@@ -256,4 +256,15 @@ describe('components/channel_members_rhs/Member', () => {
         jest.clearAllTimers();
         jest.useRealTimers();
     });
+    test('should name the send message button by the member it messages', () => {
+        renderWithContext(
+            <Member
+                {...baseProps}
+                member={{...baseMember, user: {...mockUser, remote_id: ''}}}
+            />,
+            initialState,
+        );
+
+        expect(screen.getByRole('button', {name: 'Send message to Test User'})).toBeInTheDocument();
+    });
 });

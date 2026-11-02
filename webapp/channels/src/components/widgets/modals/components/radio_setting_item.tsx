@@ -22,6 +22,12 @@ type Props = BaseSettingItemProps & {
     inputFieldData: FieldsetRadio;
     inputFieldValue: string;
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+
+    /**
+     * The radio group's name, read but not shown, when the title alone doesn't tell it apart from another
+     * group's (two "Notify me about…" groups, one for desktop and one for mobile). It starts with the title.
+     */
+    legend?: string;
 };
 
 function RadioSettingItem({
@@ -32,6 +38,7 @@ function RadioSettingItem({
     inputFieldValue,
     handleChange,
     dataTestId,
+    legend,
 }: Props): JSX.Element {
     const fields = inputFieldData.options.map((option) => {
         return (
@@ -58,7 +65,7 @@ function RadioSettingItem({
             className='mm-modal-generic-section-item__fieldset-radio'
         >
             <legend className='hidden-label'>
-                {title}
+                {legend ?? title}
             </legend>
             {[...fields]}
         </fieldset>

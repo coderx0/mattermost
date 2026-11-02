@@ -29,6 +29,7 @@ import type {Tab as SidebarTab} from 'components/settings_sidebar/settings_sideb
 import {normalizePluginIcon} from 'components/settings_sidebar/settings_sidebar';
 
 import {focusElement} from 'utils/a11y_utils';
+import {agentomIdSegment} from 'utils/agentom_ids';
 import Constants from 'utils/constants';
 import {isMinimumEnterpriseAdvancedLicense} from 'utils/license_utils';
 
@@ -448,6 +449,10 @@ function ChannelSettingsModal({channelId, isOpen, onExited, focusOriginElement}:
         return renderBuiltInTabContent(isBuiltInTabId(activeTab) ? activeTab : BuiltInTabIds.INFO);
     };
 
+    // Every tab but Archive is saved as a whole, through its own Save: its panel says whether it has unsaved changes
+    const activeTabSavesAsAWhole = activeTab !== BuiltInTabIds.ARCHIVE;
+    const activeTabName = [...visibleBuiltInTabs, ...visiblePluginTabs].find((tab) => tab.name === activeTab)?.uiName ?? '';
+
     // Renders the body: left sidebar for tabs, the content on the right
     const renderModalBody = () => {
         return (
@@ -465,8 +470,29 @@ function ChannelSettingsModal({channelId, isOpen, onExited, focusOriginElement}:
                         />
                     </React.Suspense>
                 </div>
-                <div className='settings-content minimize-settings'>
+                <div
+                    className='settings-content minimize-settings'
+                    role='tabpanel'
+                    id={`${activeTab}Settings`}
+                    aria-labelledby={`${activeTab}Button`}
+                    aria-describedby={activeTabSavesAsAWhole ? 'channelSettingsUnsavedChanges' : undefined}
+                    data-agentom-id={`channel-settings.${agentomIdSegment(activeTab)}`}
+                >
                     {renderTabContent()}
+                    {activeTabSavesAsAWhole && (
+                        <span
+                            id='channelSettingsUnsavedChanges'
+                            hidden={true}
+                        >
+                            {areThereUnsavedChanges ? formatMessage({
+                                id: 'channel_settings.unsaved_changes',
+                                defaultMessage: 'Unsaved changes: the changes on the {tab} tab are kept only when saved',
+                            }, {tab: activeTabName}) : formatMessage({
+                                id: 'channel_settings.no_unsaved_changes',
+                                defaultMessage: 'No unsaved changes',
+                            })}
+                        </span>
+                    )}
                 </div>
             </div>
         );

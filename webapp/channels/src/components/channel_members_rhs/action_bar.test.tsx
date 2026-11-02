@@ -110,4 +110,28 @@ describe('channel_members_rhs/action_bar', () => {
 
         expect(screen.queryByText('Manage')).not.toBeInTheDocument();
     });
+    test('should name the Add button by what it adds, and describe the Manage button with a pinned id', async () => {
+        const testProps: Props = {...actionBarDefaultProps};
+        const {rerender} = renderWithContext(
+            <ActionBar
+                {...testProps}
+            />,
+        );
+
+        expect(screen.getByRole('button', {name: 'Add members'})).toBeInTheDocument();
+        const manage = screen.getByRole('button', {name: 'Manage'});
+        expect(manage).toHaveAttribute('data-agentom-id', 'channel-members.manage');
+        expect(manage).toHaveAccessibleDescription('Shows a role menu beside each member, to change their role or remove them from the channel');
+
+        rerender(
+            <ActionBar
+                {...testProps}
+                editing={true}
+            />,
+        );
+
+        const done = screen.getByRole('button', {name: 'Done'});
+        expect(done).toHaveAttribute('data-agentom-id', 'channel-members.manage');
+        expect(done).toHaveAccessibleDescription("Stops managing members: hides each member's role menu");
+    });
 });

@@ -31,7 +31,7 @@ import DeleteCategoryModal from 'components/delete_category_modal';
 import EditCategoryModal from 'components/edit_category_modal';
 import * as Menu from 'components/menu';
 
-import {agentomIdSegment} from 'utils/agentom_ids';
+import {getCategoryAgentomId} from 'utils/agentom_ids';
 import {ModalIdentifiers} from 'utils/constants';
 import {describeActions, describeChoices} from 'utils/popup_descriptions';
 
@@ -87,15 +87,6 @@ const messages = defineMessages({
         defaultMessage: 'Manually',
     },
 });
-
-/**
- * The data-agentom-id of a category: by its type for the categories every user has, by its name for one of
- * the user's own.
- */
-export function getCategoryAgentomId(category: ChannelCategory) {
-    const name = category.type === CategoryTypes.CUSTOM ? category.display_name : category.type;
-    return `category.${agentomIdSegment(name)}`;
-}
 
 const SidebarCategoryMenu = ({
     category,

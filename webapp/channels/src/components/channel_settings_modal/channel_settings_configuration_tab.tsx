@@ -854,6 +854,30 @@ function ChannelSettingsConfigurationTab({
         classificationFormInvalid ||
         showTabSwitchError;
 
+    // What Save keeps: the sections this tab shows, by their headings, in its order and under the same conditions
+    const savedSections: string[] = [];
+    if (canManageSharedChannels) {
+        savedSections.push(formatMessage({id: 'channel_settings.share_channel_with_workspaces.title', defaultMessage: 'Share with connected workspaces'}));
+    }
+    if (canManageClassification) {
+        savedSections.push(formatMessage({id: 'channel_settings.classification.title', defaultMessage: 'Classification'}));
+    }
+    if (canManageBanner) {
+        savedSections.push(bannerHeading);
+    }
+    if (canManageJoinLeaveMessages) {
+        savedSections.push(joinLeaveMessagesHeading);
+    }
+    if (canManageChannelTranslation) {
+        savedSections.push(autoTranslationHeading);
+    }
+    const saveButtonDescription = formatMessage({
+        id: 'channel_settings.save_changes_panel.configuration_save_description',
+        defaultMessage: "Saves this tab's settings: {sections}",
+    }, {
+        sections: formatList(savedSections, {type: 'conjunction'}),
+    });
+
     return (
         <div
             className={`ChannelSettingsModal__configurationTab${showSaveChangesPanel ? ' ChannelSettingsModal__configurationTab--with-save-panel' : ''}`}
@@ -1013,6 +1037,7 @@ function ChannelSettingsConfigurationTab({
                             {/*Banner text section*/}
                             <div className='setting_section'>
                                 <span
+                                    id='channel_banner_banner_text_label'
                                     className='setting_title'
                                     aria-label={bannerTextSettingTitle}
                                 >
@@ -1052,6 +1077,7 @@ function ChannelSettingsConfigurationTab({
                                             createMessage={bannerTextPlaceholder}
                                             maxLength={CHANNEL_BANNER_MAX_CHARACTER_LIMIT}
                                             minLength={CHANNEL_BANNER_MIN_CHARACTER_LIMIT}
+                                            aria-labelledby='channel_banner_banner_text_label'
                                         />
                                     )}
                                 </div>
@@ -1187,6 +1213,12 @@ function ChannelSettingsConfigurationTab({
                         id: 'channel_settings.save_changes_panel.reset',
                         defaultMessage: 'Reset',
                     })}
+                    customSavedMessage={formatMessage({
+                        id: 'channel_settings.save_changes_panel.configuration_saved',
+                        defaultMessage: 'Channel configuration saved',
+                    })}
+                    saveButtonDescription={saveButtonDescription}
+                    agentomId='channel-settings.configuration'
                 />
             )}
         </div>

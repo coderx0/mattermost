@@ -29,9 +29,11 @@ import * as Menu from 'components/menu';
 
 import {Constants} from 'utils/constants';
 import {canPopout, isChannelPopoutWindow} from 'utils/popouts/popout_windows';
+import {describeActions} from 'utils/popup_descriptions';
 
 import type {GlobalState} from 'types/store';
 
+import {useChannelHeaderMenuActions} from './channel_header_menu_actions';
 import ChannelDirectMenu from './channel_header_menu_items/channel_header_direct_menu';
 import ChannelGroupMenu from './channel_header_menu_items/channel_header_group_menu';
 import ChannelHeaderMobileMenu from './channel_header_menu_items/channel_header_mobile_menu';
@@ -62,6 +64,20 @@ export default function ChannelHeaderMenu({dmUser, gmMembers, isMobile, archived
     const isChannelBookmarksEnabled = useSelector(getIsChannelBookmarksEnabled);
     const isChannelAutotranslated = useSelector((state: GlobalState) => (channel?.id ? isChannelAutotranslatedSelector(state, channel.id) : false));
 
+    // What the menu offers, for its button's description
+    const actionLabels = useChannelHeaderMenuActions(channel, {
+        user,
+        isMuted,
+        isFavorite,
+        isDefault,
+        isMobile: isMobile || false,
+        isLicensedForLDAPGroups,
+        isChannelBookmarksEnabled,
+        isChannelAutotranslated,
+        pluginItemTexts: pluginMenuItems.flatMap((item) => (typeof item.text === 'string' ? [item.text] : [])),
+        pluginItemCount: pluginMenuItems.length,
+    });
+
     if (!channel) {
         return null;
     }
@@ -90,6 +106,17 @@ export default function ChannelHeaderMenu({dmUser, gmMembers, isMobile, archived
         channelTitle = <ChannelHeaderTitleGroup gmMembers={gmMembers}/>;
     }
 
+    let description: string | undefined;
+    if (actionLabels) {
+        description = describeActions(intl, actionLabels);
+        if (channel.delete_at !== 0) {
+            description = intl.formatMessage({
+                id: 'channel_header.menu.archived_description',
+                defaultMessage: 'Archived channel. {actions}',
+            }, {actions: description});
+        }
+    }
+
     const pluginItems = pluginMenuItems.map((item) => {
         const handlePluginItemClick = () => {
             if (item.action) {
@@ -108,88 +135,100 @@ export default function ChannelHeaderMenu({dmUser, gmMembers, isMobile, archived
     });
 
     return (
-        <Menu.Container
-            menuButtonTooltip={{
-                text: channelTitle as string,
-            }}
-            menuButton={{
-                id: 'channelHeaderDropdownButton',
-                class: classNames('channel-header__trigger style--none'),
-                children: (
-                    <>
-                        {archivedIcon}
-                        <strong
-                            id='channelHeaderTitle'
-                            className='heading'
-                        >
-                            {channelTitle as string}
-                        </strong>
-                        {sharedIcon}
-                        <ChevronDownIcon size={16}/>
-                    </>
-                ),
-                'aria-label': ariaLabel.toLowerCase(),
-            }}
-            menu={{
-                id: 'channelHeaderDropdownMenu',
-                'aria-label': ariaLabel.toLowerCase(),
-            }}
-            transformOrigin={{
-                horizontal: 'left',
-                vertical: 'top',
-            }}
-            anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-            }}
-        >
-            {canPopout() && !isChannelPopoutWindow() && (
-                <MenuItemOpenInNewWindow channel={channel}/>
-            )}
-            {isDirect && (
-                <ChannelDirectMenu
-                    channel={channel}
-                    user={user}
-                    isMuted={isMuted}
-                    pluginItems={pluginItems}
-                    isFavorite={isFavorite}
-                    isMobile={isMobile || false}
-                    isChannelBookmarksEnabled={isChannelBookmarksEnabled}
-                    isChannelAutotranslated={isChannelAutotranslated}
-                />
-            )}
-            {isGroup && (
-                <ChannelGroupMenu
-                    channel={channel}
-                    user={user}
-                    isMuted={isMuted}
-                    pluginItems={pluginItems}
-                    isFavorite={isFavorite}
-                    isMobile={isMobile || false}
-                    isChannelBookmarksEnabled={isChannelBookmarksEnabled}
-                    isChannelAutotranslated={isChannelAutotranslated}
-                />
-            )}
-            {(!isDirect && !isGroup) && (
-                <ChannelPublicPrivateMenu
-                    channel={channel}
-                    user={user}
-                    isMuted={isMuted}
-                    pluginItems={pluginItems}
-                    isFavorite={isFavorite}
-                    isMobile={isMobile || false}
-                    isDefault={isDefault}
-                    isLicensedForLDAPGroups={isLicensedForLDAPGroups}
-                    isChannelBookmarksEnabled={isChannelBookmarksEnabled}
-                    isChannelAutotranslated={isChannelAutotranslated}
-                />
-            )}
+        <>
+            <Menu.Container
+                menuButtonTooltip={{
+                    text: channelTitle as string,
+                }}
+                menuButton={{
+                    id: 'channelHeaderDropdownButton',
+                    class: classNames('channel-header__trigger style--none'),
+                    children: (
+                        <>
+                            {archivedIcon}
+                            <strong
+                                id='channelHeaderTitle'
+                                className='heading'
+                            >
+                                {channelTitle as string}
+                            </strong>
+                            {sharedIcon}
+                            <ChevronDownIcon size={16}/>
+                        </>
+                    ),
+                    'aria-label': ariaLabel,
+                    'aria-describedby': description ? 'channelHeaderDropdownButtonDescription' : undefined,
+                    agentomId: 'channel-header.menu',
+                }}
+                menu={{
+                    id: 'channelHeaderDropdownMenu',
+                    'aria-label': ariaLabel,
+                }}
+                transformOrigin={{
+                    horizontal: 'left',
+                    vertical: 'top',
+                }}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                }}
+            >
+                {canPopout() && !isChannelPopoutWindow() && (
+                    <MenuItemOpenInNewWindow channel={channel}/>
+                )}
+                {isDirect && (
+                    <ChannelDirectMenu
+                        channel={channel}
+                        user={user}
+                        isMuted={isMuted}
+                        pluginItems={pluginItems}
+                        isFavorite={isFavorite}
+                        isMobile={isMobile || false}
+                        isChannelBookmarksEnabled={isChannelBookmarksEnabled}
+                        isChannelAutotranslated={isChannelAutotranslated}
+                    />
+                )}
+                {isGroup && (
+                    <ChannelGroupMenu
+                        channel={channel}
+                        user={user}
+                        isMuted={isMuted}
+                        pluginItems={pluginItems}
+                        isFavorite={isFavorite}
+                        isMobile={isMobile || false}
+                        isChannelBookmarksEnabled={isChannelBookmarksEnabled}
+                        isChannelAutotranslated={isChannelAutotranslated}
+                    />
+                )}
+                {(!isDirect && !isGroup) && (
+                    <ChannelPublicPrivateMenu
+                        channel={channel}
+                        user={user}
+                        isMuted={isMuted}
+                        pluginItems={pluginItems}
+                        isFavorite={isFavorite}
+                        isMobile={isMobile || false}
+                        isDefault={isDefault}
+                        isLicensedForLDAPGroups={isLicensedForLDAPGroups}
+                        isChannelBookmarksEnabled={isChannelBookmarksEnabled}
+                        isChannelAutotranslated={isChannelAutotranslated}
+                    />
+                )}
 
-            <ChannelHeaderMobileMenu
-                isMobile={isMobile || false}
-                pluginItems={pluginItems}
-                channel={channel}
-            />
-        </Menu.Container>
+                <ChannelHeaderMobileMenu
+                    isMobile={isMobile || false}
+                    pluginItems={pluginItems}
+                    channel={channel}
+                />
+            </Menu.Container>
+            {description && (
+                <span
+                    id='channelHeaderDropdownButtonDescription'
+                    hidden={true}
+                >
+                    {description}
+                </span>
+            )}
+        </>
     );
 }

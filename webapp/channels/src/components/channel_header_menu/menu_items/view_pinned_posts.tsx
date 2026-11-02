@@ -12,6 +12,8 @@ import * as Menu from 'components/menu';
 
 import {RHSStates} from 'utils/constants';
 
+import {channelHeaderMenuMessages} from '../channel_header_menu_messages';
+
 type Props = {
     channelID: string;
 };
@@ -35,10 +37,7 @@ const ViewPinnedPosts = ({
         <Menu.Item
             onClick={handleClick}
             labels={
-                <FormattedMessage
-                    id='navbar.viewPinnedPosts'
-                    defaultMessage='View Pinned Posts'
-                />
+                <FormattedMessage {...channelHeaderMenuMessages.viewPinnedPosts}/>
             }
         />
     );

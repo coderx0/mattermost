@@ -66,8 +66,26 @@ describe('channel_info_rhs/components/editable_area', () => {
         // We should be able to click on the text...
         await userEvent.click(screen.getByText('No content'));
 
+        // ... which is the button's name, as it shows it
+        expect(screen.getByRole('button', {name: 'No content'})).toBeInTheDocument();
+        expect(screen.queryByLabelText('Edit')).not.toBeInTheDocument();
+
         // ... or the Edit icon
-        await userEvent.click(screen.getByLabelText('Edit'));
+        await userEvent.click(screen.getByText('No content').querySelector('.edit-icon') ?? screen.getByText('No content'));
         expect(mockOnEdit).toHaveBeenCalledTimes(2);
+    });
+
+    test('should name the edit button by its tooltip, which says what it edits', () => {
+        renderWithContext(
+            <EditableArea
+                content='Some content'
+                editable={true}
+                emptyLabel='Add a header'
+                editTooltip='Edit channel header'
+                onEdit={() => {}}
+            />,
+        );
+
+        expect(screen.getByRole('button', {name: 'Edit channel header'})).toBeInTheDocument();
     });
 });

@@ -14,6 +14,8 @@ import * as Menu from 'components/menu';
 
 import {Constants, NotificationLevels} from 'utils/constants';
 
+import {channelHeaderMenuMessages} from '../channel_header_menu_messages';
+
 type Props = {
     userID: string;
     channel: Channel;
@@ -41,32 +43,20 @@ export default function ToggleMuteChannel({
     if (channel.type === Constants.DM_CHANNEL || channel.type === Constants.GM_CHANNEL) {
         if (isMuted) {
             text = (
-                <FormattedMessage
-                    id='channel_header.unmuteConversation'
-                    defaultMessage='Unmute'
-                />
+                <FormattedMessage {...channelHeaderMenuMessages.unmuteConversation}/>
             );
         } else {
             text = (
-                <FormattedMessage
-                    id='channel_header.muteConversation'
-                    defaultMessage='Mute'
-                />
+                <FormattedMessage {...channelHeaderMenuMessages.muteConversation}/>
             );
         }
     } else if (isMuted) {
         text = (
-            <FormattedMessage
-                id='channel_header.unmute'
-                defaultMessage='Unmute Channel'
-            />
+            <FormattedMessage {...channelHeaderMenuMessages.unmuteChannel}/>
         );
     } else {
         text = (
-            <FormattedMessage
-                id='channel_header.mute'
-                defaultMessage='Mute Channel'
-            />
+            <FormattedMessage {...channelHeaderMenuMessages.muteChannel}/>
         );
     }
 
@@ -76,6 +66,7 @@ export default function ToggleMuteChannel({
             id='channelToggleMuteChannel'
             onClick={handleClick}
             labels={text}
+            data-agentom-id='channel-header.menu.mute'
         />
     );
 }

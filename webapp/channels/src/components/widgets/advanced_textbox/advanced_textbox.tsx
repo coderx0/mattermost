@@ -31,6 +31,11 @@ type AdvancedTextboxProps = {
     showCharacterCount?: boolean;
     readOnly?: boolean;
     name?: string; // Added name prop for floating label
+
+    /**
+     * The id of a label shown elsewhere that names the field, when it has no name of its own
+     */
+    'aria-labelledby'?: string;
 };
 
 const AdvancedTextbox = ({
@@ -53,6 +58,7 @@ const AdvancedTextbox = ({
     showCharacterCount = false,
     readOnly = false,
     name,
+    'aria-labelledby': ariaLabelledBy,
 }: AdvancedTextboxProps) => {
     const {formatMessage} = useIntl();
     const [internalError, setInternalError] = useState<string | JSX.Element | undefined>(errorMessage);
@@ -113,11 +119,22 @@ const AdvancedTextbox = ({
         localPreview = true;
     }
 
+    // The field is named by the label shown over it (not only by its placeholder), and described by the error
+    // or help text shown below it
+    const labelId = `${id}_label`;
+    const errorId = `${id}_error`;
+    const descriptionId = `${id}_description`;
+    const showDescription = Boolean(descriptionMessage && !internalError);
+    const describedBy = [internalError ? errorId : undefined, showDescription ? descriptionId : undefined].filter(Boolean).join(' ');
+
     return (
         <div className='AdvancedTextbox'>
             <div className='AdvancedTextbox__wrapper'>
                 {name && (
-                    <div className={`AdvancedTextbox__label ${(value || isFocused) ? 'AdvancedTextbox__label--active' : ''} ${isFocused ? 'AdvancedTextbox__label--focused' : ''} ${hasError || internalError ? 'AdvancedTextbox__label--error' : ''}`}>
+                    <div
+                        id={labelId}
+                        className={`AdvancedTextbox__label ${(value || isFocused) ? 'AdvancedTextbox__label--active' : ''} ${isFocused ? 'AdvancedTextbox__label--focused' : ''} ${hasError || internalError ? 'AdvancedTextbox__label--error' : ''}`}
+                    >
                         {name}
                     </div>
                 )}
@@ -137,6 +154,9 @@ const AdvancedTextbox = ({
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     disabled={readOnly}
+                    aria-labelledby={name ? labelId : ariaLabelledBy}
+                    aria-describedby={describedBy || undefined}
+                    aria-invalid={hasError || Boolean(internalError) || undefined}
                 />
             </div>
             {!readOnly && value.trim().length > 0 && (
@@ -151,7 +171,12 @@ const AdvancedTextbox = ({
                 {internalError && (
                     <div className='AdvancedTextbox__error-message'>
                         <i className='icon icon-alert-circle-outline'/>
-                        <span data-testid='advanced-textbox-error-text'>{internalError}</span>
+                        <span
+                            id={errorId}
+                            data-testid='advanced-textbox-error-text'
+                        >
+                            {internalError}
+                        </span>
                     </div>
                 )}
 
@@ -170,8 +195,9 @@ const AdvancedTextbox = ({
             </div>
 
             {/* Error message display */}
-            {(descriptionMessage && !internalError) && (
+            {showDescription && (
                 <p
+                    id={descriptionId}
                     data-testid='AdvancedTextbox__description'
                     className='AdvancedTextbox__description'
                 >

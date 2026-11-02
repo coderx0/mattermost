@@ -43,6 +43,7 @@ exports[`components/search_bar/SearchBar should match snapshot with search 1`] =
             value="test"
           />
           <button
+            aria-label="Clear"
             class="input-clear visible"
             data-testid="input-clear"
           >
@@ -113,6 +114,7 @@ exports[`components/search_bar/SearchBar should match snapshot with search, with
             value="test"
           />
           <button
+            aria-label="Clear"
             class="input-clear visible"
             data-testid="input-clear"
           >

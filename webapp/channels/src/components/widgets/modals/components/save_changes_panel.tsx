@@ -2,8 +2,8 @@
 // See LICENSE.txt for license information.
 
 import classNames from 'classnames';
-import React, {useEffect} from 'react';
-import {FormattedMessage} from 'react-intl';
+import React, {useEffect, useId} from 'react';
+import {FormattedMessage, useIntl} from 'react-intl';
 
 import {AlertCircleOutlineIcon} from '@mattermost/compass-icons/components';
 import {Button} from '@mattermost/shared/components/button';
@@ -27,6 +27,22 @@ type Props = {
     saveButtonText?: React.ReactNode;
     cancelButtonText?: React.ReactNode;
     saving?: boolean;
+
+    /**
+     * What the save button keeps, given to it as its description: "Saves the channel's name, URL, type…"
+     */
+    saveButtonDescription?: string;
+
+    /**
+     * Data attributes added to the save button, such as the Agent Object Model's data-agentom-risk and
+     * data-agentom-confirmation when saving asks first or is risky
+     */
+    saveButtonAttributes?: {[dataAttribute: `data-${string}`]: string | undefined};
+
+    /**
+     * The start of the data-agentom-id of the panel's buttons: `<agentomId>.save`, `.discard` (Undo or Reset) and `.close`
+     */
+    agentomId?: string;
 };
 function SaveChangesPanel({
     handleSubmit,
@@ -39,7 +55,12 @@ function SaveChangesPanel({
     saveButtonText,
     cancelButtonText,
     saving = false,
+    saveButtonDescription,
+    saveButtonAttributes,
+    agentomId,
 }: Props) {
+    const {formatMessage} = useIntl();
+    const saveButtonDescriptionId = useId();
     const panelClassName = classNames('SaveChangesPanel', {error: tabChangeError || state === 'error'}, {saved: state === 'saved'});
     const messageClassName = classNames('SaveChangesPanel__message', {error: tabChangeError || state === 'error'}, {saved: state === 'saved'});
 
@@ -97,9 +118,12 @@ function SaveChangesPanel({
                         type='button'
                         className='btn btn-icon btn-sm'
                         onClick={handleClose}
+                        aria-label={formatMessage({id: 'saveChangesPanel.close', defaultMessage: 'Close notice'})}
+                        data-agentom-id={agentomId && `${agentomId}.close`}
                     >
                         <i
                             className='icon icon-close'
+                            aria-hidden='true'
                         />
                     </button>
                 </div>
@@ -117,6 +141,7 @@ function SaveChangesPanel({
                     className={classNames('SaveChangesPanel__cancel-btn', {error: tabChangeError || state === 'error'})}
                     onClick={handleCancel}
                     disabled={saving}
+                    data-agentom-id={agentomId && `${agentomId}.discard`}
                 >
                     {cancelButtonText || (
                         <FormattedMessage
@@ -126,12 +151,15 @@ function SaveChangesPanel({
                     )}
                 </Button>
                 <Button
+                    {...saveButtonAttributes}
                     data-testid='SaveChangesPanel__save-btn'
                     emphasis='primary'
                     size='sm'
                     className={classNames('SaveChangesPanel__save-btn', {error: tabChangeError || state === 'error', 'btn-force-disabled': saving})}
                     onClick={handleSubmit}
                     disabled={saveButtonDisabled}
+                    aria-describedby={saveButtonDescription ? saveButtonDescriptionId : undefined}
+                    data-agentom-id={agentomId && `${agentomId}.save`}
                 >
                     {saving ? (
                         <LoadingSpinner
@@ -149,13 +177,24 @@ function SaveChangesPanel({
                         />
                     ))}
                 </Button>
+                {saveButtonDescription && (
+                    <span
+                        id={saveButtonDescriptionId}
+                        hidden={true}
+                    >
+                        {saveButtonDescription}
+                    </span>
+                )}
             </div>
         );
     };
 
     return (
         <div className={panelClassName}>
-            <p className={messageClassName}>
+            <p
+                className={messageClassName}
+                role='status'
+            >
                 <AlertCircleOutlineIcon
                     size={18}
                     color={'currentcolor'}

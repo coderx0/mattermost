@@ -49,6 +49,8 @@ import {describeActions} from 'utils/popup_descriptions';
 
 import type {GlobalState} from 'types/store';
 
+import {browseOrAddChannelMenuMessages} from './sidebar_browse_or_add_channel_menu';
+
 interface Props {
     currentTeam: Team;
 }
@@ -94,7 +96,47 @@ const messages = defineMessages({
         id: 'sidebarLeft.teamMenu.learnAboutTeamsMenuItem.primaryLabel',
         defaultMessage: 'Learn about teams',
     },
+
+    // What the dialog each item opens asks for or shows, as the item's description
+    addGroupsToTeamDescription: {
+        id: 'sidebarLeft.teamMenu.addGroupsToTeamMenuItem.description',
+        defaultMessage: 'Asks for the groups to add, then adds them and their members to the team',
+    },
+    teamSettingsDescription: {
+        id: 'sidebarLeft.teamMenu.teamSettingsMenuItem.description',
+        defaultMessage: "Opens the team's settings, such as its name, description, icon and who can join it",
+    },
+    viewMembersDescription: {
+        id: 'sidebarLeft.teamMenu.viewMembersMenuItem.description',
+        defaultMessage: "Opens the list of the team's members, with a search",
+    },
+    manageMembersDescription: {
+        id: 'sidebarLeft.teamMenu.manageMembersMenuItem.description',
+        defaultMessage: "Opens the list of the team's members, to search them, change their roles or remove them from the team",
+    },
+    manageGroupsDescription: {
+        id: 'sidebarLeft.teamMenu.manageGroupsMenuItem.description',
+        defaultMessage: 'Opens the list of groups linked to the team, to add groups, change their roles or remove them with their members',
+    },
+    leaveTeamDescription: {
+        id: 'sidebarLeft.teamMenu.leaveTeamMenuItem.description',
+        defaultMessage: "Asks for confirmation, then removes you from the team and from its channels you're in",
+    },
 });
+
+// A description that is read, not shown
+function HiddenDescription({id, message}: {id: string; message: MessageDescriptor}) {
+    const {formatMessage} = useIntl();
+
+    return (
+        <span
+            id={id}
+            hidden={true}
+        >
+            {formatMessage(message)}
+        </span>
+    );
+}
 
 export default function SidebarTeamMenu(props: Props) {
     const intl = useIntl();
@@ -255,8 +297,14 @@ function InvitePeopleMenuItem(props: Menu.FirstMenuItemProps) {
                 </>
             )}
             aria-haspopup='dialog'
+            aria-describedby='sidebarTeamMenu-invitePeople-description'
             {...props}
-        />
+        >
+            <HiddenDescription
+                id='sidebarTeamMenu-invitePeople-description'
+                message={browseOrAddChannelMenuMessages.invitePeopleDescription}
+            />
+        </Menu.Item>
     );
 }
 
@@ -284,8 +332,14 @@ function AddGroupsToTeamMenuItem(props: Menu.FirstMenuItemProps) {
             )}
             labels={<FormattedMessage {...messages.addGroupsToTeam}/>}
             aria-haspopup='dialog'
+            aria-describedby='sidebarTeamMenu-addGroups-description'
             {...props}
-        />
+        >
+            <HiddenDescription
+                id='sidebarTeamMenu-addGroups-description'
+                message={messages.addGroupsToTeamDescription}
+            />
+        </Menu.Item>
     );
 }
 
@@ -314,8 +368,14 @@ function TeamSettingsMenuItem(props: Menu.FirstMenuItemProps) {
             onClick={handleClick}
             labels={<FormattedMessage {...messages.teamSettings}/>}
             aria-haspopup='dialog'
+            aria-describedby='sidebarTeamMenu-teamSettings-description'
             {...props}
-        />
+        >
+            <HiddenDescription
+                id='sidebarTeamMenu-teamSettings-description'
+                message={messages.teamSettingsDescription}
+            />
+        </Menu.Item>
     );
 }
 
@@ -345,8 +405,14 @@ function ManageViewMembersMenuItem({canManageMembers, ...props}: Menu.FirstMenuI
             onClick={handleClick}
             labels={label}
             aria-haspopup='dialog'
+            aria-describedby='sidebarTeamMenu-members-description'
             {...props}
-        />
+        >
+            <HiddenDescription
+                id='sidebarTeamMenu-members-description'
+                message={canManageMembers ? messages.manageMembersDescription : messages.viewMembersDescription}
+            />
+        </Menu.Item>
     );
 }
 
@@ -378,7 +444,13 @@ function ManageGroupsMenuItem({teamID}: ManageGroupsMenuItemProps) {
             onClick={handleClick}
             labels={<FormattedMessage {...messages.manageGroups}/>}
             aria-haspopup='dialog'
-        />
+            aria-describedby='sidebarTeamMenu-manageGroups-description'
+        >
+            <HiddenDescription
+                id='sidebarTeamMenu-manageGroups-description'
+                message={messages.manageGroupsDescription}
+            />
+        </Menu.Item>
     );
 }
 
@@ -405,10 +477,16 @@ function LeaveTeamMenuItem({agentomId}: {agentomId: string}) {
             isDestructive={true}
             labels={<FormattedMessage {...messages.leaveTeam}/>}
             aria-haspopup='dialog'
+            aria-describedby='sidebarTeamMenu-leaveTeam-description'
             data-agentom-id={agentomId}
             data-agentom-risk='destructive'
             data-agentom-confirmation='required'
-        />
+        >
+            <HiddenDescription
+                id='sidebarTeamMenu-leaveTeam-description'
+                message={messages.leaveTeamDescription}
+            />
+        </Menu.Item>
     );
 }
 

@@ -36,6 +36,7 @@ exports[`components/AdminSidebar Plugins should filter plugins 1`] = `
           value="autolink"
         />
         <button
+          aria-label="Clear"
           class="input-clear visible"
           data-testid="input-clear"
         >

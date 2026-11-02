@@ -14,6 +14,8 @@ import UnarchiveChannelModal from 'components/unarchive_channel_modal';
 
 import {ModalIdentifiers} from 'utils/constants';
 
+import {channelHeaderMenuMessages} from '../channel_header_menu_messages';
+
 type Props = {
     channel: Channel;
 };
@@ -40,10 +42,7 @@ const UnarchiveChannel = ({
                 id='channelUnarchiveChannel'
                 onClick={handleUnarchiveChannel}
                 labels={
-                    <FormattedMessage
-                        id='channel_header.unarchive'
-                        defaultMessage='Unarchive Channel'
-                    />
+                    <FormattedMessage {...channelHeaderMenuMessages.unarchiveChannel}/>
                 }
             />
         </>

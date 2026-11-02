@@ -20,9 +20,14 @@ function ModalHeader({id, title, subtitle, handleClose}: Props) {
                 id={`mm-modal-header-${id}`}
                 className='mm-modal-header__title'
             >
-                <span>{title}</span>
+                <span id={`mm-modal-header-${id}-title`}>{title}</span>
                 <span className='mm-modal-header__vertical-divider'/>
-                <span className='mm-modal-header__subtitle'>{subtitle}</span>
+                <span
+                    id={`mm-modal-header-${id}-subtitle`}
+                    className='mm-modal-header__subtitle'
+                >
+                    {subtitle}
+                </span>
                 {handleClose && <div className='mm-modal-header__ctr'>
                     <button
                         className='btn btn-icon'

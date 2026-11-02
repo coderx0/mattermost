@@ -43,7 +43,11 @@ exports[`components/LeaveChannelModal should match snapshot for the policy enfor
                   class="modal-title"
                   id="genericModalLabel"
                 >
-                  Leave Ask IT channel
+                  <span
+                    id="_r_2_"
+                  >
+                    Leave Ask IT channel
+                  </span>
                 </h1>
               </div>
             </div>
@@ -119,7 +123,7 @@ exports[`components/LeaveChannelModal should match snapshot, init 1`] = `
     class="fade modal-backdrop in"
   />
   <div
-    aria-labelledby="genericModalLabel"
+    aria-labelledby="_r_0_"
     aria-modal="true"
     class="fade in modal"
     id="confirmModal"
@@ -150,10 +154,14 @@ exports[`components/LeaveChannelModal should match snapshot, init 1`] = `
                   class="modal-title"
                   id="genericModalLabel"
                 >
-                  Leave Channel 
-                  <b>
-                    Town Square
-                  </b>
+                  <span
+                    id="_r_0_"
+                  >
+                    Leave Channel 
+                    <b>
+                      Town Square
+                    </b>
+                  </span>
                 </h1>
               </div>
             </div>

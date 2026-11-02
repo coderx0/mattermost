@@ -7,6 +7,8 @@ import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import {GenericModal} from '@mattermost/components';
 import type {ChannelCategory} from '@mattermost/types/channel_categories';
 
+import {getCategoryAgentomId} from 'utils/agentom_ids';
+
 import '../category_modal.scss';
 
 type Props = {
@@ -44,6 +46,10 @@ export default function DeleteCategoryModal(props: Props) {
                 />
             )}
             confirmButtonVariant='destructive'
+            confirmButtonAttributes={{
+                'data-agentom-id': `${getCategoryAgentomId(props.category)}.delete.confirm`,
+                'data-agentom-risk': 'destructive',
+            }}
         >
             <span className='delete-category__helpText'>
                 <FormattedMessage

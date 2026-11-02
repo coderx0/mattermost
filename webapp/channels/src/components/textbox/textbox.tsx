@@ -74,6 +74,13 @@ export type Props = {
     defaultAgent?: Agent;
     hasLabels?: boolean;
     hasError?: boolean;
+
+    /**
+     * Given to the text field, so a label and help text shown beside it name and describe it
+     */
+    'aria-labelledby'?: string;
+    'aria-describedby'?: string;
+    'aria-invalid'?: boolean;
 };
 
 const VISIBLE = {visibility: 'visible'} as const;
@@ -340,6 +347,9 @@ export default class Textbox extends React.PureComponent<Props> {
                     contextId={this.props.channelId}
                     openWhenEmpty={this.props.openWhenEmpty}
                     alignWithTextbox={this.props.alignWithTextbox}
+                    aria-labelledby={this.props['aria-labelledby']}
+                    aria-describedby={this.props['aria-describedby']}
+                    aria-invalid={this.props['aria-invalid']}
                 />
             </div>
         );

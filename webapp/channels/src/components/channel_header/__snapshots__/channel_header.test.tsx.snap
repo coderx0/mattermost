@@ -28,8 +28,11 @@ exports[`components/ChannelHeader should match snapshot with last active display
               class="channel-header__icons"
             >
               <button
+                aria-controls="sidebar-right"
+                aria-expanded="false"
                 aria-label="Channel files"
                 class="channel-header__icon channel-header__icon--left btn btn-icon btn-xs "
+                data-agentom-id="channel-header.files"
                 id="channelHeaderFilesButton"
               >
                 <i
@@ -38,8 +41,11 @@ exports[`components/ChannelHeader should match snapshot with last active display
               </button>
             </div>
             <div
+              aria-label="Channel header"
               class="channel-header__description"
+              data-agentom-id="channel-header.header"
               id="channelHeaderDescription"
+              role="group"
             >
               <span
                 class="header-status__text"
@@ -79,8 +85,10 @@ exports[`components/ChannelHeader should match snapshot with last active display
         />
       </button>
       <button
+        aria-controls="sidebar-right"
         aria-label="View Info"
         class="channel-header__icon"
+        data-agentom-id="channel-header.info"
         id="channel-info-btn"
       >
         <i
@@ -120,8 +128,11 @@ exports[`components/ChannelHeader should match snapshot with no last active disp
               class="channel-header__icons"
             >
               <button
+                aria-controls="sidebar-right"
+                aria-expanded="false"
                 aria-label="Channel files"
                 class="channel-header__icon channel-header__icon--left btn btn-icon btn-xs "
+                data-agentom-id="channel-header.files"
                 id="channelHeaderFilesButton"
               >
                 <i
@@ -130,8 +141,11 @@ exports[`components/ChannelHeader should match snapshot with no last active disp
               </button>
             </div>
             <div
+              aria-label="Channel header"
               class="channel-header__description"
+              data-agentom-id="channel-header.header"
               id="channelHeaderDescription"
+              role="group"
             >
               <span
                 class="header-status__text"
@@ -160,8 +174,10 @@ exports[`components/ChannelHeader should match snapshot with no last active disp
         />
       </button>
       <button
+        aria-controls="sidebar-right"
         aria-label="View Info"
         class="channel-header__icon"
+        data-agentom-id="channel-header.info"
         id="channel-info-btn"
       >
         <i
@@ -201,8 +217,12 @@ exports[`components/ChannelHeader should render active channel files 1`] = `
               class="channel-header__icons"
             >
               <button
+                aria-controls="sidebar-right"
+                aria-describedby="channelHeaderMembersButtonDescription"
+                aria-expanded="false"
                 aria-label="Members"
                 class="member-rhs__trigger channel-header__icon channel-header__icon--wide channel-header__icon--left btn btn-icon btn-xs"
+                data-agentom-id="channel-header.members"
                 id="member_rhs"
               >
                 <span
@@ -220,9 +240,18 @@ exports[`components/ChannelHeader should render active channel files 1`] = `
                   2
                 </span>
               </button>
+              <span
+                hidden=""
+                id="channelHeaderMembersButtonDescription"
+              >
+                2 members
+              </span>
               <button
+                aria-controls="sidebar-right"
+                aria-expanded="true"
                 aria-label="Channel files"
                 class="channel-header__icon channel-header__icon--left btn btn-icon btn-xs  channel-header__icon--active"
+                data-agentom-id="channel-header.files"
                 id="channelHeaderFilesButton"
               >
                 <i
@@ -231,8 +260,11 @@ exports[`components/ChannelHeader should render active channel files 1`] = `
               </button>
             </div>
             <div
+              aria-label="Channel header"
               class="channel-header__description"
+              data-agentom-id="channel-header.header"
               id="channelHeaderDescription"
+              role="group"
             >
               <div
                 class="header-description__text"
@@ -258,8 +290,10 @@ exports[`components/ChannelHeader should render active channel files 1`] = `
         />
       </button>
       <button
+        aria-controls="sidebar-right"
         aria-label="View Info"
         class="channel-header__icon"
+        data-agentom-id="channel-header.info"
         id="channel-info-btn"
       >
         <i
@@ -299,8 +333,12 @@ exports[`components/ChannelHeader should render active flagged posts 1`] = `
               class="channel-header__icons"
             >
               <button
+                aria-controls="sidebar-right"
+                aria-describedby="channelHeaderMembersButtonDescription"
+                aria-expanded="false"
                 aria-label="Members"
                 class="member-rhs__trigger channel-header__icon channel-header__icon--wide channel-header__icon--left btn btn-icon btn-xs"
+                data-agentom-id="channel-header.members"
                 id="member_rhs"
               >
                 <span
@@ -318,9 +356,18 @@ exports[`components/ChannelHeader should render active flagged posts 1`] = `
                   2
                 </span>
               </button>
+              <span
+                hidden=""
+                id="channelHeaderMembersButtonDescription"
+              >
+                2 members
+              </span>
               <button
+                aria-controls="sidebar-right"
+                aria-expanded="false"
                 aria-label="Channel files"
                 class="channel-header__icon channel-header__icon--left btn btn-icon btn-xs "
+                data-agentom-id="channel-header.files"
                 id="channelHeaderFilesButton"
               >
                 <i
@@ -329,8 +376,11 @@ exports[`components/ChannelHeader should render active flagged posts 1`] = `
               </button>
             </div>
             <div
+              aria-label="Channel header"
               class="channel-header__description"
+              data-agentom-id="channel-header.header"
               id="channelHeaderDescription"
+              role="group"
             >
               <div
                 class="header-description__text"
@@ -356,8 +406,10 @@ exports[`components/ChannelHeader should render active flagged posts 1`] = `
         />
       </button>
       <button
+        aria-controls="sidebar-right"
         aria-label="View Info"
         class="channel-header__icon"
+        data-agentom-id="channel-header.info"
         id="channel-info-btn"
       >
         <i
@@ -397,8 +449,12 @@ exports[`components/ChannelHeader should render active mentions posts 1`] = `
               class="channel-header__icons"
             >
               <button
+                aria-controls="sidebar-right"
+                aria-describedby="channelHeaderMembersButtonDescription"
+                aria-expanded="false"
                 aria-label="Members"
                 class="member-rhs__trigger channel-header__icon channel-header__icon--wide channel-header__icon--left btn btn-icon btn-xs"
+                data-agentom-id="channel-header.members"
                 id="member_rhs"
               >
                 <span
@@ -416,9 +472,18 @@ exports[`components/ChannelHeader should render active mentions posts 1`] = `
                   2
                 </span>
               </button>
+              <span
+                hidden=""
+                id="channelHeaderMembersButtonDescription"
+              >
+                2 members
+              </span>
               <button
+                aria-controls="sidebar-right"
+                aria-expanded="false"
                 aria-label="Channel files"
                 class="channel-header__icon channel-header__icon--left btn btn-icon btn-xs "
+                data-agentom-id="channel-header.files"
                 id="channelHeaderFilesButton"
               >
                 <i
@@ -427,8 +492,11 @@ exports[`components/ChannelHeader should render active mentions posts 1`] = `
               </button>
             </div>
             <div
+              aria-label="Channel header"
               class="channel-header__description"
+              data-agentom-id="channel-header.header"
               id="channelHeaderDescription"
+              role="group"
             >
               <div
                 class="header-description__text"
@@ -454,8 +522,10 @@ exports[`components/ChannelHeader should render active mentions posts 1`] = `
         />
       </button>
       <button
+        aria-controls="sidebar-right"
         aria-label="View Info"
         class="channel-header__icon"
+        data-agentom-id="channel-header.info"
         id="channel-info-btn"
       >
         <i
@@ -495,8 +565,12 @@ exports[`components/ChannelHeader should render active pinned posts 1`] = `
               class="channel-header__icons"
             >
               <button
+                aria-controls="sidebar-right"
+                aria-describedby="channelHeaderMembersButtonDescription"
+                aria-expanded="false"
                 aria-label="Members"
                 class="member-rhs__trigger channel-header__icon channel-header__icon--wide channel-header__icon--left btn btn-icon btn-xs"
+                data-agentom-id="channel-header.members"
                 id="member_rhs"
               >
                 <span
@@ -514,9 +588,18 @@ exports[`components/ChannelHeader should render active pinned posts 1`] = `
                   2
                 </span>
               </button>
+              <span
+                hidden=""
+                id="channelHeaderMembersButtonDescription"
+              >
+                2 members
+              </span>
               <button
+                aria-controls="sidebar-right"
+                aria-expanded="false"
                 aria-label="Channel files"
                 class="channel-header__icon channel-header__icon--left btn btn-icon btn-xs "
+                data-agentom-id="channel-header.files"
                 id="channelHeaderFilesButton"
               >
                 <i
@@ -525,8 +608,11 @@ exports[`components/ChannelHeader should render active pinned posts 1`] = `
               </button>
             </div>
             <div
+              aria-label="Channel header"
               class="channel-header__description"
+              data-agentom-id="channel-header.header"
               id="channelHeaderDescription"
+              role="group"
             >
               <div
                 class="header-description__text"
@@ -552,8 +638,10 @@ exports[`components/ChannelHeader should render active pinned posts 1`] = `
         />
       </button>
       <button
+        aria-controls="sidebar-right"
         aria-label="View Info"
         class="channel-header__icon"
+        data-agentom-id="channel-header.info"
         id="channel-info-btn"
       >
         <i
@@ -593,8 +681,12 @@ exports[`components/ChannelHeader should render archived view 1`] = `
               class="channel-header__icons"
             >
               <button
+                aria-controls="sidebar-right"
+                aria-describedby="channelHeaderMembersButtonDescription"
+                aria-expanded="false"
                 aria-label="Members"
                 class="member-rhs__trigger channel-header__icon channel-header__icon--wide channel-header__icon--left btn btn-icon btn-xs"
+                data-agentom-id="channel-header.members"
                 id="member_rhs"
               >
                 <span
@@ -612,9 +704,18 @@ exports[`components/ChannelHeader should render archived view 1`] = `
                   2
                 </span>
               </button>
+              <span
+                hidden=""
+                id="channelHeaderMembersButtonDescription"
+              >
+                2 members
+              </span>
               <button
+                aria-controls="sidebar-right"
+                aria-expanded="false"
                 aria-label="Channel files"
                 class="channel-header__icon channel-header__icon--left btn btn-icon btn-xs "
+                data-agentom-id="channel-header.files"
                 id="channelHeaderFilesButton"
               >
                 <i
@@ -623,8 +724,11 @@ exports[`components/ChannelHeader should render archived view 1`] = `
               </button>
             </div>
             <div
+              aria-label="Channel header"
               class="channel-header__description"
+              data-agentom-id="channel-header.header"
               id="channelHeaderDescription"
+              role="group"
             >
               <div
                 class="header-description__text"
@@ -650,8 +754,10 @@ exports[`components/ChannelHeader should render archived view 1`] = `
         />
       </button>
       <button
+        aria-controls="sidebar-right"
         aria-label="View Info"
         class="channel-header__icon"
+        data-agentom-id="channel-header.info"
         id="channel-info-btn"
       >
         <i
@@ -693,6 +799,7 @@ exports[`components/ChannelHeader should render correct menu when muted 1`] = `
               <button
                 aria-label="Unmute"
                 class="channel-header__mute inactive btn btn-icon btn-xs"
+                data-agentom-id="channel-header.unmute"
                 id="toggleMute"
               >
                 <i
@@ -701,8 +808,12 @@ exports[`components/ChannelHeader should render correct menu when muted 1`] = `
                 />
               </button>
               <button
+                aria-controls="sidebar-right"
+                aria-describedby="channelHeaderMembersButtonDescription"
+                aria-expanded="false"
                 aria-label="Members"
                 class="member-rhs__trigger channel-header__icon channel-header__icon--wide channel-header__icon--left btn btn-icon btn-xs"
+                data-agentom-id="channel-header.members"
                 id="member_rhs"
               >
                 <span
@@ -720,9 +831,18 @@ exports[`components/ChannelHeader should render correct menu when muted 1`] = `
                   2
                 </span>
               </button>
+              <span
+                hidden=""
+                id="channelHeaderMembersButtonDescription"
+              >
+                2 members
+              </span>
               <button
+                aria-controls="sidebar-right"
+                aria-expanded="false"
                 aria-label="Channel files"
                 class="channel-header__icon channel-header__icon--left btn btn-icon btn-xs "
+                data-agentom-id="channel-header.files"
                 id="channelHeaderFilesButton"
               >
                 <i
@@ -731,8 +851,11 @@ exports[`components/ChannelHeader should render correct menu when muted 1`] = `
               </button>
             </div>
             <div
+              aria-label="Channel header"
               class="channel-header__description"
+              data-agentom-id="channel-header.header"
               id="channelHeaderDescription"
+              role="group"
             >
               <div
                 class="header-description__text"
@@ -758,8 +881,10 @@ exports[`components/ChannelHeader should render correct menu when muted 1`] = `
         />
       </button>
       <button
+        aria-controls="sidebar-right"
         aria-label="View Info"
         class="channel-header__icon"
+        data-agentom-id="channel-header.info"
         id="channel-info-btn"
       >
         <i
@@ -799,8 +924,12 @@ exports[`components/ChannelHeader should render not active channel files 1`] = `
               class="channel-header__icons"
             >
               <button
+                aria-controls="sidebar-right"
+                aria-describedby="channelHeaderMembersButtonDescription"
+                aria-expanded="false"
                 aria-label="Members"
                 class="member-rhs__trigger channel-header__icon channel-header__icon--wide channel-header__icon--left btn btn-icon btn-xs"
+                data-agentom-id="channel-header.members"
                 id="member_rhs"
               >
                 <span
@@ -818,9 +947,18 @@ exports[`components/ChannelHeader should render not active channel files 1`] = `
                   2
                 </span>
               </button>
+              <span
+                hidden=""
+                id="channelHeaderMembersButtonDescription"
+              >
+                2 members
+              </span>
               <button
+                aria-controls="sidebar-right"
+                aria-expanded="false"
                 aria-label="Channel files"
                 class="channel-header__icon channel-header__icon--left btn btn-icon btn-xs "
+                data-agentom-id="channel-header.files"
                 id="channelHeaderFilesButton"
               >
                 <i
@@ -829,8 +967,11 @@ exports[`components/ChannelHeader should render not active channel files 1`] = `
               </button>
             </div>
             <div
+              aria-label="Channel header"
               class="channel-header__description"
+              data-agentom-id="channel-header.header"
               id="channelHeaderDescription"
+              role="group"
             >
               <div
                 class="header-description__text"
@@ -856,8 +997,10 @@ exports[`components/ChannelHeader should render not active channel files 1`] = `
         />
       </button>
       <button
+        aria-controls="sidebar-right"
         aria-label="View Info"
         class="channel-header__icon"
+        data-agentom-id="channel-header.info"
         id="channel-info-btn"
       >
         <i
@@ -897,8 +1040,11 @@ exports[`components/ChannelHeader should render properly when custom status is e
               class="channel-header__icons"
             >
               <button
+                aria-controls="sidebar-right"
+                aria-expanded="false"
                 aria-label="Channel files"
                 class="channel-header__icon channel-header__icon--left btn btn-icon btn-xs "
+                data-agentom-id="channel-header.files"
                 id="channelHeaderFilesButton"
               >
                 <i
@@ -907,8 +1053,11 @@ exports[`components/ChannelHeader should render properly when custom status is e
               </button>
             </div>
             <div
+              aria-label="Channel header"
               class="channel-header__description"
+              data-agentom-id="channel-header.header"
               id="channelHeaderDescription"
+              role="group"
             >
               <span
                 class="header-status__text"
@@ -948,8 +1097,10 @@ exports[`components/ChannelHeader should render properly when custom status is e
         />
       </button>
       <button
+        aria-controls="sidebar-right"
         aria-label="View Info"
         class="channel-header__icon"
+        data-agentom-id="channel-header.info"
         id="channel-info-btn"
       >
         <i
@@ -989,8 +1140,11 @@ exports[`components/ChannelHeader should render properly when custom status is s
               class="channel-header__icons"
             >
               <button
+                aria-controls="sidebar-right"
+                aria-expanded="false"
                 aria-label="Channel files"
                 class="channel-header__icon channel-header__icon--left btn btn-icon btn-xs "
+                data-agentom-id="channel-header.files"
                 id="channelHeaderFilesButton"
               >
                 <i
@@ -999,8 +1153,11 @@ exports[`components/ChannelHeader should render properly when custom status is s
               </button>
             </div>
             <div
+              aria-label="Channel header"
               class="channel-header__description"
+              data-agentom-id="channel-header.header"
               id="channelHeaderDescription"
+              role="group"
             >
               <span
                 class="header-status__text"
@@ -1043,8 +1200,10 @@ exports[`components/ChannelHeader should render properly when custom status is s
         />
       </button>
       <button
+        aria-controls="sidebar-right"
         aria-label="View Info"
         class="channel-header__icon"
+        data-agentom-id="channel-header.info"
         id="channel-info-btn"
       >
         <i
@@ -1084,8 +1243,12 @@ exports[`components/ChannelHeader should render properly when empty 1`] = `
               class="channel-header__icons"
             >
               <button
+                aria-controls="sidebar-right"
+                aria-describedby="channelHeaderMembersButtonDescription"
+                aria-expanded="false"
                 aria-label="Members"
                 class="member-rhs__trigger channel-header__icon channel-header__icon--wide channel-header__icon--left btn btn-icon btn-xs"
+                data-agentom-id="channel-header.members"
                 id="member_rhs"
               >
                 <span
@@ -1103,9 +1266,18 @@ exports[`components/ChannelHeader should render properly when empty 1`] = `
                   2
                 </span>
               </button>
+              <span
+                hidden=""
+                id="channelHeaderMembersButtonDescription"
+              >
+                2 members
+              </span>
               <button
+                aria-controls="sidebar-right"
+                aria-expanded="false"
                 aria-label="Channel files"
                 class="channel-header__icon channel-header__icon--left btn btn-icon btn-xs "
+                data-agentom-id="channel-header.files"
                 id="channelHeaderFilesButton"
               >
                 <i
@@ -1114,8 +1286,11 @@ exports[`components/ChannelHeader should render properly when empty 1`] = `
               </button>
             </div>
             <div
+              aria-label="Channel header"
               class="channel-header__description"
+              data-agentom-id="channel-header.header"
               id="channelHeaderDescription"
+              role="group"
             >
               <div
                 class="header-description__text"
@@ -1141,8 +1316,10 @@ exports[`components/ChannelHeader should render properly when empty 1`] = `
         />
       </button>
       <button
+        aria-controls="sidebar-right"
         aria-label="View Info"
         class="channel-header__icon"
+        data-agentom-id="channel-header.info"
         id="channel-info-btn"
       >
         <i
@@ -1182,8 +1359,12 @@ exports[`components/ChannelHeader should render properly when populated 1`] = `
               class="channel-header__icons"
             >
               <button
+                aria-controls="sidebar-right"
+                aria-describedby="channelHeaderMembersButtonDescription"
+                aria-expanded="false"
                 aria-label="Members"
                 class="member-rhs__trigger channel-header__icon channel-header__icon--wide channel-header__icon--left btn btn-icon btn-xs"
+                data-agentom-id="channel-header.members"
                 id="member_rhs"
               >
                 <span
@@ -1201,9 +1382,18 @@ exports[`components/ChannelHeader should render properly when populated 1`] = `
                   2
                 </span>
               </button>
+              <span
+                hidden=""
+                id="channelHeaderMembersButtonDescription"
+              >
+                2 members
+              </span>
               <button
+                aria-controls="sidebar-right"
+                aria-expanded="false"
                 aria-label="Channel files"
                 class="channel-header__icon channel-header__icon--left btn btn-icon btn-xs "
+                data-agentom-id="channel-header.files"
                 id="channelHeaderFilesButton"
               >
                 <i
@@ -1212,8 +1402,11 @@ exports[`components/ChannelHeader should render properly when populated 1`] = `
               </button>
             </div>
             <div
+              aria-label="Channel header"
               class="channel-header__description"
+              data-agentom-id="channel-header.header"
               id="channelHeaderDescription"
+              role="group"
             >
               <div
                 class="header-description__text"
@@ -1239,8 +1432,10 @@ exports[`components/ChannelHeader should render properly when populated 1`] = `
         />
       </button>
       <button
+        aria-controls="sidebar-right"
         aria-label="View Info"
         class="channel-header__icon"
+        data-agentom-id="channel-header.info"
         id="channel-info-btn"
       >
         <i
@@ -1280,8 +1475,12 @@ exports[`components/ChannelHeader should render properly when populated with cha
               class="channel-header__icons"
             >
               <button
+                aria-controls="sidebar-right"
+                aria-describedby="channelHeaderMembersButtonDescription"
+                aria-expanded="false"
                 aria-label="Members"
                 class="member-rhs__trigger channel-header__icon channel-header__icon--wide channel-header__icon--left btn btn-icon btn-xs"
+                data-agentom-id="channel-header.members"
                 id="member_rhs"
               >
                 <span
@@ -1299,9 +1498,18 @@ exports[`components/ChannelHeader should render properly when populated with cha
                   2
                 </span>
               </button>
+              <span
+                hidden=""
+                id="channelHeaderMembersButtonDescription"
+              >
+                2 members
+              </span>
               <button
+                aria-controls="sidebar-right"
+                aria-expanded="false"
                 aria-label="Channel files"
                 class="channel-header__icon channel-header__icon--left btn btn-icon btn-xs "
+                data-agentom-id="channel-header.files"
                 id="channelHeaderFilesButton"
               >
                 <i
@@ -1310,8 +1518,11 @@ exports[`components/ChannelHeader should render properly when populated with cha
               </button>
             </div>
             <div
+              aria-label="Channel header"
               class="channel-header__description"
+              data-agentom-id="channel-header.header"
               id="channelHeaderDescription"
+              role="group"
             >
               <div
                 class="header-description__text"
@@ -1337,8 +1548,10 @@ exports[`components/ChannelHeader should render properly when populated with cha
         />
       </button>
       <button
+        aria-controls="sidebar-right"
         aria-label="View Info"
         class="channel-header__icon"
+        data-agentom-id="channel-header.info"
         id="channel-info-btn"
       >
         <i
@@ -1378,8 +1591,12 @@ exports[`components/ChannelHeader should render properly when there are pending 
               class="channel-header__icons"
             >
               <button
+                aria-controls="sidebar-right"
+                aria-describedby="channelHeaderMembersButtonDescription"
+                aria-expanded="false"
                 aria-label="Members — pending join requests"
                 class="member-rhs__trigger channel-header__icon channel-header__icon--wide channel-header__icon--left btn btn-icon btn-xs"
+                data-agentom-id="channel-header.members"
                 id="member_rhs"
               >
                 <span
@@ -1402,9 +1619,18 @@ exports[`components/ChannelHeader should render properly when there are pending 
                   2
                 </span>
               </button>
+              <span
+                hidden=""
+                id="channelHeaderMembersButtonDescription"
+              >
+                2 members
+              </span>
               <button
+                aria-controls="sidebar-right"
+                aria-expanded="false"
                 aria-label="Channel files"
                 class="channel-header__icon channel-header__icon--left btn btn-icon btn-xs "
+                data-agentom-id="channel-header.files"
                 id="channelHeaderFilesButton"
               >
                 <i
@@ -1413,8 +1639,11 @@ exports[`components/ChannelHeader should render properly when there are pending 
               </button>
             </div>
             <div
+              aria-label="Channel header"
               class="channel-header__description"
+              data-agentom-id="channel-header.header"
               id="channelHeaderDescription"
+              role="group"
             >
               <div
                 class="header-description__text"
@@ -1440,8 +1669,10 @@ exports[`components/ChannelHeader should render properly when there are pending 
         />
       </button>
       <button
+        aria-controls="sidebar-right"
         aria-label="View Info"
         class="channel-header__icon"
+        data-agentom-id="channel-header.info"
         id="channel-info-btn"
       >
         <i
@@ -1481,8 +1712,12 @@ exports[`components/ChannelHeader should render shared view 1`] = `
               class="channel-header__icons"
             >
               <button
+                aria-controls="sidebar-right"
+                aria-describedby="channelHeaderMembersButtonDescription"
+                aria-expanded="false"
                 aria-label="Members"
                 class="member-rhs__trigger channel-header__icon channel-header__icon--wide channel-header__icon--left btn btn-icon btn-xs"
+                data-agentom-id="channel-header.members"
                 id="member_rhs"
               >
                 <span
@@ -1500,9 +1735,18 @@ exports[`components/ChannelHeader should render shared view 1`] = `
                   2
                 </span>
               </button>
+              <span
+                hidden=""
+                id="channelHeaderMembersButtonDescription"
+              >
+                2 members
+              </span>
               <button
+                aria-controls="sidebar-right"
+                aria-expanded="false"
                 aria-label="Channel files"
                 class="channel-header__icon channel-header__icon--left btn btn-icon btn-xs "
+                data-agentom-id="channel-header.files"
                 id="channelHeaderFilesButton"
               >
                 <i
@@ -1511,8 +1755,11 @@ exports[`components/ChannelHeader should render shared view 1`] = `
               </button>
             </div>
             <div
+              aria-label="Channel header"
               class="channel-header__description"
+              data-agentom-id="channel-header.header"
               id="channelHeaderDescription"
+              role="group"
             >
               <div
                 class="header-description__text"
@@ -1538,8 +1785,10 @@ exports[`components/ChannelHeader should render shared view 1`] = `
         />
       </button>
       <button
+        aria-controls="sidebar-right"
         aria-label="View Info"
         class="channel-header__icon"
+        data-agentom-id="channel-header.info"
         id="channel-info-btn"
       >
         <i
@@ -1579,8 +1828,12 @@ exports[`components/ChannelHeader should render the pinned icon with the pinned 
               class="channel-header__icons"
             >
               <button
+                aria-controls="sidebar-right"
+                aria-describedby="channelHeaderMembersButtonDescription"
+                aria-expanded="false"
                 aria-label="Members"
                 class="member-rhs__trigger channel-header__icon channel-header__icon--wide channel-header__icon--left btn btn-icon btn-xs"
+                data-agentom-id="channel-header.members"
                 id="member_rhs"
               >
                 <span
@@ -1598,9 +1851,19 @@ exports[`components/ChannelHeader should render the pinned icon with the pinned 
                   2
                 </span>
               </button>
+              <span
+                hidden=""
+                id="channelHeaderMembersButtonDescription"
+              >
+                2 members
+              </span>
               <button
+                aria-controls="sidebar-right"
+                aria-describedby="channelHeaderPinButtonDescription"
+                aria-expanded="false"
                 aria-label="Pinned messages"
                 class="channel-header__icon channel-header__icon--wide channel-header__icon--left btn btn-icon btn-xs"
+                data-agentom-id="channel-header.pinned"
                 id="channelHeaderPinButton"
               >
                 <i
@@ -1614,9 +1877,18 @@ exports[`components/ChannelHeader should render the pinned icon with the pinned 
                   2
                 </span>
               </button>
+              <span
+                hidden=""
+                id="channelHeaderPinButtonDescription"
+              >
+                2 pinned messages
+              </span>
               <button
+                aria-controls="sidebar-right"
+                aria-expanded="false"
                 aria-label="Channel files"
                 class="channel-header__icon channel-header__icon--left btn btn-icon btn-xs "
+                data-agentom-id="channel-header.files"
                 id="channelHeaderFilesButton"
               >
                 <i
@@ -1625,8 +1897,11 @@ exports[`components/ChannelHeader should render the pinned icon with the pinned 
               </button>
             </div>
             <div
+              aria-label="Channel header"
               class="channel-header__description"
+              data-agentom-id="channel-header.header"
               id="channelHeaderDescription"
+              role="group"
             >
               <div
                 class="header-description__text"
@@ -1652,8 +1927,10 @@ exports[`components/ChannelHeader should render the pinned icon with the pinned 
         />
       </button>
       <button
+        aria-controls="sidebar-right"
         aria-label="View Info"
         class="channel-header__icon"
+        data-agentom-id="channel-header.info"
         id="channel-info-btn"
       >
         <i

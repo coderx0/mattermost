@@ -12,6 +12,8 @@ import {
 
 import * as Menu from 'components/menu';
 
+import {channelHeaderMenuMessages} from '../channel_header_menu_messages';
+
 type Props = {
     pluginItems: ReactNode[];
 };
@@ -25,15 +27,12 @@ const PluginsSubmenu = (props: Props) => {
         <Menu.SubMenu
             id={'moreActions'}
             labels={
-                <FormattedMessage
-                    id='pluginsMenu.more_actions'
-                    defaultMessage='More actions'
-                />
+                <FormattedMessage {...channelHeaderMenuMessages.moreActions}/>
             }
             leadingElement={<AppsIcon size='18px'/>}
             trailingElements={<ChevronRightIcon size={16}/>}
             menuId={'moreActions-menu'}
-            menuAriaLabel={formatMessage({id: 'pluginsMenu.more_actions', defaultMessage: 'More actions'})}
+            menuAriaLabel={formatMessage(channelHeaderMenuMessages.moreActions)}
         >
             {props.pluginItems}
         </Menu.SubMenu>

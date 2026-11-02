@@ -13,7 +13,7 @@ exports[`components/marketplace/ doesn't show web marketplace banner for Cloud 1
   />
   <div
     aria-label="App Marketplace"
-    aria-labelledby="genericModalLabel"
+    aria-labelledby="_r_6_"
     aria-modal="true"
     class="fade in modal"
     id="marketplace-modal"
@@ -44,7 +44,11 @@ exports[`components/marketplace/ doesn't show web marketplace banner for Cloud 1
                   class="modal-title"
                   id="genericModalLabel"
                 >
-                  App Marketplace
+                  <span
+                    id="_r_6_"
+                  >
+                    App Marketplace
+                  </span>
                 </h1>
               </div>
             </div>
@@ -141,7 +145,7 @@ exports[`components/marketplace/ hides search and shows web marketplace banner 1
   />
   <div
     aria-label="App Marketplace"
-    aria-labelledby="genericModalLabel"
+    aria-labelledby="_r_5_"
     aria-modal="true"
     class="fade in modal"
     id="marketplace-modal"
@@ -172,7 +176,11 @@ exports[`components/marketplace/ hides search and shows web marketplace banner 1
                   class="modal-title"
                   id="genericModalLabel"
                 >
-                  App Marketplace
+                  <span
+                    id="_r_5_"
+                  >
+                    App Marketplace
+                  </span>
                 </h1>
               </div>
             </div>
@@ -451,7 +459,7 @@ exports[`components/marketplace/ should render default 1`] = `
   />
   <div
     aria-label="App Marketplace"
-    aria-labelledby="genericModalLabel"
+    aria-labelledby="_r_0_"
     aria-modal="true"
     class="fade in modal"
     id="marketplace-modal"
@@ -482,7 +490,11 @@ exports[`components/marketplace/ should render default 1`] = `
                   class="modal-title"
                   id="genericModalLabel"
                 >
-                  App Marketplace
+                  <span
+                    id="_r_0_"
+                  >
+                    App Marketplace
+                  </span>
                 </h1>
               </div>
             </div>
@@ -603,7 +615,7 @@ exports[`components/marketplace/ should render with error banner 1`] = `
   />
   <div
     aria-label="App Marketplace"
-    aria-labelledby="genericModalLabel"
+    aria-labelledby="_r_4_"
     aria-modal="true"
     class="fade in modal"
     id="marketplace-modal"
@@ -634,7 +646,11 @@ exports[`components/marketplace/ should render with error banner 1`] = `
                   class="modal-title"
                   id="genericModalLabel"
                 >
-                  App Marketplace
+                  <span
+                    id="_r_4_"
+                  >
+                    App Marketplace
+                  </span>
                 </h1>
               </div>
             </div>
@@ -797,7 +813,7 @@ exports[`components/marketplace/ should render with no plugins available 1`] = `
   />
   <div
     aria-label="App Marketplace"
-    aria-labelledby="genericModalLabel"
+    aria-labelledby="_r_1_"
     aria-modal="true"
     class="fade in modal"
     id="marketplace-modal"
@@ -828,7 +844,11 @@ exports[`components/marketplace/ should render with no plugins available 1`] = `
                   class="modal-title"
                   id="genericModalLabel"
                 >
-                  App Marketplace
+                  <span
+                    id="_r_1_"
+                  >
+                    App Marketplace
+                  </span>
                 </h1>
               </div>
             </div>
@@ -975,7 +995,7 @@ exports[`components/marketplace/ should render with plugins available 1`] = `
   />
   <div
     aria-label="App Marketplace"
-    aria-labelledby="genericModalLabel"
+    aria-labelledby="_r_2_"
     aria-modal="true"
     class="fade in modal"
     id="marketplace-modal"
@@ -1006,7 +1026,11 @@ exports[`components/marketplace/ should render with plugins available 1`] = `
                   class="modal-title"
                   id="genericModalLabel"
                 >
-                  App Marketplace
+                  <span
+                    id="_r_2_"
+                  >
+                    App Marketplace
+                  </span>
                 </h1>
               </div>
             </div>
@@ -1195,7 +1219,7 @@ exports[`components/marketplace/ should render with plugins installed 1`] = `
   />
   <div
     aria-label="App Marketplace"
-    aria-labelledby="genericModalLabel"
+    aria-labelledby="_r_3_"
     aria-modal="true"
     class="fade in modal"
     id="marketplace-modal"
@@ -1226,7 +1250,11 @@ exports[`components/marketplace/ should render with plugins installed 1`] = `
                   class="modal-title"
                   id="genericModalLabel"
                 >
-                  App Marketplace
+                  <span
+                    id="_r_3_"
+                  >
+                    App Marketplace
+                  </span>
                 </h1>
               </div>
             </div>

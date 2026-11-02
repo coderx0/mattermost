@@ -102,8 +102,12 @@ const AboutAreaChannel = ({channel, canEditChannelProperties, actions}: Props) =
             <ChannelInfoAttributes channelId={channel.id}/>
 
             {(channel.purpose || canEditChannelProperties) && (
-                <ChannelPurpose>
-                    <ChannelDescriptionHeading>
+                <ChannelPurpose
+                    role='region'
+                    aria-labelledby='channelInfoRhsPurposeHeading'
+                    data-agentom-id='channel-info.purpose'
+                >
+                    <ChannelDescriptionHeading id='channelInfoRhsPurposeHeading'>
                         {formatMessage({id: 'channel_info_rhs.about_area.channel_purpose.heading', defaultMessage: 'Channel Purpose'})}
                     </ChannelDescriptionHeading>
                     <EditableArea
@@ -126,8 +130,12 @@ const AboutAreaChannel = ({channel, canEditChannelProperties, actions}: Props) =
             )}
 
             {(channel.header || canEditChannelProperties) && (
-                <ChannelHeader>
-                    <ChannelDescriptionHeading>
+                <ChannelHeader
+                    role='region'
+                    aria-labelledby='channelInfoRhsHeaderHeading'
+                    data-agentom-id='channel-info.header'
+                >
+                    <ChannelDescriptionHeading id='channelInfoRhsHeaderHeading'>
                         {formatMessage({id: 'channel_info_rhs.about_area.channel_header.heading', defaultMessage: 'Channel Header'})}
                     </ChannelDescriptionHeading>
                     <EditableArea

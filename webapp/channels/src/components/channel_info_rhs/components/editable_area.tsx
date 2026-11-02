@@ -59,28 +59,34 @@ const EditableAreaBase = ({editable, content, emptyLabel, onEdit, className, edi
 
     const allowEditArea = editable && content;
 
+    // The edit button shows only an icon: it's named by its tooltip, which says what it edits ("Edit channel header")
+    const editLabel = editTooltip || formatMessage({id: 'channel_info_rhs.edit_link', defaultMessage: 'Edit'});
+
     return (
         <div className={className}>
             <div className='EditableArea__content'>
                 {content}
                 {!content && editable && (
-                    <EmptyPlace
-                        onClick={onEdit}
-                        aria-label={formatMessage({id: 'channel_info_rhs.edit_link', defaultMessage: 'Edit'})}
-                    >
+                    <EmptyPlace onClick={onEdit}>
                         {emptyLabel}
-                        <i className='icon icon-pencil-outline edit-icon'/>
+                        <i
+                            className='icon icon-pencil-outline edit-icon'
+                            aria-hidden='true'
+                        />
                     </EmptyPlace>
                 )}
             </div>
             <div className='EditableArea__edit'>
                 {allowEditArea ? (
-                    <WithTooltip title={editTooltip || formatMessage({id: 'channel_info_rhs.edit_link', defaultMessage: 'Edit'})}>
+                    <WithTooltip title={editLabel}>
                         <EditButton
                             onClick={onEdit}
-                            aria-label={formatMessage({id: 'channel_info_rhs.edit_link', defaultMessage: 'Edit'})}
+                            aria-label={editLabel}
                         >
-                            <i className='icon icon-pencil-outline'/>
+                            <i
+                                className='icon icon-pencil-outline'
+                                aria-hidden='true'
+                            />
                         </EditButton>
                     </WithTooltip>
                 ) : ''}

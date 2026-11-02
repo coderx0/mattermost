@@ -12,7 +12,7 @@ exports[`components/learn_more_trial_modal/learn_more_trial_modal should match s
     class="fade modal-backdrop in"
   />
   <div
-    aria-labelledby="genericModalLabel"
+    aria-labelledby="_r_0_"
     aria-modal="true"
     class="fade in modal"
     id="learnMoreTrialModal"
@@ -43,7 +43,11 @@ exports[`components/learn_more_trial_modal/learn_more_trial_modal should match s
                   class="modal-title"
                   id="genericModalLabel"
                 >
-                  With Enterprise, you can...
+                  <span
+                    id="_r_0_"
+                  >
+                    With Enterprise, you can...
+                  </span>
                 </h1>
               </div>
             </div>

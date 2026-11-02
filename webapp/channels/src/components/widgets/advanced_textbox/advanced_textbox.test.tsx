@@ -21,6 +21,9 @@ jest.mock('components/textbox', () => ({
             placeholder={props.createMessage}
             onFocus={props.onFocus}
             onBlur={props.onBlur}
+            aria-labelledby={props['aria-labelledby']}
+            aria-describedby={props['aria-describedby']}
+            aria-invalid={props['aria-invalid']}
         />
     )),
 }));
@@ -316,5 +319,47 @@ describe('AdvancedTextbox', () => {
         // Label should still have active class because there's a value
         label = document.querySelector('.AdvancedTextbox__label');
         expect(label).toHaveClass('AdvancedTextbox__label--active');
+    });
+
+    test('names the field by its label and describes it by its help text', () => {
+        render(
+            <AdvancedTextbox
+                {...defaultProps}
+                name='Channel Purpose'
+            />,
+        );
+
+        const textbox = screen.getByRole('textbox', {name: 'Channel Purpose'});
+        expect(textbox).toHaveAccessibleDescription('This is a description');
+        expect(textbox).not.toHaveAttribute('aria-invalid');
+    });
+
+    test('describes the field by its error instead while it shows one', () => {
+        render(
+            <AdvancedTextbox
+                {...defaultProps}
+                name='Channel Purpose'
+                hasError={true}
+                errorMessage='Too long'
+            />,
+        );
+
+        const textbox = screen.getByRole('textbox', {name: 'Channel Purpose'});
+        expect(textbox).toHaveAccessibleDescription('Too long');
+        expect(textbox).toHaveAttribute('aria-invalid', 'true');
+    });
+
+    test('is named by a label elsewhere when it has no name of its own', () => {
+        render(
+            <>
+                <span id='external-label'>{'Banner text'}</span>
+                <AdvancedTextbox
+                    {...defaultProps}
+                    aria-labelledby='external-label'
+                />
+            </>,
+        );
+
+        expect(screen.getByRole('textbox', {name: 'Banner text'})).toBeInTheDocument();
     });
 });

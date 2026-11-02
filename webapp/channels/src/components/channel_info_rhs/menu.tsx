@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React, {useEffect, useState, type JSX} from 'react';
+import React, {useEffect, useId, useState, type JSX} from 'react';
 import {useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
@@ -82,10 +82,14 @@ function MenuItem(props: MenuItemProps) {
     const {icon, text, opensSubpanel, badge, onClick, id} = props;
     const hasRightSide = (badge !== undefined) || opensSubpanel;
 
+    // The name is the item's text alone; the count its badge shows is its description
+    const badgeId = useId();
+
     return (
         <MenuItemButton
             onClick={onClick}
             aria-label={text}
+            aria-describedby={badge === undefined ? undefined : badgeId}
             type='button'
             id={id || ''}
         >
@@ -94,10 +98,15 @@ function MenuItem(props: MenuItemProps) {
             {hasRightSide && (
                 <RightSide>
                     {badge !== undefined && (
-                        <Badge>{badge}</Badge>
+                        <Badge id={badgeId}>{badge}</Badge>
                     )}
                     {opensSubpanel && (
-                        <Icon><i className='icon icon-chevron-right'/></Icon>
+                        <Icon>
+                            <i
+                                className='icon icon-chevron-right'
+                                aria-hidden='true'
+                            />
+                        </Icon>
                     )}
                 </RightSide>
             )}

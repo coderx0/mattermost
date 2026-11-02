@@ -24,6 +24,11 @@ type Props = BaseSettingItemProps & {
     handleSelectChange: (selected: OnChangeValue<SelectOption, boolean>) => void;
     isSelectDisabled?: boolean;
     selectPlaceholder?: string;
+
+    /**
+     * The select's name, when nothing shown names it (its placeholder disappears once a value is chosen)
+     */
+    selectAriaLabel?: string;
 };
 
 export default function CheckboxWithSelectSettingItem({
@@ -40,6 +45,7 @@ export default function CheckboxWithSelectSettingItem({
     handleSelectChange,
     isSelectDisabled,
     selectPlaceholder,
+    selectAriaLabel,
 }: Props) {
     const intl = useIntl();
 
@@ -66,6 +72,7 @@ export default function CheckboxWithSelectSettingItem({
                     id={selectFieldData.id}
                     inputId={selectFieldData.inputId}
                     aria-labelledby={selectFieldData.ariaLabelledby}
+                    aria-label={selectAriaLabel}
                     className='react-select singleSelect react-select-top'
                     classNamePrefix='react-select'
                     options={selectFieldData.options}

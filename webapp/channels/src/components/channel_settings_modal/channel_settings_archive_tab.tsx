@@ -49,7 +49,13 @@ function ChannelSettingsArchiveTab({
                 variant='destructive'
                 onClick={handleArchiveChannel}
                 id='channelSettingsArchiveChannelButton'
-                aria-label={`Archive channel ${channel.display_name}`}
+                aria-label={formatMessage({
+                    id: 'channel_settings.archive.button.label',
+                    defaultMessage: 'Archive this channel: {channelName}',
+                }, {channelName: channel.display_name})}
+                data-agentom-id='channel-settings.archive-channel'
+                data-agentom-risk='destructive'
+                data-agentom-confirmation='required'
             >
                 <FormattedMessage
                     id='channel_settings.archive.button'

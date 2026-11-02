@@ -23,6 +23,83 @@ describe('GenericModal', () => {
         expect(wrapper).toMatchSnapshot();
     });
 
+    // Both modals are rendered at once here, so each hides the other (aria-hidden) and neither has a name as
+    // computed for the accessibility tree; what each is labelled by is checked instead.
+    function labelOf(dialog: HTMLElement) {
+        return document.getElementById(dialog.getAttribute('aria-labelledby') ?? '')?.textContent;
+    }
+
+    test('should label each of two stacked modals by its own title', () => {
+        render(
+            wrapIntl(
+                <>
+                    <GenericModal
+                        {...baseProps}
+                        compassDesign={true}
+                        modalHeaderText='Settings'
+                    />
+                    <GenericModal
+                        {...baseProps}
+                        id='confirmModal'
+                        compassDesign={true}
+                        isStacked={true}
+                        modalHeaderText='Are you sure?'
+                    />
+                </>,
+            ),
+        );
+
+        expect(labelOf(document.getElementById('genericModal')!)).toBe('Settings');
+        expect(labelOf(document.getElementById('confirmModal')!)).toBe('Are you sure?');
+    });
+
+    test('should be labelled by a title whose id is given, and by its aria-label without a title', () => {
+        render(
+            wrapIntl(
+                <>
+                    <GenericModal
+                        {...baseProps}
+                        compassDesign={true}
+                        modalHeaderText='Members'
+                        modalHeaderTextId='membersModalLabel'
+                    />
+                    <GenericModal
+                        {...baseProps}
+                        id='untitledModal'
+                        modalHeaderText={undefined}
+                        ariaLabel='Untitled'
+                    />
+                </>,
+            ),
+        );
+
+        expect(document.getElementById('genericModal')).toHaveAttribute('aria-labelledby', 'membersModalLabel');
+        expect(document.getElementById('untitledModal')).not.toHaveAttribute('aria-labelledby');
+        expect(document.getElementById('untitledModal')).toHaveAttribute('aria-label', 'Untitled');
+    });
+
+    test('should add the attributes given for the confirm button', () => {
+        render(
+            wrapIntl(
+                <GenericModal
+                    {...baseProps}
+                    handleConfirm={jest.fn()}
+                    confirmButtonText='Delete'
+                    confirmButtonAttributes={{
+                        id: 'deleteConfirm',
+                        'data-agentom-id': 'thing.delete.confirm',
+                        'data-agentom-risk': 'destructive',
+                    }}
+                />,
+            ),
+        );
+
+        const button = screen.getByRole('button', {name: 'Delete'});
+        expect(button).toHaveAttribute('id', 'deleteConfirm');
+        expect(button).toHaveAttribute('data-agentom-id', 'thing.delete.confirm');
+        expect(button).toHaveAttribute('data-agentom-risk', 'destructive');
+    });
+
     test('should have confirm and cancels buttons when handlers are passed for both buttons', () => {
         const props = {
             ...baseProps,

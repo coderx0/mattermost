@@ -74,6 +74,8 @@ const messages = defineMessages({
     },
 });
 
+export const browseOrAddChannelMenuMessages = messages;
+
 // A description that is read, not shown
 function HiddenDescription({id, text}: {id: string; text: string}) {
     return (

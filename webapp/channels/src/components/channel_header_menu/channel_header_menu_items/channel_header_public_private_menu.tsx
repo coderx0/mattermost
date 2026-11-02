@@ -17,6 +17,7 @@ import ChannelPermissionGate from 'components/permissions_gates/channel_permissi
 
 import {Constants} from 'utils/constants';
 
+import {channelHeaderMenuMessages} from '../channel_header_menu_messages';
 import MenuItemArchiveChannel from '../menu_items/archive_channel';
 import MenuItemAutotranslation from '../menu_items/autotranslation';
 import MenuItemChannelBookmarks from '../menu_items/channel_bookmarks_submenu';
@@ -106,10 +107,7 @@ const ChannelHeaderPublicMenu = ({channel, user, isMuted, isDefault, isMobile, i
                     id='channelMembers'
                     channel={channel}
                     text={
-                        <FormattedMessage
-                            id='channel_header.members'
-                            defaultMessage='Members'
-                        />
+                        <FormattedMessage {...channelHeaderMenuMessages.members}/>
                     }
                 />
             )}
@@ -130,10 +128,7 @@ const ChannelHeaderPublicMenu = ({channel, user, isMuted, isDefault, isMobile, i
                             id='channelMembers'
                             channel={channel}
                             text={
-                                <FormattedMessage
-                                    id='channel_header.members'
-                                    defaultMessage='Members'
-                                />
+                                <FormattedMessage {...channelHeaderMenuMessages.members}/>
                             }
                         />
                     </ChannelPermissionGate>
@@ -148,10 +143,7 @@ const ChannelHeaderPublicMenu = ({channel, user, isMuted, isDefault, isMobile, i
                             id='channelMembers'
                             channel={channel}
                             text={
-                                <FormattedMessage
-                                    id='channel_header.members'
-                                    defaultMessage='Members'
-                                />
+                                <FormattedMessage {...channelHeaderMenuMessages.members}/>
                             }
                         />
                     </ChannelPermissionGate>

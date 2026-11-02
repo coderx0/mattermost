@@ -142,6 +142,28 @@ describe('menu click handlers', () => {
     for (const enterOrSpace of ['enter', 'space']) {
         const key = enterOrSpace === 'space' ? ' ' : '{enter}';
 
+        test(`should open a submenu with the ${enterOrSpace} key, leaving open the menu that holds it`, async () => {
+            renderWithContext(
+                <MenuWithSubMenuModal/>,
+            );
+
+            await userEvent.tab();
+            await userEvent.keyboard(key);
+            await userEvent.keyboard('{arrowdown}');
+
+            expect(screen.getByText('Open submenu').closest('li')).toHaveFocus();
+
+            await userEvent.keyboard(key);
+
+            expect(screen.getByText('Open modal from submenu')).toBeInTheDocument();
+            expect(screen.getByText('Open submenu').closest('li')).toHaveAttribute('aria-expanded', 'true');
+            expect(screen.getByLabelText('menu with modal button')).toHaveAttribute('aria-expanded', 'true');
+        });
+    }
+
+    for (const enterOrSpace of ['enter', 'space']) {
+        const key = enterOrSpace === 'space' ? ' ' : '{enter}';
+
         test(`should be able to open a React Bootstrap modal with the keyboard using the ${enterOrSpace} key`, async () => {
             renderWithContext(
                 <MenuWithSubMenuModal/>,

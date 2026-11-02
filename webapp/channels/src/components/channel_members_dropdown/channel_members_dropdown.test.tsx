@@ -300,4 +300,28 @@ describe('components/channel_members_dropdown', () => {
                 }),
             }));
     });
+
+    test('should say what its menu offers and whether it is open, and mark the risky items', async () => {
+        const props = {
+            ...baseProps,
+            user: {...baseProps.user, username: 'alice'} as UserProfile,
+            canChangeMemberRoles: true,
+        };
+        renderWithContext(
+            <ChannelMembersDropdown {...props}/>,
+        );
+
+        const button = screen.getByRole('button', {name: /alice/});
+        expect(button).toHaveAttribute('aria-haspopup', 'menu');
+        expect(button).toHaveAttribute('aria-expanded', 'false');
+        expect(button).toHaveAttribute('data-agentom-id', 'channel-members.alice.role');
+        expect(button).toHaveAccessibleDescription('Actions: Make Channel Member, Remove from Channel');
+
+        await userEvent.click(button);
+
+        expect(button).toHaveAttribute('aria-expanded', 'true');
+        expect(screen.getByRole('button', {name: 'Make Channel Member'})).toHaveAttribute('data-agentom-risk', 'sensitive');
+        expect(screen.getByRole('button', {name: 'Remove from Channel'})).toHaveAttribute('data-agentom-id', 'channel-members.alice.remove');
+        expect(screen.getByRole('button', {name: 'Remove from Channel'})).toHaveAttribute('data-agentom-risk', 'sensitive');
+    });
 });

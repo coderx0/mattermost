@@ -368,6 +368,7 @@ export default function ChannelMembersRHS({
                         loadMore={loadMore}
                         hasNextPage={channelMembers.length < membersCount}
                         isNextPageLoading={isNextPageLoading}
+                        membersCount={membersCount}
                     />
                 )}
             </div>

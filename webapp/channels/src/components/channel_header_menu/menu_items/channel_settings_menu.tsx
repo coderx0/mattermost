@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import React, {memo, type JSX} from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, defineMessages} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {
@@ -16,13 +16,26 @@ import {canAccessChannelSettings} from 'selectors/views/channel_settings';
 import ChannelSettingsModal from 'components/channel_settings_modal/channel_settings_modal';
 import * as Menu from 'components/menu';
 
-import {ModalIdentifiers} from 'utils/constants';
+import {Constants, ModalIdentifiers} from 'utils/constants';
 
 import type {GlobalState} from 'types/store';
+
+import {channelHeaderMenuMessages} from '../channel_header_menu_messages';
 
 type Props = {
     channel: Channel;
 };
+
+const messages = defineMessages({
+    channelDescription: {
+        id: 'channel_header.channel_settings.description',
+        defaultMessage: "Opens the channel's settings, in a tab for each part you can change, such as its name, URL, type, purpose and header, its configuration, and archiving it",
+    },
+    conversationDescription: {
+        id: 'channel_header.channel_settings.conversation_description',
+        defaultMessage: "Opens the conversation's settings",
+    },
+});
 
 const ChannelSettingsMenu = ({channel}: Props): JSX.Element | null => {
     const dispatch = useDispatch();
@@ -47,18 +60,26 @@ const ChannelSettingsMenu = ({channel}: Props): JSX.Element | null => {
         );
     };
 
+    const isConversation = channel.type === Constants.DM_CHANNEL || channel.type === Constants.GM_CHANNEL;
+
     return (
         <Menu.Item
             id={'channelSettings'}
             labels={
-                <FormattedMessage
-                    id='channel_header.channel_settings'
-                    defaultMessage='Channel Settings'
-                />
+                <FormattedMessage {...channelHeaderMenuMessages.channelSettings}/>
             }
             onClick={handleOpenChannelSettings}
             leadingElement={<CogOutlineIcon size={18}/>}
-        />
+            aria-haspopup='dialog'
+            aria-describedby='channelSettings-description'
+        >
+            <span
+                id='channelSettings-description'
+                hidden={true}
+            >
+                <FormattedMessage {...(isConversation ? messages.conversationDescription : messages.channelDescription)}/>
+            </span>
+        </Menu.Item>
     );
 };
 

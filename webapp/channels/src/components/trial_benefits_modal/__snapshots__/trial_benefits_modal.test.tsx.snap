@@ -12,7 +12,6 @@ exports[`components/trial_benefits_modal/trial_benefits_modal should match snaps
     class="fade modal-backdrop in"
   />
   <div
-    aria-labelledby="genericModalLabel"
     aria-modal="true"
     class="fade in modal"
     id="trialBenefitsModal"
@@ -1594,7 +1593,6 @@ exports[`components/trial_benefits_modal/trial_benefits_modal should match snaps
     class="fade modal-backdrop in"
   />
   <div
-    aria-labelledby="genericModalLabel"
     aria-modal="true"
     class="fade in modal"
     id="trialBenefitsModal"

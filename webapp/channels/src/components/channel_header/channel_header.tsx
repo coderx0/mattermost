@@ -42,6 +42,24 @@ const membersTooltipMessages = defineMessages({
     membersPendingRequests: {id: 'channel_header.channelMembersPendingRequests', defaultMessage: 'Members — pending join requests'},
 });
 
+const messages = defineMessages({
+    memberCount: {
+        id: 'channel_header.memberCount',
+        defaultMessage: '{count, number} {count, plural, one {member} other {members}}',
+    },
+    pinnedPostsCount: {
+        id: 'channel_header.pinnedPostsCount',
+        defaultMessage: '{count, number} pinned {count, plural, one {message} other {messages}}',
+    },
+    headerLabel: {
+        id: 'channel_header.headerLabel',
+        defaultMessage: 'Channel header',
+    },
+});
+
+// The right-hand sidebar, which the header's members, pinned messages, files and info buttons open
+const RHS_ID = 'sidebar-right';
+
 export type Props = WrappedComponentProps & PropsFromRedux;
 
 class ChannelHeader extends React.PureComponent<Props> {
@@ -293,14 +311,26 @@ class ChannelHeader extends React.PureComponent<Props> {
         );
 
         const pinnedButton = this.props.pinnedPostsCount ? (
-            <HeaderIconWrapper
-                buttonClass={pinnedIconClass}
-                buttonId={'channelHeaderPinButton'}
-                onClick={this.showPinnedPosts}
-                tooltip={this.props.intl.formatMessage({id: 'channel_header.pinnedPosts', defaultMessage: 'Pinned messages'})}
-            >
-                {pinnedIcon}
-            </HeaderIconWrapper>
+            <>
+                <HeaderIconWrapper
+                    buttonClass={pinnedIconClass}
+                    buttonId={'channelHeaderPinButton'}
+                    onClick={this.showPinnedPosts}
+                    tooltip={this.props.intl.formatMessage({id: 'channel_header.pinnedPosts', defaultMessage: 'Pinned messages'})}
+                    ariaExpanded={rhsState === RHSStates.PIN}
+                    ariaControls={RHS_ID}
+                    ariaDescribedBy='channelHeaderPinButtonDescription'
+                    agentomId='channel-header.pinned'
+                >
+                    {pinnedIcon}
+                </HeaderIconWrapper>
+                <span
+                    id='channelHeaderPinButtonDescription'
+                    hidden={true}
+                >
+                    {this.props.intl.formatMessage(messages.pinnedPostsCount, {count: this.props.pinnedPostsCount})}
+                </span>
+            </>
         ) : (
             null
         );
@@ -334,19 +364,34 @@ class ChannelHeader extends React.PureComponent<Props> {
                 </>
             );
 
-            memberListButton = (
-                <HeaderIconWrapper
-                    tooltip={this.props.intl.formatMessage(
-                        this.props.hasPendingJoinRequests ?
-                            membersTooltipMessages.membersPendingRequests :
-                            membersTooltipMessages.members,
-                    )}
-                    buttonClass={membersIconClass}
-                    buttonId={'member_rhs'}
-                    onClick={this.toggleChannelMembersRHS}
+            // The count shown once the channel's stats have loaded, as the button's description
+            const memberCountDescription = this.props.memberCount ? (
+                <span
+                    id='channelHeaderMembersButtonDescription'
+                    hidden={true}
                 >
-                    {membersIcon}
-                </HeaderIconWrapper>
+                    {this.props.intl.formatMessage(messages.memberCount, {count: this.props.memberCount})}
+                </span>
+            ) : null;
+
+            memberListButton = (
+                <>
+                    <HeaderIconWrapper
+                        tooltip={this.props.intl.formatMessage(
+                            this.props.hasPendingJoinRequests ? membersTooltipMessages.membersPendingRequests : membersTooltipMessages.members,
+                        )}
+                        buttonClass={membersIconClass}
+                        buttonId={'member_rhs'}
+                        onClick={this.toggleChannelMembersRHS}
+                        ariaExpanded={rhsState === RHSStates.CHANNEL_MEMBERS}
+                        ariaControls={RHS_ID}
+                        ariaDescribedBy={memberCountDescription ? 'channelHeaderMembersButtonDescription' : undefined}
+                        agentomId='channel-header.members'
+                    >
+                        {membersIcon}
+                    </HeaderIconWrapper>
+                    {memberCountDescription}
+                </>
             );
         }
 
@@ -366,6 +411,7 @@ class ChannelHeader extends React.PureComponent<Props> {
                         onClick={this.unmute}
                         className={'channel-header__mute inactive btn btn-icon btn-xs'}
                         aria-label={this.props.intl.formatMessage({id: 'channelHeader.unmute', defaultMessage: 'Unmute'})}
+                        data-agentom-id='channel-header.unmute'
                     >
                         <i
                             className={'icon icon-bell-off-outline'}
@@ -413,6 +459,9 @@ class ChannelHeader extends React.PureComponent<Props> {
                                             buttonId={'channelHeaderFilesButton'}
                                             onClick={this.showChannelFiles}
                                             tooltip={this.props.intl.formatMessage({id: 'channel_header.channelFiles', defaultMessage: 'Channel files'})}
+                                            ariaExpanded={rhsState === RHSStates.CHANNEL_FILES}
+                                            ariaControls={RHS_ID}
+                                            agentomId='channel-header.files'
                                         >
                                             {channelFilesIcon}
                                         </HeaderIconWrapper>
@@ -432,6 +481,9 @@ class ChannelHeader extends React.PureComponent<Props> {
                                 <div
                                     id='channelHeaderDescription'
                                     className='channel-header__description'
+                                    role='group'
+                                    aria-label={this.props.intl.formatMessage(messages.headerLabel)}
+                                    data-agentom-id='channel-header.header'
                                 >
                                     {dmHeaderTextStatus}
                                     {hasGuestsText}

@@ -26,6 +26,22 @@ type Props = {
     tooltipShortcut?: ShortcutDefinition;
     isRhsOpen?: boolean;
     pluginId?: string;
+
+    /**
+     * For a button that opens and closes a panel: whether the panel shows it now, and the panel's id
+     */
+    ariaExpanded?: boolean;
+    ariaControls?: string;
+
+    /**
+     * The id of an element describing the button, such as one giving the count it shows
+     */
+    ariaDescribedBy?: string;
+
+    /**
+     * Rendered as the button's data-agentom-id: a stable id for the Agent Object Model's projection
+     */
+    agentomId?: string;
 };
 
 const HeaderIconWrapper = (props: Props) => {
@@ -39,6 +55,10 @@ const HeaderIconWrapper = (props: Props) => {
         tooltipShortcut,
         isRhsOpen,
         pluginId,
+        ariaExpanded,
+        ariaControls,
+        ariaDescribedBy,
+        agentomId,
     } = props;
 
     const boardsEnabled = pluginId === suitePluginIds.focalboard;
@@ -54,6 +74,10 @@ const HeaderIconWrapper = (props: Props) => {
                 <button
                     id={buttonId}
                     aria-label={ariaLabelText}
+                    aria-expanded={ariaExpanded}
+                    aria-controls={ariaControls}
+                    aria-describedby={ariaDescribedBy}
+                    data-agentom-id={agentomId}
                     className={buttonClass || 'channel-header__icon'}
                     onClick={onClick}
                 >

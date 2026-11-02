@@ -65,4 +65,38 @@ describe('components/channel_header/components/HeaderIconWrapper', () => {
             expect(screen.queryByText('c')).toBeVisible();
         });
     });
+    test('should say whether the panel it opens is shown, and what it shows', () => {
+        renderWithContext(
+            <>
+                <HeaderIconWrapper
+                    {...baseProps}
+                    tooltip='Members'
+                    ariaExpanded={true}
+                    ariaControls='sidebar-right'
+                    ariaDescribedBy='count'
+                    agentomId='channel-header.members'
+                />
+                <span id='count'>{'4 members'}</span>
+            </>,
+        );
+
+        const button = screen.getByRole('button', {name: 'Members'});
+        expect(button).toHaveAttribute('aria-expanded', 'true');
+        expect(button).toHaveAttribute('aria-controls', 'sidebar-right');
+        expect(button).toHaveAttribute('data-agentom-id', 'channel-header.members');
+        expect(button).toHaveAccessibleDescription('4 members');
+    });
+
+    test('should add none of them when they are not given', () => {
+        renderWithContext(
+            <HeaderIconWrapper
+                {...baseProps}
+            />,
+        );
+
+        const button = screen.getByRole('button', {name: 'Recent mentions'});
+        expect(button).not.toHaveAttribute('aria-expanded');
+        expect(button).not.toHaveAttribute('aria-controls');
+        expect(button).not.toHaveAttribute('data-agentom-id');
+    });
 });

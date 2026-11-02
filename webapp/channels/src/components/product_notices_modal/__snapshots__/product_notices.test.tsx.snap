@@ -12,7 +12,7 @@ exports[`ProductNoticesModal Match snapshot for single notice 1`] = `
     class="fade modal-backdrop in"
   />
   <div
-    aria-labelledby="genericModalLabel"
+    aria-labelledby="_r_2_"
     aria-modal="true"
     class="fade in modal"
     id="genericModal"
@@ -43,8 +43,12 @@ exports[`ProductNoticesModal Match snapshot for single notice 1`] = `
                   class="modal-title"
                   id="genericModalLabel"
                 >
-                  <span>
-                    title
+                  <span
+                    id="_r_2_"
+                  >
+                    <span>
+                      title
+                    </span>
                   </span>
                 </h1>
               </div>
@@ -118,7 +122,7 @@ exports[`ProductNoticesModal Match snapshot for user notice 1`] = `
     class="fade modal-backdrop in"
   />
   <div
-    aria-labelledby="genericModalLabel"
+    aria-labelledby="_r_1_"
     aria-modal="true"
     class="fade in modal"
     id="genericModal"
@@ -149,8 +153,12 @@ exports[`ProductNoticesModal Match snapshot for user notice 1`] = `
                   class="modal-title"
                   id="genericModalLabel"
                 >
-                  <span>
-                    title
+                  <span
+                    id="_r_1_"
+                  >
+                    <span>
+                      title
+                    </span>
                   </span>
                 </h1>
               </div>
@@ -256,7 +264,7 @@ exports[`ProductNoticesModal Should match snapshot for system admin notice 1`] =
     class="fade modal-backdrop in"
   />
   <div
-    aria-labelledby="genericModalLabel"
+    aria-labelledby="_r_0_"
     aria-modal="true"
     class="fade in modal"
     id="genericModal"
@@ -287,8 +295,12 @@ exports[`ProductNoticesModal Should match snapshot for system admin notice 1`] =
                   class="modal-title"
                   id="genericModalLabel"
                 >
-                  <span>
-                    for sysadmin
+                  <span
+                    id="_r_0_"
+                  >
+                    <span>
+                      for sysadmin
+                    </span>
                   </span>
                 </h1>
               </div>

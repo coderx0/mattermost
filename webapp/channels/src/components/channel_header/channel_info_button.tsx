@@ -68,6 +68,8 @@ const ChannelInfoButton = ({channel}: Props) => {
             buttonId='channel-info-btn'
             onClick={toggleRHS}
             tooltip={tooltip}
+            ariaControls='sidebar-right'
+            agentomId='channel-header.info'
         >
             <Icon className='icon-information-outline'/>
         </HeaderIconWrapper>

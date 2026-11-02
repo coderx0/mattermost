@@ -20,6 +20,8 @@ import {ModalIdentifiers} from 'utils/constants';
 
 import type {GlobalState} from 'types/store';
 
+import {channelHeaderMenuMessages} from '../channel_header_menu_messages';
+
 interface Props extends Menu.FirstMenuItemProps {
     channel: Channel;
 }
@@ -70,17 +72,11 @@ const Autotranslation = ({channel, ...rest}: Props): JSX.Element => {
         }
         if (isAutotranslated) {
             return (
-                <FormattedMessage
-                    id='channel_header.autotranslation.disable'
-                    defaultMessage='Disable autotranslation'
-                />
+                <FormattedMessage {...channelHeaderMenuMessages.disableAutotranslation}/>
             );
         }
         return (
-            <FormattedMessage
-                id='channel_header.autotranslation.enable'
-                defaultMessage='Enable autotranslation'
-            />
+            <FormattedMessage {...channelHeaderMenuMessages.enableAutotranslation}/>
         );
     }, [isAutotranslated, isLanguageSupported]);
 

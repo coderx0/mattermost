@@ -15,6 +15,8 @@ import * as Menu from 'components/menu';
 
 import {RHSStates} from 'utils/constants';
 
+import {channelHeaderMenuMessages} from '../channel_header_menu_messages';
+
 interface Props extends Menu.FirstMenuItemProps {
     channel: Channel;
 }
@@ -38,16 +40,10 @@ const ToggleInfo = ({channel, ...rest}: Props) => {
     let text;
     if (rhsOpen) {
         text = (
-            <FormattedMessage
-                id='channelHeader.hideInfo'
-                defaultMessage='Close Info'
-            />);
+            <FormattedMessage {...channelHeaderMenuMessages.hideInfo}/>);
     } else {
         text = (
-            <FormattedMessage
-                id='channelHeader.viewInfo'
-                defaultMessage='View Info'
-            />);
+            <FormattedMessage {...channelHeaderMenuMessages.viewInfo}/>);
     }
 
     return (

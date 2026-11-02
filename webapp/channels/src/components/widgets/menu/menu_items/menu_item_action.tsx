@@ -17,6 +17,11 @@ type Props = {
     disabled?: boolean;
     sibling?: React.ReactNode;
     iconClassName?: string;
+
+    /**
+     * The Agent Object Model's data-agentom-* metadata (an id, a risk, a confirmation), given to the button
+     */
+    [agentomAttribute: `data-agentom-${string}`]: string | undefined;
 };
 export const MenuItemActionImpl = ({
     onClick,
@@ -29,9 +34,11 @@ export const MenuItemActionImpl = ({
     disabled,
     sibling,
     iconClassName,
+    ...rest
 }: Props) => (
     <>
         <button
+            {...agentomAttributes(rest)}
             data-testid={id}
             id={id}
             className={classNames('style--none', buttonClass, {
@@ -51,6 +58,11 @@ export const MenuItemActionImpl = ({
     </>
 
 );
+
+// Only the data-agentom-* attributes among the other props are passed on, as before no other props were
+function agentomAttributes(props: Record<string, unknown>) {
+    return Object.fromEntries(Object.entries(props).filter(([key]) => key.startsWith('data-agentom-')));
+}
 
 const MenuItemAction = menuItem(MenuItemActionImpl);
 MenuItemAction.displayName = 'MenuItemAction';

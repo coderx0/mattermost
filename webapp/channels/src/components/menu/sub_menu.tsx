@@ -189,6 +189,10 @@ export function SubMenu(props: Props) {
             onMouseLeave={handleMouseLeave}
             onClickCapture={handleClickCapture}
             onKeyDown={handleKeyDown}
+
+            // Enter on the item opens its submenu (handleKeyDown), as Space does (WAI-ARIA menu pattern). MUI then
+            // also treats Enter as a click on the item, which must not close the menu that holds it.
+            disableCloseOnSelect={true}
         >
             <SubMenuContext.Provider value={providerValue}>
                 <MuiPopover

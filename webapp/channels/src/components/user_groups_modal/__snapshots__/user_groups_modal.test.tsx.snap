@@ -13,7 +13,7 @@ exports[`component/user_groups_modal should match snapshot with groups 1`] = `
   />
   <div
     aria-label="userGroupsModalLabel"
-    aria-labelledby="genericModalLabel"
+    aria-labelledby="_r_2_"
     aria-modal="true"
     class="fade in modal"
     id="userGroupsModal"
@@ -44,7 +44,11 @@ exports[`component/user_groups_modal should match snapshot with groups 1`] = `
                   class="modal-title"
                   id="genericModalLabel"
                 >
-                  User Groups
+                  <span
+                    id="_r_2_"
+                  >
+                    User Groups
+                  </span>
                 </h1>
                 <button
                   class="btn btn-secondary btn-sm"
@@ -284,7 +288,7 @@ exports[`component/user_groups_modal should match snapshot without groups 1`] = 
   />
   <div
     aria-label="userGroupsModalLabel"
-    aria-labelledby="genericModalLabel"
+    aria-labelledby="_r_0_"
     aria-modal="true"
     class="fade in modal"
     id="userGroupsModal"
@@ -315,7 +319,11 @@ exports[`component/user_groups_modal should match snapshot without groups 1`] = 
                   class="modal-title"
                   id="genericModalLabel"
                 >
-                  User Groups
+                  <span
+                    id="_r_0_"
+                  >
+                    User Groups
+                  </span>
                 </h1>
                 <button
                   class="btn btn-secondary btn-sm"

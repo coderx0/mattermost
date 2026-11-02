@@ -43,6 +43,7 @@ exports[`CreateTeamForm - display_name step should match snapshot 1`] = `
                 >
                   <input
                     aria-invalid="false"
+                    aria-required="true"
                     class="Input form-control medium Input__focus"
                     id="teamNameInput"
                     maxlength="64"

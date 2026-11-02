@@ -51,4 +51,49 @@ describe('SaveChangesPanel', () => {
         );
         expect(screen.getByText('Failed to save policy')).toBeInTheDocument();
     });
+
+    test('should announce its message as a status, and name its close button', () => {
+        renderWithContext(
+            <SaveChangesPanel
+                {...defaultProps}
+                customSavedMessage='Channel info saved'
+                agentomId='channel-settings.info'
+            />,
+        );
+
+        expect(screen.getByRole('status')).toHaveTextContent('Channel info saved');
+        expect(screen.getByRole('button', {name: 'Close notice'})).toHaveAttribute('data-agentom-id', 'channel-settings.info.close');
+    });
+
+    test('should describe the save button with what it keeps, and give the buttons ids and attributes', () => {
+        renderWithContext(
+            <SaveChangesPanel
+                {...defaultProps}
+                state='editing'
+                saveButtonDescription="Saves the channel's name and header"
+                saveButtonAttributes={{'data-agentom-confirmation': 'required'}}
+                agentomId='channel-settings.info'
+            />,
+        );
+
+        const save = screen.getByRole('button', {name: 'Save'});
+        expect(save).toHaveAccessibleDescription("Saves the channel's name and header");
+        expect(save).toHaveAttribute('data-agentom-id', 'channel-settings.info.save');
+        expect(save).toHaveAttribute('data-agentom-confirmation', 'required');
+        expect(screen.getByRole('button', {name: 'Undo'})).toHaveAttribute('data-agentom-id', 'channel-settings.info.discard');
+        expect(screen.getByRole('status')).toHaveTextContent('You have unsaved changes');
+    });
+
+    test('should add nothing when the new props are not given', () => {
+        renderWithContext(
+            <SaveChangesPanel
+                {...defaultProps}
+                state='editing'
+            />,
+        );
+
+        const save = screen.getByRole('button', {name: 'Save'});
+        expect(save).not.toHaveAttribute('aria-describedby');
+        expect(save).not.toHaveAttribute('data-agentom-id');
+    });
 });

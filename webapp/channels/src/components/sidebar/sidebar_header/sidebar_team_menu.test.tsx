@@ -121,6 +121,26 @@ describe('components/sidebar/sidebar_header/sidebar_team_menu', () => {
         });
     });
 
+    test('should describe what the dialog each item opens asks for or shows', async () => {
+        renderWithContext(
+            <SidebarTeamMenu {...baseProps}/>,
+            initialState,
+        );
+
+        await userEvent.click(screen.getByText(currentTeam.display_name));
+
+        await waitFor(() => {
+            expect(screen.getByRole('menuitem', {name: 'Team settings'})).toHaveAccessibleDescription("Opens the team's settings, such as its name, description, icon and who can join it");
+        });
+        expect(screen.getByRole('menuitem', {name: 'Manage members'})).toHaveAccessibleDescription("Opens the list of the team's members, to search them, change their roles or remove them from the team");
+        expect(screen.getByRole('menuitem', {name: 'Leave team'})).toHaveAccessibleDescription("Asks for confirmation, then removes you from the team and from its channels you're in");
+        for (const item of screen.getAllByRole('menuitem')) {
+            if (item.getAttribute('aria-haspopup') === 'dialog') {
+                expect(item).toHaveAccessibleDescription(/.+/);
+            }
+        }
+    });
+
     test('should show leave team option when primary team is not set', async () => {
         // State with no primary team set
         const state: DeepPartial<GlobalState> = {

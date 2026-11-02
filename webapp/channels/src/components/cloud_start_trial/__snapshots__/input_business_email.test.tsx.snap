@@ -21,6 +21,7 @@ exports[`/components/cloud_start_trial/input_business_email should match snapsho
       >
         <input
           aria-label="Enter business email"
+          aria-required="true"
           autocomplete="off"
           class="Input form-control medium request-business-email-input Input__focus"
           id="input_request-business-email"

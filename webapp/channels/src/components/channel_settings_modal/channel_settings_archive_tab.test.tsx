@@ -62,7 +62,16 @@ describe('ChannelSettingsArchiveTab', () => {
         // Check that the archive button is rendered
         const archiveButton = screen.getByText('Archive this channel');
         expect(archiveButton).toBeInTheDocument();
-        expect(archiveButton).toHaveAttribute('aria-label', 'Archive channel Test Channel');
+        expect(archiveButton).toHaveAttribute('aria-label', 'Archive this channel: Test Channel');
+    });
+
+    it('should name the archive button starting with its visible text, and mark it as destructive and confirmed', () => {
+        renderWithContext(<ChannelSettingsArchiveTab {...baseProps}/>);
+
+        const archiveButton = screen.getByRole('button', {name: 'Archive this channel: Test Channel'});
+        expect(archiveButton).toHaveAttribute('data-agentom-id', 'channel-settings.archive-channel');
+        expect(archiveButton).toHaveAttribute('data-agentom-risk', 'destructive');
+        expect(archiveButton).toHaveAttribute('data-agentom-confirmation', 'required');
     });
 
     it('should show confirmation modal when archive button is clicked', async () => {

@@ -70,7 +70,6 @@ jest.mock('utils/url', () => ({
 
 // Mock child components to provide controlled testing interfaces
 jest.mock('./channel_settings_info_tab', () => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const React = require('react');
 
     return function MockChannelSettingsInfoTab({
@@ -371,6 +370,28 @@ describe('ChannelSettingsModal', () => {
         await waitFor(() => {
             expect(screen.getByTestId('info-tab')).toBeInTheDocument();
         });
+    });
+
+    it('should show the tab as a tab panel that says whether it has unsaved changes', async () => {
+        const testState = makeTestState();
+
+        renderWithContext(<ChannelSettingsModal {...baseProps}/>, testState);
+
+        await waitFor(() => {
+            expect(screen.getByTestId('info-tab')).toBeInTheDocument();
+        });
+
+        const panel = screen.getByRole('tabpanel');
+        expect(panel).toHaveAttribute('id', 'infoSettings');
+        expect(panel).toHaveAttribute('aria-labelledby', 'infoButton');
+        expect(panel).toHaveAttribute('data-agentom-id', 'channel-settings.info');
+        expect(panel).toHaveAccessibleDescription('No unsaved changes');
+
+        await userEvent.click(screen.getByTestId('set-unsaved-changes'));
+        expect(panel).toHaveAccessibleDescription('Unsaved changes: the changes on the Info tab are kept only when saved');
+
+        await userEvent.click(screen.getByTestId('save-changes'));
+        expect(panel).toHaveAccessibleDescription('No unsaved changes');
     });
 
     it('should switch tabs when clicked', async () => {

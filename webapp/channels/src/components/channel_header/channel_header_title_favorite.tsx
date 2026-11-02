@@ -96,8 +96,12 @@ const ChannelHeaderTitleFavorite = () => {
                 aria-label={ariaLabel}
                 ref={favIconRef}
                 disabled={isInManagedCategory}
+                data-agentom-id='channel-header.favorite'
             >
-                <i className={classNames('icon', {'icon-star': isFavorite, 'icon-star-outline': !isFavorite})}/>
+                <i
+                    className={classNames('icon', {'icon-star': isFavorite, 'icon-star-outline': !isFavorite})}
+                    aria-hidden='true'
+                />
             </button>
         </WithTooltip>
     );

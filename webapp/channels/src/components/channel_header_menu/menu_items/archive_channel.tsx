@@ -15,6 +15,8 @@ import * as Menu from 'components/menu';
 import {getArchiveIconComponent} from 'utils/channel_utils';
 import {ModalIdentifiers} from 'utils/constants';
 
+import {channelHeaderMenuMessages} from '../channel_header_menu_messages';
+
 type Props = {
     channel: Channel;
 };
@@ -44,12 +46,12 @@ const ArchiveChannel = ({
             leadingElement={<ArchiveIcon size={18}/>}
             onClick={handleArchiveChannel}
             labels={
-                <FormattedMessage
-                    id='channel_header.delete'
-                    defaultMessage='Archive Channel'
-                />
+                <FormattedMessage {...channelHeaderMenuMessages.archiveChannel}/>
             }
             isDestructive={true}
+            data-agentom-id='channel-header.menu.archive'
+            data-agentom-risk='destructive'
+            data-agentom-confirmation='required'
         />
     );
 };

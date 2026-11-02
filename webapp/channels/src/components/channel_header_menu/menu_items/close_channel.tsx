@@ -8,6 +8,8 @@ import {goToLastViewedChannel} from 'actions/views/channel';
 
 import * as Menu from 'components/menu';
 
+import {channelHeaderMenuMessages} from '../channel_header_menu_messages';
+
 interface Props extends Menu.FirstMenuItemProps {}
 
 const CloseChannel = ({...rest}: Props): JSX.Element => {
@@ -15,10 +17,7 @@ const CloseChannel = ({...rest}: Props): JSX.Element => {
         <Menu.Item
             onClick={goToLastViewedChannel}
             labels={
-                <FormattedMessage
-                    id='center_panel.archived.closeChannel'
-                    defaultMessage='Close Channel'
-                />}
+                <FormattedMessage {...channelHeaderMenuMessages.closeChannel}/>}
             {...rest}
         />
     );

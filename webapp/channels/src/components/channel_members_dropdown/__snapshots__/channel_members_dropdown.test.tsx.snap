@@ -6,7 +6,12 @@ exports[`components/channel_members_dropdown should match snapshot for channel_m
     class="MenuWrapper "
   >
     <button
+      aria-controls="channelMembersDropdown-user-1"
+      aria-describedby="channelMembersDropdown-user-1-description"
+      aria-expanded="false"
+      aria-haspopup="menu"
       class="dropdown-toggle theme color--link style--none"
+      data-agentom-id="channel-members.user-1.role"
       type="button"
     >
       <span
@@ -20,6 +25,12 @@ exports[`components/channel_members_dropdown should match snapshot for channel_m
         class="fa fa-angle-down"
         title="Dropdown Icon"
       />
+      <span
+        hidden=""
+        id="channelMembersDropdown-user-1-description"
+      >
+        Actions: Remove from Channel
+      </span>
     </button>
   </div>
 </div>
@@ -31,7 +42,12 @@ exports[`components/channel_members_dropdown should match snapshot for dropdown 
     class="MenuWrapper "
   >
     <button
+      aria-controls="channelMembersDropdown-user-1"
+      aria-describedby="channelMembersDropdown-user-1-description"
+      aria-expanded="false"
+      aria-haspopup="menu"
       class="dropdown-toggle theme color--link style--none"
+      data-agentom-id="channel-members.user-1.role"
       type="button"
     >
       <span
@@ -45,6 +61,12 @@ exports[`components/channel_members_dropdown should match snapshot for dropdown 
         class="fa fa-angle-down"
         title="Dropdown Icon"
       />
+      <span
+        hidden=""
+        id="channelMembersDropdown-user-1-description"
+      >
+        Actions: Make Channel Member, Remove from Channel
+      </span>
     </button>
   </div>
 </div>
@@ -66,7 +88,12 @@ exports[`components/channel_members_dropdown should match snapshot for not dropd
     class="MenuWrapper "
   >
     <button
+      aria-controls="channelMembersDropdown-user-1"
+      aria-describedby="channelMembersDropdown-user-1-description"
+      aria-expanded="false"
+      aria-haspopup="menu"
       class="dropdown-toggle theme color--link style--none"
+      data-agentom-id="channel-members.user-1.role"
       type="button"
     >
       <span
@@ -80,6 +107,12 @@ exports[`components/channel_members_dropdown should match snapshot for not dropd
         class="fa fa-angle-down"
         title="Dropdown Icon"
       />
+      <span
+        hidden=""
+        id="channelMembersDropdown-user-1-description"
+      >
+        Actions: Remove from Channel
+      </span>
     </button>
   </div>
 </div>
@@ -91,7 +124,12 @@ exports[`components/channel_members_dropdown should match snapshot opening dropd
     class="MenuWrapper "
   >
     <button
+      aria-controls="channelMembersDropdown-user-1"
+      aria-describedby="channelMembersDropdown-user-1-description"
+      aria-expanded="false"
+      aria-haspopup="menu"
       class="dropdown-toggle theme color--link style--none"
+      data-agentom-id="channel-members.user-1.role"
       type="button"
     >
       <span
@@ -105,6 +143,12 @@ exports[`components/channel_members_dropdown should match snapshot opening dropd
         class="fa fa-angle-down"
         title="Dropdown Icon"
       />
+      <span
+        hidden=""
+        id="channelMembersDropdown-user-1-description"
+      >
+        Actions: Remove from Channel
+      </span>
     </button>
   </div>
 </div>
@@ -116,7 +160,12 @@ exports[`components/channel_members_dropdown should match snapshot when user is 
     class="MenuWrapper "
   >
     <button
+      aria-controls="channelMembersDropdown-user-1"
+      aria-describedby="channelMembersDropdown-user-1-description"
+      aria-expanded="false"
+      aria-haspopup="menu"
       class="dropdown-toggle theme color--link style--none"
+      data-agentom-id="channel-members.user-1.role"
       type="button"
     >
       <span
@@ -130,6 +179,12 @@ exports[`components/channel_members_dropdown should match snapshot when user is 
         class="fa fa-angle-down"
         title="Dropdown Icon"
       />
+      <span
+        hidden=""
+        id="channelMembersDropdown-user-1-description"
+      >
+        Actions: Leave Channel
+      </span>
     </button>
   </div>
 </div>
@@ -141,7 +196,12 @@ exports[`components/channel_members_dropdown should match snapshot with role cha
     class="MenuWrapper "
   >
     <button
+      aria-controls="channelMembersDropdown-user-1"
+      aria-describedby="channelMembersDropdown-user-1-description"
+      aria-expanded="false"
+      aria-haspopup="menu"
       class="dropdown-toggle theme color--link style--none"
+      data-agentom-id="channel-members.user-1.role"
       type="button"
     >
       <span
@@ -155,6 +215,12 @@ exports[`components/channel_members_dropdown should match snapshot with role cha
         class="fa fa-angle-down"
         title="Dropdown Icon"
       />
+      <span
+        hidden=""
+        id="channelMembersDropdown-user-1-description"
+      >
+        Actions: Make Channel Member, Remove from Channel
+      </span>
     </button>
   </div>
 </div>

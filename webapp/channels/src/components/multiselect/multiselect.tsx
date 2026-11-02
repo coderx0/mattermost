@@ -92,6 +92,7 @@ const KeyCodes = Constants.KeyCodes;
 
 const SEARCH_DESCRIPTION_ID = 'multiSelectSearchDescription';
 const SUBMIT_DESCRIPTION_ID = 'multiSelectSubmitDescription';
+const ERROR_ID = 'multiSelectMessageError';
 
 export class MultiSelect<T extends Value> extends React.PureComponent<Props<T>, State> {
     private listRef = React.createRef<MultiSelectList<T>>();
@@ -311,9 +312,10 @@ export class MultiSelect<T extends Value> extends React.PureComponent<Props<T>, 
     };
 
     // react-select gives its input an aria-describedby of its own (its placeholder), replacing one passed to
-    // it, so the search's description is added to the input here.
+    // it, so the search's description and the required field's error are added to the input here.
     private Input = (props: InputProps<T, true>) => {
         const describedBy = [
+            this.state.hasError ? ERROR_ID : undefined,
             this.props.searchDescription ? SEARCH_DESCRIPTION_ID : undefined,
             props['aria-describedby'],
         ].filter(Boolean).join(' ');
@@ -556,7 +558,6 @@ export class MultiSelect<T extends Value> extends React.PureComponent<Props<T>, 
                                 className={this.state.a11yActive ? 'multi-select__focused' : ''}
                                 classNamePrefix='react-select-auto react-select'
                                 aria-invalid={this.state.hasError}
-                                aria-describedby={this.state.hasError ? 'multiSelectMessageError' : undefined}
                                 onBlur={this.validateInput}
                             />
                             {this.props.saveButtonPosition === 'top' &&
@@ -606,7 +607,7 @@ export class MultiSelect<T extends Value> extends React.PureComponent<Props<T>, 
                         <div
                             className='multi-select__error'
                             role='alert'
-                            id='multiSelectMessageError'
+                            id={ERROR_ID}
                         >
                             <i className='icon icon-alert-circle-outline'/>
                             <span>

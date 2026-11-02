@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import classNames from 'classnames';
-import React, {useState, useEffect, useCallback, useRef} from 'react';
+import React, {useState, useEffect, useCallback, useRef, useId} from 'react';
 import {Modal} from 'react-bootstrap';
 import {FormattedMessage, useIntl} from 'react-intl';
 
@@ -13,6 +13,16 @@ import {useStackedModal} from '../hooks/useStackedModal';
 import './generic_modal.scss';
 
 export type ModalLocation = 'top' | 'center' | 'bottom';
+
+/**
+ * Attributes added to the confirm button: an id, a description, and data attributes such as the Agent Object
+ * Model's data-agentom-* metadata (its id, risk and confirmation).
+ */
+export type ConfirmButtonAttributes = {
+    id?: string;
+    'aria-describedby'?: string;
+    [dataAttribute: `data-${string}`]: string | undefined;
+};
 
 export type Props = {
     className?: string;
@@ -30,6 +40,7 @@ export type Props = {
     handleKeydown?: (event?: React.KeyboardEvent<HTMLDivElement>) => void;
     confirmButtonText?: React.ReactNode;
     confirmButtonVariant?: ButtonVariant;
+    confirmButtonAttributes?: ConfirmButtonAttributes;
     cancelButtonText?: React.ReactNode;
     isConfirmDisabled?: boolean;
     id?: string;
@@ -116,6 +127,7 @@ export const GenericModal: React.FC<Props> = ({
     handleKeydown,
     confirmButtonText,
     confirmButtonVariant,
+    confirmButtonAttributes,
     cancelButtonText,
     isConfirmDisabled,
     container,
@@ -216,6 +228,7 @@ export const GenericModal: React.FC<Props> = ({
         }
         confirmButtonElement = (
             <Button
+                {...confirmButtonAttributes}
                 autoFocus={autoFocusConfirmButton}
                 type='submit'
                 emphasis='primary'
@@ -254,11 +267,18 @@ export const GenericModal: React.FC<Props> = ({
         );
     }
 
+    // The id the dialog is labelled by. A modal opened over another (a confirmation over a settings modal) must
+    // not share it: an id given as modalHeaderTextId is used as it is, otherwise the title is wrapped in an
+    // element with an id unique to this modal. The heading keeps the id 'genericModalLabel' that styles and
+    // tests look for.
+    const generatedLabelId = useId();
+    const labelId = modalHeaderTextId || generatedLabelId;
+
     // Build header text if provided.
     const headerText = modalHeaderText && (
         <div className='GenericModal__header'>
             <h1 id={modalHeaderTextId || 'genericModalLabel'} className='modal-title'>
-                {modalHeaderText}
+                {modalHeaderTextId ? modalHeaderText : <span id={generatedLabelId}>{modalHeaderText}</span>}
             </h1>
             {headerButton}
         </div>
@@ -273,14 +293,14 @@ export const GenericModal: React.FC<Props> = ({
     const modalLocationClass = locationClassMapping[modalLocation];
 
     // Accessibility labeling strategy:
-    // 1. We always set aria-labelledby to ensure the modal has a proper label
+    // 1. aria-labelledby names the modal
     //    - First try to use the provided ariaLabeledBy prop
-    //    - Fall back to 'genericModalLabel' which references the modal title
+    //    - Fall back to this modal's own title, when it shows one
     // 2. We also support aria-label as a secondary option
-    //    - This will only be used by screen readers if the element referenced by aria-labelledby doesn't exist
-    //    - This provides a fallback for accessibility in case the referenced element is missing
+    //    - This is used when the modal has no aria-labelledby, or the element it references doesn't exist
     // Note: When both aria-labelledby and aria-label are present, aria-labelledby takes precedence
-    const ariaLabelledbyValue = ariaLabelledby || 'genericModalLabel';
+    const showsHeaderText = Boolean(headerText) && (!compassDesign || showHeader);
+    const ariaLabelledbyValue = ariaLabelledby || (showsHeaderText ? labelId : undefined);
 
     return (
         <Modal

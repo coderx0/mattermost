@@ -16,7 +16,9 @@ import DropdownIcon from 'components/widgets/icons/fa_dropdown_icon';
 import Menu from 'components/widgets/menu/menu';
 import MenuWrapper from 'components/widgets/menu/menu_wrapper';
 
+import {agentomIdSegment} from 'utils/agentom_ids';
 import {Constants, ModalIdentifiers} from 'utils/constants';
+import {describeActions} from 'utils/popup_descriptions';
 
 import type {ModalData} from 'types/actions';
 import type {MMAction} from 'types/store';
@@ -62,6 +64,7 @@ export default function ChannelMembersDropdown({
 
     const [removing, setRemoving] = useState(false);
     const [serverError, setServerError] = useState<string | null>(null);
+    const [menuOpen, setMenuOpen] = useState(false);
     const dispatch = useDispatch();
 
     const handleRemoveFromChannel = async () => {
@@ -164,7 +167,33 @@ export default function ChannelMembersDropdown({
     const removeFromChannelText = user.id === currentUserId ? intl.formatMessage({id: 'channel_header.leave', defaultMessage: 'Leave Channel'}) : intl.formatMessage({id: 'channel_members_dropdown.remove_from_channel', defaultMessage: 'Remove from Channel'});
     const removeFromChannelTestId = user.id === currentUserId ? 'leaveChannel' : 'removeFromChannel';
 
+    // Removing someone, or changing their role, affects them and can be undone. Leaving (the item on one's own row)
+    // asks for confirmation first, and leaving a private channel or one a policy governs can't be undone without
+    // being added back.
+    const agentomId = `channel-members.${agentomIdSegment(user.username || user.id)}`;
+    let removeRisk = 'sensitive';
+    if (user.id === currentUserId && (channel.type === Constants.PRIVATE_CHANNEL || channel.policy_enforced)) {
+        removeRisk = 'destructive';
+    }
+
     if (canMakeUserChannelMember || canMakeUserChannelAdmin || canRemoveUserFromChannel) {
+        const makeMemberText = intl.formatMessage({id: 'channel_members_dropdown.make_channel_member', defaultMessage: 'Make Channel Member'});
+        const makeAdminText = intl.formatMessage({id: 'channel_members_dropdown.make_channel_admin', defaultMessage: 'Make Channel Admin'});
+
+        // The actions the menu offers, in its order, for its button's description
+        const actionLabels: string[] = [];
+        if (canMakeUserChannelMember) {
+            actionLabels.push(makeMemberText);
+        }
+        if (canMakeUserChannelAdmin) {
+            actionLabels.push(makeAdminText);
+        }
+        if (canRemoveUserFromChannel) {
+            actionLabels.push(removeFromChannelText);
+        }
+        const menuId = `channelMembersDropdown-${user.id}`;
+        const descriptionId = `${menuId}-description`;
+
         const removeMenu = (
             <Menu.ItemAction
                 data-testid={removeFromChannelTestId}
@@ -172,6 +201,9 @@ export default function ChannelMembersDropdown({
                 onClick={handleRemoveFromChannel}
                 text={removeFromChannelText}
                 isDangerous={true}
+                data-agentom-id={`${agentomId}.remove`}
+                data-agentom-risk={removeRisk}
+                data-agentom-confirmation={user.id === currentUserId ? 'required' : undefined}
             />
         );
         const makeAdminMenu = (
@@ -179,7 +211,9 @@ export default function ChannelMembersDropdown({
                 id={`${user.username}-make-channel-admin`}
                 show={canMakeUserChannelAdmin}
                 onClick={handleMakeChannelAdmin}
-                text={intl.formatMessage({id: 'channel_members_dropdown.make_channel_admin', defaultMessage: 'Make Channel Admin'})}
+                text={makeAdminText}
+                data-agentom-id={`${agentomId}.make-admin`}
+                data-agentom-risk='sensitive'
             />
         );
         const makeMemberMenu = (
@@ -187,23 +221,37 @@ export default function ChannelMembersDropdown({
                 id={`${user.username}-make-channel-member`}
                 show={canMakeUserChannelMember}
                 onClick={handleMakeChannelMember}
-                text={intl.formatMessage({id: 'channel_members_dropdown.make_channel_member', defaultMessage: 'Make Channel Member'})}
+                text={makeMemberText}
+                data-agentom-id={`${agentomId}.make-member`}
+                data-agentom-risk='sensitive'
             />
         );
         return (
-            <MenuWrapper>
+            <MenuWrapper onToggle={setMenuOpen}>
                 <button
                     className='dropdown-toggle theme color--link style--none'
                     type='button'
+                    aria-haspopup='menu'
+                    aria-expanded={menuOpen}
+                    aria-controls={menuId}
+                    aria-describedby={descriptionId}
+                    data-agentom-id={`${agentomId}.role`}
                 >
                     <span className='sr-only'>{user.username}</span>
                     <span>{currentRole} </span>
                     <DropdownIcon/>
+                    <span
+                        id={descriptionId}
+                        hidden={true}
+                    >
+                        {describeActions(intl, actionLabels)}
+                    </span>
                 </button>
                 <Menu
                     openLeft={true}
                     openUp={totalUsers > ROWS_FROM_BOTTOM_TO_OPEN_UP && totalUsers - index <= ROWS_FROM_BOTTOM_TO_OPEN_UP}
                     ariaLabel={intl.formatMessage({id: 'channel_members_dropdown.menuAriaLabel', defaultMessage: 'Change the role of channel member'})}
+                    listId={menuId}
                 >
                     {canMakeUserChannelMember ? makeMemberMenu : null}
                     {canMakeUserChannelAdmin ? makeAdminMenu : null}

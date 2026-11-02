@@ -16,6 +16,8 @@ import * as Menu from 'components/menu';
 
 import {Constants, ModalIdentifiers} from 'utils/constants';
 
+import {channelHeaderMenuMessages} from '../channel_header_menu_messages';
+
 // import type {PropsFromRedux} from './index';
 
 type Props = {
@@ -28,8 +30,13 @@ const LeaveChannel = ({
     id,
 }: Props) => {
     const dispatch = useDispatch();
+
+    // Leaving a private channel, or one whose membership a policy enforces, asks for confirmation first and can't be
+    // undone without being added back; leaving a public channel happens at once, and it can be joined again
+    const needsConfirmation = channel.type === Constants.PRIVATE_CHANNEL || Boolean(channel.policy_enforced);
+
     const handleLeave = () => {
-        if (channel.type === Constants.PRIVATE_CHANNEL || channel.policy_enforced) {
+        if (needsConfirmation) {
             dispatch(
                 openModal({
                     modalId: ModalIdentifiers.LEAVE_PRIVATE_CHANNEL_MODAL,
@@ -50,12 +57,12 @@ const LeaveChannel = ({
             leadingElement={<LogoutVariantIcon size='18px'/>}
             onClick={handleLeave}
             labels={
-                <FormattedMessage
-                    id='channel_header.leave'
-                    defaultMessage='Leave Channel'
-                />
+                <FormattedMessage {...channelHeaderMenuMessages.leaveChannel}/>
             }
             isDestructive={true}
+            data-agentom-id='channel-header.menu.leave'
+            data-agentom-risk={needsConfirmation ? 'destructive' : 'sensitive'}
+            data-agentom-confirmation={needsConfirmation ? 'required' : undefined}
         />
     );
 };

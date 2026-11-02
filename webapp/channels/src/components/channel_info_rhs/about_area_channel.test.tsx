@@ -164,8 +164,22 @@ describe('channel_info_rhs/about_area_channel', () => {
             initialState,
         );
 
-        const editButtons = screen.getAllByLabelText('Edit');
-        fireEvent.click(editButtons[0]);
+        fireEvent.click(screen.getByRole('button', {name: 'Rename channel'}));
         expect(props.actions.editChannelName).toHaveBeenCalled();
+    });
+
+    test('should name each edit button by what it edits, and the purpose and header by their headings', () => {
+        renderWithContext(
+            <AboutAreaChannel
+                {...defaultProps}
+            />,
+            initialState,
+        );
+
+        expect(screen.getByRole('button', {name: 'Rename channel'})).toBeInTheDocument();
+        expect(screen.getByRole('region', {name: 'Channel Purpose'})).toHaveAttribute('data-agentom-id', 'channel-info.purpose');
+        expect(screen.getByRole('region', {name: 'Channel Header'})).toHaveAttribute('data-agentom-id', 'channel-info.header');
+        expect(screen.getByRole('button', {name: 'Edit channel purpose'})).toBeInTheDocument();
+        expect(screen.getByRole('button', {name: 'Edit channel header'})).toBeInTheDocument();
     });
 });

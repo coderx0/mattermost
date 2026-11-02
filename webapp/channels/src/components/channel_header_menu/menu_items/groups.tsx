@@ -16,6 +16,8 @@ import * as Menu from 'components/menu';
 
 import {ModalIdentifiers} from 'utils/constants';
 
+import {channelHeaderMenuMessages} from '../channel_header_menu_messages';
+
 interface Props extends Menu.FirstMenuItemProps {
     channel: Channel;
 }
@@ -48,10 +50,7 @@ const Groups = ({channel, ...rest}: Props): JSX.Element => {
                 leadingElement={<AccountMultiplePlusOutlineIcon size='18px'/>}
                 onClick={handleAddGroups}
                 labels={
-                    <FormattedMessage
-                        id='navbar.addGroups'
-                        defaultMessage='Add Groups'
-                    />
+                    <FormattedMessage {...channelHeaderMenuMessages.addGroups}/>
                 }
                 {...rest}
             />
@@ -60,10 +59,7 @@ const Groups = ({channel, ...rest}: Props): JSX.Element => {
                 leadingElement={<AccountMultipleOutlineIcon size='18px'/>}
                 onClick={handleManageGroups}
                 labels={
-                    <FormattedMessage
-                        id='navbar_dropdown.manageGroups'
-                        defaultMessage='Manage Groups'
-                    />
+                    <FormattedMessage {...channelHeaderMenuMessages.manageGroups}/>
                 }
                 {...rest}
             />

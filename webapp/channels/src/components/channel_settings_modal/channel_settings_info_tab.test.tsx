@@ -597,6 +597,50 @@ describe('ChannelSettingsInfoTab', () => {
         ).toBeInTheDocument();
     });
 
+    it('should name the purpose and header fields by their labels and describe them by their help text', () => {
+        renderWithContext(<ChannelSettingsInfoTab {...baseProps}/>);
+
+        expect(screen.getByRole('textbox', {name: 'Channel Purpose'})).toHaveAccessibleDescription('Describe how this channel should be used.');
+        expect(screen.getByRole('textbox', {name: 'Channel Header'})).toHaveAccessibleDescription(/^This is the text that will appear in the header of the channel/);
+    });
+
+    it('should describe what Save keeps, and say it asks for confirmation while the channel is made private', async () => {
+        mockConvertToPrivatePermission = true;
+
+        renderWithContext(<ChannelSettingsInfoTab {...baseProps}/>);
+
+        await act(async () => {
+            const nameInput = screen.getByRole('textbox', {name: 'Channel name'});
+            await userEvent.type(nameInput, ' 2');
+        });
+
+        const save = screen.getByRole('button', {name: 'Save'});
+        expect(save).toHaveAccessibleDescription("Saves the channel's name, URL, type, purpose, and header");
+        expect(save).toHaveAttribute('data-agentom-id', 'channel-settings.info.save');
+        expect(save).not.toHaveAttribute('data-agentom-confirmation');
+
+        await userEvent.click(screen.getByRole('radio', {name: /Private Channel/}));
+
+        expect(save).toHaveAttribute('data-agentom-risk', 'sensitive');
+        expect(save).toHaveAttribute('data-agentom-confirmation', 'required');
+    });
+
+    it('should say what was saved', async () => {
+        const {patchChannel} = require('mattermost-redux/actions/channels');
+        patchChannel.mockReturnValue({type: 'MOCK_ACTION', data: {}});
+
+        renderWithContext(<ChannelSettingsInfoTab {...baseProps}/>);
+
+        await act(async () => {
+            const nameInput = screen.getByRole('textbox', {name: 'Channel name'});
+            await userEvent.type(nameInput, ' 2');
+        });
+
+        await userEvent.click(screen.getByRole('button', {name: 'Save'}));
+
+        expect(await screen.findByRole('status')).toHaveTextContent('Channel info saved');
+    });
+
     it('should show ConvertConfirmModal when converting from public to private', async () => {
         mockConvertToPrivatePermission = true;
 

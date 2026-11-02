@@ -12,7 +12,7 @@ exports[`components/ResetStatusModal should match snapshot 1`] = `
     class="fade modal-backdrop in"
   />
   <div
-    aria-labelledby="genericModalLabel"
+    aria-labelledby="_r_0_"
     aria-modal="true"
     class="fade in modal"
     id="confirmModal"
@@ -43,7 +43,11 @@ exports[`components/ResetStatusModal should match snapshot 1`] = `
                   class="modal-title"
                   id="genericModalLabel"
                 >
-                  Your status is set to "Away"
+                  <span
+                    id="_r_0_"
+                  >
+                    Your status is set to "Away"
+                  </span>
                 </h1>
               </div>
             </div>
@@ -128,7 +132,7 @@ exports[`components/ResetStatusModal should match snapshot, render modal for OOF
     class="fade modal-backdrop in"
   />
   <div
-    aria-labelledby="genericModalLabel"
+    aria-labelledby="_r_5_"
     aria-modal="true"
     class="fade in modal"
     id="confirmModal"
@@ -159,7 +163,11 @@ exports[`components/ResetStatusModal should match snapshot, render modal for OOF
                   class="modal-title"
                   id="genericModalLabel"
                 >
-                  Your status is set to "Out of office"
+                  <span
+                    id="_r_5_"
+                  >
+                    Your status is set to "Out of office"
+                  </span>
                 </h1>
               </div>
             </div>

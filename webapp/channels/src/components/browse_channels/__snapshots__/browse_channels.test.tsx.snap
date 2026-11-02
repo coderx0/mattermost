@@ -12,7 +12,7 @@ exports[`components/BrowseChannels should match snapshot and state 1`] = `
     class="fade modal-backdrop in"
   />
   <div
-    aria-labelledby="genericModalLabel"
+    aria-labelledby="_r_0_"
     aria-modal="true"
     class="fade in modal"
     id="browseChannelsModal"
@@ -43,7 +43,11 @@ exports[`components/BrowseChannels should match snapshot and state 1`] = `
                   class="modal-title"
                   id="genericModalLabel"
                 >
-                  Browse Channels
+                  <span
+                    id="_r_0_"
+                  >
+                    Browse Channels
+                  </span>
                 </h1>
               </div>
             </div>

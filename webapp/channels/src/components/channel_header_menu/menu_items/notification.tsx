@@ -16,6 +16,8 @@ import * as Menu from 'components/menu';
 
 import {ModalIdentifiers} from 'utils/constants';
 
+import {channelHeaderMenuMessages} from '../channel_header_menu_messages';
+
 interface Props extends Menu.FirstMenuItemProps {
     channel: Channel;
     user: UserProfile;
@@ -41,10 +43,7 @@ const Notification = ({channel, user, ...rest}: Props): JSX.Element => {
             id='channelNotificationPreferences'
             onClick={handleNotificationPreferences}
             labels={
-                <FormattedMessage
-                    id='navbar.preferences'
-                    defaultMessage='Notification Preferences'
-                />
+                <FormattedMessage {...channelHeaderMenuMessages.notificationPreferences}/>
             }
             {...rest}
         />

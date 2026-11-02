@@ -12,7 +12,7 @@ exports[`components/MoreDirectChannels should exclude deleted users if there is 
     class="fade modal-backdrop in"
   />
   <div
-    aria-labelledby="genericModalLabel"
+    aria-labelledby="_r_a_"
     aria-modal="true"
     class="fade in modal"
     id="moreDmModal"
@@ -43,7 +43,11 @@ exports[`components/MoreDirectChannels should exclude deleted users if there is 
                   class="modal-title"
                   id="genericModalLabel"
                 >
-                  Direct Messages
+                  <span
+                    id="_r_a_"
+                  >
+                    Direct Messages
+                  </span>
                 </h1>
               </div>
             </div>
@@ -227,7 +231,7 @@ exports[`components/MoreDirectChannels should match snapshot 1`] = `
     class="fade modal-backdrop in"
   />
   <div
-    aria-labelledby="genericModalLabel"
+    aria-labelledby="_r_0_"
     aria-modal="true"
     class="fade in modal"
     id="moreDmModal"
@@ -258,7 +262,11 @@ exports[`components/MoreDirectChannels should match snapshot 1`] = `
                   class="modal-title"
                   id="genericModalLabel"
                 >
-                  Direct Messages
+                  <span
+                    id="_r_0_"
+                  >
+                    Direct Messages
+                  </span>
                 </h1>
               </div>
             </div>

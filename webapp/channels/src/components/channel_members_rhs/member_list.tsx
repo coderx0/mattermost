@@ -1,7 +1,8 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React, {memo, useEffect, useMemo, useRef, useState, type JSX} from 'react';
+import React, {createContext, forwardRef, memo, useContext, useEffect, useMemo, useRef, useState, type JSX} from 'react';
+import {useIntl} from 'react-intl';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import {VariableSizeList} from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
@@ -40,7 +41,38 @@ export interface Props {
     openDirectMessage: (user: UserProfile) => void;
     fetchRemoteClusterInfo: (remoteId: string, includeDeleted?: boolean, forceRefresh?: boolean) => void;
     loadMore: () => void;
+
+    /**
+     * The channel's member count, said in the list's description when it isn't narrowed by a search
+     */
+    membersCount?: number;
 }
+
+const DESCRIPTION_ID = 'channelMembersRhsListDescription';
+
+// The list's name, given to the element that scrolls (react-window renders it, from outerElementType)
+const ListLabelContext = createContext<string | undefined>(undefined);
+
+// Only the rows in view are rendered, so the scrolling container is a named, focusable region: the keyboard can
+// scroll it, and its description says how many members the list holds
+const ListOuterElement = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>((props, ref) => {
+    const label = useContext(ListLabelContext);
+
+    return (
+        <div
+            ref={ref}
+            {...props}
+            role='region'
+            aria-label={label}
+            aria-describedby={DESCRIPTION_ID}
+
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- the list scrolls, and only the rows in view are rendered: the keyboard reaches the rest by scrolling it
+            tabIndex={0}
+            data-agentom-id='channel-members.list'
+        />
+    );
+});
+ListOuterElement.displayName = 'ListOuterElement';
 
 const MemberList = ({
     hasNextPage,
@@ -52,7 +84,9 @@ const MemberList = ({
     openDirectMessage,
     fetchRemoteClusterInfo,
     loadMore,
+    membersCount,
 }: Props) => {
+    const {formatMessage} = useIntl();
     const infiniteLoaderRef = useRef<InfiniteLoader | null>(null);
     const variableSizeListRef = useRef<VariableSizeList | null>(null);
     const [hasMounted, setHasMounted] = useState(false);
@@ -111,35 +145,57 @@ const MemberList = ({
         return null;
     }
 
-    return (
-        <AutoSizer>
-            {({height, width}) => (
-                <InfiniteLoader
-                    ref={infiniteLoaderRef}
-                    isItemLoaded={isItemLoaded}
-                    itemCount={itemCount}
-                    loadMoreItems={loadMoreItems}
-                >
-                    {({onItemsRendered, ref}) => (
+    let description;
+    if (searchTerms) {
+        description = formatMessage({
+            id: 'channel_members_rhs.list.search_description',
+            defaultMessage: '{count, number} {count, plural, one {member matches} other {members match}} “{terms}”',
+        }, {count: totalMemberCount, terms: searchTerms});
+    } else {
+        description = formatMessage({
+            id: 'channel_members_rhs.list.description',
+            defaultMessage: '{count, number} {count, plural, one {member} other {members}}, channel admins first, each group by name; more load as you scroll',
+        }, {count: membersCount ?? totalMemberCount});
+    }
 
-                        <VariableSizeList
-                            itemCount={itemCount}
-                            onItemsRendered={onItemsRendered}
-                            ref={(list) => {
-                                ref(list);
-                                variableSizeListRef.current = list;
-                            }}
-                            itemData={itemData}
-                            itemSize={getItemSize}
-                            height={height}
-                            width={width}
-                        >
-                            {MemberListItem}
-                        </VariableSizeList>
-                    )}
-                </InfiniteLoader>
-            )}
-        </AutoSizer>
+    return (
+        <ListLabelContext.Provider value={formatMessage({id: 'channel_members_rhs.list.label', defaultMessage: 'Channel members'})}>
+            <span
+                id={DESCRIPTION_ID}
+                hidden={true}
+            >
+                {description}
+            </span>
+            <AutoSizer>
+                {({height, width}) => (
+                    <InfiniteLoader
+                        ref={infiniteLoaderRef}
+                        isItemLoaded={isItemLoaded}
+                        itemCount={itemCount}
+                        loadMoreItems={loadMoreItems}
+                    >
+                        {({onItemsRendered, ref}) => (
+
+                            <VariableSizeList
+                                itemCount={itemCount}
+                                onItemsRendered={onItemsRendered}
+                                ref={(list) => {
+                                    ref(list);
+                                    variableSizeListRef.current = list;
+                                }}
+                                itemData={itemData}
+                                itemSize={getItemSize}
+                                height={height}
+                                width={width}
+                                outerElementType={ListOuterElement}
+                            >
+                                {MemberListItem}
+                            </VariableSizeList>
+                        )}
+                    </InfiniteLoader>
+                )}
+            </AutoSizer>
+        </ListLabelContext.Provider>
     );
 };
 

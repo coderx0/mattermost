@@ -18883,6 +18883,14 @@
     "defaultMessage": "Channel Settings",
     "description": "Menu item in the channel dropdown menu and channel info sidebar; opens the Channel Settings modal."
   },
+  "channel_header.channel_settings.conversation_description": {
+    "defaultMessage": "Opens the conversation's settings",
+    "description": "Hidden description of the 'Channel Settings' item in a direct or group message's header menu: what the dialog it opens holds."
+  },
+  "channel_header.channel_settings.description": {
+    "defaultMessage": "Opens the channel's settings, in a tab for each part you can change, such as its name, URL, type, purpose and header, its configuration, and archiving it",
+    "description": "Hidden description of the 'Channel Settings' item in a channel's header menu: what the settings dialog it opens holds."
+  },
   "channel_header.channelFiles": {
     "defaultMessage": "Channel files",
     "description": "Tooltip of the file icon button in the channel header; opens the list of files shared in the channel."
@@ -18923,6 +18931,10 @@
     "defaultMessage": "This group message has guests",
     "description": "Indicator text in the header of a group message when guest users are participants."
   },
+  "channel_header.headerLabel": {
+    "defaultMessage": "Channel header",
+    "description": "Accessible name of the area under the channel name that shows the channel header text (and status or guest notices)."
+  },
   "channel_header.headerText.addNewButton": {
     "defaultMessage": "Add a channel header",
     "description": "Placeholder button text in the channel header description area when no header text is set; opens the edit-header dialog."
@@ -18939,9 +18951,17 @@
     "defaultMessage": "Leave Channel",
     "description": "Menu item in the channel dropdown menu (and members list, for yourself); removes the current user from the channel."
   },
+  "channel_header.memberCount": {
+    "defaultMessage": "{count, number} {count, plural, one {member} other {members}}",
+    "description": "Hidden description of the channel header's Members button: how many members the channel has."
+  },
   "channel_header.members": {
     "defaultMessage": "Members",
     "description": "Menu item in the channel name dropdown menu; opens the channel members panel."
+  },
+  "channel_header.menu.archived_description": {
+    "defaultMessage": "Archived channel. {actions}",
+    "description": "Hidden description of the channel name menu button for an archived channel; {actions} is the list of actions the menu offers ('Actions: …')."
   },
   "channel_header.mute": {
     "defaultMessage": "Mute Channel",
@@ -18962,6 +18982,10 @@
   "channel_header.pinnedPosts": {
     "defaultMessage": "Pinned messages",
     "description": "Tooltip of the pin icon button in the channel header; opens the list of pinned messages."
+  },
+  "channel_header.pinnedPostsCount": {
+    "defaultMessage": "{count, number} pinned {count, plural, one {message} other {messages}}",
+    "description": "Hidden description of the channel header's Pinned messages button: how many messages are pinned."
   },
   "channel_header.recentMentions": {
     "defaultMessage": "Recent mentions",
@@ -19355,13 +19379,25 @@
     "defaultMessage": "Add",
     "description": "Button in the channel members panel header; opens the dialog to add members ('Add' as a verb, compact)."
   },
+  "channel_members_rhs.action_bar.add_button.label": {
+    "defaultMessage": "Add members",
+    "description": "Accessible name of the 'Add' button in the channel members panel, which opens the dialog to add people to the channel."
+  },
   "channel_members_rhs.action_bar.done_button": {
     "defaultMessage": "Done",
     "description": "Button in the channel members panel header that exits member-management mode."
   },
+  "channel_members_rhs.action_bar.done_button.description": {
+    "defaultMessage": "Stops managing members: hides each member's role menu",
+    "description": "Hidden description of the 'Done' button in the channel members panel, which leaves the mode for managing members."
+  },
   "channel_members_rhs.action_bar.manage_button": {
     "defaultMessage": "Manage",
     "description": "Button in the channel members panel header that enters member-management (edit roles/remove) mode; 'Manage' as a verb."
+  },
+  "channel_members_rhs.action_bar.manage_button.description": {
+    "defaultMessage": "Shows a role menu beside each member, to change their role or remove them from the channel",
+    "description": "Hidden description of the 'Manage' button in the channel members panel: what managing members shows."
   },
   "channel_members_rhs.action_bar.managing_title": {
     "defaultMessage": "Managing Members",
@@ -19387,6 +19423,18 @@
     "defaultMessage": "MEMBERS",
     "description": "All-caps group heading in the channel members panel above the list of ordinary members."
   },
+  "channel_members_rhs.list.description": {
+    "defaultMessage": "{count, number} {count, plural, one {member} other {members}}, channel admins first, each group by name; more load as you scroll",
+    "description": "Hidden description of the scrolling list of channel members: how many members it holds and in what order; only the rows in view are rendered."
+  },
+  "channel_members_rhs.list.label": {
+    "defaultMessage": "Channel members",
+    "description": "Accessible name of the scrolling list of members in the channel members panel."
+  },
+  "channel_members_rhs.list.search_description": {
+    "defaultMessage": "{count, number} {count, plural, one {member matches} other {members match}} “{terms}”",
+    "description": "Hidden description of the list of channel members while a search narrows it: how many members match the search text {terms}."
+  },
   "channel_members_rhs.member.select_role_channel_admin": {
     "defaultMessage": "Admin",
     "description": "Compact role option/label in the role selector next to a member while managing channel members; short form of Channel Admin."
@@ -19403,6 +19451,10 @@
     "defaultMessage": "Send message",
     "description": "Tooltip of the send icon next to a user in the channel members panel; opens a direct message with them."
   },
+  "channel_members_rhs.member.send_message_to": {
+    "defaultMessage": "Send message to {name}",
+    "description": "Accessible name of the icon button on a member's row in the channel members panel that opens a direct message with {name}."
+  },
   "channel_members_rhs.policy_enforced_restrictions": {
     "defaultMessage": "Channel access is restricted by user attributes",
     "description": "Notice in the channel members panel when membership is restricted by attribute-based access rules."
@@ -19414,6 +19466,10 @@
   "channel_members_rhs.search_bar.aria.cancel_search_button": {
     "defaultMessage": "cancel members search",
     "description": "Aria-label of the button that clears/cancels the search in the channel members panel; lowercase."
+  },
+  "channel_members_rhs.search_bar.description": {
+    "defaultMessage": "Shows the channel's members, other than deactivated users, whose username, first name, last name, full name, nickname, position or email address before the @ contains the text you type as one piece, ignoring case and a leading @. With an @ in the text, whole email addresses are searched too. Results update as you type.",
+    "description": "Hidden description of the search field in the channel members panel: which members and fields it searches, and how the text matches."
   },
   "channel_members_rhs.search_bar.placeholder": {
     "defaultMessage": "Search members",
@@ -19583,6 +19639,10 @@
     "defaultMessage": "Message notification sounds",
     "description": "Checkbox label in the channel notification preferences modal enabling notification sounds for this channel."
   },
+  "channel_notifications.desktopNotifications.soundSelectLabel": {
+    "defaultMessage": "Message notification sound",
+    "description": "Accessible name of the drop-down for choosing the sound played for this channel's desktop notifications."
+  },
   "channel_notifications.desktopNotifications.soundSelectPlaceholder": {
     "defaultMessage": "Select a sound",
     "description": "Placeholder of the dropdown for choosing the notification sound in the channel notification preferences modal."
@@ -19635,6 +19695,14 @@
     "defaultMessage": "Notify me about…",
     "description": "Section heading in the channel notification preferences modal, above the notify-level radio options; ends with an ellipsis character."
   },
+  "channel_notifications.NotifyMeTitle.desktop": {
+    "defaultMessage": "Notify me about… (desktop notifications)",
+    "description": "Name, read but not shown, of the desktop 'Notify me about…' choices in the channel notification preferences, telling them apart from the mobile ones."
+  },
+  "channel_notifications.NotifyMeTitle.mobile": {
+    "defaultMessage": "Notify me about… (mobile notifications)",
+    "description": "Name, read but not shown, of the mobile 'Notify me about…' choices in the channel notification preferences, telling them apart from the desktop ones."
+  },
   "channel_notifications.preferences": {
     "defaultMessage": "Notification Preferences",
     "description": "Title of the channel notification preferences modal."
@@ -19642,6 +19710,10 @@
   "channel_notifications.resetToDefault": {
     "defaultMessage": "Reset to default",
     "description": "Button in each section of the channel notification preferences modal; reverts the section to the user's global notification settings."
+  },
+  "channel_notifications.save.description": {
+    "defaultMessage": "Saves this channel's notification preferences",
+    "description": "Hidden description of the Save button in the channel notification preferences dialog: what it saves."
   },
   "channel_notifications.ThreadsReplyTitle": {
     "defaultMessage": "Thread reply notifications",
@@ -19819,6 +19891,10 @@
     "defaultMessage": "Archive this channel",
     "description": "Destructive button on the Archive tab of the Channel Settings modal that starts archiving the channel."
   },
+  "channel_settings.archive.button.label": {
+    "defaultMessage": "Archive this channel: {channelName}",
+    "description": "Accessible name of the 'Archive this channel' button in Channel Settings; {channelName} is the channel's display name."
+  },
   "channel_settings.archive.warning": {
     "defaultMessage": "Archiving a channel removes it from the user interface, but doesn't permanently delete the channel. New messages can't be posted to archived channels.",
     "description": "Explanatory text on the Archive tab of the Channel Settings modal describing what archiving does."
@@ -19894,6 +19970,10 @@
   "channel_settings.modal.title": {
     "defaultMessage": "Channel Settings",
     "description": "Title of the Channel Settings modal."
+  },
+  "channel_settings.no_unsaved_changes": {
+    "defaultMessage": "No unsaved changes",
+    "description": "Hidden description of the open tab in Channel Settings when it has no unsaved changes."
   },
   "channel_settings.permissions_policy.action.download": {
     "defaultMessage": "Download files",
@@ -20159,6 +20239,54 @@
     "defaultMessage": "Channel banner text cannot be empty when enabled",
     "description": "Error in the unsaved-changes panel when the channel banner is enabled but its text is empty."
   },
+  "channel_settings.save_changes_panel.configuration_save_description": {
+    "defaultMessage": "Saves this tab's settings: {sections}",
+    "description": "Hidden description of the Save button on the Configuration tab of Channel Settings; {sections} lists the tab's sections, by their headings."
+  },
+  "channel_settings.save_changes_panel.configuration_saved": {
+    "defaultMessage": "Channel configuration saved",
+    "description": "Status message shown after the Configuration tab of Channel Settings is saved."
+  },
+  "channel_settings.save_changes_panel.field.default_category": {
+    "defaultMessage": "default sidebar category",
+    "description": "One of the fields listed in the Info tab's Save description ('Saves the channel's …'): the channel's default sidebar category."
+  },
+  "channel_settings.save_changes_panel.field.discoverable": {
+    "defaultMessage": "discoverability",
+    "description": "One of the fields listed in the Info tab's Save description ('Saves the channel's …'): whether a private channel can be discovered by non-members."
+  },
+  "channel_settings.save_changes_panel.field.header": {
+    "defaultMessage": "header",
+    "description": "One of the fields listed in the Info tab's Save description ('Saves the channel's …'): the channel header."
+  },
+  "channel_settings.save_changes_panel.field.managed_category": {
+    "defaultMessage": "managed category",
+    "description": "One of the fields listed in the Info tab's Save description ('Saves the channel's …'): the channel's managed sidebar category."
+  },
+  "channel_settings.save_changes_panel.field.name": {
+    "defaultMessage": "name",
+    "description": "One of the fields listed in the Info tab's Save description ('Saves the channel's …'): the channel name."
+  },
+  "channel_settings.save_changes_panel.field.purpose": {
+    "defaultMessage": "purpose",
+    "description": "One of the fields listed in the Info tab's Save description ('Saves the channel's …'): the channel purpose."
+  },
+  "channel_settings.save_changes_panel.field.type": {
+    "defaultMessage": "type",
+    "description": "One of the fields listed in the Info tab's Save description ('Saves the channel's …'): whether the channel is public or private."
+  },
+  "channel_settings.save_changes_panel.field.url": {
+    "defaultMessage": "URL",
+    "description": "One of the fields listed in the Info tab's Save description ('Saves the channel's …'): the channel URL."
+  },
+  "channel_settings.save_changes_panel.info_save_description": {
+    "defaultMessage": "Saves the channel's {fields}",
+    "description": "Hidden description of the Save button on the Info tab of Channel Settings; {fields} lists the fields the tab shows, joined as a list."
+  },
+  "channel_settings.save_changes_panel.info_saved": {
+    "defaultMessage": "Channel info saved",
+    "description": "Status message shown after the Info tab of Channel Settings is saved."
+  },
   "channel_settings.save_changes_panel.reset": {
     "defaultMessage": "Reset",
     "description": "Button in the unsaved-changes panel of Channel Settings tabs; discards the pending edits ('Reset' as a verb)."
@@ -20238,6 +20366,10 @@
   "channel_settings.unknown_error": {
     "defaultMessage": "Something went wrong.",
     "description": "Generic fallback error shown in the Channel Settings modal when a save fails for an unknown reason."
+  },
+  "channel_settings.unsaved_changes": {
+    "defaultMessage": "Unsaved changes: the changes on the {tab} tab are kept only when saved",
+    "description": "Hidden description of the open tab in Channel Settings while it has unsaved changes; {tab} is the tab's name."
   },
   "channel_switch_modal.deactivated": {
     "defaultMessage": "Deactivated",
@@ -28567,6 +28699,10 @@
     "defaultMessage": "Undo",
     "description": "Button in the unsaved-changes panel at the bottom of settings screens that reverts the pending changes; 'Undo' is a verb."
   },
+  "saveChangesPanel.close": {
+    "defaultMessage": "Close notice",
+    "description": "Accessible name of the icon button that closes the 'saved' notice in a settings panel."
+  },
   "saveChangesPanel.error": {
     "defaultMessage": "There was an error saving your settings",
     "description": "Error text in the unsaved-changes panel when saving settings fails."
@@ -30003,6 +30139,10 @@
     "defaultMessage": "Browse or create channels",
     "description": "Accessible label and tooltip for the + button in the sidebar header that opens the browse/create channels menu."
   },
+  "sidebarLeft.teamMenu.addGroupsToTeamMenuItem.description": {
+    "defaultMessage": "Asks for the groups to add, then adds them and their members to the team",
+    "description": "Hidden description of the 'Add groups' item in the team menu: what its dialog asks for."
+  },
   "sidebarLeft.teamMenu.addGroupsToTeamMenuItem.primaryLabel": {
     "defaultMessage": "Add groups",
     "description": "Menu item in the team name menu that opens the dialog to link LDAP/AD groups to the team."
@@ -30027,21 +30167,41 @@
     "defaultMessage": "Learn about teams",
     "description": "Menu item in the team name menu linking to external training material about teams."
   },
+  "sidebarLeft.teamMenu.leaveTeamMenuItem.description": {
+    "defaultMessage": "Asks for confirmation, then removes you from the team and from its channels you're in",
+    "description": "Hidden description of the 'Leave team' item in the team menu: what its dialog asks, and what leaving does."
+  },
   "sidebarLeft.teamMenu.leaveTeamMenuItem.primaryLabel": {
     "defaultMessage": "Leave team",
     "description": "Destructive menu item in the team name menu to leave the current team."
+  },
+  "sidebarLeft.teamMenu.manageGroupsMenuItem.description": {
+    "defaultMessage": "Opens the list of groups linked to the team, to add groups, change their roles or remove them with their members",
+    "description": "Hidden description of the 'Manage groups' item in the team menu: what its dialog shows."
   },
   "sidebarLeft.teamMenu.manageGroupsMenuItem.primaryLabel": {
     "defaultMessage": "Manage groups",
     "description": "Menu item in the team name menu that opens the dialog to manage the team's linked groups."
   },
+  "sidebarLeft.teamMenu.manageMembersMenuItem.description": {
+    "defaultMessage": "Opens the list of the team's members, to search them, change their roles or remove them from the team",
+    "description": "Hidden description of the 'Manage members' item in the team menu: what its dialog shows."
+  },
   "sidebarLeft.teamMenu.manageMembersMenuItem.primaryLabel": {
     "defaultMessage": "Manage members",
     "description": "Menu item in the team name menu opening the team members dialog, shown to users who can change member roles."
   },
+  "sidebarLeft.teamMenu.teamSettingsMenuItem.description": {
+    "defaultMessage": "Opens the team's settings, such as its name, description, icon and who can join it",
+    "description": "Hidden description of the 'Team settings' item in the team menu: what its dialog holds."
+  },
   "sidebarLeft.teamMenu.teamSettingsMenuItem.primaryLabel": {
     "defaultMessage": "Team settings",
     "description": "Menu item in the team name menu that opens the team settings dialog."
+  },
+  "sidebarLeft.teamMenu.viewMembersMenuItem.description": {
+    "defaultMessage": "Opens the list of the team's members, with a search",
+    "description": "Hidden description of the 'View members' item in the team menu: what its dialog shows."
   },
   "sidebarLeft.teamMenu.viewMembersMenuItem.primaryLabel": {
     "defaultMessage": "View members",

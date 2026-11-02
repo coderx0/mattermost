@@ -179,6 +179,10 @@ export default function ChannelNotificationsModal(props: Props) {
                     id: 'channel_notifications.NotifyMeTitle',
                     defaultMessage: 'Notify me about…',
                 })}
+                legend={formatMessage({
+                    id: 'channel_notifications.NotifyMeTitle.desktop',
+                    defaultMessage: 'Notify me about… (desktop notifications)',
+                })}
                 inputFieldValue={settings.desktop || ''}
                 inputFieldData={utils.desktopNotificationInputFieldData(props.currentUser.notify_props.desktop)}
                 handleChange={(e) => handleChange({desktop: e.target.value})}
@@ -222,6 +226,10 @@ export default function ChannelNotificationsModal(props: Props) {
                         id: 'channel_notifications.desktopNotifications.soundSelectPlaceholder',
                         defaultMessage: 'Select a sound',
                     })}
+                    selectAriaLabel={formatMessage({
+                        id: 'channel_notifications.desktopNotifications.soundSelectLabel',
+                        defaultMessage: 'Message notification sound',
+                    })}
                     handleSelectChange={handleChangeForMessageNotificationSoundSelect}
                 />
             )}
@@ -248,6 +256,10 @@ export default function ChannelNotificationsModal(props: Props) {
                         title={formatMessage({
                             id: 'channel_notifications.NotifyMeTitle',
                             defaultMessage: 'Notify me about…',
+                        })}
+                        legend={formatMessage({
+                            id: 'channel_notifications.NotifyMeTitle.mobile',
+                            defaultMessage: 'Notify me about… (mobile notifications)',
                         })}
                         inputFieldValue={settings.push || ''}
                         inputFieldData={utils.mobileNotificationInputFieldData(props.currentUser.notify_props.push)}
@@ -293,6 +305,7 @@ export default function ChannelNotificationsModal(props: Props) {
         <>
             <div className='ChannelNotificationModal__divider'/>
             <ModalSection
+                agentomId='channel-notifications.desktop'
                 title={formatMessage({
                     id: 'channel_notifications.desktopNotificationsTitle',
                     defaultMessage: 'Desktop Notifications',
@@ -313,6 +326,7 @@ export default function ChannelNotificationsModal(props: Props) {
             />
             <div className='ChannelNotificationModal__divider'/>
             <ModalSection
+                agentomId='channel-notifications.mobile'
                 title={formatMessage({
                     id: 'channel_notifications.mobileNotificationsTitle',
                     defaultMessage: 'Mobile Notifications',
@@ -382,12 +396,23 @@ export default function ChannelNotificationsModal(props: Props) {
                 emphasis='primary'
                 size='md'
                 onClick={handleSave}
+                aria-describedby='channelNotificationModalSaveDescription'
+                data-agentom-id='channel-notifications.save'
             >
                 <FormattedMessage
                     id='generic_btn.save'
                     defaultMessage='Save'
                 />
             </Button>
+            <span
+                id='channelNotificationModalSaveDescription'
+                hidden={true}
+            >
+                <FormattedMessage
+                    id='channel_notifications.save.description'
+                    defaultMessage="Saves this channel's notification preferences"
+                />
+            </span>
         </footer>
     );
 
@@ -409,7 +434,7 @@ export default function ChannelNotificationsModal(props: Props) {
             show={show}
             onHide={handleHide}
             onExited={handleExited}
-            ariaLabel='channelNotificationModalLabel'
+            ariaLabelledby='mm-modal-header-channelNotificationModalLabel-title mm-modal-header-channelNotificationModalLabel-subtitle'
             compassDesign={true}
             footerContent={footerContent}
             modalHeaderText={headerText}
@@ -417,9 +442,10 @@ export default function ChannelNotificationsModal(props: Props) {
             footerDivider={true}
         >
 
-            <main className='ChannelNotificationModal__body'>
+            <div className='ChannelNotificationModal__body'>
                 <fieldset aria-labelledby='ChannelNotificationModal-legend'>
                     <ModalSection
+                        agentomId='channel-notifications.mute-or-ignore'
                         title={
                             <legend
                                 style={{all: 'unset'}}
@@ -439,6 +465,7 @@ export default function ChannelNotificationsModal(props: Props) {
                     <>
                         <div className='ChannelNotificationModal__divider'/>
                         <ModalSection
+                            agentomId='channel-notifications.follow-threads'
                             title={formatMessage({
                                 id: 'channel_notifications.autoFollowThreadsTitle',
                                 defaultMessage: 'Follow all threads in this channel',
@@ -451,7 +478,7 @@ export default function ChannelNotificationsModal(props: Props) {
                         />
                     </>
                 }
-            </main>
+            </div>
         </GenericModal>
     );
 }

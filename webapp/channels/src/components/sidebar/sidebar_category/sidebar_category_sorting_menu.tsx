@@ -27,10 +27,9 @@ import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
 
 import * as Menu from 'components/menu';
 
+import {getCategoryAgentomId} from 'utils/agentom_ids';
 import Constants from 'utils/constants';
 import {describeActions, describeChoices} from 'utils/popup_descriptions';
-
-import {getCategoryAgentomId} from './sidebar_category_menu';
 
 const messages = defineMessages({
     sort: {

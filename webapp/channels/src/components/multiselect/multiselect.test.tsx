@@ -143,4 +143,25 @@ describe('components/multiselect/multiselect', () => {
 
         expect(screen.getByRole('combobox')).toHaveAccessibleDescription('Finds people whose name starts with the text you type.');
     });
+
+    test('should describe its search field with the required field\'s error while it shows', async () => {
+        renderWithContext(
+            <MultiSelect
+                {...baseProps}
+                values={[]}
+                required={true}
+                placeholderText='Search people'
+            />,
+        );
+
+        const field = screen.getByRole('combobox');
+        expect(field).not.toHaveAccessibleDescription('This field is required');
+
+        await userEvent.click(field);
+        await userEvent.tab();
+
+        expect(screen.getByRole('alert')).toHaveTextContent('This field is required');
+        expect(field).toHaveAttribute('aria-invalid', 'true');
+        expect(field).toHaveAccessibleDescription(/^This field is required/);
+    });
 });

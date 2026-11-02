@@ -143,8 +143,15 @@ const Member = ({channel, member, index, totalUsers, editing, actions}: Props) =
                     <button
                         className='channel-members-rhs__send-message'
                         onClick={() => actions.openDirectMessage(member.user)}
+                        aria-label={formatMessage({
+                            id: 'channel_members_rhs.member.send_message_to',
+                            defaultMessage: 'Send message to {name}',
+                        }, {name: member.displayName})}
                     >
-                        <i className='icon icon-send'/>
+                        <i
+                            className='icon icon-send'
+                            aria-hidden='true'
+                        />
                     </button>
                 </WithTooltip>
             )}

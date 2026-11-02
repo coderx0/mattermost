@@ -14,6 +14,8 @@ import * as Menu from 'components/menu';
 
 import type {GlobalState} from 'types/store';
 
+import {channelHeaderMenuMessages} from '../channel_header_menu_messages';
+
 type Props = {
     channelID: string;
     isFavorite: boolean;
@@ -35,16 +37,10 @@ const ToggleFavoriteChannel = ({
     };
 
     let text = (
-        <FormattedMessage
-            id='channelHeader.addToFavorites'
-            defaultMessage='Add to Favorites'
-        />);
+        <FormattedMessage {...channelHeaderMenuMessages.addToFavorites}/>);
     if (isFavorite) {
         text = (
-            <FormattedMessage
-                id='channelHeader.removeFromFavorites'
-                defaultMessage='Remove from Favorites'
-            />);
+            <FormattedMessage {...channelHeaderMenuMessages.removeFromFavorites}/>);
     }
 
     if (isInManagedCategory) {
@@ -62,6 +58,7 @@ const ToggleFavoriteChannel = ({
                         onClick={toggleFavorite}
                         labels={text}
                         disabled={true}
+                        data-agentom-id='channel-header.menu.favorite'
                     />
                 </div>
             </WithTooltip>
@@ -72,6 +69,7 @@ const ToggleFavoriteChannel = ({
         <Menu.Item
             onClick={toggleFavorite}
             labels={text}
+            data-agentom-id='channel-header.menu.favorite'
         />
     );
 };

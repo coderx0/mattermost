@@ -2,7 +2,8 @@
 // See LICENSE.txt for license information.
 
 import React, {useCallback, useState, useEffect, useMemo, useRef} from 'react';
-import {useIntl} from 'react-intl';
+import {defineMessages, useIntl} from 'react-intl';
+import type {MessageDescriptor} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
 import type {Channel, ChannelType} from '@mattermost/types/channels';
@@ -40,6 +41,49 @@ import Constants from 'utils/constants';
 
 import type {GlobalState} from 'types/store';
 
+const messages = defineMessages({
+    saved: {
+        id: 'channel_settings.save_changes_panel.info_saved',
+        defaultMessage: 'Channel info saved',
+    },
+    saveDescription: {
+        id: 'channel_settings.save_changes_panel.info_save_description',
+        defaultMessage: "Saves the channel's {fields}",
+    },
+    name: {
+        id: 'channel_settings.save_changes_panel.field.name',
+        defaultMessage: 'name',
+    },
+    url: {
+        id: 'channel_settings.save_changes_panel.field.url',
+        defaultMessage: 'URL',
+    },
+    type: {
+        id: 'channel_settings.save_changes_panel.field.type',
+        defaultMessage: 'type',
+    },
+    discoverable: {
+        id: 'channel_settings.save_changes_panel.field.discoverable',
+        defaultMessage: 'discoverability',
+    },
+    defaultCategory: {
+        id: 'channel_settings.save_changes_panel.field.default_category',
+        defaultMessage: 'default sidebar category',
+    },
+    managedCategory: {
+        id: 'channel_settings.save_changes_panel.field.managed_category',
+        defaultMessage: 'managed category',
+    },
+    purpose: {
+        id: 'channel_settings.save_changes_panel.field.purpose',
+        defaultMessage: 'purpose',
+    },
+    header: {
+        id: 'channel_settings.save_changes_panel.field.header',
+        defaultMessage: 'header',
+    },
+});
+
 type ChannelSettingsInfoTabProps = {
     channel: Channel;
     onCancel?: () => void;
@@ -62,7 +106,7 @@ function ChannelSettingsInfoTab({
     setAreThereUnsavedChanges,
     showTabSwitchError,
 }: ChannelSettingsInfoTabProps) {
-    const {formatMessage} = useIntl();
+    const {formatMessage, formatList} = useIntl();
     const dispatch = useDispatch();
 
     const getSidebarCategoryNamesForTeam = useRef(makeGetSidebarCategoryNamesForTeam());
@@ -130,12 +174,10 @@ function ChannelSettingsInfoTab({
     // does not constrain the channel type, so the privacy toggle must stay
     // enabled in that case.
     const channelTypeLockedByMembershipPolicy = isMembershipPolicyEnforced(channel);
-    const channelTypeLockTooltip = channelTypeLockedByMembershipPolicy ?
-        formatMessage({
-            id: 'channel_settings.policy_enforced.cannot_change_channel_type',
-            defaultMessage: 'This channel has a membership policy applied. Remove the policy before changing between public and private.',
-        }) :
-        undefined;
+    const channelTypeLockTooltip = channelTypeLockedByMembershipPolicy ? formatMessage({
+        id: 'channel_settings.policy_enforced.cannot_change_channel_type',
+        defaultMessage: 'This channel has a membership policy applied. Remove the policy before changing between public and private.',
+    }) : undefined;
 
     const [defaultCategoryName, setDefaultCategoryName] = useState<string | undefined>(channel.default_category_name);
     const [serverDefaultCategoryName, setServerDefaultCategoryName] = useState<string | undefined>(channel.default_category_name);
@@ -501,6 +543,31 @@ function ChannelSettingsInfoTab({
 
     const shouldShowPanel = hasUnsavedChanges || saveChangesPanelState === 'saved';
 
+    // What Save keeps: the fields this tab shows, in its order, under the same conditions
+    const savedFields: MessageDescriptor[] = [];
+    if (!isDMorGroupChannel) {
+        savedFields.push(messages.name, messages.url, messages.type);
+    }
+    if (showDiscoverableToggle) {
+        savedFields.push(messages.discoverable);
+    }
+    if (showDefaultCategoryField) {
+        savedFields.push(messages.defaultCategory);
+    }
+    if (showManagedCategoryField) {
+        savedFields.push(messages.managedCategory);
+    }
+    if (!isDMorGroupChannel) {
+        savedFields.push(messages.purpose);
+    }
+    savedFields.push(messages.header);
+    const saveButtonDescription = formatMessage(messages.saveDescription, {
+        fields: formatList(savedFields.map((field) => formatMessage(field)), {type: 'conjunction'}),
+    });
+
+    // Making a public channel private asks for confirmation when saved (handleSaveChanges)
+    const isChangingToPrivate = channel.type === Constants.OPEN_CHANNEL && channelType === Constants.PRIVATE_CHANNEL;
+
     return (
         <div
             className='ChannelSettingsModal__infoTab'
@@ -740,6 +807,13 @@ function ChannelSettingsInfoTab({
                         id: 'channel_settings.save_changes_panel.reset',
                         defaultMessage: 'Reset',
                     })}
+                    customSavedMessage={formatMessage(messages.saved)}
+                    saveButtonDescription={saveButtonDescription}
+                    agentomId='channel-settings.info'
+                    saveButtonAttributes={isChangingToPrivate ? {
+                        'data-agentom-risk': 'sensitive',
+                        'data-agentom-confirmation': 'required',
+                    } : undefined}
                 />
             )}
         </div>

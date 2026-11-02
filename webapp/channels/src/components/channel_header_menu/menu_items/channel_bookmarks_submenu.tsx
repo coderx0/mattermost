@@ -22,6 +22,8 @@ import * as Menu from 'components/menu';
 
 import type {GlobalState} from 'types/store';
 
+import {channelHeaderMenuMessages} from '../channel_header_menu_messages';
+
 type Props = {
     channel: Channel;
 };
@@ -65,16 +67,13 @@ const ChannelBookmarksSubmenu = (props: Props) => {
             id={`channel-menu-${channelId}-bookmarks`}
             leadingElement={<BookmarkOutlineIcon size={18}/>}
             labels={(
-                <FormattedMessage
-                    id='channel_menu.bookmarks'
-                    defaultMessage='Bookmarks Bar'
-                />
+                <FormattedMessage {...channelHeaderMenuMessages.bookmarksBar}/>
             )}
             trailingElements={(
                 <ChevronRightIcon size={16}/>
             )}
             menuId={`channel-menu-${channelId}-menu`}
-            menuAriaLabel={formatMessage({id: 'channel_menu.bookmarks', defaultMessage: 'Bookmarks Bar'})}
+            menuAriaLabel={formatMessage(channelHeaderMenuMessages.bookmarksBar)}
         >
             <Menu.Item
                 id={`channel-menu-${channelId}-bookmarks-link`}

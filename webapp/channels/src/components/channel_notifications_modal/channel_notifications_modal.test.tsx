@@ -89,6 +89,29 @@ describe('ChannelNotificationsModal', () => {
         );
     });
 
+    test('should name the dialog, its sections and its two "Notify me about…" groups apart, and describe Save', async () => {
+        renderWithContext(
+            <ChannelNotificationsModal {...baseProps}/>,
+        );
+
+        expect(screen.getByRole('dialog', {name: 'Notification Preferences channel_display_name'})).toBeInTheDocument();
+        expect(screen.queryByRole('main')).not.toBeInTheDocument();
+        expect(screen.getByRole('region', {name: 'Desktop Notifications'})).toHaveAttribute('data-agentom-id', 'channel-notifications.desktop');
+        expect(screen.getByRole('region', {name: 'Mobile Notifications'})).toHaveAttribute('data-agentom-id', 'channel-notifications.mobile');
+        expect(screen.getByRole('group', {name: 'Notify me about… (desktop notifications)'})).toBeInTheDocument();
+        expect(screen.getByRole('combobox', {name: 'Message notification sound'})).toBeInTheDocument();
+
+        const sameAsDesktop = screen.getByTestId('sameMobileSettingsDesktop');
+        if ((sameAsDesktop as HTMLInputElement).checked) {
+            await userEvent.click(sameAsDesktop);
+        }
+        expect(screen.getByRole('group', {name: 'Notify me about… (mobile notifications)'})).toBeInTheDocument();
+
+        const save = screen.getByRole('button', {name: 'Save'});
+        expect(save).toHaveAttribute('data-agentom-id', 'channel-notifications.save');
+        expect(save).toHaveAccessibleDescription("Saves this channel's notification preferences");
+    });
+
     test('should save correctly for \'Ignore mentions for @channel, @here and @all\'', async () => {
         renderWithContext(
             <ChannelNotificationsModal {...baseProps}/>,

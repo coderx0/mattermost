@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import React, {useCallback, useEffect} from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import styled from 'styled-components';
 
 import Constants from 'utils/constants';
@@ -69,6 +69,7 @@ export interface Props {
 }
 
 const ActionBar = ({className, channelType, membersCount, canManageMembers, editing, actions}: Props) => {
+    const {formatMessage} = useIntl();
     const showManageButton = channelType !== Constants.GM_CHANNEL && membersCount > 1;
 
     const handleShortcut = useCallback((e: KeyboardEvent) => {
@@ -108,6 +109,8 @@ const ActionBar = ({className, channelType, membersCount, canManageMembers, edit
                         <Button
                             onClick={actions.stopEditing}
                             className='manage-members-done'
+                            aria-describedby='channelMembersRhsManageDescription'
+                            data-agentom-id='channel-members.manage'
                         >
                             <FormattedMessage
                                 id='channel_members_rhs.action_bar.done_button'
@@ -120,6 +123,8 @@ const ActionBar = ({className, channelType, membersCount, canManageMembers, edit
                                 <Button
                                     className='manage-members'
                                     onClick={actions.startEditing}
+                                    aria-describedby='channelMembersRhsManageDescription'
+                                    data-agentom-id='channel-members.manage'
                                 >
                                     <FormattedMessage
                                         id='channel_members_rhs.action_bar.manage_button'
@@ -130,10 +135,15 @@ const ActionBar = ({className, channelType, membersCount, canManageMembers, edit
                             <Button
                                 onClick={actions.inviteMembers}
                                 className='add-members'
+                                aria-label={formatMessage({
+                                    id: 'channel_members_rhs.action_bar.add_button.label',
+                                    defaultMessage: 'Add members',
+                                })}
                             >
                                 <ButtonIcon
                                     className='icon-account-plus-outline'
                                     title='Add Icon'
+                                    aria-hidden='true'
                                 />
                                 <FormattedMessage
                                     id='channel_members_rhs.action_bar.add_button'
@@ -142,7 +152,20 @@ const ActionBar = ({className, channelType, membersCount, canManageMembers, edit
                             </Button>
                         </>
                     )}
-
+                    {(editing || showManageButton) && (
+                        <span
+                            id='channelMembersRhsManageDescription'
+                            hidden={true}
+                        >
+                            {editing ? formatMessage({
+                                id: 'channel_members_rhs.action_bar.done_button.description',
+                                defaultMessage: "Stops managing members: hides each member's role menu",
+                            }) : formatMessage({
+                                id: 'channel_members_rhs.action_bar.manage_button.description',
+                                defaultMessage: 'Shows a role menu beside each member, to change their role or remove them from the channel',
+                            })}
+                        </span>
+                    )}
                 </Actions>
             )}
         </div>

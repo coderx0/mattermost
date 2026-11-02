@@ -11,6 +11,12 @@ type Props = {
     description?: ReactNode;
     content: JSX.Element;
     titleSuffix?: JSX.Element;
+
+    /**
+     * Makes the section a region named by its title, with this data-agentom-id: a named section of the Agent
+     * Object Model's projection
+     */
+    agentomId?: string;
 };
 
 function ModalSection({
@@ -18,10 +24,12 @@ function ModalSection({
     description,
     content,
     titleSuffix,
+    agentomId,
 }: Props) {
+    const titleId = agentomId ? `${agentomId}-title` : undefined;
     const titleComponent = title && (
         <h4 className='modalSectionTitle'>
-            {title}
+            {titleId ? <span id={titleId}>{title}</span> : title}
             {titleSuffix}
         </h4>
     );
@@ -33,7 +41,12 @@ function ModalSection({
     );
 
     return (
-        <section className='mm-modal-generic-section'>
+        <section
+            className='mm-modal-generic-section'
+            aria-labelledby={title ? titleId : undefined}
+            data-agentom-id={agentomId}
+            data-agentom-kind={agentomId ? 'section' : undefined}
+        >
             {(title || description) && (
                 <div className='modalSectionHeader'>
                     {titleComponent}
