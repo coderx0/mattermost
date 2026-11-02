@@ -9,6 +9,10 @@
 ARG BUILD_NUMBER=12.0.1
 
 FROM node:24.11.1-bookworm AS webapp
+# AGENT_OM=off builds without the Agent Object Model's projector and sitemap
+# (webapp/channels/webpack.config.js): the markup only, as other agents see it.
+ARG AGENT_OM
+ENV AGENT_OM=$AGENT_OM
 WORKDIR /src/webapp
 COPY webapp/ ./
 RUN npm ci && npm run build
