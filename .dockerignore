@@ -1,0 +1,13 @@
+# The root Dockerfile needs webapp/ and server/ only, without build output.
+.git
+**/node_modules
+api
+docs
+e2e-tests
+tools
+webapp/channels/dist
+webapp/platform/*/lib
+server/bin
+server/dist
+server/go.work
+server/go.work.sum
