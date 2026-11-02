@@ -711,7 +711,7 @@ describe('components/new_channel_modal - plugin channel-type options', () => {
         expect(screen.getByText('Public Channel')).toBeInTheDocument();
         expect(screen.getByText('Private Channel')).toBeInTheDocument();
         expect(screen.getByText('Plugin Channel')).toBeInTheDocument();
-        expect(screen.queryAllByRole('button').filter((b) => b.classList.contains('public-private-selector-button'))).toHaveLength(3);
+        expect(screen.queryAllByRole('radio').filter((b) => b.classList.contains('public-private-selector-button'))).toHaveLength(3);
     });
 
     test('selecting plugin button updates selected state', async () => {
@@ -749,7 +749,7 @@ describe('components/new_channel_modal - plugin channel-type options', () => {
         expect(screen.getByText('Public Channel')).toBeInTheDocument();
         expect(screen.getByText('Private Channel')).toBeInTheDocument();
         expect(screen.queryByText('Plugin Channel')).not.toBeInTheDocument();
-        expect(screen.queryAllByRole('button').filter((b) => b.classList.contains('public-private-selector-button'))).toHaveLength(2);
+        expect(screen.queryAllByRole('radio').filter((b) => b.classList.contains('public-private-selector-button'))).toHaveLength(2);
     });
 
     test('isAvailable throw - option dropped, modal renders, error logged', () => {

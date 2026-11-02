@@ -583,6 +583,7 @@ const NewChannelModal = () => {
                 />
                 <PublicPrivateSelector
                     className='new-channel-modal-type-selector'
+                    ariaLabel={formatMessage({id: 'channel_modal.type.ariaLabel', defaultMessage: 'Channel type'})}
                     selected={type}
                     publicButtonProps={{
                         title: formatMessage({id: 'channel_modal.type.public.title', defaultMessage: 'Public Channel'}),

@@ -159,7 +159,7 @@ describe('ChannelSettingsInfoTab', () => {
         expect(screen.getByTestId('channel_settings_header_textbox')).toHaveValue('Initial header');
 
         // Check that the public channel button is selected.
-        expect(screen.getByRole('button', {name: /Public Channel/}).classList.contains('selected')).toBe(true);
+        expect(screen.getByRole('radio', {name: /Public Channel/}).classList.contains('selected')).toBe(true);
     });
 
     it('should show SaveChangesPanel when changes are made', async () => {
@@ -522,7 +522,7 @@ describe('ChannelSettingsInfoTab', () => {
         renderWithContext(<ChannelSettingsInfoTab {...baseProps}/>);
 
         // Private channel button should be disabled
-        const privateButton = screen.getByRole('button', {name: /Private Channel/});
+        const privateButton = screen.getByRole('radio', {name: /Private Channel/});
         expect(privateButton).toHaveClass('disabled');
     });
 
@@ -534,7 +534,7 @@ describe('ChannelSettingsInfoTab', () => {
         renderWithContext(<ChannelSettingsInfoTab {...baseProps}/>);
 
         // Private channel button should not be disabled
-        const privateButton = screen.getByRole('button', {name: /Private Channel/});
+        const privateButton = screen.getByRole('radio', {name: /Private Channel/});
         expect(privateButton).not.toBeDisabled();
 
         // Should be able to change to private in the UI
@@ -562,11 +562,11 @@ describe('ChannelSettingsInfoTab', () => {
         );
 
         // Public channel button should be disabled regardless of permissions
-        const publicButton = screen.getByRole('button', {name: /Public Channel/});
+        const publicButton = screen.getByRole('radio', {name: /Public Channel/});
         expect(publicButton).toHaveClass('disabled');
 
         // Private button should be selected
-        const privateButton = screen.getByRole('button', {name: /Private Channel/});
+        const privateButton = screen.getByRole('radio', {name: /Private Channel/});
         expect(privateButton).toHaveClass('selected');
     });
 
@@ -586,8 +586,8 @@ describe('ChannelSettingsInfoTab', () => {
             />,
         );
 
-        const publicButton = screen.getByRole('button', {name: /Public Channel/});
-        const privateButton = screen.getByRole('button', {name: /Private Channel/});
+        const publicButton = screen.getByRole('radio', {name: /Public Channel/});
+        const privateButton = screen.getByRole('radio', {name: /Private Channel/});
         expect(publicButton).toHaveClass('disabled');
         expect(privateButton).toHaveClass('disabled');
 
@@ -603,7 +603,7 @@ describe('ChannelSettingsInfoTab', () => {
         renderWithContext(<ChannelSettingsInfoTab {...baseProps}/>);
 
         // Change to private channel
-        const privateButton = screen.getByRole('button', {name: /Private Channel/});
+        const privateButton = screen.getByRole('radio', {name: /Private Channel/});
         await userEvent.click(privateButton);
 
         // Click Save button
@@ -622,7 +622,7 @@ describe('ChannelSettingsInfoTab', () => {
         renderWithContext(<ChannelSettingsInfoTab {...baseProps}/>);
 
         // Change to private channel
-        const privateButton = screen.getByRole('button', {name: /Private Channel/});
+        const privateButton = screen.getByRole('radio', {name: /Private Channel/});
         await userEvent.click(privateButton);
 
         // Click Save button to show modal
@@ -644,7 +644,7 @@ describe('ChannelSettingsInfoTab', () => {
         renderWithContext(<ChannelSettingsInfoTab {...baseProps}/>);
 
         // Change to private channel
-        const privateButton = screen.getByRole('button', {name: /Private Channel/});
+        const privateButton = screen.getByRole('radio', {name: /Private Channel/});
         await userEvent.click(privateButton);
 
         // Click Save button to show modal
@@ -669,7 +669,7 @@ describe('ChannelSettingsInfoTab', () => {
         renderWithContext(<ChannelSettingsInfoTab {...baseProps}/>);
 
         // Change to private channel
-        const privateButton = screen.getByRole('button', {name: /Private Channel/});
+        const privateButton = screen.getByRole('radio', {name: /Private Channel/});
         await userEvent.click(privateButton);
 
         // Click Save button to show modal

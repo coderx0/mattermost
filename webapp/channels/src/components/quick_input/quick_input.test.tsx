@@ -97,4 +97,16 @@ describe('components/QuickInput', () => {
         expect(screen.queryByTestId('input-clear')).not.toBeInTheDocument();
         expect(focusFn).toHaveBeenCalled();
     });
+
+    test('should name its clear button', () => {
+        renderWithContext(
+            <QuickInput
+                value='value'
+                clearable={true}
+                onClear={jest.fn()}
+            />,
+        );
+
+        expect(screen.getByRole('button', {name: 'Clear'})).toBeInTheDocument();
+    });
 });

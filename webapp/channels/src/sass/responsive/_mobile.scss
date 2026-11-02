@@ -1318,13 +1318,19 @@
                             height: 45px;
                         }
 
-                        .badge + .SidebarMenu {
-                            display: none !important;
+                        // Room for the channel's options button, laid over the link's end while it shows
+                        &.SidebarLink--withMenu:not(.SidebarLink--withMentionBadge) {
+                            padding-right: 44px;
                         }
+                    }
 
-                        &:hover .SidebarMenu {
-                            display: block !important;
-                        }
+                    // The options button is left out while the mention badge shows, except on hover
+                    .SidebarLink--withMentionBadge + .SidebarMenu {
+                        display: none !important;
+                    }
+
+                    &:hover > .SidebarMenu {
+                        display: block !important;
                     }
 
                     &.has-close {

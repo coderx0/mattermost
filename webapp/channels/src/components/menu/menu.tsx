@@ -44,6 +44,11 @@ type MenuButtonProps = {
     dataTestId?: string;
     'aria-label'?: string;
     'aria-describedby'?: string;
+
+    /**
+     * Rendered as the trigger's data-agentom-id: a stable id for the Agent Object Model's projection.
+     */
+    agentomId?: string;
     disabled?: boolean;
     class?: string;
     as?: 'button' | 'div';
@@ -315,6 +320,7 @@ export function Menu(props: Props) {
                 tabIndex={divTabIndex}
                 aria-label={props.menuButton?.['aria-label']}
                 aria-describedby={props.menuButton?.['aria-describedby']}
+                data-agentom-id={props.menuButton?.agentomId}
                 className={props.menuButton?.class ?? ''}
                 onMouseDown={props.menuButton?.onMouseDown}
                 onClick={isDisabled ? undefined : handleMenuButtonClick}

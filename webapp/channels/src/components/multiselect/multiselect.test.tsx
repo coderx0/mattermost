@@ -131,4 +131,16 @@ describe('components/multiselect/multiselect', () => {
 
         expect(handleBackButtonClick).toHaveBeenCalled();
     });
+
+    test('should describe its search field with the search description, which react-select would otherwise drop', () => {
+        renderWithContext(
+            <MultiSelect
+                {...baseProps}
+                placeholderText='Search people'
+                searchDescription='Finds people whose name starts with the text you type.'
+            />,
+        );
+
+        expect(screen.getByRole('combobox')).toHaveAccessibleDescription('Finds people whose name starts with the text you type.');
+    });
 });

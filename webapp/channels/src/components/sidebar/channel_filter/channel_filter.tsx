@@ -68,7 +68,8 @@ export class ChannelFilter extends React.PureComponent<Props> {
     render() {
         const {intl, unreadFilterEnabled} = this.props;
 
-        const unreadsAriaLabel = intl.formatMessage({id: 'sidebar_left.channel_filter.filterUnreadAria', defaultMessage: 'unreads filter'});
+        // A toggle: its name stays the same, and whether it's on is its pressed state
+        const unreadsAriaLabel = intl.formatMessage(messages.enableTooltip);
 
         return (
             <div className='SidebarFilters'>
@@ -78,10 +79,13 @@ export class ChannelFilter extends React.PureComponent<Props> {
                 >
                     <a
                         href='#'
+                        role='button'
+                        aria-pressed={unreadFilterEnabled}
                         className={classNames('SidebarFilters_filterButton', {
                             active: unreadFilterEnabled,
                         })}
                         data-testid='sidebar-unread-filter-button'
+                        data-agentom-id='sidebar.unread-filter'
                         onClick={this.toggleUnreadFilter}
                         aria-label={unreadsAriaLabel}
                     >

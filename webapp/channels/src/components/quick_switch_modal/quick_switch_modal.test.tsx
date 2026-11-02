@@ -286,4 +286,11 @@ describe('components/QuickSwitchModal', () => {
             expect(screen.getByTestId('SidebarChannelNavigatorButton')).toHaveFocus();
         });
     });
+
+    test('should name its field and describe what it finds', () => {
+        renderWithContext(<QuickSwitchModal {...baseProps}/>);
+
+        const field = screen.getByRole('combobox', {name: 'Find channels'});
+        expect(field).toHaveAccessibleDescription(/^Finds your channels, public channels, direct and group messages, and people\. /);
+    });
 });

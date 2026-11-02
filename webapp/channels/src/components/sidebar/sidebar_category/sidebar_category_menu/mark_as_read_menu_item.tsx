@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import React, {useCallback} from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
 import {MarkAsUnreadIcon} from '@mattermost/compass-icons/components';
@@ -21,6 +21,17 @@ type Props = {
     numChannels: number;
 };
 
+export const markAsReadMenuItemMessages = defineMessages({
+    viewCategory: {
+        id: 'sidebar_left.sidebar_category_menu.viewCategory',
+        defaultMessage: 'Mark category as read',
+    },
+    viewCategoryDescription: {
+        id: 'sidebar_left.sidebar_category_menu.viewCategory.description',
+        defaultMessage: 'Asks for confirmation, then marks the {numChannels} channels as read',
+    },
+});
+
 const MarkAsUnreadItem = ({
     id,
     handleViewCategory,
@@ -28,6 +39,7 @@ const MarkAsUnreadItem = ({
     ...otherProps
 }: Props) => {
     const dispatch = useDispatch();
+    const {formatMessage} = useIntl();
 
     const onClick = useCallback(() => {
         if (numChannels <= 0) {
@@ -49,20 +61,29 @@ const MarkAsUnreadItem = ({
         }));
     }, [dispatch, handleViewCategory, numChannels]);
 
+    // With more than one channel to mark, it opens a dialog that asks to confirm
+    const asksToConfirm = numChannels > 1;
+    const descriptionId = `view-${id}-description`;
+
     return (
         <Menu.Item
             id={`view-${id}`}
             onClick={onClick}
-            aria-haspopup={numChannels > 1}
+            aria-haspopup={asksToConfirm ? 'dialog' : undefined}
+            aria-describedby={asksToConfirm ? descriptionId : undefined}
             leadingElement={<MarkAsUnreadIcon size={18}/>}
-            labels={(
-                <FormattedMessage
-                    id='sidebar_left.sidebar_category_menu.viewCategory'
-                    defaultMessage='Mark category as read'
-                />
-            )}
+            labels={<FormattedMessage {...markAsReadMenuItemMessages.viewCategory}/>}
             {...otherProps}
-        />
+        >
+            {asksToConfirm && (
+                <span
+                    id={descriptionId}
+                    hidden={true}
+                >
+                    {formatMessage(markAsReadMenuItemMessages.viewCategoryDescription, {numChannels})}
+                </span>
+            )}
+        </Menu.Item>
     );
 };
 

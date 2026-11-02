@@ -4,7 +4,7 @@
 import classNames from 'classnames';
 import React, {memo, useState} from 'react';
 import type {MouseEvent, KeyboardEvent} from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {
@@ -28,6 +28,36 @@ import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
 import * as Menu from 'components/menu';
 
 import Constants from 'utils/constants';
+import {describeActions, describeChoices} from 'utils/popup_descriptions';
+
+import {getCategoryAgentomId} from './sidebar_category_menu';
+
+const messages = defineMessages({
+    sort: {
+        id: 'sidebar.sort',
+        defaultMessage: 'Sort',
+    },
+    sortAlphabetically: {
+        id: 'user.settings.sidebar.sortAlpha',
+        defaultMessage: 'Alphabetically',
+    },
+    sortByRecency: {
+        id: 'sidebar.sortedByRecencyLabel',
+        defaultMessage: 'Recent activity',
+    },
+    show: {
+        id: 'sidebar.show',
+        defaultMessage: 'Show',
+    },
+    showAll: {
+        id: 'channel_notifications.levels.all',
+        defaultMessage: 'All',
+    },
+    openDirectMessage: {
+        id: 'sidebar.openDirectMessage',
+        defaultMessage: 'Open a direct message',
+    },
+});
 
 type Props = {
     category: ChannelCategory;
@@ -39,7 +69,8 @@ const SidebarCategorySortingMenu = ({
     handleOpenDirectMessagesModal,
 }: Props) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const {formatMessage} = useIntl();
+    const intl = useIntl();
+    const {formatMessage} = intl;
 
     const dispatch = useDispatch();
     const selectedDmNumber = useSelector(getVisibleDmGmLimit);
@@ -66,46 +97,45 @@ const SidebarCategorySortingMenu = ({
         sortDirectMessagesIcon = <SortAlphabeticalAscendingIcon size={18}/>;
     }
 
+    // The sort orders the submenu offers; the category's own is the checked one
+    const sortChoices = [
+        {id: `sortAlphabetical-${category.id}`, sorting: CategorySorting.Alphabetical, label: messages.sortAlphabetically},
+        {id: `sortByMostRecent-${category.id}`, sorting: CategorySorting.Recency, label: messages.sortByRecency},
+    ];
+    const sortChoicesId = `sortDirectMessages-${category.id}-choices`;
+
     const sortDirectMessagesMenuItem = (
         <Menu.SubMenu
             id={`sortDirectMessages-${category.id}`}
             leadingElement={sortDirectMessagesIcon}
-            labels={(
-                <FormattedMessage
-                    id='sidebar.sort'
-                    defaultMessage='Sort'
-                />
-            )}
+            labels={<FormattedMessage {...messages.sort}/>}
             trailingElements={
                 <>
                     {sortDirectMessagesSelectedValue}
                     <ChevronRightIcon size={16}/>
+                    <span
+                        id={sortChoicesId}
+                        hidden={true}
+                    >
+                        {describeChoices(intl, sortChoices.map((choice) => choice.label))}
+                    </span>
                 </>
             }
+            aria-describedby={sortChoicesId}
             menuId={`sortDirectMessages-${category.id}-menu`}
         >
-            <Menu.Item
-                id={`sortAlphabetical-${category.id}`}
-                labels={(
-                    <FormattedMessage
-                        id='user.settings.sidebar.sortAlpha'
-                        defaultMessage='Alphabetically'
-                    />
-                )}
-                onClick={() => handleSortDirectMessages(CategorySorting.Alphabetical)}
-                trailingElements={category.sorting === CategorySorting.Alphabetical ? <CheckIcon size={16}/> : null}
-            />
-            <Menu.Item
-                id={`sortByMostRecent-${category.id}`}
-                labels={(
-                    <FormattedMessage
-                        id='sidebar.sortedByRecencyLabel'
-                        defaultMessage='Recent activity'
-                    />
-                )}
-                onClick={() => handleSortDirectMessages(CategorySorting.Recency)}
-                trailingElements={category.sorting === CategorySorting.Recency ? <CheckIcon size={16}/> : null}
-            />
+            {sortChoices.map((choice) => (
+                <Menu.Item
+                    key={choice.id}
+                    id={choice.id}
+                    role='menuitemradio'
+                    aria-checked={category.sorting === choice.sorting}
+                    forceCloseOnSelect={true}
+                    labels={<FormattedMessage {...choice.label}/>}
+                    onClick={() => handleSortDirectMessages(choice.sorting)}
+                    trailingElements={category.sorting === choice.sorting ? <CheckIcon size={16}/> : null}
+                />
+            ))}
         </Menu.SubMenu>
 
     );
@@ -121,36 +151,37 @@ const SidebarCategorySortingMenu = ({
 
     let showMessagesCountSelectedValue = <span>{selectedDmNumber}</span>;
     if (selectedDmNumber === 10000) {
-        showMessagesCountSelectedValue = (
-            <FormattedMessage
-                id='channel_notifications.levels.all'
-                defaultMessage='All'
-            />
-        );
+        showMessagesCountSelectedValue = <FormattedMessage {...messages.showAll}/>;
     }
+    const showChoicesId = `showMessagesCount-${category.id}-choices`;
 
     const showMessagesCountMenuItem = (
         <Menu.SubMenu
             id={`showMessagesCount-${category.id}`}
             leadingElement={<AccountMultipleOutlineIcon size={18}/>}
-            labels={(
-                <FormattedMessage
-                    id='sidebar.show'
-                    defaultMessage='Show'
-                />
-            )}
+            labels={<FormattedMessage {...messages.show}/>}
             trailingElements={(
                 <>
                     {showMessagesCountSelectedValue}
                     <ChevronRightIcon size={16}/>
+                    <span
+                        id={showChoicesId}
+                        hidden={true}
+                    >
+                        {describeChoices(intl, Constants.DM_AND_GM_SHOW_COUNTS.map((dmGmShowCount) => String(dmGmShowCount)))}
+                    </span>
                 </>
             )}
+            aria-describedby={showChoicesId}
             menuId={`showMessagesCount-${category.id}-menu`}
         >
             {Constants.DM_AND_GM_SHOW_COUNTS.map((dmGmShowCount) => (
                 <Menu.Item
                     id={`showDmCount-${category.id}-${dmGmShowCount}`}
                     key={`showDmCount-${category.id}-${dmGmShowCount}`}
+                    role='menuitemradio'
+                    aria-checked={selectedDmNumber === dmGmShowCount}
+                    forceCloseOnSelect={true}
                     labels={<span>{dmGmShowCount}</span>}
                     onClick={() => handlelimitVisibleDMsGMs(dmGmShowCount)}
                     trailingElements={selectedDmNumber === dmGmShowCount ? <CheckIcon size={16}/> : null}
@@ -165,14 +196,12 @@ const SidebarCategorySortingMenu = ({
             id={`openDirectMessage-${category.id}`}
             onClick={handleOpenDirectMessagesModal}
             leadingElement={<AccountPlusOutlineIcon size={18}/>}
-            labels={(
-                <FormattedMessage
-                    id='sidebar.openDirectMessage'
-                    defaultMessage='Open a direct message'
-                />
-            )}
+            labels={<FormattedMessage {...messages.openDirectMessage}/>}
         />
     );
+
+    const descriptionId = `SidebarCategorySortingMenu-Description-${category.id}`;
+    const agentomId = `${getCategoryAgentomId(category)}.options`;
 
     function handleMenuToggle(isOpen: boolean) {
         setIsMenuOpen(isOpen);
@@ -191,6 +220,8 @@ const SidebarCategorySortingMenu = ({
                 menuButton={{
                     id: `SidebarCategorySortingMenu-Button-${category.id}`,
                     'aria-label': formatMessage({id: 'sidebar_left.sidebar_category_menu.editCategory', defaultMessage: '{name} category options'}, {name: category.display_name}),
+                    'aria-describedby': descriptionId,
+                    agentomId,
                     class: 'SidebarMenu_menuButton sortingMenu',
                     children: <DotsVerticalIcon size={16}/>,
                 }}
@@ -209,6 +240,12 @@ const SidebarCategorySortingMenu = ({
                 <Menu.Separator/>
                 {openDirectMessageMenuItem}
             </Menu.Container>
+            <span
+                id={descriptionId}
+                hidden={true}
+            >
+                {describeActions(intl, [messages.sort, messages.show, messages.openDirectMessage])}
+            </span>
         </div>
     );
 };

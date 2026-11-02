@@ -114,6 +114,31 @@ describe('menu click handlers', () => {
         expect(screen.getByText('A Modal')).toBeInTheDocument();
     });
 
+    test('should open a submenu when its item is clicked, without hovering it first', async () => {
+        renderWithContext(
+            <MenuWithSubMenuModal/>,
+        );
+
+        await userEvent.click(screen.getByLabelText('menu with modal button'));
+
+        // A click with no hover first, as a pointer that doesn't move (or an agent's executor) sends it
+        await userEvent.click(screen.getByText('Open submenu'), {skipHover: true});
+
+        expect(screen.getByText('Open modal from submenu')).toBeInTheDocument();
+        expect(screen.getByText('Open submenu').closest('li')).toHaveAttribute('aria-expanded', 'true');
+
+        // The click opened the submenu and left open the menu that holds it
+        expect(screen.getByLabelText('menu with modal button')).toHaveAttribute('aria-expanded', 'true');
+
+        await userEvent.click(screen.getByText('Open modal from submenu'), {skipHover: true});
+
+        await waitFor(() => {
+            expect(screen.queryByText('Open submenu')).not.toBeInTheDocument();
+        });
+
+        expect(screen.getByText('A Modal')).toBeInTheDocument();
+    });
+
     for (const enterOrSpace of ['enter', 'space']) {
         const key = enterOrSpace === 'space' ? ' ' : '{enter}';
 

@@ -306,4 +306,51 @@ describe('components/sidebar/sidebar_channel/sidebar_channel_menu', () => {
         await openMenu();
         expect(screen.queryByRole('menuitem', {name: 'Open in new window'})).not.toBeInTheDocument();
     });
+
+    test('should mark leaving a channel that asks to confirm as destructive, and leaving at once as sensitive', async () => {
+        const {unmount} = renderWithContext(
+            <SidebarChannelMenu
+                {...baseProps}
+                channel={{...baseProps.channel, type: 'P' as ChannelType}}
+                channelLeaveHandler={jest.fn()}
+                channelLeaveNeedsConfirmation={true}
+                agentomId='channel.private-channel.options'
+            />,
+        );
+
+        await openMenu();
+        let leaveItem = screen.getByRole('menuitem', {name: 'Leave Channel'});
+        expect(leaveItem).toHaveAttribute('data-agentom-id', 'channel.private-channel.options.leave');
+        expect(leaveItem).toHaveAttribute('data-agentom-risk', 'destructive');
+        expect(leaveItem).toHaveAttribute('data-agentom-confirmation', 'required');
+        unmount();
+
+        renderWithContext(
+            <SidebarChannelMenu
+                {...baseProps}
+                channelLeaveHandler={jest.fn()}
+                channelLeaveNeedsConfirmation={false}
+                agentomId='channel.public-channel.options'
+            />,
+        );
+
+        await openMenu();
+        leaveItem = screen.getByRole('menuitem', {name: 'Leave Channel'});
+        expect(leaveItem).toHaveAttribute('data-agentom-risk', 'sensitive');
+        expect(leaveItem).not.toHaveAttribute('data-agentom-confirmation');
+    });
+
+    test('should name its button by the channel as the sidebar shows it, and describe what the menu offers', () => {
+        renderWithContext(
+            <SidebarChannelMenu
+                {...baseProps}
+                channelLabel='Some Channel'
+                agentomId='channel.some-channel.options'
+            />,
+        );
+
+        const menuButton = screen.getByRole('button', {name: 'Channel options for {channelName}'});
+        expect(menuButton).toHaveAttribute('data-agentom-id', 'channel.some-channel.options');
+        expect(menuButton).toHaveAccessibleDescription('Actions: {list}');
+    });
 });

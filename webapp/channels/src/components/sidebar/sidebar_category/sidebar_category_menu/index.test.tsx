@@ -132,4 +132,30 @@ describe('components/sidebar/sidebar_category/sidebar_category_menu', () => {
 
         expect(screen.getByRole('menuitem', {name: /mute category/i})).toBeInTheDocument();
     });
+
+    test('should mark deleting as destructive, name its choices, and open Sort with a click alone', async () => {
+        renderWithContext(
+            <SidebarCategoryMenu {...baseProps}/>,
+            initialState,
+        );
+
+        const menuButton = screen.getByRole('button', {name: /custom_category_1 category options/i});
+        expect(menuButton).toHaveAttribute('data-agentom-id', 'category.custom_category_1.options');
+        expect(menuButton).toHaveAccessibleDescription('Actions: Mark category as read, Mute Category, Rename Category, Delete Category, Sort, Create New Category');
+
+        await userEvent.click(menuButton);
+
+        const deleteItem = screen.getByRole('menuitem', {name: /delete category/i});
+        expect(deleteItem).toHaveAttribute('aria-haspopup', 'dialog');
+        expect(deleteItem).toHaveAttribute('data-agentom-risk', 'destructive');
+        expect(deleteItem).toHaveAttribute('data-agentom-confirmation', 'required');
+
+        const sortItem = screen.getByRole('menuitem', {name: /sort/i});
+        expect(sortItem).toHaveAccessibleDescription('Choices: Alphabetically, Recent activity, Manually');
+
+        // A click with no hover first opens the submenu, whose current choice is checked
+        await userEvent.click(sortItem, {skipHover: true});
+        expect(screen.getByRole('menuitemradio', {name: 'Alphabetically'})).toHaveAttribute('aria-checked', 'true');
+        expect(screen.getByRole('menuitemradio', {name: 'Manually'})).toHaveAttribute('aria-checked', 'false');
+    });
 });

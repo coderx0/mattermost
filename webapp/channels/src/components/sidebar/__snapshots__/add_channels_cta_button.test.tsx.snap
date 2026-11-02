@@ -4,9 +4,11 @@ exports[`components/new_channel_modal should match snapshot 1`] = `
 <div>
   <button
     aria-controls="AddChannelCtaDropdown"
+    aria-describedby="addChannelsCtaDescription"
     aria-expanded="false"
     aria-haspopup="true"
     class="SidebarChannelNavigator__addChannelsCtaLhsButton SidebarChannelNavigator__addChannelsCtaLhsButton--untouched"
+    data-agentom-id="sidebar.add-channels"
     id="addChannelsCta"
   >
     <i
@@ -15,6 +17,12 @@ exports[`components/new_channel_modal should match snapshot 1`] = `
     />
     Add Channels
   </button>
+  <span
+    hidden=""
+    id="addChannelsCtaDescription"
+  >
+    Actions: Browse channels, Create new channel
+  </span>
 </div>
 `;
 

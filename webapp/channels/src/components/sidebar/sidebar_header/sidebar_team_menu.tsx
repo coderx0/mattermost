@@ -2,7 +2,8 @@
 // See LICENSE.txt for license information.
 
 import React, {useCallback} from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
+import type {MessageDescriptor} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 
@@ -40,9 +41,11 @@ import TeamMembersModal from 'components/team_members_modal';
 import TeamSettingsModal from 'components/team_settings_modal';
 import RestrictedIndicator from 'components/widgets/menu/menu_items/restricted_indicator';
 
+import {agentomIdSegment} from 'utils/agentom_ids';
 import {FREEMIUM_TO_ENTERPRISE_TRIAL_LENGTH_DAYS} from 'utils/cloud_utils';
 import {LicenseSkus, ModalIdentifiers, MattermostFeatures, CloudProducts} from 'utils/constants';
 import {isCloudLicense} from 'utils/license_utils';
+import {describeActions} from 'utils/popup_descriptions';
 
 import type {GlobalState} from 'types/store';
 
@@ -50,7 +53,51 @@ interface Props {
     currentTeam: Team;
 }
 
+const messages = defineMessages({
+    invitePeople: {
+        id: 'sidebarLeft.teamMenu.invitePeopleMenuItem.primaryLabel',
+        defaultMessage: 'Invite people',
+    },
+    addGroupsToTeam: {
+        id: 'sidebarLeft.teamMenu.addGroupsToTeamMenuItem.primaryLabel',
+        defaultMessage: 'Add groups',
+    },
+    teamSettings: {
+        id: 'sidebarLeft.teamMenu.teamSettingsMenuItem.primaryLabel',
+        defaultMessage: 'Team settings',
+    },
+    viewMembers: {
+        id: 'sidebarLeft.teamMenu.viewMembersMenuItem.primaryLabel',
+        defaultMessage: 'View members',
+    },
+    manageMembers: {
+        id: 'sidebarLeft.teamMenu.manageMembersMenuItem.primaryLabel',
+        defaultMessage: 'Manage members',
+    },
+    manageGroups: {
+        id: 'sidebarLeft.teamMenu.manageGroupsMenuItem.primaryLabel',
+        defaultMessage: 'Manage groups',
+    },
+    leaveTeam: {
+        id: 'sidebarLeft.teamMenu.leaveTeamMenuItem.primaryLabel',
+        defaultMessage: 'Leave team',
+    },
+    joinAnotherTeam: {
+        id: 'sidebarLeft.teamMenu.joinAnotherTeamMenuItem.primaryLabel',
+        defaultMessage: 'Join another team',
+    },
+    createTeam: {
+        id: 'sidebarLeft.teamMenu.createTeamMenuItem.primaryLabel',
+        defaultMessage: 'Create a team',
+    },
+    learnAboutTeams: {
+        id: 'sidebarLeft.teamMenu.learnAboutTeamsMenuItem.primaryLabel',
+        defaultMessage: 'Learn about teams',
+    },
+});
+
 export default function SidebarTeamMenu(props: Props) {
+    const intl = useIntl();
     const license = useSelector(getLicense);
     const config = useSelector(getConfig);
 
@@ -58,6 +105,10 @@ export default function SidebarTeamMenu(props: Props) {
     const havePermissionToManageTeam = useSelector((state: GlobalState) => haveICurrentTeamPermission(state, Permissions.MANAGE_TEAM));
     const havePermissionToAddUserToTeam = useSelector((state: GlobalState) => haveICurrentTeamPermission(state, Permissions.ADD_USER_TO_TEAM));
     const havePermissionToInviteGuest = useSelector((state: GlobalState) => haveICurrentTeamPermission(state, Permissions.INVITE_GUEST));
+    const havePermissionToRemoveUserFromTeam = useSelector((state: GlobalState) => haveICurrentTeamPermission(state, Permissions.REMOVE_USER_FROM_TEAM));
+    const havePermissionToManageTeamRoles = useSelector((state: GlobalState) => haveICurrentTeamPermission(state, Permissions.MANAGE_TEAM_ROLES));
+    const canManageMembers = havePermissionToRemoveUserFromTeam && havePermissionToManageTeamRoles;
+    const pluginInMainMenu = useSelector(getMainMenuPluginComponents);
     const isCloud = isCloudLicense(license);
     const isGuestAccessEnabled = config?.EnableGuestAccounts === 'true';
     const isTeamGroupConstrained = Boolean(props.currentTeam?.group_constrained);
@@ -69,56 +120,106 @@ export default function SidebarTeamMenu(props: Props) {
 
     const tooltipText = props.currentTeam.description ? props.currentTeam.description : props.currentTeam.display_name;
 
+    // Which items the menu shows, and so the actions its button's description names, in its order
+    const showInvitePeople = (isGuestAccessEnabled && havePermissionToInviteGuest) || havePermissionToAddUserToTeam;
+    const showGroupItems = isTeamGroupConstrained && isLicensedForLDAPGroups && havePermissionToManageTeam;
+    const showLeaveTeam = !isTeamGroupConstrained && experimentalPrimaryTeam !== props.currentTeam.name;
+
+    const actionLabels: Array<MessageDescriptor | string> = [];
+    if (showInvitePeople) {
+        actionLabels.push(messages.invitePeople);
+    }
+    if (showGroupItems) {
+        actionLabels.push(messages.addGroupsToTeam);
+    }
+    if (havePermissionToManageTeam) {
+        actionLabels.push(messages.teamSettings);
+    }
+    actionLabels.push(canManageMembers ? messages.manageMembers : messages.viewMembers);
+    if (showGroupItems) {
+        actionLabels.push(messages.manageGroups);
+    }
+    if (showLeaveTeam) {
+        actionLabels.push(messages.leaveTeam);
+    }
+    if (canJoinAnotherTeam) {
+        actionLabels.push(messages.joinAnotherTeam);
+    }
+    if (havePermissionToCreateTeam) {
+        actionLabels.push(messages.createTeam);
+    }
+    actionLabels.push(messages.learnAboutTeams);
+    for (const plugin of pluginInMainMenu) {
+        if (typeof plugin.text === 'string') {
+            actionLabels.push(plugin.text);
+        }
+    }
+
+    const agentomId = `team.${agentomIdSegment(props.currentTeam.name)}.menu`;
+
     return (
-        <Menu.Container
-            menuButton={{
-                id: 'sidebarTeamMenuButton',
-                class: buttonClassNames({emphasis: 'quaternary', size: 'sm'}, 'btn-inverted'),
-                children: (
-                    <>
-                        <span>{props.currentTeam.display_name}</span>
-                        <i className='icon icon-chevron-down'/>
-                    </>
-                ),
-            }}
-            menuButtonTooltip={{
-                text: tooltipText,
-            }}
-            menu={{
-                id: 'sidebarTeamMenu',
-            }}
-        >
-            {((isGuestAccessEnabled && havePermissionToInviteGuest) || havePermissionToAddUserToTeam) && (
-                <InvitePeopleMenuItem/>
-            )}
-            {isTeamGroupConstrained && isLicensedForLDAPGroups && havePermissionToManageTeam && (
-                <AddGroupsToTeamMenuItem/>
-            )}
-            {havePermissionToManageTeam && (
-                <TeamSettingsMenuItem/>
-            )}
-            <ManageViewMembersMenuItem/>
-            {(isTeamGroupConstrained && isLicensedForLDAPGroups && havePermissionToManageTeam) && (
-                <ManageGroupsMenuItem
-                    teamID={props.currentTeam.id}
-                />
-            )}
-            {(!isTeamGroupConstrained && experimentalPrimaryTeam !== props.currentTeam.name) && (
-                <LeaveTeamMenuItem/>
-            )}
-            {(canJoinAnotherTeam || havePermissionToCreateTeam) && <Menu.Separator/>}
-            {canJoinAnotherTeam &&
-                <JoinAnotherTeamMenuItem/>
-            }
-            {havePermissionToCreateTeam && (
-                <CreateTeamMenuItem
-                    isCloud={isCloud}
-                />
-            )}
-            <Menu.Separator/>
-            <LearnAboutTeamsMenuItem/>
-            <PluginMenuItems/>
-        </Menu.Container>
+        <>
+            <Menu.Container
+                menuButton={{
+                    id: 'sidebarTeamMenuButton',
+                    class: buttonClassNames({emphasis: 'quaternary', size: 'sm'}, 'btn-inverted'),
+                    'aria-describedby': 'sidebarTeamMenuButtonDescription',
+                    agentomId,
+                    children: (
+                        <>
+                            <span>{props.currentTeam.display_name}</span>
+                            <i
+                                className='icon icon-chevron-down'
+                                aria-hidden='true'
+                            />
+                        </>
+                    ),
+                }}
+                menuButtonTooltip={{
+                    text: tooltipText,
+                }}
+                menu={{
+                    id: 'sidebarTeamMenu',
+                }}
+            >
+                {showInvitePeople && (
+                    <InvitePeopleMenuItem/>
+                )}
+                {showGroupItems && (
+                    <AddGroupsToTeamMenuItem/>
+                )}
+                {havePermissionToManageTeam && (
+                    <TeamSettingsMenuItem/>
+                )}
+                <ManageViewMembersMenuItem canManageMembers={canManageMembers}/>
+                {showGroupItems && (
+                    <ManageGroupsMenuItem
+                        teamID={props.currentTeam.id}
+                    />
+                )}
+                {showLeaveTeam && (
+                    <LeaveTeamMenuItem agentomId={`${agentomId}.leave`}/>
+                )}
+                {(canJoinAnotherTeam || havePermissionToCreateTeam) && <Menu.Separator/>}
+                {canJoinAnotherTeam &&
+                    <JoinAnotherTeamMenuItem/>
+                }
+                {havePermissionToCreateTeam && (
+                    <CreateTeamMenuItem
+                        isCloud={isCloud}
+                    />
+                )}
+                <Menu.Separator/>
+                <LearnAboutTeamsMenuItem/>
+                <PluginMenuItems/>
+            </Menu.Container>
+            <span
+                id='sidebarTeamMenuButtonDescription'
+                hidden={true}
+            >
+                {describeActions(intl, actionLabels)}
+            </span>
+        </>
     );
 }
 
@@ -146,10 +247,7 @@ function InvitePeopleMenuItem(props: Menu.FirstMenuItemProps) {
             )}
             labels={(
                 <>
-                    <FormattedMessage
-                        id='sidebarLeft.teamMenu.invitePeopleMenuItem.primaryLabel'
-                        defaultMessage='Invite people'
-                    />
+                    <FormattedMessage {...messages.invitePeople}/>
                     <FormattedMessage
                         id='sidebarLeft.teamMenu.invitePeopleMenuItem.secondaryLabel'
                         defaultMessage='Add or invite people to the team'
@@ -184,12 +282,7 @@ function AddGroupsToTeamMenuItem(props: Menu.FirstMenuItemProps) {
                     aria-hidden='true'
                 />
             )}
-            labels={(
-                <FormattedMessage
-                    id='sidebarLeft.teamMenu.addGroupsToTeamMenuItem.primaryLabel'
-                    defaultMessage='Add groups'
-                />
-            )}
+            labels={<FormattedMessage {...messages.addGroupsToTeam}/>}
             aria-haspopup='dialog'
             {...props}
         />
@@ -219,23 +312,15 @@ function TeamSettingsMenuItem(props: Menu.FirstMenuItemProps) {
                 />
             )}
             onClick={handleClick}
-            labels={(
-                <FormattedMessage
-                    id='sidebarLeft.teamMenu.teamSettingsMenuItem.primaryLabel'
-                    defaultMessage='Team settings'
-                />
-            )}
+            labels={<FormattedMessage {...messages.teamSettings}/>}
             aria-haspopup='dialog'
             {...props}
         />
     );
 }
 
-function ManageViewMembersMenuItem(props: Menu.FirstMenuItemProps) {
+function ManageViewMembersMenuItem({canManageMembers, ...props}: Menu.FirstMenuItemProps & {canManageMembers: boolean}) {
     const dispatch = useDispatch();
-
-    const havePermissionToRemoveUserFromTeam = useSelector((state: GlobalState) => haveICurrentTeamPermission(state, Permissions.REMOVE_USER_FROM_TEAM));
-    const havePermissionToManageTeamRoles = useSelector((state: GlobalState) => haveICurrentTeamPermission(state, Permissions.MANAGE_TEAM_ROLES));
 
     const handleClick = useCallback(() => {
         dispatch(openModal({
@@ -247,20 +332,7 @@ function ManageViewMembersMenuItem(props: Menu.FirstMenuItemProps) {
         }));
     }, [dispatch]);
 
-    let label = (
-        <FormattedMessage
-            id='sidebarLeft.teamMenu.viewMembersMenuItem.primaryLabel'
-            defaultMessage='View members'
-        />
-    );
-    if (havePermissionToRemoveUserFromTeam && havePermissionToManageTeamRoles) {
-        label = (
-            <FormattedMessage
-                id='sidebarLeft.teamMenu.manageMembersMenuItem.primaryLabel'
-                defaultMessage='Manage members'
-            />
-        );
-    }
+    const label = <FormattedMessage {...(canManageMembers ? messages.manageMembers : messages.viewMembers)}/>;
 
     return (
         <Menu.Item
@@ -304,18 +376,14 @@ function ManageGroupsMenuItem({teamID}: ManageGroupsMenuItemProps) {
                 />
             )}
             onClick={handleClick}
-            labels={(
-                <FormattedMessage
-                    id='sidebarLeft.teamMenu.manageGroupsMenuItem.primaryLabel'
-                    defaultMessage='Manage groups'
-                />
-            )}
+            labels={<FormattedMessage {...messages.manageGroups}/>}
             aria-haspopup='dialog'
         />
     );
 }
 
-function LeaveTeamMenuItem() {
+// Leaving asks for confirmation first, and can't be undone: rejoining a private team takes an invitation
+function LeaveTeamMenuItem({agentomId}: {agentomId: string}) {
     const dispatch = useDispatch();
 
     const handleClick = useCallback(() => {
@@ -335,13 +403,11 @@ function LeaveTeamMenuItem() {
             )}
             onClick={handleClick}
             isDestructive={true}
-            labels={(
-                <FormattedMessage
-                    id='sidebarLeft.teamMenu.leaveTeamMenuItem.primaryLabel'
-                    defaultMessage='Leave team'
-                />
-            )}
+            labels={<FormattedMessage {...messages.leaveTeam}/>}
             aria-haspopup='dialog'
+            data-agentom-id={agentomId}
+            data-agentom-risk='destructive'
+            data-agentom-confirmation='required'
         />
     );
 }
@@ -362,12 +428,7 @@ function JoinAnotherTeamMenuItem() {
                 />
             )}
             onClick={handleClick}
-            labels={(
-                <FormattedMessage
-                    id='sidebarLeft.teamMenu.joinAnotherTeamMenuItem.primaryLabel'
-                    defaultMessage='Join another team'
-                />
-            )}
+            labels={<FormattedMessage {...messages.joinAnotherTeam}/>}
         />
     );
 }
@@ -404,12 +465,7 @@ function CreateTeamMenuItem({isCloud}: CreateTeamMenuItemProps) {
                 />
             )}
             onClick={handleClick}
-            labels={(
-                <FormattedMessage
-                    id='sidebarLeft.teamMenu.createTeamMenuItem.primaryLabel'
-                    defaultMessage='Create a team'
-                />
-            )}
+            labels={<FormattedMessage {...messages.createTeam}/>}
             trailingElements={isTeamCreateRestricted && <RestrictedIndicatorForCreateTeam isFreeTrial={isFreeTrial}/>}
         />
     );
@@ -476,12 +532,7 @@ function LearnAboutTeamsMenuItem() {
                     aria-hidden='true'
                 />
             )}
-            labels={(
-                <FormattedMessage
-                    id='sidebarLeft.teamMenu.learnAboutTeamsMenuItem.primaryLabel'
-                    defaultMessage='Learn about teams'
-                />
-            )}
+            labels={<FormattedMessage {...messages.learnAboutTeams}/>}
         />
     );
 }

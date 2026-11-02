@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import React, {useCallback, useMemo} from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
 import type {UserProfile} from '@mattermost/types/users';
@@ -21,6 +21,26 @@ import type {Option, OptionValue} from '../types';
 const MAX_SELECTABLE_VALUES = Constants.MAX_USERS_IN_GM - 1;
 export const USERS_PER_PAGE = 50;
 
+export const moreDirectChannelsMessages = defineMessages({
+
+    // What the dialog asks for, for the controls that open it
+    dialogDescription: {
+        id: 'more_direct_channels.dialog.description',
+        defaultMessage: 'Asks for up to {maxPeople, number} people, then opens a direct message with one of them or a group message with several',
+    },
+
+    // The rule of the search, from makeSearchProfilesStartingWithTerm and searchProfilesInCurrentTeam (both
+    // filterProfilesStartingWithTerm and nameSuggestionsForUser) and makeGetOptions; typing is debounced
+    searchDescription: {
+        id: 'more_direct_channels.search.description',
+        defaultMessage: "Finds {scope, select, team {this team's members} other {people}}, and your direct and group messages with them, by the start of a username (or of any part of it after a period, hyphen or underscore), first name, last name, full name, nickname, word of their position, or email address (only the part before the @, unless you type an @), ignoring case and a leading @. Your recent conversations come first. With no text, it lists your 20 most recent conversations. Results update as you type.",
+    },
+    submitDescription: {
+        id: 'more_direct_channels.go.description',
+        defaultMessage: 'Opens a direct message with the person added, or a group message with everyone added, up to {maxPeople, number} people',
+    },
+});
+
 type Props = {
     addValue: (value: OptionValue) => void;
     currentUserId: string;
@@ -34,6 +54,11 @@ type Props = {
     saving: boolean;
     search: (term: string) => void;
     selectedItemRef: React.RefObject<HTMLDivElement | null>;
+
+    /**
+     * Whom the search finds: anyone, or only the current team's members
+     */
+    searchScope?: 'all' | 'team';
     totalCount: number;
     users: UserProfile[];
 
@@ -167,6 +192,8 @@ const List = React.forwardRef((props: Props, ref?: React.Ref<MultiSelect<OptionV
             users={props.users}
             totalCount={props.totalCount}
             placeholderText={intl.formatMessage({id: 'multiselect.placeholder', defaultMessage: 'Search for people'})}
+            searchDescription={intl.formatMessage(moreDirectChannelsMessages.searchDescription, {scope: props.searchScope ?? 'team'})}
+            submitDescription={intl.formatMessage(moreDirectChannelsMessages.submitDescription, {maxPeople: MAX_SELECTABLE_VALUES})}
         />
     );
 });

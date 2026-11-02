@@ -553,6 +553,7 @@ function ChannelSettingsInfoTab({
             {!isDMorGroupChannel && (
                 <PublicPrivateSelector
                     className='ChannelSettingsModal__typeSelector'
+                    ariaLabel={formatMessage({id: 'channel_modal.type.ariaLabel', defaultMessage: 'Channel type'})}
                     selected={channelType}
                     publicButtonProps={{
                         title: formatMessage({id: 'channel_modal.type.public.title', defaultMessage: 'Public Channel'}),

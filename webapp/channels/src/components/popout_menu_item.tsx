@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, defineMessages} from 'react-intl';
 
 import {DockWindowIcon} from '@mattermost/compass-icons/components';
 
@@ -13,6 +13,13 @@ import {canPopout} from 'utils/popouts/popout_windows';
 
 export type PopoutMenuItemProps = Omit<MenuItemProps, 'labels' | 'leadingElement'>;
 
+export const popoutMenuItemMessages = defineMessages({
+    openInNewWindow: {
+        id: 'popout_menu_item.openInNewWindow',
+        defaultMessage: 'Open in new window',
+    },
+});
+
 export default function PopoutMenuItem({onClick, id = 'openInNewWindow', ...rest}: PopoutMenuItemProps) {
     if (!canPopout()) {
         return null;
@@ -22,12 +29,7 @@ export default function PopoutMenuItem({onClick, id = 'openInNewWindow', ...rest
         <Menu.Item
             id={id}
             leadingElement={<DockWindowIcon size={18}/>}
-            labels={
-                <FormattedMessage
-                    id='popout_menu_item.openInNewWindow'
-                    defaultMessage='Open in new window'
-                />
-            }
+            labels={<FormattedMessage {...popoutMenuItemMessages.openInNewWindow}/>}
             onClick={onClick}
             {...rest}
         />

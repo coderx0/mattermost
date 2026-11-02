@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import React, {useCallback} from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
 import {FolderPlusOutlineIcon} from '@mattermost/compass-icons/components';
@@ -18,11 +18,23 @@ type Props = {
     id: string;
 };
 
+export const createNewCategoryMenuItemMessages = defineMessages({
+    createCategory: {
+        id: 'sidebar_left.sidebar_category_menu.createCategory',
+        defaultMessage: 'Create New Category',
+    },
+    createCategoryDescription: {
+        id: 'sidebar_left.sidebar_category_menu.createCategory.description',
+        defaultMessage: 'Asks for a name, then creates the category',
+    },
+});
+
 const CreateNewCategoryMenuItem = ({
     id,
     ...otherProps
 }: Props) => {
     const dispatch = useDispatch();
+    const {formatMessage} = useIntl();
     const handleCreateCategory = useCallback(() => {
         dispatch(openModal({
             modalId: ModalIdentifiers.EDIT_CATEGORY,
@@ -30,20 +42,26 @@ const CreateNewCategoryMenuItem = ({
         }));
     }, [dispatch]);
 
+    // It opens a dialog that asks for the new category's name
+    const descriptionId = `create-${id}-description`;
+
     return (
         <Menu.Item
             id={`create-${id}`}
             onClick={handleCreateCategory}
-            aria-haspopup={true}
+            aria-haspopup='dialog'
+            aria-describedby={descriptionId}
             leadingElement={<FolderPlusOutlineIcon size={18}/>}
-            labels={(
-                <FormattedMessage
-                    id='sidebar_left.sidebar_category_menu.createCategory'
-                    defaultMessage='Create New Category'
-                />
-            )}
+            labels={<FormattedMessage {...createNewCategoryMenuItemMessages.createCategory}/>}
             {...otherProps}
-        />
+        >
+            <span
+                id={descriptionId}
+                hidden={true}
+            >
+                {formatMessage(createNewCategoryMenuItemMessages.createCategoryDescription)}
+            </span>
+        </Menu.Item>
     );
 };
 

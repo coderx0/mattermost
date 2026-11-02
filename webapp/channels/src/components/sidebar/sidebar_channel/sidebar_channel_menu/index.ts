@@ -26,9 +26,24 @@ import SidebarChannelMenu from './sidebar_channel_menu';
 
 export type OwnProps = {
     channel: Channel;
+
+    /**
+     * The channel's name as the sidebar shows it; the channel's display name when not given
+     */
+    channelLabel?: string;
     channelLink: string;
     isUnread: boolean;
     channelLeaveHandler?: (callback: () => void) => void;
+
+    /**
+     * Whether leaving the channel asks for confirmation first
+     */
+    channelLeaveNeedsConfirmation?: boolean;
+
+    /**
+     * The menu button's data-agentom-id; its leave item's id is built on it
+     */
+    agentomId?: string;
     onMenuToggle: (open: boolean) => void;
 };
 

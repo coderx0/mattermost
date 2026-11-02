@@ -19,7 +19,7 @@ describe('components/widgets/public-private-selector', () => {
 
         expect(screen.getByText('Public')).toBeInTheDocument();
         expect(screen.getByText('Private')).toBeInTheDocument();
-        expect(screen.queryAllByRole('button')).toHaveLength(2);
+        expect(screen.queryAllByRole('radio')).toHaveLength(2);
     });
 
     test('renders three buttons when one pluginOption is provided', () => {
@@ -42,7 +42,7 @@ describe('components/widgets/public-private-selector', () => {
         expect(screen.getByText('Public')).toBeInTheDocument();
         expect(screen.getByText('Private')).toBeInTheDocument();
         expect(screen.getByText('Plugin Option')).toBeInTheDocument();
-        expect(screen.queryAllByRole('button')).toHaveLength(3);
+        expect(screen.queryAllByRole('radio')).toHaveLength(3);
     });
 
     test('clicking plugin button fires onChange with plugin id', async () => {

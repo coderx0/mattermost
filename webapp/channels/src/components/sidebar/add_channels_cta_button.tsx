@@ -3,7 +3,8 @@
 
 import type {ReactNode, JSX} from 'react';
 import React, {useCallback} from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
+import type {MessageDescriptor} from 'react-intl';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {GlobeIcon, PlusIcon} from '@mattermost/compass-icons/components';
@@ -22,8 +23,20 @@ import * as Menu from 'components/menu';
 import NewChannelModal from 'components/new_channel_modal/new_channel_modal';
 
 import {ModalIdentifiers, Preferences, Touched} from 'utils/constants';
+import {describeActions} from 'utils/popup_descriptions';
 
 import type {GlobalState} from 'types/store';
+
+const messages = defineMessages({
+    browseChannels: {
+        id: 'sidebar_left.add_channel_dropdown.browseChannels',
+        defaultMessage: 'Browse channels',
+    },
+    createNewChannel: {
+        id: 'sidebar_left.add_channel_dropdown.createNewChannel',
+        defaultMessage: 'Create new channel',
+    },
+});
 
 // Left-align the menu with the icon in the LHS
 const anchorOrigin = {vertical: 'bottom', horizontal: 'left'} as const;
@@ -61,44 +74,34 @@ const AddChannelsCtaButton = (): JSX.Element | null => {
         }));
     };
 
-    const renderDropdownItems = () => {
-        const items: ReactNode[] = [];
-        if (canJoinPublicChannel) {
-            items.push(
-                <Menu.Item
-                    key='showMoreChannels'
-                    id='showMoreChannels'
-                    onClick={showMoreChannelsModal}
-                    leadingElement={<GlobeIcon size={18}/>}
-                    labels={
-                        <FormattedMessage
-                            id='sidebar_left.add_channel_dropdown.browseChannels'
-                            defaultMessage='Browse channels'
-                        />
-                    }
-                />,
-            );
-        }
+    // The menu's items and their labels, which also name them in the button's description
+    const dropdownItems: ReactNode[] = [];
+    const dropdownItemLabels: MessageDescriptor[] = [];
+    if (canJoinPublicChannel) {
+        dropdownItems.push(
+            <Menu.Item
+                key='showMoreChannels'
+                id='showMoreChannels'
+                onClick={showMoreChannelsModal}
+                leadingElement={<GlobeIcon size={18}/>}
+                labels={<FormattedMessage {...messages.browseChannels}/>}
+            />,
+        );
+        dropdownItemLabels.push(messages.browseChannels);
+    }
 
-        if (canCreateChannel) {
-            items.push(
-                <Menu.Item
-                    key='showNewChannel'
-                    id='showNewChannel'
-                    onClick={showNewChannelModal}
-                    leadingElement={<PlusIcon size={18}/>}
-                    labels={
-                        <FormattedMessage
-                            id='sidebar_left.add_channel_dropdown.createNewChannel'
-                            defaultMessage='Create new channel'
-                        />
-                    }
-                />,
-            );
-        }
-
-        return items;
-    };
+    if (canCreateChannel) {
+        dropdownItems.push(
+            <Menu.Item
+                key='showNewChannel'
+                id='showNewChannel'
+                onClick={showNewChannelModal}
+                leadingElement={<PlusIcon size={18}/>}
+                labels={<FormattedMessage {...messages.createNewChannel}/>}
+            />,
+        );
+        dropdownItemLabels.push(messages.createNewChannel);
+    }
 
     const storePreferencesAndTrackEvent = useCallback(() => {
         if (!touchedAddChannelsCtaButton) {
@@ -155,23 +158,33 @@ const AddChannelsCtaButton = (): JSX.Element | null => {
     }
 
     return (
-        <Menu.Container
-            anchorOrigin={anchorOrigin}
-            transformOrigin={transformOrigin}
-            menuButton={{
-                id: 'addChannelsCta',
-                class: buttonClass,
-                children: buttonContents,
-            }}
-            menu={{
-                id: 'AddChannelCtaDropdown',
-                className: 'AddChannelsCtaDropdown',
-                'aria-label': intl.formatMessage({id: 'sidebar_left.addChannelsCta', defaultMessage: 'Add Channels'}),
-                onToggle: handleMenuToggle,
-            }}
-        >
-            {renderDropdownItems()}
-        </Menu.Container>
+        <>
+            <Menu.Container
+                anchorOrigin={anchorOrigin}
+                transformOrigin={transformOrigin}
+                menuButton={{
+                    id: 'addChannelsCta',
+                    class: buttonClass,
+                    'aria-describedby': 'addChannelsCtaDescription',
+                    agentomId: 'sidebar.add-channels',
+                    children: buttonContents,
+                }}
+                menu={{
+                    id: 'AddChannelCtaDropdown',
+                    className: 'AddChannelsCtaDropdown',
+                    'aria-label': intl.formatMessage({id: 'sidebar_left.addChannelsCta', defaultMessage: 'Add Channels'}),
+                    onToggle: handleMenuToggle,
+                }}
+            >
+                {dropdownItems}
+            </Menu.Container>
+            <span
+                id='addChannelsCtaDescription'
+                hidden={true}
+            >
+                {describeActions(intl, dropdownItemLabels)}
+            </span>
+        </>
     );
 };
 

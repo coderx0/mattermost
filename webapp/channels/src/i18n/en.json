@@ -211,6 +211,10 @@
     "defaultMessage": "mentions",
     "description": "Screen reader text appended after a number in a sidebar channel's label to announce unread mentions (plural form); concatenated after the count."
   },
+  "accessibility.sidebar.types.muted": {
+    "defaultMessage": "muted",
+    "description": "Screen-reader word appended to a sidebar channel link's name when the channel is muted (lowercase, like the other words in that name)."
+  },
   "accessibility.sidebar.types.private": {
     "defaultMessage": "private channel",
     "description": "Screen-reader suffix appended to a private channel's name in the sidebar; lowercase, part of a composed aria-label."
@@ -19519,6 +19523,10 @@
     "defaultMessage": "The purpose exceeds the maximum of 250 characters",
     "description": "Validation error in the 'Create channel' dialog when the channel purpose exceeds the 250-character limit."
   },
+  "channel_modal.type.ariaLabel": {
+    "defaultMessage": "Channel type",
+    "description": "Accessible name of the group of Public/Private choices when creating a channel or editing its settings; not shown on screen."
+  },
   "channel_modal.type.private.description": {
     "defaultMessage": "Only invited members",
     "description": "Short description under the Private Channel option in the channel type selector (create channel / channel settings)."
@@ -21762,6 +21770,10 @@
   "edit_category_modal.helpText": {
     "defaultMessage": "Drag channels into this category to organize your sidebar.",
     "description": "Help text below the name input in the create-category modal; 'category' refers to a sidebar channel category."
+  },
+  "edit_category_modal.name.ariaLabel": {
+    "defaultMessage": "Category name",
+    "description": "Accessible name of the text field in the Create/Rename Category dialog; not shown on screen."
   },
   "edit_category_modal.placeholder": {
     "defaultMessage": "Name your category",
@@ -25663,6 +25675,10 @@
     "defaultMessage": "Channel type filter",
     "description": "Accessibility label for the channel-type filter dropdown in the Browse Channels modal."
   },
+  "more_channels.channel_type_filter.description": {
+    "defaultMessage": "{current}. {choices}",
+    "description": "Hidden description of the Browse Channels type filter button: {current} is its current label (e.g. 'Channel Type: All'), {choices} the list 'Choices: …'."
+  },
   "more_channels.channel_type_filter.filter_type_set": {
     "defaultMessage": "Channel type filter set to {filterType}",
     "description": "Screen-reader-only announcement in the Browse Channels dialog when the channel type filter changes; {filterType} is the selected filter's name."
@@ -25707,6 +25723,10 @@
     "defaultMessage": "Hide joined channels",
     "description": "Checkbox label in the Browse Channels dialog that hides channels the user has already joined."
   },
+  "more_channels.join.ariaLabel": {
+    "defaultMessage": "Join {channelName}",
+    "description": "Accessible name of a row's Join button in Browse Channels; {channelName} is the channel's display name."
+  },
   "more_channels.joined": {
     "defaultMessage": "Joined",
     "description": "Badge on a channel row in the Browse Channels modal indicating the user is already a member; compact space."
@@ -25714,6 +25734,10 @@
   "more_channels.joinedChannel": {
     "defaultMessage": "Joined channel {channelName}",
     "description": "Screen-reader-only announcement after the user successfully joins a channel from Browse Channels; {channelName} is the channel's name."
+  },
+  "more_channels.list.ariaLabel": {
+    "defaultMessage": "Channels",
+    "description": "Accessible name of the list of channels in the Browse Channels dialog; not shown on screen."
   },
   "more_channels.membership_indicator": {
     "defaultMessage": "Membership Indicator: Joined",
@@ -25771,6 +25795,22 @@
     "defaultMessage": "Request to join",
     "description": "Button on a discoverable private channel row in the Browse Channels modal that sends a join request; compact button."
   },
+  "more_channels.requestToJoin.ariaLabel": {
+    "defaultMessage": "Request to join {channelName}",
+    "description": "Accessible name of a row's 'Request to join' button in Browse Channels; {channelName} is the channel's display name."
+  },
+  "more_channels.results_status": {
+    "defaultMessage": "{count, plural, =0 {No channels} one {# channel} other {# channels}}{hasSearch, select, true { matching “{search}”} other {}}, {filterLabel}{hideJoined, select, true {, joined channels hidden} other {}}{hideArchived, select, true {, archived channels hidden} other {}}{paged, select, true {, showing {start, number}–{end, number}} other {}}",
+    "description": "Screen-reader status in Browse Channels saying what the list shows: the count, the search text, the channel type filter's label, which channels are hidden, and the rows on this page. Keep the select/plural structure."
+  },
+  "more_channels.results_status.updating": {
+    "defaultMessage": "Updating channels…",
+    "description": "Screen-reader status in Browse Channels while the list is being searched or loaded."
+  },
+  "more_channels.search.description": {
+    "defaultMessage": "Searches this team's channels, archived ones included: public channels, and private ones you belong to{discoverable, select, true { or that are discoverable} other {}}. A channel matches when its name, URL or purpose contains the text you type, ignoring case, or when each word you type starts a word of them. At most 50 channels are found; the channel type filter, Hide Joined and Hide Archived narrow them further. Results update as you type.",
+    "description": "Hidden description of the Browse Channels search field: what it searches and how the text matches. {discoverable} adds the part about discoverable private channels when that feature is on."
+  },
   "more_channels.searchError": {
     "defaultMessage": "Try searching different keywords, checking for typos or adjusting the filters.",
     "description": "Secondary message shown in the Browse Channels modal when a channel search returns no results."
@@ -25811,6 +25851,10 @@
     "defaultMessage": "View",
     "description": "Button on a channel row in the Browse Channels modal for channels the user already belongs to; opens the channel; 'View' is a verb; compact button."
   },
+  "more_channels.view.ariaLabel": {
+    "defaultMessage": "View {channelName}",
+    "description": "Accessible name of a row's View button in Browse Channels, for a channel you're a member of; {channelName} is the channel's display name."
+  },
   "more_channels.withdraw": {
     "defaultMessage": "Withdraw",
     "description": "Button in the Browse Channels modal that withdraws a pending join request; verb; compact button."
@@ -25823,6 +25867,14 @@
     "defaultMessage": "Withdraw request",
     "description": "Button label to withdraw a pending request to join a discoverable private channel; 'Withdraw' is a verb."
   },
+  "more_channels.withdrawRequest.ariaLabel": {
+    "defaultMessage": "Withdraw request to join {channelName}",
+    "description": "Accessible name of a row's Withdraw button in Browse Channels, which withdraws your request to join; {channelName} is the channel's display name."
+  },
+  "more_direct_channels.dialog.description": {
+    "defaultMessage": "Asks for up to {maxPeople, number} people, then opens a direct message with one of them or a group message with several",
+    "description": "Hidden description of the controls that open the Direct Messages dialog: what it asks for. {maxPeople} is the most people that can be added."
+  },
   "more_direct_channels.directchannel.deactivated": {
     "defaultMessage": "{displayname} - Deactivated",
     "description": "How a deactivated user appears in the Direct Messages people list; {displayname} is the user's display name."
@@ -25830,6 +25882,10 @@
   "more_direct_channels.directchannel.you": {
     "defaultMessage": "{displayname} (you)",
     "description": "How the current user appears in the Direct Messages people list; {displayname} is their display name and '(you)' marks it as themselves."
+  },
+  "more_direct_channels.go.description": {
+    "defaultMessage": "Opens a direct message with the person added, or a group message with everyone added, up to {maxPeople, number} people",
+    "description": "Hidden description of the Go button in the Direct Messages dialog. {maxPeople} is the most people that can be added."
   },
   "more_direct_channels.new_convo_add.label": {
     "defaultMessage": "Add option {label}",
@@ -25842,6 +25898,10 @@
   "more_direct_channels.new_convo_note.full": {
     "defaultMessage": "You've reached the maximum number of people for this conversation. Consider creating a private channel instead.",
     "description": "Note in the Direct Messages dialog when the maximum number of participants for a group message has been selected."
+  },
+  "more_direct_channels.search.description": {
+    "defaultMessage": "Finds {scope, select, team {this team's members} other {people}}, and your direct and group messages with them, by the start of a username (or of any part of it after a period, hyphen or underscore), first name, last name, full name, nickname, word of their position, or email address (only the part before the @, unless you type an @), ignoring case and a leading @. Your recent conversations come first. With no text, it lists your 20 most recent conversations. Results update as you type.",
+    "description": "Hidden description of the Direct Messages dialog's search field: whom it finds and how the text matches. {scope} is 'team' when only the team's members can be messaged."
   },
   "more_direct_channels.title": {
     "defaultMessage": "Direct Messages",
@@ -26839,6 +26899,14 @@
     "defaultMessage": "Open in new window",
     "description": "Menu item that opens the current view in a separate popped-out window."
   },
+  "popup_description.actions": {
+    "defaultMessage": "Actions: {list}",
+    "description": "Hidden description of a menu button listing the actions its menu offers; {list} is the items' labels, separated by commas."
+  },
+  "popup_description.choices": {
+    "defaultMessage": "Choices: {list}",
+    "description": "Hidden description of a control that opens a list of choices; {list} is the choices' labels, separated by commas."
+  },
   "post_body.check_for_out_of_channel_groups_mentions.message": {
     "defaultMessage": "did not get notified by this mention because they are not in the channel. They cannot be added to the channel because they are not a member of the linked groups. To add them to this channel, they must be added to the linked groups.",
     "description": "Ephemeral notice shown after mentioning group members who are not in the channel; concatenated after the list of mentioned usernames (e.g. '@user did not get notified...'); channel membership is controlled by linked LDAP groups."
@@ -27671,9 +27739,13 @@
     "defaultMessage": "Type to find a channel.",
     "description": "Help text under the search box in the channel switcher modal on mobile-width screens, where keyboard shortcuts don't apply."
   },
-  "quick_switch_modal.input": {
-    "defaultMessage": "quick switch input",
-    "description": "Accessible (screen reader) label of the text input in the channel switcher modal; not visible on screen."
+  "quick_switch_modal.input.description": {
+    "defaultMessage": "Finds your channels, public channels, direct and group messages, and people. A channel matches when its name or URL contains the text you type; a direct or group message also matches when a member's name, username, nickname or email address contains it (only the part before the @, unless you type an @). Several words, separated by spaces or commas, must each appear. People match when their name, username, nickname or email address contains the text. Case is ignored. Results update as you type; with no text, it lists up to 5 unread channels that aren't muted, and up to 20 recently viewed ones.",
+    "description": "Hidden description of the Find Channels (quick switcher) field: what it finds and how the text matches."
+  },
+  "quick_switch_modal.input.label": {
+    "defaultMessage": "Find channels",
+    "description": "Accessible name of the search field in the Find Channels (quick switcher) dialog; not shown on screen."
   },
   "quick_switch_modal.switchChannels": {
     "defaultMessage": "Find Channels",
@@ -29579,10 +29651,6 @@
     "defaultMessage": "Filter by unread",
     "description": "Tooltip on the sidebar filter toggle when it would enable showing only unread channels."
   },
-  "sidebar_left.channel_filter.filterUnreadAria": {
-    "defaultMessage": "unreads filter",
-    "description": "Accessible label for the unread-channels filter toggle in the channel sidebar."
-  },
   "sidebar_left.channel_filter.showAllChannels": {
     "defaultMessage": "Show all channels",
     "description": "Tooltip on the sidebar filter toggle when it would disable the unread filter and show all channels again."
@@ -29611,9 +29679,17 @@
     "defaultMessage": "Create New Category",
     "description": "Menu item in a sidebar category's options menu that opens the create category dialog."
   },
+  "sidebar_left.sidebar_category_menu.createCategory.description": {
+    "defaultMessage": "Asks for a name, then creates the category",
+    "description": "Hidden description of the Create New Category menu item: what its dialog asks for."
+  },
   "sidebar_left.sidebar_category_menu.deleteCategory": {
     "defaultMessage": "Delete Category",
     "description": "Destructive menu item in a sidebar category's options menu that deletes the custom category."
+  },
+  "sidebar_left.sidebar_category_menu.deleteCategory.description": {
+    "defaultMessage": "Asks for confirmation, then deletes the category. Its channels move back to the Channels and Direct Messages categories; you are not removed from any channel.",
+    "description": "Hidden description of the Delete Category menu item: what its dialog asks and what deleting does."
   },
   "sidebar_left.sidebar_category_menu.dropdownAriaLabel": {
     "defaultMessage": "Edit category menu",
@@ -29631,6 +29707,10 @@
     "defaultMessage": "Rename Category",
     "description": "Menu item in a sidebar category's options menu that opens the rename category dialog."
   },
+  "sidebar_left.sidebar_category_menu.renameCategory.description": {
+    "defaultMessage": "Asks for a new name, then renames the category",
+    "description": "Hidden description of the Rename Category menu item: what its dialog asks for."
+  },
   "sidebar_left.sidebar_category_menu.sort.dropdownAriaLabel": {
     "defaultMessage": "Sort submenu",
     "description": "Accessible label for the Sort submenu inside a sidebar category's options menu."
@@ -29642,6 +29722,10 @@
   "sidebar_left.sidebar_category_menu.viewCategory": {
     "defaultMessage": "Mark category as read",
     "description": "Menu item in a sidebar category's options menu that marks every channel in the category as read."
+  },
+  "sidebar_left.sidebar_category_menu.viewCategory.description": {
+    "defaultMessage": "Asks for confirmation, then marks the {numChannels} channels as read",
+    "description": "Hidden description of 'Mark category as read' when it asks for confirmation; {numChannels} is the number of unread channels (always more than one)."
   },
   "sidebar_left.sidebar_category.newDropBoxLabel": {
     "defaultMessage": "Drag channels here...",
@@ -29871,6 +29955,10 @@
     "defaultMessage": "More unreads",
     "description": "Indicator shown at the top or bottom edge of the channel sidebar when unread channels are scrolled out of view."
   },
+  "sidebarLeft.browserOrCreateChannelMenu.browseChannelsMenuItem.description": {
+    "defaultMessage": "Opens a list of the team's channels to search, view and join",
+    "description": "Hidden description of the 'Browse channels' item in the sidebar's + menu: what its dialog offers."
+  },
   "sidebarLeft.browserOrCreateChannelMenu.browseChannelsMenuItem.primaryLabel": {
     "defaultMessage": "Browse channels",
     "description": "Menu item in the sidebar's + (browse or create channels) menu that opens the channel browser."
@@ -29879,13 +29967,25 @@
     "defaultMessage": "Create new category",
     "description": "Menu item in the sidebar's + menu that opens the create sidebar category dialog."
   },
+  "sidebarLeft.browserOrCreateChannelMenu.createNewChannelMenuItem.description": {
+    "defaultMessage": "Asks for the channel's name, whether it's public or private, and its purpose, then creates the channel",
+    "description": "Hidden description of the 'Create new channel' item in the sidebar's + menu: what its dialog asks for."
+  },
   "sidebarLeft.browserOrCreateChannelMenu.createNewChannelMenuItem.primaryLabel": {
     "defaultMessage": "Create new channel",
     "description": "Menu item in the sidebar's + menu that opens the create channel dialog."
   },
+  "sidebarLeft.browserOrCreateChannelMenu.createUserGroupMenuItem.description": {
+    "defaultMessage": "Asks for the group's name, its mention and its members, then creates the group",
+    "description": "Hidden description of the 'Create new user group' item in the sidebar's + menu: what its dialog asks for."
+  },
   "sidebarLeft.browserOrCreateChannelMenu.createUserGroupMenuItem.primaryLabel": {
     "defaultMessage": "Create new user group",
     "description": "Menu item in the sidebar's + menu that opens the create user group dialog."
+  },
+  "sidebarLeft.browserOrCreateChannelMenu.invitePeopleMenuItem.description": {
+    "defaultMessage": "Asks for the people to invite, by name or email address, then invites them to the team",
+    "description": "Hidden description of the 'Invite people' item in the sidebar's + menu: what its dialog asks for."
   },
   "sidebarLeft.browserOrCreateChannelMenu.invitePeopleMenuItem.primaryLabel": {
     "defaultMessage": "Invite people",
@@ -30858,6 +30958,10 @@
   "team_settings.sync_status.syncing": {
     "defaultMessage": "Syncing...",
     "description": "Status text with a spinner shown in the membership sync footer while a membership sync job is running."
+  },
+  "team_sidebar.ariaLabel": {
+    "defaultMessage": "Teams",
+    "description": "Accessible name of the team sidebar (the column of team icons); not shown on screen."
   },
   "team_sidebar.join": {
     "defaultMessage": "Other teams you can join",

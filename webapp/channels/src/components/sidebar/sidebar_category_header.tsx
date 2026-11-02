@@ -30,6 +30,16 @@ export const SidebarCategoryHeaderStatic = React.forwardRef((props: StaticProps,
 SidebarCategoryHeaderStatic.displayName = 'SidebarCategoryHeaderStatic';
 
 type Props = StaticProps & {
+
+    /**
+     * The id of the header's button, which names the category's list
+     */
+    id?: string;
+
+    /**
+     * The id of the list of channels the button collapses and expands
+     */
+    controlsId?: string;
     dragHandleProps?: DraggableProvidedDragHandleProps | null;
     isCollapsed: boolean;
     isCollapsible: boolean;
@@ -42,8 +52,10 @@ type Props = StaticProps & {
 
 export const SidebarCategoryHeader = React.forwardRef(({
     children,
+    controlsId,
     displayName,
     dragHandleProps,
+    id,
     isCollapsed,
     isCollapsible = true,
     isDragging = false,
@@ -66,10 +78,12 @@ export const SidebarCategoryHeader = React.forwardRef(({
         >
             <button
                 ref={ref}
+                id={id}
                 className={classNames('SidebarChannelGroupHeader_groupButton')}
                 aria-label={displayName}
                 onClick={onClick}
                 aria-expanded={!isCollapsed}
+                aria-controls={controlsId}
             >
                 <i
                     className={classNames('icon icon-chevron-down', {

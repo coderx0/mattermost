@@ -869,7 +869,8 @@ describe('components/BrowseChannels', () => {
         });
         expect(screen.getByText('Archived Public')).toBeInTheDocument();
 
-        await user.click(screen.getByLabelText('Channel type filter'));
+        // The filter's items apply as the menu closes, so the closing menu (also named so) may still be there
+        await user.click(screen.getByRole('button', {name: 'Channel type filter'}));
         await user.click(await screen.findByText('Private channels'));
 
         await waitFor(() => {

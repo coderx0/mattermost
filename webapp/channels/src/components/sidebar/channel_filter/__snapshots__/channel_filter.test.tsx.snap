@@ -6,10 +6,13 @@ exports[`components/sidebar/channel_filter should match snapshot 1`] = `
     class="SidebarFilters"
   >
     <a
-      aria-label="unreads filter"
+      aria-label="Filter by unread"
+      aria-pressed="false"
       class="SidebarFilters_filterButton"
+      data-agentom-id="sidebar.unread-filter"
       data-testid="sidebar-unread-filter-button"
       href="#"
+      role="button"
     >
       <i
         class="icon icon-filter-variant"
@@ -25,10 +28,13 @@ exports[`components/sidebar/channel_filter should match snapshot if the unread f
     class="SidebarFilters"
   >
     <a
-      aria-label="unreads filter"
+      aria-label="Filter by unread"
+      aria-pressed="true"
       class="SidebarFilters_filterButton active"
+      data-agentom-id="sidebar.unread-filter"
       data-testid="sidebar-unread-filter-button"
       href="#"
+      role="button"
     >
       <i
         class="icon icon-filter-variant"

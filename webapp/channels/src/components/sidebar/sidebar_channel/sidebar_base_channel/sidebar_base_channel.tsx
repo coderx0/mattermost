@@ -64,6 +64,7 @@ const SidebarBaseChannel = ({
             label={channel.display_name}
             ariaLabelPrefix={ariaLabelPrefix}
             channelLeaveHandler={channelLeaveHandler!}
+            channelLeaveNeedsConfirmation={channelLeaveHandler === handleLeaveWithConfirmation}
             icon={channelIcon}
             isSharedChannel={channel.shared}
         />

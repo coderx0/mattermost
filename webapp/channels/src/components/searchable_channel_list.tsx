@@ -3,7 +3,7 @@
 
 import classNames from 'classnames';
 import React, {type JSX} from 'react';
-import {FormattedMessage, defineMessages, injectIntl, type WrappedComponentProps} from 'react-intl';
+import {FormattedMessage, defineMessages, injectIntl, type MessageDescriptor, type WrappedComponentProps} from 'react-intl';
 
 import {ArchiveOutlineIcon, CheckIcon, ChevronDownIcon, GlobeIcon, LockOutlineIcon, AccountOutlineIcon, GlobeCheckedIcon, AccountPlusOutlineIcon, ClockOutlineIcon} from '@mattermost/compass-icons/components';
 import {Button} from '@mattermost/shared/components/button';
@@ -22,6 +22,7 @@ import LoadingWrapper from 'components/widgets/loading/loading_wrapper';
 
 import Constants, {ModalIdentifiers} from 'utils/constants';
 import {isKeyPressed} from 'utils/keyboard';
+import {describeChoices} from 'utils/popup_descriptions';
 
 import type {FilterType} from './browse_channels/browse_channels';
 import {Filter} from './browse_channels/browse_channels';
@@ -209,16 +210,6 @@ export class SearchableChannelList extends React.PureComponent<Props, State> {
         // Join button that the server rejects for a private channel.
         const pendingRequest = isMember ? undefined : this.getPendingRequest(channel.id);
 
-        const ariaLabel = pendingRequest ?
-            this.props.intl.formatMessage(
-                {
-                    id: 'more_channels.requested.aria',
-                    defaultMessage: '{channelName}, join request pending',
-                },
-                {channelName: channel.display_name},
-            ) :
-            `${channel.display_name}, ${channel.purpose}`.toLowerCase();
-
         const discoverableIndicator = isDiscoverable ? (
             <div
                 className='discoverableIndicatorContainer'
@@ -261,6 +252,9 @@ export class SearchableChannelList extends React.PureComponent<Props, State> {
         //   discoverable           -> "Request to Join" (calls handleRequestToJoin)
         //   default                -> Join (existing public-channel behavior)
         //
+        // Each row's buttons are named for the channel they act on, as every row has them
+        const channelValues = {channelName: channel.display_name};
+
         const renderJoinOrViewButton = () => {
             const joinViewChannelButtonEmphasis = isMember ? 'secondary' : 'primary';
             const joinViewChannelButtonClass = isMember ? 'outlineButton' : 'primaryButton';
@@ -273,16 +267,13 @@ export class SearchableChannelList extends React.PureComponent<Props, State> {
                     className={joinViewChannelButtonClass}
                     disabled={Boolean(this.state.joiningChannel)}
                     tabIndex={-1}
-                    aria-label={isMember ? this.props.intl.formatMessage({id: 'more_channels.view', defaultMessage: 'View'}) : this.props.intl.formatMessage({id: 'joinChannel.JoinButton', defaultMessage: 'Join'})}
+                    aria-label={this.props.intl.formatMessage(isMember ? messages.viewChannel : messages.joinChannel, channelValues)}
                 >
                     <LoadingWrapper
                         loading={this.state.joiningChannel === channel.id}
                         text={messages.joiningButton}
                     >
-                        <FormattedMessage
-                            id={isMember ? 'more_channels.view' : 'joinChannel.JoinButton'}
-                            defaultMessage={isMember ? 'View' : 'Join'}
-                        />
+                        <FormattedMessage {...(isMember ? messages.view : messages.join)}/>
                     </LoadingWrapper>
                 </Button>
             );
@@ -297,7 +288,7 @@ export class SearchableChannelList extends React.PureComponent<Props, State> {
                 className='primaryButton'
                 disabled={Boolean(this.state.requestingChannel)}
                 tabIndex={-1}
-                aria-label={this.props.intl.formatMessage({id: 'more_channels.requestToJoin', defaultMessage: 'Request to join'})}
+                aria-label={this.props.intl.formatMessage(messages.requestToJoinChannel, channelValues)}
             >
                 <LoadingWrapper
                     loading={this.state.requestingChannel === channel.id}
@@ -318,7 +309,7 @@ export class SearchableChannelList extends React.PureComponent<Props, State> {
                 emphasis='tertiary'
                 size='sm'
                 disabled={Boolean(this.state.withdrawingChannel)}
-                aria-label={this.props.intl.formatMessage({id: 'more_channels.withdrawRequest', defaultMessage: 'Withdraw request'})}
+                aria-label={this.props.intl.formatMessage(messages.withdrawRequestForChannel, channelValues)}
             >
                 <LoadingWrapper
                     loading={this.state.withdrawingChannel === channel.id}
@@ -372,20 +363,39 @@ export class SearchableChannelList extends React.PureComponent<Props, State> {
             this.handleJoin(channel, e);
         };
 
+        // The row is a group named by its channel, holding the channel's details and its buttons; a pending
+        // request to join it is its description
+        const channelNameId = `channelName-${channel.id}`;
+        const pendingRequestId = `channelPendingRequest-${channel.id}`;
+
         return (
             <div
                 className='more-modal__row'
                 key={channel.id}
                 id={`ChannelRow-${channel.name}`}
                 data-testid={`ChannelRow-${channel.name}`}
-                aria-label={ariaLabel}
+                role='group'
+                aria-labelledby={channelNameId}
+                aria-describedby={pendingRequest ? pendingRequestId : undefined}
                 onClick={handleRowClick}
                 tabIndex={0}
             >
                 <div className='more-modal__details'>
                     <div className='style--none more-modal__name'>
                         {channelTypeIcon}
-                        <span id='channelName'>{channel.display_name}</span>
+                        <span id={channelNameId}>{channel.display_name}</span>
+                        {pendingRequest && (
+                            <span
+                                id={pendingRequestId}
+                                hidden={true}
+                            >
+                                <FormattedMessage
+                                    id='more_channels.requested.aria'
+                                    defaultMessage='{channelName}, join request pending'
+                                    values={{channelName: channel.display_name}}
+                                />
+                            </span>
+                        )}
                         {sharedChannelIcon}
                     </div>
                     {channelPurposeContainer}
@@ -527,57 +537,7 @@ export class SearchableChannelList extends React.PureComponent<Props, State> {
         }
     };
     getFilterLabel = () => {
-        switch (this.props.filter) {
-        case Filter.Archived:
-            return (
-                <FormattedMessage
-                    id='more_channels.show_archived_channels'
-                    defaultMessage='Channel Type: Archived'
-                />
-            );
-        case Filter.Public:
-            return (
-                <FormattedMessage
-                    id='more_channels.show_public_channels'
-                    defaultMessage='Channel Type: Public'
-                />
-            );
-        case Filter.Private:
-            return (
-                <FormattedMessage
-                    id='more_channels.show_private_channels'
-                    defaultMessage='Channel Type: Private'
-                />
-            );
-        case Filter.Recommended:
-            return (
-                <FormattedMessage
-                    id='more_channels.show_recommended_channels'
-                    defaultMessage='Recommended channels'
-                />
-            );
-        case Filter.Discoverable:
-            return (
-                <FormattedMessage
-                    id='more_channels.show_discoverable_channels'
-                    defaultMessage='Discoverable private channels'
-                />
-            );
-        case Filter.MyPendingRequests:
-            return (
-                <FormattedMessage
-                    id='more_channels.show_my_pending_requests'
-                    defaultMessage='My pending requests'
-                />
-            );
-        default:
-            return (
-                <FormattedMessage
-                    id='more_channels.show_all_channels'
-                    defaultMessage='Channel Type: All'
-                />
-            );
-        }
+        return <FormattedMessage {...(filterLabels[this.props.filter] ?? filterLabels[Filter.All])}/>;
     };
 
     render() {
@@ -644,8 +604,14 @@ export class SearchableChannelList extends React.PureComponent<Props, State> {
             }
         }
 
+        // The search landmark holds the field; what the field matches is its description: the server's
+        // channel autocomplete for the team (buildAutocompleteInTeamQuery and searchClause in the channel
+        // store), then the filters of BrowseChannels.setSearchResults.
         const input = (
-            <div className='filter-row'>
+            <div
+                className='filter-row'
+                role='search'
+            >
                 <span
                     id='searchIcon'
                     aria-hidden='true'
@@ -662,7 +628,14 @@ export class SearchableChannelList extends React.PureComponent<Props, State> {
                     onClear={this.handleClear}
                     value={this.state.channelSearchValue}
                     aria-label={this.props.intl.formatMessage({id: 'filtered_channels_list.search.label', defaultMessage: 'Search Channels'})}
+                    aria-describedby='searchChannelsTextboxDescription'
                 />
+                <span
+                    id='searchChannelsTextboxDescription'
+                    hidden={true}
+                >
+                    {this.props.intl.formatMessage(messages.searchDescription, {discoverable: Boolean(this.props.showDiscoverableFilters)})}
+                </span>
             </div>
         );
 
@@ -672,68 +645,17 @@ export class SearchableChannelList extends React.PureComponent<Props, State> {
                 color={'var(--button-bg)'}
             />
         );
-        const channelDropdownItems = [
-            <Menu.Item
-                key='channelsMoreDropdownAll'
-                id='channelsMoreDropdownAll'
-                onClick={() => this.filterChange(Filter.All)}
-                leadingElement={<GlobeCheckedIcon size={16}/>}
-                labels={
-                    <FormattedMessage
-                        id='suggestion.all'
-                        defaultMessage='All channel types'
-                    />
-                }
-                trailingElements={this.props.filter === Filter.All ? checkIcon : null}
-                aria-label={this.props.intl.formatMessage({id: 'suggestion.all', defaultMessage: 'All channel types'})}
-            />,
-            <Menu.Item
-                key='channelsMoreDropdownPublic'
-                id='channelsMoreDropdownPublic'
-                onClick={() => this.filterChange(Filter.Public)}
-                leadingElement={<GlobeIcon size={16}/>}
-                labels={
-                    <FormattedMessage
-                        id='suggestion.public'
-                        defaultMessage='Public channels'
-                    />
-                }
-                trailingElements={this.props.filter === Filter.Public ? checkIcon : null}
-                aria-label={this.props.intl.formatMessage({id: 'suggestion.public', defaultMessage: 'Public channels'})}
-            />,
-            <Menu.Item
-                key='channelsMoreDropdownPrivate'
-                id='channelsMoreDropdownPrivate'
-                onClick={() => this.filterChange(Filter.Private)}
-                leadingElement={<LockOutlineIcon size={16}/>}
-                labels={
-                    <FormattedMessage
-                        id='suggestion.private'
-                        defaultMessage='Private channels'
-                    />
-                }
-                trailingElements={this.props.filter === Filter.Private ? checkIcon : null}
-                aria-label={this.props.intl.formatMessage({id: 'suggestion.private', defaultMessage: 'Private channels'})}
-            />,
+
+        // The channel types the filter offers, in its order; the one shown is the checked choice
+        const filterChoices: Array<{filter: FilterType; id: string; icon: React.ReactNode; separatorBefore?: string}> = [
+            {filter: Filter.All, id: 'channelsMoreDropdownAll', icon: <GlobeCheckedIcon size={16}/>},
+            {filter: Filter.Public, id: 'channelsMoreDropdownPublic', icon: <GlobeIcon size={16}/>},
+            {filter: Filter.Private, id: 'channelsMoreDropdownPrivate', icon: <LockOutlineIcon size={16}/>},
         ];
 
         if (this.props.showRecommendedFilter) {
-            channelDropdownItems.push(
-                <Menu.Separator key='channelsMoreDropdownRecommendedSeparator'/>,
-                <Menu.Item
-                    key='channelsMoreDropdownRecommended'
-                    id='channelsMoreDropdownRecommended'
-                    onClick={() => this.filterChange(Filter.Recommended)}
-                    leadingElement={<GlobeCheckedIcon size={16}/>}
-                    labels={
-                        <FormattedMessage
-                            id='suggestion.recommended'
-                            defaultMessage='Recommended channels'
-                        />
-                    }
-                    trailingElements={this.props.filter === Filter.Recommended ? checkIcon : null}
-                    aria-label={this.props.intl.formatMessage({id: 'suggestion.recommended', defaultMessage: 'Recommended channels'})}
-                />,
+            filterChoices.push(
+                {filter: Filter.Recommended, id: 'channelsMoreDropdownRecommended', icon: <GlobeCheckedIcon size={16}/>, separatorBefore: 'channelsMoreDropdownRecommendedSeparator'},
             );
         }
 
@@ -741,56 +663,41 @@ export class SearchableChannelList extends React.PureComponent<Props, State> {
         // is on so non-enterprise / flag-off deployments don't see new menu
         // items they can't act on.
         if (this.props.showDiscoverableFilters) {
-            channelDropdownItems.push(
-                <Menu.Separator key='channelsMoreDropdownDiscoverableSeparator'/>,
-                <Menu.Item
-                    key='channelsMoreDropdownDiscoverable'
-                    id='channelsMoreDropdownDiscoverable'
-                    onClick={() => this.filterChange(Filter.Discoverable)}
-                    leadingElement={<AccountPlusOutlineIcon size={16}/>}
-                    labels={
-                        <FormattedMessage
-                            id='suggestion.discoverable'
-                            defaultMessage='Discoverable private channels'
-                        />
-                    }
-                    trailingElements={this.props.filter === Filter.Discoverable ? checkIcon : null}
-                    aria-label={this.props.intl.formatMessage({id: 'suggestion.discoverable', defaultMessage: 'Discoverable private channels'})}
-                />,
-                <Menu.Item
-                    key='channelsMoreDropdownMyPending'
-                    id='channelsMoreDropdownMyPending'
-                    onClick={() => this.filterChange(Filter.MyPendingRequests)}
-                    leadingElement={<ClockOutlineIcon size={16}/>}
-                    labels={
-                        <FormattedMessage
-                            id='suggestion.my_pending_requests'
-                            defaultMessage='My pending requests'
-                        />
-                    }
-                    trailingElements={this.props.filter === Filter.MyPendingRequests ? checkIcon : null}
-                    aria-label={this.props.intl.formatMessage({id: 'suggestion.my_pending_requests', defaultMessage: 'My pending requests'})}
-                />,
+            filterChoices.push(
+                {filter: Filter.Discoverable, id: 'channelsMoreDropdownDiscoverable', icon: <AccountPlusOutlineIcon size={16}/>, separatorBefore: 'channelsMoreDropdownDiscoverableSeparator'},
+                {filter: Filter.MyPendingRequests, id: 'channelsMoreDropdownMyPending', icon: <ClockOutlineIcon size={16}/>},
             );
         }
 
-        channelDropdownItems.push(
-            <Menu.Separator key='channelsMoreDropdownSeparator'/>,
-            <Menu.Item
-                key='channelsMoreDropdownArchived'
-                id='channelsMoreDropdownArchived'
-                onClick={() => this.filterChange(Filter.Archived)}
-                leadingElement={<ArchiveOutlineIcon size={16}/>}
-                labels={
-                    <FormattedMessage
-                        id='suggestion.archive'
-                        defaultMessage='Archived channels'
-                    />
-                }
-                trailingElements={this.props.filter === Filter.Archived ? checkIcon : null}
-                aria-label={this.props.intl.formatMessage({id: 'suggestion.archive', defaultMessage: 'Archived channels'})}
-            />,
+        filterChoices.push(
+            {filter: Filter.Archived, id: 'channelsMoreDropdownArchived', icon: <ArchiveOutlineIcon size={16}/>, separatorBefore: 'channelsMoreDropdownSeparator'},
         );
+
+        const channelDropdownItems: React.ReactNode[] = [];
+        for (const choice of filterChoices) {
+            if (choice.separatorBefore) {
+                channelDropdownItems.push(<Menu.Separator key={choice.separatorBefore}/>);
+            }
+            channelDropdownItems.push(
+                <Menu.Item
+                    key={choice.id}
+                    id={choice.id}
+                    role='menuitemradio'
+                    aria-checked={this.props.filter === choice.filter}
+                    forceCloseOnSelect={true}
+                    onClick={() => this.filterChange(choice.filter)}
+                    leadingElement={choice.icon}
+                    labels={<FormattedMessage {...filterItemLabels[choice.filter]}/>}
+                    trailingElements={this.props.filter === choice.filter ? checkIcon : null}
+                    aria-label={this.props.intl.formatMessage(filterItemLabels[choice.filter])}
+                />,
+            );
+        }
+        const filterChoicesDescription = this.props.intl.formatMessage(messages.filterDescription, {
+            current: this.props.intl.formatMessage(filterLabels[this.props.filter] ?? filterLabels[Filter.All]),
+            choices: describeChoices(this.props.intl, filterChoices.map((choice) => filterItemLabels[choice.filter])),
+        });
+
         const menuButton = (
             <>
                 {this.getFilterLabel()}
@@ -818,15 +725,26 @@ export class SearchableChannelList extends React.PureComponent<Props, State> {
                     menuButton={{
                         id: 'menuWrapper',
                         children: menuButton,
+
                         'aria-label': this.props.intl.formatMessage({id: 'more_channels.channel_type_filter', defaultMessage: 'Channel type filter'}),
+
+                        // The type it shows, as its label says, and its choices are its description
+                        'aria-describedby': 'browseChannelsTypeFilterChoices',
+                        agentomId: 'browse-channels.type-filter',
                     }}
                     menu={{
                         id: 'browseChannelsDropdown',
                         'aria-label': this.props.intl.formatMessage({id: 'more_channels.channel_type_filter', defaultMessage: 'Channel type filter'}),
                     }}
                 >
-                    {channelDropdownItems.map((item) => item)}
+                    {channelDropdownItems}
                 </Menu.Container>
+                <span
+                    id='browseChannelsTypeFilterChoices'
+                    hidden={true}
+                >
+                    {filterChoicesDescription}
+                </span>
             </>
         );
 
@@ -895,6 +813,25 @@ export class SearchableChannelList extends React.PureComponent<Props, State> {
             channelCountLabel = this.props.intl.formatMessage({id: 'more_channels.count_zero', defaultMessage: '0 Results'});
         }
 
+        // The status says what the list shows and what narrows it, or that it's being updated
+        const pageStart = this.state.page * this.props.channelsPerPage;
+        let resultsStatus: string;
+        if (this.props.loading) {
+            resultsStatus = this.props.intl.formatMessage(messages.resultsUpdating);
+        } else {
+            resultsStatus = this.props.intl.formatMessage(messages.resultsStatus, {
+                count: channels.length,
+                hasSearch: this.state.channelSearchValue.length > 0,
+                search: this.state.channelSearchValue,
+                filterLabel: this.props.intl.formatMessage(filterLabels[this.props.filter] ?? filterLabels[Filter.All]),
+                hideJoined: this.props.rememberHideJoinedChannelsChecked,
+                hideArchived: this.props.filter !== Filter.Archived && this.props.rememberHideArchivedChannelsChecked,
+                paged: channels.length > this.props.channelsPerPage,
+                start: pageStart + 1,
+                end: Math.min(pageStart + this.props.channelsPerPage, channels.length),
+            });
+        }
+
         const dropDownContainer = (
             <div className='more-modal__dropdown'>
                 <span id='channelCountLabel'>{channelCountLabel}</span>
@@ -903,7 +840,7 @@ export class SearchableChannelList extends React.PureComponent<Props, State> {
                     role='status'
                     aria-live='polite'
                 >
-                    {channelCountLabel}
+                    {resultsStatus}
                 </span>
                 <div id='modalPreferenceContainer'>
                     {channelDropdown}
@@ -918,7 +855,9 @@ export class SearchableChannelList extends React.PureComponent<Props, State> {
                 {input}
                 {dropDownContainer}
                 <div
-                    role='search'
+                    role='region'
+                    aria-label={this.props.intl.formatMessage(messages.channelList)}
+                    aria-busy={Boolean(this.props.loading)}
                     className='more-modal__list'
                     tabIndex={-1}
                 >
@@ -940,6 +879,50 @@ export class SearchableChannelList extends React.PureComponent<Props, State> {
 }
 
 const messages = defineMessages({
+    searchDescription: {
+        id: 'more_channels.search.description',
+        defaultMessage: "Searches this team's channels, archived ones included: public channels, and private ones you belong to{discoverable, select, true { or that are discoverable} other {}}. A channel matches when its name, URL or purpose contains the text you type, ignoring case, or when each word you type starts a word of them. At most 50 channels are found; the channel type filter, Hide Joined and Hide Archived narrow them further. Results update as you type.",
+    },
+    resultsStatus: {
+        id: 'more_channels.results_status',
+        defaultMessage: '{count, plural, =0 {No channels} one {# channel} other {# channels}}{hasSearch, select, true { matching “{search}”} other {}}, {filterLabel}{hideJoined, select, true {, joined channels hidden} other {}}{hideArchived, select, true {, archived channels hidden} other {}}{paged, select, true {, showing {start, number}–{end, number}} other {}}',
+    },
+    filterDescription: {
+        id: 'more_channels.channel_type_filter.description',
+        defaultMessage: '{current}. {choices}',
+    },
+    resultsUpdating: {
+        id: 'more_channels.results_status.updating',
+        defaultMessage: 'Updating channels…',
+    },
+    channelList: {
+        id: 'more_channels.list.ariaLabel',
+        defaultMessage: 'Channels',
+    },
+    view: {
+        id: 'more_channels.view',
+        defaultMessage: 'View',
+    },
+    join: {
+        id: 'joinChannel.JoinButton',
+        defaultMessage: 'Join',
+    },
+    joinChannel: {
+        id: 'more_channels.join.ariaLabel',
+        defaultMessage: 'Join {channelName}',
+    },
+    viewChannel: {
+        id: 'more_channels.view.ariaLabel',
+        defaultMessage: 'View {channelName}',
+    },
+    requestToJoinChannel: {
+        id: 'more_channels.requestToJoin.ariaLabel',
+        defaultMessage: 'Request to join {channelName}',
+    },
+    withdrawRequestForChannel: {
+        id: 'more_channels.withdrawRequest.ariaLabel',
+        defaultMessage: 'Withdraw request to join {channelName}',
+    },
     channelCount: {
         id: 'more_channels.count',
         defaultMessage: '{count} Results',
@@ -963,6 +946,71 @@ const messages = defineMessages({
     noMore: {
         id: 'more_channels.noMore',
         defaultMessage: 'No results for "{text}"',
+    },
+});
+
+// The filter's label for each channel type, as its button shows it. The keys are Filter's values, written
+// out: browse_channels, where Filter is defined, imports this module, so Filter isn't defined yet here.
+const filterLabels: Record<FilterType, MessageDescriptor> = defineMessages({
+    All: {
+        id: 'more_channels.show_all_channels',
+        defaultMessage: 'Channel Type: All',
+    },
+    Public: {
+        id: 'more_channels.show_public_channels',
+        defaultMessage: 'Channel Type: Public',
+    },
+    Private: {
+        id: 'more_channels.show_private_channels',
+        defaultMessage: 'Channel Type: Private',
+    },
+    Archived: {
+        id: 'more_channels.show_archived_channels',
+        defaultMessage: 'Channel Type: Archived',
+    },
+    Recommended: {
+        id: 'more_channels.show_recommended_channels',
+        defaultMessage: 'Recommended channels',
+    },
+    Discoverable: {
+        id: 'more_channels.show_discoverable_channels',
+        defaultMessage: 'Discoverable private channels',
+    },
+    MyPendingRequests: {
+        id: 'more_channels.show_my_pending_requests',
+        defaultMessage: 'My pending requests',
+    },
+});
+
+// The filter's menu item for each channel type
+const filterItemLabels: Record<FilterType, MessageDescriptor> = defineMessages({
+    All: {
+        id: 'suggestion.all',
+        defaultMessage: 'All channel types',
+    },
+    Public: {
+        id: 'suggestion.public',
+        defaultMessage: 'Public channels',
+    },
+    Private: {
+        id: 'suggestion.private',
+        defaultMessage: 'Private channels',
+    },
+    Recommended: {
+        id: 'suggestion.recommended',
+        defaultMessage: 'Recommended channels',
+    },
+    Discoverable: {
+        id: 'suggestion.discoverable',
+        defaultMessage: 'Discoverable private channels',
+    },
+    MyPendingRequests: {
+        id: 'suggestion.my_pending_requests',
+        defaultMessage: 'My pending requests',
+    },
+    Archived: {
+        id: 'suggestion.archive',
+        defaultMessage: 'Archived channels',
     },
 });
 

@@ -952,6 +952,20 @@
         text-align: center;
     }
 
+    // A row's button shows on the highlighted row (hovered, or reached with the arrow keys). On the other
+    // rows it stays rendered, unseen and taking no room (laid over the row's right padding), so it can be
+    // reached and clicked there too, and it shows while it has keyboard focus.
+    .more-modal__row:not(.more-modal__row--selected) .more-modal__actions--round {
+        display: block;
+        margin-right: -32px;
+        opacity: 0;
+
+        &:focus-visible {
+            margin-right: 0;
+            opacity: 0.75;
+        }
+    }
+
     .more-modal__right {
         display: flex;
         width: 100%;

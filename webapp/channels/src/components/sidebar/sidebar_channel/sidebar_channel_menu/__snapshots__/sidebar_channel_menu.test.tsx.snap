@@ -9,6 +9,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_menu should match sn
   >
     <button
       aria-controls="SidebarChannelMenu-MenuList-channel_id"
+      aria-describedby="SidebarChannelMenu-Description-channel_id"
       aria-expanded="true"
       aria-haspopup="true"
       aria-label="Channel options for {channelName}"
@@ -28,6 +29,12 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_menu should match sn
         />
       </svg>
     </button>
+    <span
+      hidden=""
+      id="SidebarChannelMenu-Description-channel_id"
+    >
+      Actions: {list}
+    </span>
   </div>
   <div
     aria-hidden="true"
@@ -306,6 +313,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_menu should match sn
   >
     <button
       aria-controls="SidebarChannelMenu-MenuList-channel_id"
+      aria-describedby="SidebarChannelMenu-Description-channel_id"
       aria-expanded="true"
       aria-haspopup="true"
       aria-label="Channel options for {channelName}"
@@ -325,6 +333,12 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_menu should match sn
         />
       </svg>
     </button>
+    <span
+      hidden=""
+      id="SidebarChannelMenu-Description-channel_id"
+    >
+      Actions: {list}
+    </span>
   </div>
   <div
     class="MuiModal-root-jIscme ljbrzK MuiPopover-root-kLIimo MuiPopover-root a11y__popup menu_menuStyled MuiModal-root"
@@ -599,6 +613,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_menu should match sn
   >
     <button
       aria-controls="SidebarChannelMenu-MenuList-channel_id"
+      aria-describedby="SidebarChannelMenu-Description-channel_id"
       aria-expanded="true"
       aria-haspopup="true"
       aria-label="Channel options for {channelName}"
@@ -618,6 +633,12 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_menu should match sn
         />
       </svg>
     </button>
+    <span
+      hidden=""
+      id="SidebarChannelMenu-Description-channel_id"
+    >
+      Actions: {list}
+    </span>
   </div>
   <div
     class="MuiModal-root-jIscme ljbrzK MuiPopover-root-kLIimo MuiPopover-root a11y__popup menu_menuStyled MuiModal-root"
@@ -892,6 +913,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_menu should show cor
   >
     <button
       aria-controls="SidebarChannelMenu-MenuList-channel_id"
+      aria-describedby="SidebarChannelMenu-Description-channel_id"
       aria-expanded="true"
       aria-haspopup="true"
       aria-label="Channel options for {channelName}"
@@ -911,6 +933,12 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_menu should show cor
         />
       </svg>
     </button>
+    <span
+      hidden=""
+      id="SidebarChannelMenu-Description-channel_id"
+    >
+      Actions: {list}
+    </span>
   </div>
   <div
     class="MuiModal-root-jIscme ljbrzK MuiPopover-root-kLIimo MuiPopover-root a11y__popup menu_menuStyled MuiModal-root"
@@ -1117,6 +1145,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_menu should show cor
   >
     <button
       aria-controls="SidebarChannelMenu-MenuList-channel_id"
+      aria-describedby="SidebarChannelMenu-Description-channel_id"
       aria-expanded="true"
       aria-haspopup="true"
       aria-label="Channel options for {channelName}"
@@ -1136,6 +1165,12 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_menu should show cor
         />
       </svg>
     </button>
+    <span
+      hidden=""
+      id="SidebarChannelMenu-Description-channel_id"
+    >
+      Actions: {list}
+    </span>
   </div>
   <div
     class="MuiModal-root-jIscme ljbrzK MuiPopover-root-kLIimo MuiPopover-root a11y__popup menu_menuStyled MuiModal-root"
@@ -1378,6 +1413,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_menu should show cor
   >
     <button
       aria-controls="SidebarChannelMenu-MenuList-channel_id"
+      aria-describedby="SidebarChannelMenu-Description-channel_id"
       aria-expanded="true"
       aria-haspopup="true"
       aria-label="Channel options for {channelName}"
@@ -1397,6 +1433,12 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_menu should show cor
         />
       </svg>
     </button>
+    <span
+      hidden=""
+      id="SidebarChannelMenu-Description-channel_id"
+    >
+      Actions: {list}
+    </span>
   </div>
   <div
     class="MuiModal-root-jIscme ljbrzK MuiPopover-root-kLIimo MuiPopover-root a11y__popup menu_menuStyled MuiModal-root"
@@ -1668,6 +1710,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_menu should show cor
   >
     <button
       aria-controls="SidebarChannelMenu-MenuList-channel_id"
+      aria-describedby="SidebarChannelMenu-Description-channel_id"
       aria-expanded="true"
       aria-haspopup="true"
       aria-label="Channel options for {channelName}"
@@ -1687,6 +1730,12 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_menu should show cor
         />
       </svg>
     </button>
+    <span
+      hidden=""
+      id="SidebarChannelMenu-Description-channel_id"
+    >
+      Actions: {list}
+    </span>
   </div>
   <div
     class="MuiModal-root-jIscme ljbrzK MuiPopover-root-kLIimo MuiPopover-root a11y__popup menu_menuStyled MuiModal-root"
@@ -1961,6 +2010,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_menu should show cor
   >
     <button
       aria-controls="SidebarChannelMenu-MenuList-channel_id"
+      aria-describedby="SidebarChannelMenu-Description-channel_id"
       aria-expanded="true"
       aria-haspopup="true"
       aria-label="Channel options for {channelName}"
@@ -1980,6 +2030,12 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_menu should show cor
         />
       </svg>
     </button>
+    <span
+      hidden=""
+      id="SidebarChannelMenu-Description-channel_id"
+    >
+      Actions: {list}
+    </span>
   </div>
   <div
     class="MuiModal-root-jIscme ljbrzK MuiPopover-root-kLIimo MuiPopover-root a11y__popup menu_menuStyled MuiModal-root"
@@ -2254,6 +2310,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_menu should show cor
   >
     <button
       aria-controls="SidebarChannelMenu-MenuList-channel_id"
+      aria-describedby="SidebarChannelMenu-Description-channel_id"
       aria-expanded="true"
       aria-haspopup="true"
       aria-label="Channel options for {channelName}"
@@ -2273,6 +2330,12 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_menu should show cor
         />
       </svg>
     </button>
+    <span
+      hidden=""
+      id="SidebarChannelMenu-Description-channel_id"
+    >
+      Actions: {list}
+    </span>
   </div>
   <div
     class="MuiModal-root-jIscme ljbrzK MuiPopover-root-kLIimo MuiPopover-root a11y__popup menu_menuStyled MuiModal-root"
@@ -2547,6 +2610,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_menu should show cor
   >
     <button
       aria-controls="SidebarChannelMenu-MenuList-channel_id"
+      aria-describedby="SidebarChannelMenu-Description-channel_id"
       aria-expanded="true"
       aria-haspopup="true"
       aria-label="Channel options for {channelName}"
@@ -2566,6 +2630,12 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_menu should show cor
         />
       </svg>
     </button>
+    <span
+      hidden=""
+      id="SidebarChannelMenu-Description-channel_id"
+    >
+      Actions: {list}
+    </span>
   </div>
   <div
     class="MuiModal-root-jIscme ljbrzK MuiPopover-root-kLIimo MuiPopover-root a11y__popup menu_menuStyled MuiModal-root"

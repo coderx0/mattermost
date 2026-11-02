@@ -16,6 +16,7 @@ import SharedChannelIndicator from 'components/shared_channel_indicator';
 import {ChannelsAndDirectMessagesTour} from 'components/tours/onboarding_tour';
 
 import Pluggable from 'plugins/pluggable';
+import {agentomIdSegment} from 'utils/agentom_ids';
 import Constants, {RHSStates} from 'utils/constants';
 import {wrapEmojis} from 'utils/emoji_utils';
 import {cmdOrCtrlPressed} from 'utils/keyboard';
@@ -40,7 +41,17 @@ type Props = WrappedComponentProps & {
     link: string;
     label: string;
     ariaLabelPrefix?: string;
+
+    /**
+     * The link's data-agentom-id; `channel.<channel name>` when not given
+     */
+    agentomId?: string;
     channelLeaveHandler?: (callback: () => void) => void;
+
+    /**
+     * Whether leaving the channel asks for confirmation first
+     */
+    channelLeaveNeedsConfirmation?: boolean;
     icon: JSX.Element | null;
 
     /**
@@ -59,6 +70,11 @@ type Props = WrappedComponentProps & {
     isMuted: boolean;
 
     isChannelSelected: boolean;
+
+    /**
+     * Whether this is the channel shown
+     */
+    isCurrentChannel?: boolean;
 
     teammateId?: string;
 
@@ -86,6 +102,7 @@ type Props = WrappedComponentProps & {
 
 type State = {
     isMenuOpen: boolean;
+    isMenuFocused: boolean;
     showTooltip: boolean;
 };
 
@@ -99,6 +116,7 @@ export class SidebarChannelLink extends React.PureComponent<Props, State> {
 
         this.state = {
             isMenuOpen: false,
+            isMenuFocused: false,
             showTooltip: false,
         };
     }
@@ -131,7 +149,7 @@ export class SidebarChannelLink extends React.PureComponent<Props, State> {
     };
 
     getAriaLabel = (): string => {
-        const {label, ariaLabelPrefix, unreadMentions, intl} = this.props;
+        const {label, ariaLabelPrefix, unreadMentions, isMuted, intl} = this.props;
 
         let ariaLabel = label;
 
@@ -153,7 +171,15 @@ export class SidebarChannelLink extends React.PureComponent<Props, State> {
             ariaLabel += ` ${intl.formatMessage({id: 'accessibility.sidebar.types.unread', defaultMessage: 'unread'})}`;
         }
 
+        if (isMuted) {
+            ariaLabel += ` ${intl.formatMessage({id: 'accessibility.sidebar.types.muted', defaultMessage: 'muted'})}`;
+        }
+
         return ariaLabel.toLowerCase();
+    };
+
+    getAgentomId = (): string => {
+        return this.props.agentomId ?? `channel.${agentomIdSegment(this.props.channel.name)}`;
     };
 
     handleChannelClick = (event: React.MouseEvent<HTMLAnchorElement>): void => {
@@ -186,6 +212,22 @@ export class SidebarChannelLink extends React.PureComponent<Props, State> {
 
     handleMenuToggle = (isMenuOpen: boolean) => {
         this.setState({isMenuOpen});
+    };
+
+    // The options button is shown on hover and while it has keyboard focus; when it's focused from the
+    // keyboard, the row looks as it does on hover, so the button doesn't cover the mention badge.
+    handleMenuFocus = (event: React.FocusEvent<HTMLDivElement>) => {
+        let isFocusVisible = false;
+        try {
+            isFocusVisible = event.target.matches(':focus-visible');
+        } catch {
+            // A browser that doesn't know the selector shows the button over the badge instead
+        }
+        this.setState({isMenuFocused: isFocusVisible});
+    };
+
+    handleMenuBlur = () => {
+        this.setState({isMenuFocused: false});
     };
 
     render(): JSX.Element {
@@ -284,48 +326,68 @@ export class SidebarChannelLink extends React.PureComponent<Props, State> {
                         })}
                     />
                 )}
-                <div
-                    className={classNames(
-                        'SidebarMenu',
-                        'MenuWrapper',
-                        {menuOpen: this.state.isMenuOpen},
-                        {'MenuWrapper--open': this.state.isMenuOpen},
-                    )}
-                >
-                    <SidebarChannelMenu
-                        channel={channel}
-                        channelLink={link}
-                        isUnread={isUnread}
-                        channelLeaveHandler={this.props.channelLeaveHandler}
-                        onMenuToggle={this.handleMenuToggle}
-                    />
-                </div>
             </>
+        );
+
+        // The channel's options menu is the link's sibling, not inside it: a link holds no other controls.
+        // The stylesheet lays it over the end of the link, where it's shown on hover.
+        const menu = (
+            <div
+                className={classNames(
+                    'SidebarMenu',
+                    'MenuWrapper',
+                    {menuOpen: this.state.isMenuOpen},
+                    {'MenuWrapper--open': this.state.isMenuOpen},
+                )}
+                onFocus={this.handleMenuFocus}
+                onBlur={this.handleMenuBlur}
+            >
+                <SidebarChannelMenu
+                    channel={channel}
+                    channelLabel={label}
+                    channelLink={link}
+                    isUnread={isUnread}
+                    channelLeaveHandler={this.props.channelLeaveHandler}
+                    channelLeaveNeedsConfirmation={this.props.channelLeaveNeedsConfirmation}
+                    agentomId={`${this.getAgentomId()}.options`}
+                    onMenuToggle={this.handleMenuToggle}
+                />
+            </div>
         );
 
         // NOTE: class added to temporarily support the desktop app's at-mention DOM scraping of the old sidebar
         const className = classNames([
             'SidebarLink',
+
+            // The options menu that follows the link is laid over its end; on narrow screens it's left out
+            // while the mention badge shows
+            'SidebarLink--withMenu',
             {
-                menuOpen: this.state.isMenuOpen,
+                'SidebarLink--withMentionBadge': unreadMentions > 0,
+                menuOpen: this.state.isMenuOpen || this.state.isMenuFocused,
                 muted: isMuted,
                 'unread-title': this.props.isUnread,
                 selected: isChannelSelected,
             },
         ]);
         return (
-            <Link
-                className={className}
-                id={`sidebarItem_${channel.name}`}
-                aria-label={this.getAriaLabel()}
-                to={link}
-                onClick={this.handleChannelClick}
-                tabIndex={0}
-                data-testid={this.props.isUnread ? 'sidebar-unread-channel' : undefined}
-            >
-                {content}
-                {channelsTutorialTip}
-            </Link>
+            <>
+                <Link
+                    className={className}
+                    id={`sidebarItem_${channel.name}`}
+                    aria-label={this.getAriaLabel()}
+                    aria-current={this.props.isCurrentChannel ? 'page' : undefined}
+                    data-agentom-id={this.getAgentomId()}
+                    to={link}
+                    onClick={this.handleChannelClick}
+                    tabIndex={0}
+                    data-testid={this.props.isUnread ? 'sidebar-unread-channel' : undefined}
+                >
+                    {content}
+                    {channelsTutorialTip}
+                </Link>
+                {menu}
+            </>
         );
     }
 }

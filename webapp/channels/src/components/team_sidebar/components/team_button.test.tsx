@@ -1,6 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
+import {DragDropContext, Droppable} from '@hello-pangea/dnd';
 import {screen} from '@testing-library/react';
 import React from 'react';
 
@@ -198,5 +199,35 @@ describe('components/TeamSidebar/TeamButton', () => {
 
             expect(screen.getByRole('link')).toHaveAccessibleName('my team team, 5 mentions');
         });
+    });
+
+    it('should keep a draggable team a link, marked current when it is the current team, with an id from its name', () => {
+        renderWithContext(
+            <DragDropContext onDragEnd={jest.fn()}>
+                <Droppable droppableId='teams'>
+                    {(provided) => (
+                        <div
+                            ref={provided.innerRef}
+                            {...provided.droppableProps}
+                        >
+                            <TeamButton
+                                {...baseProps}
+                                url='/team-a'
+                                displayName='Team A'
+                                teamId='team_a_id'
+                                teamName='team-a'
+                                active={true}
+                                isDraggable={true}
+                            />
+                            {provided.placeholder}
+                        </div>
+                    )}
+                </Droppable>
+            </DragDropContext>,
+        );
+
+        const link = screen.getByRole('link', {name: 'team a team'});
+        expect(link).toHaveAttribute('aria-current', 'true');
+        expect(link).toHaveAttribute('data-agentom-id', 'team.team-a');
     });
 });

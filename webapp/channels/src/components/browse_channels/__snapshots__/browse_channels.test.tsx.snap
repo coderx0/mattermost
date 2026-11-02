@@ -75,6 +75,7 @@ exports[`components/BrowseChannels should match snapshot and state 1`] = `
               >
                 <div
                   class="filter-row"
+                  role="search"
                 >
                   <span
                     aria-hidden="true"
@@ -88,6 +89,7 @@ exports[`components/BrowseChannels should match snapshot and state 1`] = `
                     class="input-wrapper"
                   >
                     <input
+                      aria-describedby="searchChannelsTextboxDescription"
                       aria-label="Search Channels"
                       class="form-control filter-textbox"
                       id="searchChannelsTextbox"
@@ -95,6 +97,12 @@ exports[`components/BrowseChannels should match snapshot and state 1`] = `
                       value=""
                     />
                   </div>
+                  <span
+                    hidden=""
+                    id="searchChannelsTextboxDescription"
+                  >
+                    Searches this team's channels, archived ones included: public channels, and private ones you belong to. A channel matches when its name, URL or purpose contains the text you type, ignoring case, or when each word you type starts a word of them. At most 50 channels are found; the channel type filter, Hide Joined and Hide Archived narrow them further. Results update as you type.
+                  </span>
                 </div>
                 <div
                   class="more-modal__dropdown"
@@ -109,7 +117,7 @@ exports[`components/BrowseChannels should match snapshot and state 1`] = `
                     class="sr-only"
                     role="status"
                   >
-                    2 Results
+                    2 channels, Channel Type: All, archived channels hidden
                   </span>
                   <div
                     id="modalPreferenceContainer"
@@ -123,10 +131,12 @@ exports[`components/BrowseChannels should match snapshot and state 1`] = `
                     </div>
                     <button
                       aria-controls="browseChannelsDropdown"
+                      aria-describedby="browseChannelsTypeFilterChoices"
                       aria-expanded="false"
                       aria-haspopup="true"
                       aria-label="Channel type filter"
                       class=""
+                      data-agentom-id="browse-channels.type-filter"
                       id="menuWrapper"
                     >
                       Channel Type: All
@@ -143,6 +153,12 @@ exports[`components/BrowseChannels should match snapshot and state 1`] = `
                         />
                       </svg>
                     </button>
+                    <span
+                      hidden=""
+                      id="browseChannelsTypeFilterChoices"
+                    >
+                      Channel Type: All. Choices: All channel types, Public channels, Private channels, Archived channels
+                    </span>
                     <div
                       aria-checked="true"
                       aria-label="Hide archived channels"
@@ -226,8 +242,10 @@ exports[`components/BrowseChannels should match snapshot and state 1`] = `
                   </div>
                 </div>
                 <div
+                  aria-busy="false"
+                  aria-label="Channels"
                   class="more-modal__list"
-                  role="search"
+                  role="region"
                   tabindex="-1"
                 >
                   <div
@@ -235,10 +253,11 @@ exports[`components/BrowseChannels should match snapshot and state 1`] = `
                     tabindex="-1"
                   >
                     <div
-                      aria-label="channel-3, channel-3-purpose"
+                      aria-labelledby="channelName-channel_id_3"
                       class="more-modal__row"
                       data-testid="ChannelRow-channel-3"
                       id="ChannelRow-channel-3"
+                      role="group"
                       tabindex="0"
                     >
                       <div
@@ -260,7 +279,7 @@ exports[`components/BrowseChannels should match snapshot and state 1`] = `
                             />
                           </svg>
                           <span
-                            id="channelName"
+                            id="channelName-channel_id_3"
                           >
                             channel-3
                           </span>
@@ -303,7 +322,7 @@ exports[`components/BrowseChannels should match snapshot and state 1`] = `
                         class="more-modal__actions"
                       >
                         <button
-                          aria-label="Join"
+                          aria-label="Join channel-3"
                           class="btn btn-primary btn-sm primaryButton"
                           id="joinViewChannelButton"
                           tabindex="-1"
@@ -313,10 +332,11 @@ exports[`components/BrowseChannels should match snapshot and state 1`] = `
                       </div>
                     </div>
                     <div
-                      aria-label="default channel, default channel purpose"
+                      aria-labelledby="channelName-channel_id_1"
                       class="more-modal__row"
                       data-testid="ChannelRow-default-channel"
                       id="ChannelRow-default-channel"
+                      role="group"
                       tabindex="0"
                     >
                       <div
@@ -346,7 +366,7 @@ exports[`components/BrowseChannels should match snapshot and state 1`] = `
                             />
                           </svg>
                           <span
-                            id="channelName"
+                            id="channelName-channel_id_1"
                           >
                             Default Channel
                           </span>
@@ -389,7 +409,7 @@ exports[`components/BrowseChannels should match snapshot and state 1`] = `
                         class="more-modal__actions"
                       >
                         <button
-                          aria-label="Join"
+                          aria-label="Join Default Channel"
                           class="btn btn-primary btn-sm primaryButton"
                           id="joinViewChannelButton"
                           tabindex="-1"

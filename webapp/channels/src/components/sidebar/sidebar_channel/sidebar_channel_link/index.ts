@@ -9,7 +9,7 @@ import type {Channel} from '@mattermost/types/channels';
 
 import {fetchChannelRemotes} from 'mattermost-redux/actions/shared_channels';
 import {Permissions} from 'mattermost-redux/constants';
-import {makeGetChannelUnreadCount, getPendingJoinRequestsCount} from 'mattermost-redux/selectors/entities/channels';
+import {getCurrentChannelId, makeGetChannelUnreadCount, getPendingJoinRequestsCount} from 'mattermost-redux/selectors/entities/channels';
 import {getCurrentUserId, getMyChannelMemberships} from 'mattermost-redux/selectors/entities/common';
 import {getConfig, isDiscoverableChannelsEnabled} from 'mattermost-redux/selectors/entities/general';
 import {getInt} from 'mattermost-redux/selectors/entities/preferences';
@@ -85,6 +85,7 @@ function makeMapStateToProps() {
             isMuted: isChannelMuted(member),
             hasUrgent: unreadCount.hasUrgent,
             isChannelSelected: isChannelSelected(state, ownProps.channel.id),
+            isCurrentChannel: getCurrentChannelId(state) === ownProps.channel.id,
             firstChannelName: showChannelsTutorialStep ? getFirstChannelName(state) : '',
             showChannelsTutorialStep,
             rhsState: getRhsState(state),

@@ -18,6 +18,7 @@ import {localizeMessage} from 'mattermost-redux/utils/i18n_utils';
 import KeyboardShortcutSequence, {
     KEYBOARD_SHORTCUTS,
 } from 'components/keyboard_shortcuts/keyboard_shortcuts_sequence';
+import {moreDirectChannelsMessages} from 'components/more_direct_channels/list/list';
 
 import Constants, {A11yCustomEventTypes, DraggingStateTypes, DraggingStates} from 'utils/constants';
 import {isKeyPressed} from 'utils/keyboard';
@@ -310,10 +311,21 @@ export default class SidebarCategory extends React.PureComponent<Props, State> {
                             className='SidebarChannelGroupHeader_addButton'
                             onClick={this.handleOpenDirectMessagesModal}
                             aria-label={addHelpLabel}
+                            aria-haspopup='dialog'
+                            aria-describedby='newDirectMessageButtonDescription'
                         >
                             <i className='icon-plus'/>
                         </button>
                     </WithTooltip>
+                    <span
+                        id='newDirectMessageButtonDescription'
+                        hidden={true}
+                    >
+                        <FormattedMessage
+                            {...moreDirectChannelsMessages.dialogDescription}
+                            values={{maxPeople: Constants.MAX_USERS_IN_GM - 1}}
+                        />
+                    </span>
                 </>
             );
 
@@ -330,6 +342,10 @@ export default class SidebarCategory extends React.PureComponent<Props, State> {
             displayName = localizeMessage({id: message.id, defaultMessage: message.defaultMessage});
         }
 
+        // The header's button names the category's list of channels, and collapses and expands it
+        const headerButtonId = `sidebarCategoryHeader-${category.id}`;
+        const channelListId = `sidebarCategoryChannels-${category.id}`;
+
         if (category.type === CategoryTypes.MANAGED) {
             return (
                 <div
@@ -342,6 +358,8 @@ export default class SidebarCategory extends React.PureComponent<Props, State> {
                     <div>
                         <SidebarCategoryHeader
                             ref={this.categoryTitleRef}
+                            id={headerButtonId}
+                            controlsId={channelListId}
                             displayName={displayName}
                             dragHandleProps={undefined}
                             isCollapsed={this.state.isManagedCategoryCollapsed}
@@ -353,7 +371,11 @@ export default class SidebarCategory extends React.PureComponent<Props, State> {
                             onClick={this.handleCollapse}
                         />
                         <div className={classNames('SidebarChannelGroup_content')}>
-                            <ul className='NavGroupContent'>
+                            <ul
+                                id={channelListId}
+                                className='NavGroupContent'
+                                aria-labelledby={headerButtonId}
+                            >
                                 {renderedChannels}
                             </ul>
                         </div>
@@ -412,6 +434,8 @@ export default class SidebarCategory extends React.PureComponent<Props, State> {
                                         >
                                             <SidebarCategoryHeader
                                                 ref={this.categoryTitleRef}
+                                                id={headerButtonId}
+                                                controlsId={channelListId}
                                                 displayName={displayName}
                                                 dragHandleProps={provided.dragHandleProps}
                                                 isCollapsed={category.collapsed}
@@ -429,7 +453,9 @@ export default class SidebarCategory extends React.PureComponent<Props, State> {
                                                 className={classNames('SidebarChannelGroup_content')}
                                             >
                                                 <ul
+                                                    id={channelListId}
                                                     className='NavGroupContent'
+                                                    aria-labelledby={headerButtonId}
                                                 >
                                                     {this.renderNewDropBox(droppableSnapshot.isDraggingOver)}
                                                     {renderedChannels}

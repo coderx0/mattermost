@@ -564,6 +564,8 @@ export class SidebarList extends React.PureComponent<Props, State> {
                     id='sidebar-left'
                     role='application'
                     aria-label={ariaLabel}
+                    data-agentom-id='sidebar.channels'
+                    data-agentom-kind='section'
                     className={classNames('SidebarNavContainer a11y__region', {
                         disabled: this.props.isUnreadFilterEnabled,
                     })}

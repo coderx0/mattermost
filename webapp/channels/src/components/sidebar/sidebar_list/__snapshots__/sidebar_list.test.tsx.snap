@@ -16,6 +16,8 @@ exports[`SidebarList should match snapshot 1`] = `
     class="SidebarNavContainer a11y__region"
     data-a11y-disable-nav="false"
     data-a11y-sort-order="7"
+    data-agentom-id="sidebar.channels"
+    data-agentom-kind="section"
     id="sidebar-left"
     role="application"
   >

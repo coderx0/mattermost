@@ -116,7 +116,7 @@ exports[`components/MoreDirectChannels should exclude deleted users if there is 
                               <input
                                 aria-activedescendant=""
                                 aria-autocomplete="list"
-                                aria-describedby="react-select-12-placeholder"
+                                aria-describedby="multiSelectSearchDescription react-select-12-placeholder"
                                 aria-expanded="false"
                                 aria-haspopup="true"
                                 aria-invalid="false"
@@ -138,6 +138,7 @@ exports[`components/MoreDirectChannels should exclude deleted users if there is 
                         </div>
                       </div>
                       <button
+                        aria-describedby="multiSelectSubmitDescription"
                         class="btn btn-primary"
                         data-testid="saveSetting"
                         id="saveItems"
@@ -155,6 +156,18 @@ exports[`components/MoreDirectChannels should exclude deleted users if there is 
                       Use ↑↓ to browse, ↵ to select. You can add 7 more people. 
                       2 of 3 members
                     </div>
+                    <span
+                      hidden=""
+                      id="multiSelectSearchDescription"
+                    >
+                      Finds people, and your direct and group messages with them, by the start of a username (or of any part of it after a period, hyphen or underscore), first name, last name, full name, nickname, word of their position, or email address (only the part before the @, unless you type an @), ignoring case and a leading @. Your recent conversations come first. With no text, it lists your 20 most recent conversations. Results update as you type.
+                    </span>
+                    <span
+                      hidden=""
+                      id="multiSelectSubmitDescription"
+                    >
+                      Opens a direct message with the person added, or a group message with everyone added, up to 7 people
+                    </span>
                   </div>
                   <div
                     aria-live="polite"
@@ -366,6 +379,7 @@ exports[`components/MoreDirectChannels should match snapshot 1`] = `
                               <input
                                 aria-activedescendant=""
                                 aria-autocomplete="list"
+                                aria-describedby="multiSelectSearchDescription"
                                 aria-expanded="false"
                                 aria-haspopup="true"
                                 aria-invalid="false"
@@ -387,6 +401,7 @@ exports[`components/MoreDirectChannels should match snapshot 1`] = `
                         </div>
                       </div>
                       <button
+                        aria-describedby="multiSelectSubmitDescription"
                         class="btn btn-primary"
                         data-testid="saveSetting"
                         id="saveItems"
@@ -404,6 +419,18 @@ exports[`components/MoreDirectChannels should match snapshot 1`] = `
                       Use ↑↓ to browse, ↵ to select. You can add 5 more people. 
                       1 of 3 members
                     </div>
+                    <span
+                      hidden=""
+                      id="multiSelectSearchDescription"
+                    >
+                      Finds people, and your direct and group messages with them, by the start of a username (or of any part of it after a period, hyphen or underscore), first name, last name, full name, nickname, word of their position, or email address (only the part before the @, unless you type an @), ignoring case and a leading @. Your recent conversations come first. With no text, it lists your 20 most recent conversations. Results update as you type.
+                    </span>
+                    <span
+                      hidden=""
+                      id="multiSelectSubmitDescription"
+                    >
+                      Opens a direct message with the person added, or a group message with everyone added, up to 7 people
+                    </span>
                   </div>
                   <div
                     aria-live="polite"

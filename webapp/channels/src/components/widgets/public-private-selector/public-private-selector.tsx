@@ -61,19 +61,33 @@ const BigButtonSelector = ({
         [id, onClick],
     );
 
+    // Each button is a radio of the selector's group: named by its title, described by its description, checked
+    // when selected, and unavailable when disabled or locked (a click on it then does nothing)
+    const buttonId = `public-private-selector-button-${id}`;
     const button = (
         <button
-            id={`public-private-selector-button-${id}`}
+            id={buttonId}
             className={classNames('public-private-selector-button', {selected, disabled, locked})}
+            role='radio'
+            aria-checked={Boolean(selected)}
+            aria-disabled={disabled || locked || undefined}
+            aria-labelledby={`${buttonId}-title`}
+            aria-describedby={`${buttonId}-description`}
             onClick={handleOnClick}
         >
             <IconSVG className={classNames('public-private-selector-button-icon', iconClassName)}/>
             <div className='public-private-selector-button-text'>
-                <div className={classNames('public-private-selector-button-title', titleClassName)}>
+                <div
+                    id={`${buttonId}-title`}
+                    className={classNames('public-private-selector-button-title', titleClassName)}
+                >
                     {title}
                     {locked && <UpgradeBadge className='public-private-selector-button-icon-upgrade'/>}
                 </div>
-                <div className={classNames('public-private-selector-button-description', descriptionClassName)}>
+                <div
+                    id={`${buttonId}-description`}
+                    className={classNames('public-private-selector-button-description', descriptionClassName)}
+                >
                     {description}
                 </div>
             </div>
@@ -109,6 +123,11 @@ type ButtonSelectorProps = {
 type PublicPrivateSelectorProps = {
     selected: string;
     className?: string;
+
+    /**
+     * The name of the group of choices, such as "Channel type"
+     */
+    ariaLabel?: string;
     publicButtonProps?: ButtonSelectorProps;
     privateButtonProps?: ButtonSelectorProps;
     pluginOptions?: PluginOptionButtonProps[];
@@ -118,6 +137,7 @@ type PublicPrivateSelectorProps = {
 const PublicPrivateSelector = ({
     selected,
     className,
+    ariaLabel,
     publicButtonProps: {
         title: titlePublic,
         description: descriptionPublic,
@@ -162,7 +182,11 @@ const PublicPrivateSelector = ({
     );
 
     return (
-        <div className={classNames('public-private-selector', className)}>
+        <div
+            className={classNames('public-private-selector', className)}
+            role='radiogroup'
+            aria-label={ariaLabel}
+        >
             <BigButtonSelector
                 id={Constants.OPEN_CHANNEL as ChannelType}
                 title={titlePublic || formatMessage({id: 'public_private_selector.public.title', defaultMessage: 'Public'})}

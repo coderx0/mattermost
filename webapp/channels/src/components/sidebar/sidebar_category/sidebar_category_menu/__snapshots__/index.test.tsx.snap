@@ -9,10 +9,12 @@ exports[`components/sidebar/sidebar_category/sidebar_category_menu should match 
   >
     <button
       aria-controls="SidebarChannelMenu-MenuList-test_category_id"
+      aria-describedby="SidebarCategoryMenu-Description-test_category_id"
       aria-expanded="true"
       aria-haspopup="true"
       aria-label="custom_category_1 category options"
       class="SidebarMenu_menuButton"
+      data-agentom-id="category.custom_category_1.options"
       id="SidebarCategoryMenu-Button-test_category_id"
     >
       <svg
@@ -28,6 +30,12 @@ exports[`components/sidebar/sidebar_category/sidebar_category_menu should match 
         />
       </svg>
     </button>
+    <span
+      hidden=""
+      id="SidebarCategoryMenu-Description-test_category_id"
+    >
+      Actions: Mark category as read, Mute Category, Rename Category, Delete Category, Sort, Create New Category
+    </span>
   </div>
 </div>
 `;

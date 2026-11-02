@@ -14,6 +14,7 @@ import type {ActionResult} from 'mattermost-redux/types/actions';
 
 import ProfilePicture from 'components/profile_picture';
 
+import {agentomIdSegment} from 'utils/agentom_ids';
 import {getHistory} from 'utils/browser_history';
 import {Constants} from 'utils/constants';
 
@@ -104,6 +105,7 @@ class SidebarDirectChannel extends React.PureComponent<Props> {
                 channel={channel}
                 link={`/${currentTeamName}/messages/@${teammate.username}`}
                 label={displayName}
+                agentomId={`dm.${agentomIdSegment(teammate.username)}`}
                 channelLeaveHandler={this.handleLeaveChannel}
                 icon={this.getIcon()}
                 isSharedChannel={Boolean(teammate.remote_id)}

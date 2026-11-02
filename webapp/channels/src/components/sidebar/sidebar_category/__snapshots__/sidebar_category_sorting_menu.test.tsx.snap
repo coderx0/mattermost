@@ -7,10 +7,12 @@ exports[`components/sidebar/sidebar_category/sidebar_category_sorting_menu shoul
   >
     <button
       aria-controls="SidebarCategorySortingMenu-MenuList-category_id"
+      aria-describedby="SidebarCategorySortingMenu-Description-category_id"
       aria-expanded="false"
       aria-haspopup="true"
       aria-label="category_name category options"
       class="SidebarMenu_menuButton sortingMenu"
+      data-agentom-id="category.category_name.options"
       id="SidebarCategorySortingMenu-Button-category_id"
     >
       <svg
@@ -26,6 +28,12 @@ exports[`components/sidebar/sidebar_category/sidebar_category_sorting_menu shoul
         />
       </svg>
     </button>
+    <span
+      hidden=""
+      id="SidebarCategorySortingMenu-Description-category_id"
+    >
+      Actions: Sort, Show, Open a direct message
+    </span>
   </div>
 </div>
 `;

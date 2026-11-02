@@ -585,7 +585,17 @@ $sidebarOpacityAnimationDuration: 0.15s;
             }
         }
 
-        .SidebarLink.a11y--focused .SidebarMenu .SidebarMenu_menuButton {
+        // A channel's options menu follows its link; here it's always shown (its button faded until
+        // focused), so the link leaves room for it, as when the menu was inside the link
+        .SidebarChannel > .SidebarMenu {
+            opacity: 1;
+        }
+
+        .SidebarLink.SidebarLink--withMenu {
+            padding-right: 44px;
+        }
+
+        .SidebarLink.a11y--focused + .SidebarMenu .SidebarMenu_menuButton {
             opacity: 1;
         }
 
@@ -631,10 +641,6 @@ $sidebarOpacityAnimationDuration: 0.15s;
             &.sortingMenu {
                 margin: 0;
             }
-        }
-
-        .SidebarMenu:not(.menuOpen) {
-            display: none;
         }
 
         &.muted {
@@ -794,6 +800,42 @@ $sidebarOpacityAnimationDuration: 0.15s;
 
         .SidebarChannelGroupHeader_sortButton {
             display: block;
+        }
+    }
+
+    // A category's options menu shows on hover, as before, and while it's open or focused. Otherwise it stays
+    // rendered, unseen and taking no room: its button is laid over the end of what's before it, where it shows
+    // on hover, so it can still be reached and clicked.
+    @media screen and (min-width: 769px) {
+        .SidebarChannelGroup:not(.a11y--active) .SidebarChannelGroupHeader .SidebarMenu:not(.menuOpen):not(:focus-within) {
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+
+            // Where nothing hovers, a tap there still reaches what's under the unseen button, as before
+            @media (hover: none) {
+                pointer-events: none;
+            }
+
+            .SidebarMenu_menuButton {
+                margin-left: -44px;
+
+                &.sortingMenu {
+                    margin-left: -28px;
+                }
+            }
+        }
+
+        .SidebarNavContainer:not(.disabled) .SidebarChannelGroup .SidebarChannelGroupHeader:hover .SidebarMenu {
+            opacity: 1;
+
+            .SidebarMenu_menuButton {
+                margin-left: 2px;
+
+                &.sortingMenu {
+                    margin-left: 0;
+                }
+            }
         }
     }
 
@@ -1098,10 +1140,6 @@ $sidebarOpacityAnimationDuration: 0.15s;
             }
         }
 
-        .SidebarMenu:not(.menuOpen) {
-            display: none;
-        }
-
         .SidebarChannelLink__join-request-dot {
             position: relative;
             display: flex;
@@ -1128,21 +1166,42 @@ $sidebarOpacityAnimationDuration: 0.15s;
         outline-style: none;
     }
 
-    .SidebarChannel .SidebarLink:hover,
-    .SidebarChannel .SidebarLink.menuOpen {
+    // A channel's options menu follows its link (a link holds no other controls) and is laid over the link's
+    // end, taking no room of its own: its button sits where it showed inside the link
+    .SidebarChannel > .SidebarMenu {
+        position: relative;
+        z-index: 1;
+        flex: 0 0 auto;
+        margin: 0 16px 0 -44px;
+    }
+
+    // It shows on hover, as before, and while it's open or focused. Otherwise it stays rendered but unseen, so
+    // it can still be reached and clicked.
+    @media screen and (min-width: 769px) {
+        .SidebarChannelGroup:not(.a11y--active) .SidebarChannel:not(:hover) > .SidebarMenu:not(.menuOpen):not(:focus-within) {
+            opacity: 0;
+
+            // Where nothing hovers, a tap there still reaches the link under the unseen button, as before
+            @media (hover: none) {
+                pointer-events: none;
+            }
+        }
+    }
+
+    // The hover look is the row's, so it stays while the pointer is on a channel's options button, which
+    // follows the link rather than being inside it
+    .SidebarChannel:hover > .SidebarLink,
+    .SidebarChannel > .SidebarLink.menuOpen {
         padding-right: 5px;
         background-color: var(--sidebar-text-hover-bg);
 
+        // Room for the options button laid over the link's end, as it took inside the link
+        &.SidebarLink--withMenu {
+            padding-right: 44px;
+        }
+
         .DirectChannel__status-icon {
             box-shadow: inset 0 0 14px rgba(255, 255, 255, 0.12);
-        }
-
-        .SidebarMenu_menuButton {
-            margin-right: 11px;
-        }
-
-        .SidebarMenu {
-            display: block;
         }
 
         .channel-pencil-icon,

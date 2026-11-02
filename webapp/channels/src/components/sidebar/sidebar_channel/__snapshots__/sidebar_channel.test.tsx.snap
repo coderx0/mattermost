@@ -8,7 +8,8 @@ exports[`components/sidebar/sidebar_channel should match snapshot 1`] = `
   >
     <a
       aria-label="channel_display_name public channel"
-      class="SidebarLink"
+      class="SidebarLink SidebarLink--withMenu"
+      data-agentom-id="channel."
       href="/team_name/channels/"
       id="sidebarItem_"
       tabindex="0"
@@ -25,32 +26,40 @@ exports[`components/sidebar/sidebar_channel should match snapshot 1`] = `
           channel_display_name
         </span>
       </div>
-      <div
-        class="SidebarMenu MenuWrapper"
-      >
-        <button
-          aria-controls="SidebarChannelMenu-MenuList-channel_id"
-          aria-expanded="false"
-          aria-haspopup="true"
-          aria-label="Channel options for "
-          class="SidebarMenu_menuButton"
-          id="SidebarChannelMenu-Button-channel_id"
-        >
-          <svg
-            fill="currentColor"
-            height="16"
-            version="1.1"
-            viewBox="0 0 24 24"
-            width="16"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z"
-            />
-          </svg>
-        </button>
-      </div>
     </a>
+    <div
+      class="SidebarMenu MenuWrapper"
+    >
+      <button
+        aria-controls="SidebarChannelMenu-MenuList-channel_id"
+        aria-describedby="SidebarChannelMenu-Description-channel_id"
+        aria-expanded="false"
+        aria-haspopup="true"
+        aria-label="Channel options for channel_display_name"
+        class="SidebarMenu_menuButton"
+        data-agentom-id="channel..options"
+        id="SidebarChannelMenu-Button-channel_id"
+      >
+        <svg
+          fill="currentColor"
+          height="16"
+          version="1.1"
+          viewBox="0 0 24 24"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z"
+          />
+        </svg>
+      </button>
+      <span
+        hidden=""
+        id="SidebarChannelMenu-Description-channel_id"
+      >
+        Actions: Open in new window, Mark as Unread, Favorite, Mute Channel, Move to..., Copy Link, Leave Channel
+      </span>
+    </div>
   </li>
 </div>
 `;
@@ -89,7 +98,8 @@ exports[`components/sidebar/sidebar_channel should match snapshot when active 1`
   >
     <a
       aria-label="channel_display_name public channel"
-      class="SidebarLink"
+      class="SidebarLink SidebarLink--withMenu"
+      data-agentom-id="channel."
       href="/team_name/channels/"
       id="sidebarItem_"
       tabindex="0"
@@ -106,32 +116,40 @@ exports[`components/sidebar/sidebar_channel should match snapshot when active 1`
           channel_display_name
         </span>
       </div>
-      <div
-        class="SidebarMenu MenuWrapper"
-      >
-        <button
-          aria-controls="SidebarChannelMenu-MenuList-channel_id"
-          aria-expanded="false"
-          aria-haspopup="true"
-          aria-label="Channel options for "
-          class="SidebarMenu_menuButton"
-          id="SidebarChannelMenu-Button-channel_id"
-        >
-          <svg
-            fill="currentColor"
-            height="16"
-            version="1.1"
-            viewBox="0 0 24 24"
-            width="16"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z"
-            />
-          </svg>
-        </button>
-      </div>
     </a>
+    <div
+      class="SidebarMenu MenuWrapper"
+    >
+      <button
+        aria-controls="SidebarChannelMenu-MenuList-channel_id"
+        aria-describedby="SidebarChannelMenu-Description-channel_id"
+        aria-expanded="false"
+        aria-haspopup="true"
+        aria-label="Channel options for channel_display_name"
+        class="SidebarMenu_menuButton"
+        data-agentom-id="channel..options"
+        id="SidebarChannelMenu-Button-channel_id"
+      >
+        <svg
+          fill="currentColor"
+          height="16"
+          version="1.1"
+          viewBox="0 0 24 24"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z"
+          />
+        </svg>
+      </button>
+      <span
+        hidden=""
+        id="SidebarChannelMenu-Description-channel_id"
+      >
+        Actions: Open in new window, Mark as Unread, Favorite, Mute Channel, Move to..., Copy Link, Leave Channel
+      </span>
+    </div>
   </li>
 </div>
 `;
@@ -144,7 +162,8 @@ exports[`components/sidebar/sidebar_channel should match snapshot when collapsed
   >
     <a
       aria-label="channel_display_name public channel"
-      class="SidebarLink"
+      class="SidebarLink SidebarLink--withMenu"
+      data-agentom-id="channel."
       href="/team_name/channels/"
       id="sidebarItem_"
       tabindex="0"
@@ -161,32 +180,40 @@ exports[`components/sidebar/sidebar_channel should match snapshot when collapsed
           channel_display_name
         </span>
       </div>
-      <div
-        class="SidebarMenu MenuWrapper"
-      >
-        <button
-          aria-controls="SidebarChannelMenu-MenuList-channel_id"
-          aria-expanded="false"
-          aria-haspopup="true"
-          aria-label="Channel options for "
-          class="SidebarMenu_menuButton"
-          id="SidebarChannelMenu-Button-channel_id"
-        >
-          <svg
-            fill="currentColor"
-            height="16"
-            version="1.1"
-            viewBox="0 0 24 24"
-            width="16"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z"
-            />
-          </svg>
-        </button>
-      </div>
     </a>
+    <div
+      class="SidebarMenu MenuWrapper"
+    >
+      <button
+        aria-controls="SidebarChannelMenu-MenuList-channel_id"
+        aria-describedby="SidebarChannelMenu-Description-channel_id"
+        aria-expanded="false"
+        aria-haspopup="true"
+        aria-label="Channel options for channel_display_name"
+        class="SidebarMenu_menuButton"
+        data-agentom-id="channel..options"
+        id="SidebarChannelMenu-Button-channel_id"
+      >
+        <svg
+          fill="currentColor"
+          height="16"
+          version="1.1"
+          viewBox="0 0 24 24"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z"
+          />
+        </svg>
+      </button>
+      <span
+        hidden=""
+        id="SidebarChannelMenu-Description-channel_id"
+      >
+        Actions: Open in new window, Mark as Unread, Favorite, Mute Channel, Move to..., Copy Link, Leave Channel
+      </span>
+    </div>
   </li>
 </div>
 `;
@@ -199,7 +226,8 @@ exports[`components/sidebar/sidebar_channel should match snapshot when unread 1`
   >
     <a
       aria-label="channel_display_name public channel"
-      class="SidebarLink"
+      class="SidebarLink SidebarLink--withMenu"
+      data-agentom-id="channel."
       href="/team_name/channels/"
       id="sidebarItem_"
       tabindex="0"
@@ -216,32 +244,40 @@ exports[`components/sidebar/sidebar_channel should match snapshot when unread 1`
           channel_display_name
         </span>
       </div>
-      <div
-        class="SidebarMenu MenuWrapper"
-      >
-        <button
-          aria-controls="SidebarChannelMenu-MenuList-channel_id"
-          aria-expanded="false"
-          aria-haspopup="true"
-          aria-label="Channel options for "
-          class="SidebarMenu_menuButton"
-          id="SidebarChannelMenu-Button-channel_id"
-        >
-          <svg
-            fill="currentColor"
-            height="16"
-            version="1.1"
-            viewBox="0 0 24 24"
-            width="16"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z"
-            />
-          </svg>
-        </button>
-      </div>
     </a>
+    <div
+      class="SidebarMenu MenuWrapper"
+    >
+      <button
+        aria-controls="SidebarChannelMenu-MenuList-channel_id"
+        aria-describedby="SidebarChannelMenu-Description-channel_id"
+        aria-expanded="false"
+        aria-haspopup="true"
+        aria-label="Channel options for channel_display_name"
+        class="SidebarMenu_menuButton"
+        data-agentom-id="channel..options"
+        id="SidebarChannelMenu-Button-channel_id"
+      >
+        <svg
+          fill="currentColor"
+          height="16"
+          version="1.1"
+          viewBox="0 0 24 24"
+          width="16"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z"
+          />
+        </svg>
+      </button>
+      <span
+        hidden=""
+        id="SidebarChannelMenu-Description-channel_id"
+      >
+        Actions: Open in new window, Mark as Unread, Favorite, Mute Channel, Move to..., Copy Link, Leave Channel
+      </span>
+    </div>
   </li>
 </div>
 `;

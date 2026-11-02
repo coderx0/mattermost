@@ -239,7 +239,8 @@ export class QuickSwitchModal extends React.PureComponent<Props, State> {
                         // @ts-ignore
                         ref={this.setSwitchBoxRef}
                         id='quickSwitchInput'
-                        aria-label={this.props.intl.formatMessage({id: 'quick_switch_modal.input', defaultMessage: 'quick switch input'})}
+                        aria-label={this.props.intl.formatMessage({id: 'quick_switch_modal.input.label', defaultMessage: 'Find channels'})}
+                        aria-describedby='quickSwitchInputDescription'
                         className='form-control focused'
                         onChange={this.onChange}
                         value={this.state.text}
@@ -255,6 +256,16 @@ export class QuickSwitchModal extends React.PureComponent<Props, State> {
                         forceSuggestionsWhenBlur={true}
                         shouldSearchCompleteText={true}
                     />
+                    {/* What the field finds, from SwitchChannelProvider and its makeChannelSearchFilter */}
+                    <span
+                        id='quickSwitchInputDescription'
+                        hidden={true}
+                    >
+                        <FormattedMessage
+                            id='quick_switch_modal.input.description'
+                            defaultMessage="Finds your channels, public channels, direct and group messages, and people. A channel matches when its name or URL contains the text you type; a direct or group message also matches when a member's name, username, nickname or email address contains it (only the part before the @, unless you type an @). Several words, separated by spaces or commas, must each appear. People match when their name, username, nickname or email address contains the text. Case is ignored. Results update as you type; with no text, it lists up to 5 unread channels that aren't muted, and up to 20 recently viewed ones."
+                        />
+                    </span>
                     {
                         !this.state.shouldShowLoadingSpinner &&
                         !this.state.hasSuggestions &&

@@ -10,6 +10,7 @@ import type {ActionResult} from 'mattermost-redux/types/actions';
 
 import SidebarChannelLink from 'components/sidebar/sidebar_channel/sidebar_channel_link';
 
+import {agentomIdSegment} from 'utils/agentom_ids';
 import {getHistory} from 'utils/browser_history';
 import Constants from 'utils/constants';
 
@@ -56,6 +57,7 @@ const SidebarGroupChannel = ({
             channel={channel}
             link={`/${currentTeamName}/messages/${channel.name}`}
             label={channel.display_name}
+            agentomId={`gm.${agentomIdSegment(channel.display_name)}`}
             channelLeaveHandler={handleLeaveChannel}
             icon={getIcon()}
         />

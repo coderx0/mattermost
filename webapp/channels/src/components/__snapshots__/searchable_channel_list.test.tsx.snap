@@ -7,6 +7,7 @@ exports[`components/SearchableChannelList should match init snapshot 1`] = `
   >
     <div
       class="filter-row"
+      role="search"
     >
       <span
         aria-hidden="true"
@@ -20,6 +21,7 @@ exports[`components/SearchableChannelList should match init snapshot 1`] = `
         class="input-wrapper"
       >
         <input
+          aria-describedby="searchChannelsTextboxDescription"
           aria-label="Search Channels"
           class="form-control filter-textbox"
           id="searchChannelsTextbox"
@@ -27,6 +29,12 @@ exports[`components/SearchableChannelList should match init snapshot 1`] = `
           value=""
         />
       </div>
+      <span
+        hidden=""
+        id="searchChannelsTextboxDescription"
+      >
+        Searches this team's channels, archived ones included: public channels, and private ones you belong to{discoverable, select, true { or that are discoverable} other {}}. A channel matches when its name, URL or purpose contains the text you type, ignoring case, or when each word you type starts a word of them. At most 50 channels are found; the channel type filter, Hide Joined and Hide Archived narrow them further. Results update as you type.
+      </span>
     </div>
     <div
       class="more-modal__dropdown"
@@ -41,7 +49,7 @@ exports[`components/SearchableChannelList should match init snapshot 1`] = `
         class="sr-only"
         role="status"
       >
-        0 Results
+        Updating channels…
       </span>
       <div
         id="modalPreferenceContainer"
@@ -55,10 +63,12 @@ exports[`components/SearchableChannelList should match init snapshot 1`] = `
         </div>
         <button
           aria-controls="browseChannelsDropdown"
+          aria-describedby="browseChannelsTypeFilterChoices"
           aria-expanded="false"
           aria-haspopup="true"
           aria-label="Channel type filter"
           class=""
+          data-agentom-id="browse-channels.type-filter"
           id="menuWrapper"
         >
           Channel Type: All
@@ -75,6 +85,12 @@ exports[`components/SearchableChannelList should match init snapshot 1`] = `
             />
           </svg>
         </button>
+        <span
+          hidden=""
+          id="browseChannelsTypeFilterChoices"
+        >
+          {current}. {choices}
+        </span>
         <div
           aria-checked="true"
           aria-label="Hide archived channels"
@@ -158,8 +174,10 @@ exports[`components/SearchableChannelList should match init snapshot 1`] = `
       </div>
     </div>
     <div
+      aria-busy="true"
+      aria-label="Channels"
       class="more-modal__list"
-      role="search"
+      role="region"
       tabindex="-1"
     >
       <div

@@ -4,7 +4,7 @@
 import classNames from 'classnames';
 import React, {useCallback, useEffect, useRef} from 'react';
 import type {ReactNode} from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 
 import {WithTooltip} from '@mattermost/shared/components/tooltip';
 
@@ -100,6 +100,7 @@ export const QuickInput = React.memo(({
     size = 'md',
     ...restProps
 }: Props) => {
+    const {formatMessage} = useIntl();
     const inputRef = useRef<HTMLInputElement | HTMLTextAreaElement | null>(null);
 
     useEffect(() => {
@@ -147,6 +148,9 @@ export const QuickInput = React.memo(({
 
     const showClearButton = onClearFromProps && (clearableWithoutValue || (clearable && value));
 
+    // The button shows only an icon: it's named by its tooltip's text, or "Clear" when that isn't text
+    const clearButtonLabel = typeof clearableTooltipText === 'string' ? clearableTooltipText : formatMessage({id: 'input.clear', defaultMessage: 'Clear'});
+
     const inputElement = React.createElement(
         inputComponent || 'input',
         {
@@ -167,6 +171,7 @@ export const QuickInput = React.memo(({
                     <button
                         data-testid='input-clear'
                         className={classNames(clearClassName, 'input-clear visible')}
+                        aria-label={clearButtonLabel}
                         onClick={onClear}
                     >
                         <span

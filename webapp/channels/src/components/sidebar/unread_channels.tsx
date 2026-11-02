@@ -11,8 +11,10 @@ import {getUnreadChannels} from 'selectors/views/channel_sidebar';
 
 import * as Menu from 'components/menu';
 
-import CreateNewCategoryMenuItem from './sidebar_category/sidebar_category_menu/create_new_category_menu_item';
-import MarkAsReadMenuItem from './sidebar_category/sidebar_category_menu/mark_as_read_menu_item';
+import {describeActions} from 'utils/popup_descriptions';
+
+import CreateNewCategoryMenuItem, {createNewCategoryMenuItemMessages} from './sidebar_category/sidebar_category_menu/create_new_category_menu_item';
+import MarkAsReadMenuItem, {markAsReadMenuItemMessages} from './sidebar_category/sidebar_category_menu/mark_as_read_menu_item';
 import SidebarCategoryGenericMenu from './sidebar_category/sidebar_category_menu/sidebar_category_generic_menu';
 import {SidebarCategoryHeaderStatic} from './sidebar_category_header';
 import SidebarChannel from './sidebar_channel';
@@ -46,6 +48,8 @@ export default function UnreadChannels({
                 <SidebarCategoryGenericMenu
                     id='unreads'
                     name={intl.formatMessage({id: 'sidebar.types.unreadChannels.ariaLabel', defaultMessage: 'Unread'})}
+                    actionsDescription={describeActions(intl, [markAsReadMenuItemMessages.viewCategory, createNewCategoryMenuItemMessages.createCategory])}
+                    agentomId='category.unreads.options'
                 >
                     <MarkAsReadMenuItem
                         id={'unreads'}

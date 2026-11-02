@@ -250,6 +250,8 @@ export default class Sidebar extends React.PureComponent<Props, State> {
                     id='lhsNavigator'
                     role='application'
                     aria-label={ariaLabel}
+                    data-agentom-id='sidebar.navigator'
+                    data-agentom-kind='section'
                     className='a11y__region'
                     data-a11y-sort-order='6'
                 >

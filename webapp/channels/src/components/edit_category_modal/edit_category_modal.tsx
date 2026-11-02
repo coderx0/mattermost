@@ -153,6 +153,7 @@ export default class EditCategoryModal extends React.PureComponent<Props, State>
                     type='text'
                     value={this.state.categoryName}
                     placeholder={localizeMessage({id: 'edit_category_modal.placeholder', defaultMessage: 'Name your category'})}
+                    aria-label={localizeMessage({id: 'edit_category_modal.name.ariaLabel', defaultMessage: 'Category name'})}
                     clearable={true}
                     onClear={this.handleClear}
                     onChange={this.handleChange}

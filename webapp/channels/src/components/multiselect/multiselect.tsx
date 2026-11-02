@@ -7,7 +7,7 @@ import type {ComponentProps, ReactNode} from 'react';
 import type {IntlShape, MessageDescriptor} from 'react-intl';
 import {FormattedMessage} from 'react-intl';
 import ReactSelect, {components} from 'react-select';
-import type {GetOptionValue, InputActionMeta, MultiValueRemoveProps, SelectInstance} from 'react-select';
+import type {GetOptionValue, InputActionMeta, InputProps, MultiValueRemoveProps, SelectInstance} from 'react-select';
 
 import {Button} from '@mattermost/shared/components/button';
 
@@ -69,6 +69,16 @@ export type Props<T extends Value> = {
     handleCancel?: () => void;
     customNoOptionsMessage?: React.ReactNode;
     required?: boolean;
+
+    /**
+     * What the search field searches and how its text matches, given to the field as its description
+     */
+    searchDescription?: string;
+
+    /**
+     * What the submit button does, given to it as its description
+     */
+    submitDescription?: string;
 };
 
 export type State = {
@@ -79,6 +89,9 @@ export type State = {
 };
 
 const KeyCodes = Constants.KeyCodes;
+
+const SEARCH_DESCRIPTION_ID = 'multiSelectSearchDescription';
+const SUBMIT_DESCRIPTION_ID = 'multiSelectSubmitDescription';
 
 export class MultiSelect<T extends Value> extends React.PureComponent<Props<T>, State> {
     private listRef = React.createRef<MultiSelectList<T>>();
@@ -297,6 +310,22 @@ export class MultiSelect<T extends Value> extends React.PureComponent<Props<T>, 
         return this.props.valueWithImage ? <components.MultiValueLabel {...props}/> : this.props.valueRenderer;
     };
 
+    // react-select gives its input an aria-describedby of its own (its placeholder), replacing one passed to
+    // it, so the search's description is added to the input here.
+    private Input = (props: InputProps<T, true>) => {
+        const describedBy = [
+            this.props.searchDescription ? SEARCH_DESCRIPTION_ID : undefined,
+            props['aria-describedby'],
+        ].filter(Boolean).join(' ');
+
+        return (
+            <components.Input
+                {...props}
+                aria-describedby={describedBy || undefined}
+            />
+        );
+    };
+
     private MultiValueRemove = ({children, innerProps, data}: MultiValueRemoveProps<T>) => (
         <div
             {...innerProps}
@@ -507,6 +536,7 @@ export class MultiSelect<T extends Value> extends React.PureComponent<Props<T>, 
                                 components={{
                                     Menu: nullComponent,
                                     IndicatorsContainer: nullComponent,
+                                    Input: this.Input,
                                     MultiValueLabel: this.props.valueWithImage ? components.MultiValueLabel : paddedComponent(this.props.valueRenderer),
                                     MultiValueRemove: this.props.valueWithImage ? this.MultiValueRemove : components.MultiValueRemove,
                                 }}
@@ -532,6 +562,7 @@ export class MultiSelect<T extends Value> extends React.PureComponent<Props<T>, 
                             {this.props.saveButtonPosition === 'top' &&
                                 <SaveButton
                                     id='saveItems'
+                                    aria-describedby={this.props.submitDescription ? SUBMIT_DESCRIPTION_ID : undefined}
                                     saving={this.props.saving}
                                     disabled={this.props.saving}
                                     onClick={this.handleOnClick}
@@ -547,6 +578,22 @@ export class MultiSelect<T extends Value> extends React.PureComponent<Props<T>, 
                             {numRemainingText}
                             {memberCount}
                         </div>
+                        {this.props.searchDescription && (
+                            <span
+                                id={SEARCH_DESCRIPTION_ID}
+                                hidden={true}
+                            >
+                                {this.props.searchDescription}
+                            </span>
+                        )}
+                        {this.props.submitDescription && (
+                            <span
+                                id={SUBMIT_DESCRIPTION_ID}
+                                hidden={true}
+                            >
+                                {this.props.submitDescription}
+                            </span>
+                        )}
                     </div>
                     {multiSelectList}
                     <div
@@ -592,6 +639,7 @@ export class MultiSelect<T extends Value> extends React.PureComponent<Props<T>, 
                         }
                         <SaveButton
                             id='saveItems'
+                            aria-describedby={this.props.submitDescription ? SUBMIT_DESCRIPTION_ID : undefined}
                             saving={this.props.saving}
                             disabled={this.props.saving || !this.props.savingEnabled}
                             onClick={this.handleOnClick}

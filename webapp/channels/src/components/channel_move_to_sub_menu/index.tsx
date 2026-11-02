@@ -3,7 +3,7 @@
 
 import React, {memo} from 'react';
 import type {MouseEvent, KeyboardEvent} from 'react';
-import {FormattedMessage, useIntl} from 'react-intl';
+import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {
@@ -30,6 +30,7 @@ import EditCategoryModal from 'components/edit_category_modal';
 import * as Menu from 'components/menu';
 
 import Constants, {ModalIdentifiers} from 'utils/constants';
+import {describeChoices} from 'utils/popup_descriptions';
 
 import type {GlobalState} from 'types/store';
 
@@ -40,8 +41,30 @@ type Props = {
     inHeaderDropdown?: boolean;
 };
 
+export const channelMoveToSubMenuMessages = defineMessages({
+    moveTo: {
+        id: 'sidebar_left.sidebar_channel_menu.moveTo',
+        defaultMessage: 'Move to...',
+    },
+    favorites: {
+        id: 'sidebar_left.sidebar_channel_menu.favorites',
+        defaultMessage: 'Favorites',
+    },
+    channels: {
+        id: 'sidebar_left.sidebar_channel_menu.channels',
+        defaultMessage: 'Channels',
+    },
+    moveToNewCategory: {
+        id: 'sidebar_left.sidebar_channel_menu.moveToNewCategory',
+        defaultMessage: 'New Category',
+    },
+});
+
+const messages = channelMoveToSubMenuMessages;
+
 const ChannelMoveToSubMenu = (props: Props) => {
-    const {formatMessage} = useIntl();
+    const intl = useIntl();
+    const {formatMessage} = intl;
 
     const dispatch = useDispatch();
 
@@ -80,29 +103,25 @@ const ChannelMoveToSubMenu = (props: Props) => {
         }));
     }
 
+    function getCategoryLabel(category: ChannelCategory) {
+        if (category.type === CategoryTypes.FAVORITES) {
+            return messages.favorites;
+        }
+        if (category.type === CategoryTypes.CHANNELS) {
+            return messages.channels;
+        }
+        return category.display_name;
+    }
+
     function createSubmenuItemsForCategoryArray(categories: ChannelCategory[], currentCategory?: ChannelCategory) {
         const allCategories = categories.map((category: ChannelCategory) => {
-            let text = <span>{category.display_name}</span>;
+            const label = getCategoryLabel(category);
+            const text = typeof label === 'string' ? <span>{label}</span> : <FormattedMessage {...label}/>;
 
-            if (category.type === CategoryTypes.FAVORITES) {
-                text = (
-                    <FormattedMessage
-                        id='sidebar_left.sidebar_channel_menu.favorites'
-                        defaultMessage='Favorites'
-                    />
-                );
-            }
-            if (category.type === CategoryTypes.CHANNELS) {
-                text = (
-                    <FormattedMessage
-                        id='sidebar_left.sidebar_channel_menu.channels'
-                        defaultMessage='Channels'
-                    />
-                );
-            }
-
+            // The category the channel is in is the checked choice
+            const isCurrentCategory = Boolean(currentCategory && currentCategory.display_name === category.display_name);
             let selectedCategory = null;
-            if (currentCategory && currentCategory.display_name === category.display_name) {
+            if (isCurrentCategory) {
                 selectedCategory = (
                     <CheckIcon
                         color='var(--button-bg)'
@@ -115,6 +134,9 @@ const ChannelMoveToSubMenu = (props: Props) => {
                 <Menu.Item
                     id={`moveToCategory-${props.channel.id}-${category.id}`}
                     key={`moveToCategory-${props.channel.id}-${category.id}`}
+                    role='menuitemradio'
+                    aria-checked={isCurrentCategory}
+                    forceCloseOnSelect={true}
                     leadingElement={category.type === CategoryTypes.FAVORITES ? (<StarOutlineIcon size={18}/>) : (<FolderOutlineIcon size={18}/>)}
                     labels={text}
                     trailingElements={selectedCategory}
@@ -130,12 +152,7 @@ const ChannelMoveToSubMenu = (props: Props) => {
                 key={`moveToNewCategory-${props.channel.id}`}
                 aria-haspopup={true}
                 leadingElement={<FolderMoveOutlineIcon size={18}/>}
-                labels={
-                    <FormattedMessage
-                        id='sidebar_left.sidebar_channel_menu.moveToNewCategory'
-                        defaultMessage='New Category'
-                    />
-                }
+                labels={<FormattedMessage {...messages.moveToNewCategory}/>}
                 onClick={handleMoveToNewCategory}
             />,
         ];
@@ -151,31 +168,27 @@ const ChannelMoveToSubMenu = (props: Props) => {
         return categories.filter((category) => category.type !== CategoryTypes.DIRECT_MESSAGES);
     }
 
-    function getMoveToCategorySubmenuItems(categories: ChannelCategory[], currentCategory?: ChannelCategory) {
+    function getMoveToCategories(categories: ChannelCategory[]) {
         const isSubmenuOneOfSelectedChannels = multiSelectedChannelIds.includes(props.channel.id);
 
         // If sub menu is in channel header dropdown OR If multiple channels are selected but the menu is open outside of those selected channels
         if (props.inHeaderDropdown || !isSubmenuOneOfSelectedChannels) {
             const isDmOrGm = props.channel.type === Constants.DM_CHANNEL || props.channel.type === Constants.GM_CHANNEL;
-            const filteredCategories = filterCategoriesBasedOnChannelType(categories, isDmOrGm);
-            return createSubmenuItemsForCategoryArray(filteredCategories, currentCategory);
+            return filterCategoriesBasedOnChannelType(categories, isDmOrGm);
         }
 
         const areAllSelectedChannelsDMorGM = multiSelectedChannelIds.every((channelId) => allChannels[channelId].type === Constants.DM_CHANNEL || allChannels[channelId].type === Constants.GM_CHANNEL);
         if (areAllSelectedChannelsDMorGM) {
-            const filteredCategories = filterCategoriesBasedOnChannelType(categories, true);
-            return createSubmenuItemsForCategoryArray(filteredCategories, currentCategory);
+            return filterCategoriesBasedOnChannelType(categories, true);
         }
 
         const areAllSelectedChannelsAreNotDMorGM = multiSelectedChannelIds.every((channelId) => allChannels[channelId].type !== Constants.DM_CHANNEL && allChannels[channelId].type !== Constants.GM_CHANNEL);
         if (areAllSelectedChannelsAreNotDMorGM) {
-            const filteredCategories = filterCategoriesBasedOnChannelType(categories, false);
-            return createSubmenuItemsForCategoryArray(filteredCategories, currentCategory);
+            return filterCategoriesBasedOnChannelType(categories, false);
         }
 
         // If we have a mix of channel types, we need to filter out both the DM and Channel categories
-        const filteredCategories = categories.filter((category) => category.type !== CategoryTypes.CHANNELS && category.type !== CategoryTypes.DIRECT_MESSAGES);
-        return createSubmenuItemsForCategoryArray(filteredCategories, currentCategory);
+        return categories.filter((category) => category.type !== CategoryTypes.CHANNELS && category.type !== CategoryTypes.DIRECT_MESSAGES);
     }
 
     if (!categories) {
@@ -195,12 +208,7 @@ const ChannelMoveToSubMenu = (props: Props) => {
                 <div className='ChannelMoveToSubMenu__disabledContainer'>
                     <Menu.Item
                         id={`moveTo-${props.channel.id}`}
-                        labels={
-                            <FormattedMessage
-                                id='sidebar_left.sidebar_channel_menu.moveTo'
-                                defaultMessage='Move to...'
-                            />
-                        }
+                        labels={<FormattedMessage {...messages.moveTo}/>}
                         leadingElement={props.inHeaderDropdown ? null : <FolderMoveOutlineIcon size={18}/>}
                         trailingElements={<ChevronRightIcon size={16}/>}
                         disabled={true}
@@ -210,21 +218,33 @@ const ChannelMoveToSubMenu = (props: Props) => {
         );
     }
 
+    const moveToCategories = getMoveToCategories(categories);
+
+    // The submenu's choices, named before it opens: the categories, then a new one
+    const choicesId = `moveTo-${props.channel.id}-choices`;
+    const choices = describeChoices(intl, [...moveToCategories.map(getCategoryLabel), messages.moveToNewCategory]);
+
     return (
         <Menu.SubMenu
             id={`moveTo-${props.channel.id}`}
-            labels={
-                <FormattedMessage
-                    id='sidebar_left.sidebar_channel_menu.moveTo'
-                    defaultMessage='Move to...'
-                />
-            }
+            labels={<FormattedMessage {...messages.moveTo}/>}
             leadingElement={props.inHeaderDropdown ? null : <FolderMoveOutlineIcon size={18}/>}
-            trailingElements={<ChevronRightIcon size={16}/>}
+            trailingElements={(
+                <>
+                    <ChevronRightIcon size={16}/>
+                    <span
+                        id={choicesId}
+                        hidden={true}
+                    >
+                        {choices}
+                    </span>
+                </>
+            )}
+            aria-describedby={choicesId}
             menuId={`moveTo-${props.channel.id}-menu`}
             menuAriaLabel={formatMessage({id: 'sidebar_left.sidebar_channel_menu.moveTo.dropdownAriaLabel', defaultMessage: 'Move to submenu'})}
         >
-            {getMoveToCategorySubmenuItems(categories, currentCategory)}
+            {createSubmenuItemsForCategoryArray(moveToCategories, currentCategory)}
         </Menu.SubMenu>
     );
 };

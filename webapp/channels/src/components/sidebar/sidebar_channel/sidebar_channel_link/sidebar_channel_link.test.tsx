@@ -230,4 +230,22 @@ describe('components/sidebar/sidebar_channel/sidebar_channel_link', () => {
 
         expect(baseProps.actions.fetchChannelRemotes).toHaveBeenCalledWith('new_channel_id');
     });
+
+    test('should render the options menu beside the link, not inside it, and say which channel is shown and which is muted', () => {
+        renderLink({
+            channel: {...baseChannel, name: 'off-topic'},
+            isMuted: true,
+            isCurrentChannel: true,
+        } as Partial<typeof baseProps>);
+
+        const link = screen.getByRole('link');
+        expect(link).toHaveAttribute('aria-current', 'page');
+        expect(link).toHaveAttribute('data-agentom-id', 'channel.off-topic');
+        expect(link).toHaveAccessibleName('channel_label muted');
+
+        const menuButton = screen.getByRole('button', {name: 'Channel options for channel_label'});
+        expect(link).not.toContainElement(menuButton);
+        expect(menuButton).toHaveAttribute('data-agentom-id', 'channel.off-topic.options');
+        expect(menuButton).toHaveAccessibleDescription(/^Actions: .*Mark as Unread, .*Move to\.\.\., Copy Link, Leave Channel$/);
+    });
 });

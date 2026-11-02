@@ -310,4 +310,20 @@ describe('components/widgets/inputs/Input', () => {
             expect(screen.queryByText(/Must be at least 2 characters/i)).not.toBeInTheDocument();
         });
     });
+
+    test('should expose that the field is required, without the native required check', () => {
+        renderWithContext(
+            <Input
+                name='test'
+                label='Test label'
+                value=''
+                required={true}
+                onChange={jest.fn()}
+            />,
+        );
+
+        const field = screen.getByRole('textbox');
+        expect(field).toHaveAttribute('aria-required', 'true');
+        expect(field).not.toHaveAttribute('required');
+    });
 });

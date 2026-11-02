@@ -232,6 +232,7 @@ export class TeamSidebar extends React.PureComponent<Props, State> {
                     switchTeam={() => this.switchTeamTo(team)}
                     isDraggable={true}
                     teamId={team.id}
+                    teamName={team.name}
                     teamIndex={index}
                     isInProduct={Boolean(currentProduct)}
                 />
@@ -311,7 +312,7 @@ export class TeamSidebar extends React.PureComponent<Props, State> {
             <div
                 className={classNames('team-sidebar', {'move--right': this.props.isOpen})}
                 role='navigation'
-                aria-labelledby='teamSidebarWrapper'
+                aria-label={this.props.intl.formatMessage({id: 'team_sidebar.ariaLabel', defaultMessage: 'Teams'})}
             >
                 <Scrollbars>
                     <div

@@ -14,6 +14,7 @@ import {mark} from 'actions/telemetry_actions';
 
 import TeamIcon from 'components/widgets/team_icon/team_icon';
 
+import {agentomIdSegment} from 'utils/agentom_ids';
 import {Mark} from 'utils/performance_telemetry';
 
 const messages = defineMessages({
@@ -44,6 +45,11 @@ interface Props {
     isDraggable?: boolean;
     teamIndex?: number;
     teamId?: string;
+
+    /**
+     * The team's name (its URL name), for its data-agentom-id
+     */
+    teamName?: string;
     isInProduct?: boolean;
     hasUrgent?: boolean;
 }
@@ -60,6 +66,7 @@ export default function TeamButton({
     switchTeam,
     teamIndex,
     teamId,
+    teamName,
     tip,
     ...otherProps
 }: Props) {
@@ -179,10 +186,16 @@ export default function TeamButton({
         </WithTeamTooltip>
     );
 
+    // The current team's link leads to the team the page is in, not to the page itself
+    const ariaCurrent = otherProps.active ? 'true' : undefined;
+    const agentomId = teamName ? `team.${agentomIdSegment(teamName)}` : undefined;
+
     const teamButton = (
         <Link
             id={`${url.slice(1)}TeamButton`}
             aria-label={isNotCreateTeamButton ? ariaLabel : displayName}
+            aria-current={ariaCurrent}
+            data-agentom-id={agentomId}
             to={url}
             onClick={handleSwitch}
         >
@@ -206,6 +219,12 @@ export default function TeamButton({
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
+
+                        // It's a link that can also be dragged: the drag handle's role of button would hide that
+                        // it's a link, as in SidebarCategoryHeader
+                        role={undefined}
+                        aria-current={ariaCurrent}
+                        data-agentom-id={agentomId}
                     >
                         <div
                             className={classNames([`team-container ${teamClass}`, {isDragging: snapshot.isDragging}])}

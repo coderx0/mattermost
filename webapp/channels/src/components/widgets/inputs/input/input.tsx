@@ -236,6 +236,7 @@ const Input = React.forwardRef((
                     aria-label={ariaLabel}
                     aria-describedby={customInputLabel ? errorId : undefined}
                     aria-invalid={error || hasError}
+                    aria-required={required || undefined}
                     rows={rows || 3}
                     name={name}
                     disabled={disabled}
@@ -257,6 +258,7 @@ const Input = React.forwardRef((
                 aria-label={ariaLabel}
                 aria-describedby={customInputLabel ? errorId : undefined}
                 aria-invalid={error || hasError}
+                aria-required={required || undefined}
                 name={name}
                 disabled={disabled}
                 {...otherProps}

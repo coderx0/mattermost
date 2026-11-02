@@ -325,6 +325,7 @@ export default class MoreDirectChannels extends React.PureComponent<Props, State
                 saving={this.state.saving}
                 search={this.search}
                 selectedItemRef={this.selectedItemRef}
+                searchScope={this.props.restrictDirectMessage === 'any' ? 'all' : 'team'}
                 totalCount={this.props.totalCount}
                 users={filteredUsers}
                 values={this.state.values}

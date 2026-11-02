@@ -72,8 +72,8 @@ describe('components/TeamSettings/OpenInvite', () => {
             />,
         );
         expect(screen.queryByText(/membership is managed by a policy/i)).not.toBeInTheDocument();
-        const publicBtn = screen.getByRole('button', {name: /public team/i});
-        const privateBtn = screen.getByRole('button', {name: /private team/i});
+        const publicBtn = screen.getByRole('radio', {name: /public team/i});
+        const privateBtn = screen.getByRole('radio', {name: /private team/i});
         expect(publicBtn.className).not.toMatch(/disabled/);
         expect(privateBtn.className).not.toMatch(/disabled/);
         await userEvent.click(screen.getByText('Private Team'));
