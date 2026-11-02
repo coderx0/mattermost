@@ -1,0 +1,275 @@
+// Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
+// See LICENSE.txt for license information.
+
+import fs from 'fs';
+import path from 'path';
+
+import type {SitemapNode} from '@agent-om/core/sitemap';
+import type {MessageDescriptor} from 'react-intl';
+import ts from 'typescript';
+
+import type {AdminDefinition} from 'components/admin_console/types';
+
+// The app's semantic sitemap (the Agent Object Model's docs/sitemap.md),
+// generated from its routes; sitemap.test.ts writes it to SITEMAP_FILE and
+// fails when that file is behind them.
+//
+// - The routes are the `path` of every *Route element in the webapp's source,
+//   found with the TypeScript compiler. React Router's patterns don't say
+//   where a nested route sits (`${props.match.url}/add`), so ROUTES declares,
+//   for each one as written, the page it is or why it isn't on the map; a
+//   route with no declaration, or a declaration with no route, fails the test.
+// - The System Console's pages come from its own definition
+//   (admin_definition.tsx), as the console shows them to a system admin on a
+//   server with no license, this build's.
+// - A page's name, where its path says too little, is declared with it, or for
+//   the System Console the title its menu shows.
+
+/** Where the map is kept; the build copies it to the site's root (webpack.config.js), and the server serves it there. */
+export const SITEMAP_FILE = path.join('src', 'agent_om', 'semantic-sitemap.json');
+
+/** What a route is: a page (its path in the map, and its name when the path says too little), or why it isn't on the map. */
+type Declared = {page: string; name?: string} | {pages: Array<{page: string; name?: string}>} | {hidden: string} | {console: true} | {passes: true};
+
+/* eslint-disable no-template-curly-in-string -- the routes as written in the source, their ${...} included */
+
+/** Every route in the source, as `<file> <its path as written>`, and what it is. */
+export const ROUTES: Record<string, Declared> = {
+
+    // the app's root routes
+    "components/root/root.tsx '/error'": {hidden: 'shown after a failure, not a place to go'},
+    "components/root/root.tsx '/login'": {page: '/login', name: 'Log in'},
+    "components/login/login.tsx '/login/desktop'": {hidden: 'hands a sign-in to the desktop app'},
+    "components/root/root.tsx '/reset_password'": {page: '/reset_password', name: 'Reset password'},
+    "components/root/root.tsx '/reset_password_complete'": {hidden: "opened from a reset email's link, with its token"},
+    "components/root/root.tsx '/signup_user_complete'": {hidden: "opened from an invitation's link: the server isn't open to sign-ups"},
+    "components/signup/signup.tsx '/signup_user_complete/desktop'": {hidden: 'hands a sign-up to the desktop app'},
+    "components/root/root.tsx '/should_verify_email'": {hidden: 'shown after signing up while email is verified; email is off'},
+    "components/root/root.tsx '/do_verify_email'": {hidden: "opened from a verification email's link"},
+    "components/root/root.tsx '/claim'": {hidden: 'switches the sign-in method, offered only with single sign-on or LDAP set up'},
+    'components/claim/claim_controller.tsx `${this.props.match.url}/oauth_to_email`': {hidden: 'a step of /claim'},
+    'components/claim/claim_controller.tsx `${this.props.match.url}/email_to_oauth`': {hidden: 'a step of /claim'},
+    'components/claim/claim_controller.tsx `${this.props.match.url}/ldap_to_email`': {hidden: 'a step of /claim'},
+    'components/claim/claim_controller.tsx `${this.props.match.url}/email_to_ldap`': {hidden: 'a step of /claim'},
+    "components/root/root.tsx '/terms_of_service'": {hidden: 'shown when custom terms of service are on, which needs a license'},
+    "components/root/root.tsx '/help/:page?'": {pages: [{page: '/help', name: 'Help'}, {page: '/help/{page}'}]},
+    "components/root/root.tsx '/landing'": {hidden: 'asks whether to open a link in the desktop app'},
+    "components/root/root.tsx '/component_library'": {hidden: 'a developer page, only in developer mode'},
+    "components/root/root.tsx '/admin_console'": {page: '/admin_console', name: 'System Console'},
+    'components/admin_console/admin_console.tsx `${props.match.url}/${item.url}`': {console: true},
+    "components/root/root.tsx '/select_team'": {page: '/select_team', name: 'Select a team'},
+    "components/root/root.tsx '/oauth/authorize'": {hidden: "an OAuth app's request for access, opened by the app"},
+    "components/root/root.tsx '/create_team'": {page: '/create_team', name: 'Create a team'},
+    'components/create_team/create_team.tsx `${this.props.match.url}/display_name`': {hidden: 'the first step of /create_team, where it opens'},
+    'components/create_team/create_team.tsx `${this.props.match.url}/team_url`': {hidden: 'the second step of /create_team, reached from the first'},
+    "components/root/root.tsx '/mfa'": {hidden: 'sets up multi-factor authentication when it is required; it is off'},
+    'components/mfa/mfa_controller/mfa_controller.tsx `${this.props.match.url}/setup`': {hidden: 'a step of /mfa'},
+    'components/mfa/mfa_controller/mfa_controller.tsx `${this.props.match.url}/confirm`': {hidden: 'a step of /mfa'},
+    "components/root/root.tsx '/preparing-workspace'": {hidden: "the first admin's onboarding, which is off"},
+
+    // windows popped out of the app (the desktop app's)
+    "components/root/root.tsx '/_popout'": {hidden: 'windows popped out of the app'},
+    'components/popout_controller/popout_controller.tsx `/_popout/thread/:team(${TEAM_NAME_PATH_PATTERN})/:postId(${ID_PATH_PATTERN})`': {hidden: 'a popped-out window'},
+    'components/popout_controller/popout_controller.tsx `/_popout/channel/:team(${TEAM_NAME_PATH_PATTERN})/:path(channels|messages)/:identifier(${IDENTIFIER_PATH_PATTERN})/:postid(${ID_PATH_PATTERN})?`': {hidden: 'a popped-out window'},
+    'components/popout_controller/popout_controller.tsx `/_popout/rhs/:team(${TEAM_NAME_PATH_PATTERN})`': {hidden: 'a popped-out window'},
+    "components/popout_controller/popout_controller.tsx '/_popout/help/:page?'": {hidden: 'a popped-out window'},
+    'components/rhs_popout/rhs_popout.tsx `${match.path}/search`': {hidden: 'a popped-out window'},
+    'components/rhs_popout/rhs_popout.tsx `${match.path}/plugin/:pluginId`': {hidden: 'a popped-out window'},
+
+    // products and plugins: none in these builds
+    'components/root/root.tsx `${product.baseURL}/public`': {hidden: 'a product, none in this build'},
+    'components/root/root.tsx product.baseURL': {hidden: 'a product, none in this build'},
+    "components/root/root.tsx '/plug/' + plugin.route": {hidden: 'a plugin, none in this build'},
+    'components/team_controller/team_controller.tsx `/:team(${TEAM_NAME_PATH_PATTERN})/` + (plugin as any).route': {hidden: 'a plugin, none in this build'},
+    'components/team_controller/team_controller.tsx getTeamScopedProductRoutePath(product.baseURL)': {hidden: 'a product, none in this build'},
+    'components/channel_layout/center_channel/center_channel.tsx `/:team(${TEAM_NAME_PATH_PATTERN})/_playbooks/:playbookId(${ID_PATH_PATTERN})/run`': {hidden: 'the Playbooks plugin, not in this build'},
+
+    // a team's pages
+    'components/root/root.tsx `/:team(${TEAM_NAME_PATH_PATTERN})`': {page: '/{team}', name: 'Team: opens its last channel'},
+    'components/channel_layout/center_channel/center_channel.tsx `/:team(${TEAM_NAME_PATH_PATTERN})/:path(channels|messages)/:identifier(${IDENTIFIER_PATH_PATTERN})/:postid(${ID_PATH_PATTERN})?`': {
+        pages: [
+            {page: '/{team}/channels/{channel}', name: 'Channel'},
+            {page: '/{team}/channels/{channel}/{postId}', name: 'Message in its channel'},
+            {page: '/{team}/messages/{user}', name: 'Direct message (@username) or group message'},
+            {page: '/{team}/messages/{user}/{postId}', name: 'Message in its conversation'},
+        ],
+    },
+    'components/channel_layout/center_channel/center_channel.tsx `${url}/pl/:postid(${ID_PATH_PATTERN})`': {page: '/{team}/pl/{postId}', name: 'Message, by its link'},
+    'components/channel_layout/center_channel/center_channel.tsx `/:team(${TEAM_NAME_PATH_PATTERN})/threads/:threadIdentifier(${ID_PATH_PATTERN})?`': {pages: [{page: '/{team}/threads', name: 'Threads'}, {page: '/{team}/threads/{threadId}', name: 'Thread'}]},
+    'components/channel_layout/center_channel/center_channel.tsx `/:team(${TEAM_NAME_PATH_PATTERN})/recaps`': {hidden: 'AI recaps, a feature that is off'},
+    'components/channel_layout/center_channel/center_channel.tsx `/:team(${TEAM_NAME_PATH_PATTERN})/drafts`': {page: '/{team}/drafts', name: 'Drafts'},
+    'components/channel_layout/center_channel/center_channel.tsx `/:team(${TEAM_NAME_PATH_PATTERN})/${SCHEDULED_POST_URL_SUFFIX}`': {hidden: 'scheduled messages, which need a license; without one it shows Drafts'},
+
+    // a team's integrations and custom emoji
+    'components/team_controller/team_controller.tsx `/:team(${TEAM_NAME_PATH_PATTERN})/integrations`': {page: '/{team}/integrations', name: 'Integrations'},
+    "components/backstage/backstage_controller.tsx '/:team/integrations'": {page: '/{team}/integrations', name: 'Integrations'},
+    'components/backstage/backstage_controller.tsx `${props.match.url}/incoming_webhooks`': {page: '/{team}/integrations/incoming_webhooks', name: 'Incoming webhooks'},
+    'components/backstage/backstage_controller.tsx `${props.match.url}/incoming_webhooks/add`': {page: '/{team}/integrations/incoming_webhooks/add', name: 'Add an incoming webhook'},
+    'components/backstage/backstage_controller.tsx `${props.match.url}/incoming_webhooks/edit`': {hidden: 'edits one webhook, opened from its list with its id'},
+    'components/backstage/backstage_controller.tsx `${props.match.url}/outgoing_webhooks`': {page: '/{team}/integrations/outgoing_webhooks', name: 'Outgoing webhooks'},
+    'components/backstage/backstage_controller.tsx `${props.match.url}/outgoing_webhooks/add`': {page: '/{team}/integrations/outgoing_webhooks/add', name: 'Add an outgoing webhook'},
+    'components/backstage/backstage_controller.tsx `${props.match.url}/outgoing_webhooks/edit`': {hidden: 'edits one webhook, opened from its list with its id'},
+    'components/backstage/backstage_controller.tsx `${props.match.url}/commands`': {page: '/{team}/integrations/commands', name: 'Slash commands'},
+    'components/integrations/commands_container/commands_container.tsx `${this.props.match.url}/`': {passes: true},
+    'components/integrations/commands_container/commands_container.tsx `${this.props.match.url}/installed`': {page: '/{team}/integrations/commands/installed', name: 'Installed slash commands'},
+    'components/integrations/commands_container/commands_container.tsx `${this.props.match.url}/add`': {page: '/{team}/integrations/commands/add', name: 'Add a slash command'},
+    'components/integrations/commands_container/commands_container.tsx `${this.props.match.url}/edit`': {hidden: 'edits one command, opened from its list with its id'},
+    'components/integrations/commands_container/commands_container.tsx `${this.props.match.url}/confirm`': {hidden: 'shown once after adding a command, with its token'},
+    'components/backstage/backstage_controller.tsx `${props.match.url}/oauth2-apps`': {hidden: 'OAuth 2.0 apps, offered only when the server is an OAuth provider; it is not'},
+    'components/backstage/backstage_controller.tsx `${props.match.url}/oauth2-apps/add`': {hidden: 'OAuth 2.0 apps, offered only when the server is an OAuth provider; it is not'},
+    'components/backstage/backstage_controller.tsx `${props.match.url}/oauth2-apps/edit`': {hidden: 'OAuth 2.0 apps, offered only when the server is an OAuth provider; it is not'},
+    'components/backstage/backstage_controller.tsx `${props.match.url}/outgoing-oauth2-connections`': {hidden: 'outgoing OAuth connections, which need a license'},
+    'components/backstage/backstage_controller.tsx `${props.match.url}/outgoing-oauth2-connections/add`': {hidden: 'outgoing OAuth connections, which need a license'},
+    'components/backstage/backstage_controller.tsx `${props.match.url}/outgoing-oauth2-connections/edit`': {hidden: 'outgoing OAuth connections, which need a license'},
+    'components/backstage/backstage_controller.tsx `${props.match.url}/confirm`': {hidden: 'shown once after adding an integration, with its secret'},
+    'components/backstage/backstage_controller.tsx `${props.match.url}/bots`': {page: '/{team}/integrations/bots', name: 'Bot accounts'},
+    'components/backstage/backstage_controller.tsx `${props.match.url}/bots/add`': {page: '/{team}/integrations/bots/add', name: 'Add a bot account'},
+    'components/backstage/backstage_controller.tsx `${props.match.url}/bots/edit`': {hidden: 'edits one bot, opened from its list with its id'},
+    'components/team_controller/team_controller.tsx `/:team(${TEAM_NAME_PATH_PATTERN})/emoji`': {page: '/{team}/emoji', name: 'Custom emoji'},
+    "components/backstage/backstage_controller.tsx '/:team/emoji'": {page: '/{team}/emoji', name: 'Custom emoji'},
+    'components/backstage/backstage_controller.tsx `${props.match.url}/add`': {page: '/{team}/emoji/add', name: 'Add a custom emoji'},
+
+    // components that pass a route's path on
+    'components/header_footer_route/header_footer_route.tsx path': {passes: true},
+    'components/backstage/components/backstage_category.tsx link': {passes: true},
+};
+
+/* eslint-enable no-template-curly-in-string */
+
+/** Every route in the webapp's source, as `<file> <its path as written>`: the `path` of each *Route element. */
+export function findRoutes(srcDir: string): string[] {
+    const routes: string[] = [];
+    const walk = (dir: string) => {
+        for (const entry of fs.readdirSync(dir, {withFileTypes: true})) {
+            const file = path.join(dir, entry.name);
+            if (entry.isDirectory()) {
+                walk(file);
+                continue;
+            }
+            if (!entry.name.endsWith('.tsx') || entry.name.endsWith('.test.tsx')) {
+                continue;
+            }
+            const text = fs.readFileSync(file, 'utf8');
+            if (!text.includes('path=')) {
+                continue;
+            }
+            const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+            const visit = (node: ts.Node) => {
+                if ((ts.isJsxSelfClosingElement(node) || ts.isJsxOpeningElement(node)) && node.tagName.getText(source).endsWith('Route')) {
+                    for (const attribute of node.attributes.properties) {
+                        if (ts.isJsxAttribute(attribute) && attribute.name.getText(source) === 'path' && attribute.initializer) {
+                            const value = ts.isJsxExpression(attribute.initializer) ? attribute.initializer.expression : attribute.initializer;
+                            if (value) {
+                                routes.push(`${path.relative(srcDir, file).split(path.sep).join('/')} ${value.getText(source)}`);
+                            }
+                        }
+                    }
+                }
+                ts.forEachChild(node, visit);
+            };
+            visit(source);
+        }
+    };
+    walk(srcDir);
+    return [...new Set(routes)];
+}
+
+type Page = {path: string; name?: string};
+
+/** System Console pages the console would show that this build doesn't have, by their url, and why. */
+export const CONSOLE_HIDDEN: Record<string, string> = {
+    'plugins/plugin_:plugin_id': "a plugin's settings: no plugins in this build",
+};
+
+const nameOf = (title: string | MessageDescriptor | undefined) => (typeof title === 'string' ? title : title?.defaultMessage as string | undefined);
+
+/**
+ * The System Console's pages, as it shows them to a system admin on a server
+ * with no license: each section's pages that aren't hidden there, by their
+ * address under /admin_console (":user_id" becomes "{user_id}").
+ */
+export function consolePages(definition: AdminDefinition): Page[] {
+    const access = new Proxy({}, {get: () => true});
+    const consoleAccess = {read: access, write: access} as never;
+    const license = {IsLicensed: 'false'} as never;
+    const hidden = (check: unknown) => (typeof check === 'function' ? Boolean(check({}, {}, license, false, consoleAccess, undefined, true)) : Boolean(check));
+    const pages: Page[] = [];
+    for (const section of Object.values(definition)) {
+        if (hidden(section.isHidden)) {
+            continue;
+        }
+        for (const item of Object.values(section.subsections)) {
+            if (!item.url || item.url in CONSOLE_HIDDEN || hidden(item.isHidden)) {
+                continue;
+            }
+            const name = nameOf(item.title as string | MessageDescriptor | undefined);
+
+            // ":channel_id([a-z0-9]{26})" → "{channel_id}"
+            pages.push({path: `/admin_console/${item.url.replace(/:(\w+)(\([^)]*\))?/g, '{$1}')}`, ...(name ? {name} : {})});
+        }
+    }
+    return pages;
+}
+
+/** The pages the routes declare, with the System Console's. */
+export function declaredPages(console: Page[]): Page[] {
+    const pages = new Map<string, Page>();
+    const add = (page: Page) => pages.set(page.path, {...pages.get(page.path), ...page});
+    add({path: '/', name: 'Home: opens your last team and channel'});
+    for (const declared of Object.values(ROUTES)) {
+        if ('page' in declared) {
+            add({path: declared.page, ...(declared.name ? {name: declared.name} : {})});
+        } else if ('pages' in declared) {
+            declared.pages.forEach((p) => add({path: p.page, ...(p.name ? {name: p.name} : {})}));
+        } else if ('console' in declared) {
+            console.forEach(add);
+        }
+    }
+    return [...pages.values()];
+}
+
+const segmentsOf = (p: string) => p.split('/').filter(Boolean);
+
+/**
+ * The pages as a tree: each under the nearest page whose path is a prefix of
+ * its own, its path relative to it ("integrations/incoming_webhooks" under
+ * "{team}" when there's no page in between).
+ */
+export function buildSitemap(pages: Page[]): SitemapNode {
+    // by code point, the same on every machine
+    const byPath = (a: {path: string}, b: {path: string}) => (a.path < b.path ? -1 : Number(a.path > b.path));
+    const byDepth = [...pages].sort((a, b) => segmentsOf(a.path).length - segmentsOf(b.path).length || byPath(a, b));
+    const nodes = new Map<string, SitemapNode>();
+    const root: SitemapNode = {path: '/'};
+    nodes.set('/', root);
+    for (const page of byDepth) {
+        if (page.path === '/') {
+            if (page.name) {
+                root.name = page.name;
+            }
+            continue;
+        }
+        const segments = segmentsOf(page.path);
+        let parent = '/';
+        for (let i = segments.length - 1; i > 0; i--) {
+            const above = `/${segments.slice(0, i).join('/')}`;
+            if (nodes.has(above)) {
+                parent = above;
+                break;
+            }
+        }
+        const node: SitemapNode = {path: segments.slice(segmentsOf(parent).length).join('/'), ...(page.name ? {name: page.name} : {})};
+        const up = nodes.get(parent)!;
+        up.children = [...(up.children ?? []), node];
+        nodes.set(page.path, node);
+    }
+    const sort = (node: SitemapNode) => {
+        node.children?.sort(byPath);
+        node.children?.forEach(sort);
+    };
+    sort(root);
+    return root;
+}
+
+/** The map as it's written: JSON, two spaces, a newline at the end. */
+export const sitemapJson = (map: SitemapNode) => `${JSON.stringify(map, null, 2)}\n`;

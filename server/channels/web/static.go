@@ -47,6 +47,7 @@ func (w *Web) InitStatic() {
 		w.MainRouter.PathPrefix("/static/plugins/").Handler(pluginHandler)
 		w.MainRouter.PathPrefix("/static/").Handler(staticHandler)
 		w.MainRouter.Handle("/robots.txt", http.HandlerFunc(robotsHandler))
+		w.MainRouter.Handle("/semantic-sitemap.json", sitemapHandler(staticDir)).Methods(http.MethodGet, http.MethodHead)
 		w.MainRouter.Handle("/unsupported_browser.js", http.HandlerFunc(unsupportedBrowserScriptHandler))
 		w.MainRouter.Handle("/{anything:.*}", w.NewStaticHandler(root)).Methods(http.MethodGet, http.MethodHead)
 
@@ -162,6 +163,19 @@ func (w *notFoundNoCacheResponseWriter) WriteHeader(statusCode int) {
 		w.Header().Set("Cache-Control", "no-cache, public")
 	}
 	w.ResponseWriter.WriteHeader(statusCode)
+}
+
+// sitemapHandler serves the app's semantic sitemap (the Agent Object Model's
+// format: its pages as path templates), which the webapp's build puts in the
+// client directory, at the site's root, where its readers look for it. It
+// changes with the build, so it isn't cached for long; a build without it
+// answers 404.
+func sitemapHandler(staticDir string) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Cache-Control", "no-cache")
+		w.Header().Set("X-Content-Type-Options", "nosniff")
+		http.ServeFile(w, r, filepath.Join(staticDir, "semantic-sitemap.json"))
+	})
 }
 
 func robotsHandler(w http.ResponseWriter, r *http.Request) {

@@ -156,6 +156,7 @@ var config = {
             inject: 'head',
             template: 'src/root.html',
             scriptLoading: 'blocking',
+            agentOm: process.env.AGENT_OM || '',
             meta: {
                 csp: {
                     'http-equiv': 'Content-Security-Policy',
@@ -173,6 +174,9 @@ var config = {
                 {from: 'src/images/logo-email.png', to: 'images'},
                 {from: 'src/images/browser-icons', to: 'images/browser-icons'},
                 {from: 'src/images/cloud', to: 'images'},
+
+                // the app's semantic sitemap (src/agent_om/sitemap.ts), served at the site's root; not with AGENT_OM=off
+                ...(process.env.AGENT_OM === 'off' ? [] : [{from: 'src/agent_om/semantic-sitemap.json', to: 'semantic-sitemap.json'}]),
                 {from: 'src/images/welcome_illustration_new.png', to: 'images'},
                 {from: 'src/images/logo_email_blue.png', to: 'images'},
                 {from: 'src/images/logo_email_dark.png', to: 'images'},
@@ -461,7 +465,9 @@ if (DEV) {
     };
 }
 
-const env = {};
+// AGENT_OM=off builds without the Agent Object Model's projector and sitemap
+// link: the markup only, as agents other than ours see it.
+const env = {AGENT_OM: JSON.stringify(process.env.AGENT_OM || '')};
 if (DEV) {
     env.PUBLIC_PATH = JSON.stringify(publicPath);
 } else {

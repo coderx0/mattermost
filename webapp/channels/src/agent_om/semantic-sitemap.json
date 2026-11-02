@@ -1,0 +1,390 @@
+{
+  "path": "/",
+  "name": "Home: opens your last team and channel",
+  "children": [
+    {
+      "path": "admin_console",
+      "name": "System Console",
+      "children": [
+        {
+          "path": "about/license",
+          "name": "Edition and License"
+        },
+        {
+          "path": "authentication/email",
+          "name": "Email"
+        },
+        {
+          "path": "authentication/gitlab",
+          "name": "GitLab"
+        },
+        {
+          "path": "authentication/guest_access",
+          "name": "Guest Access"
+        },
+        {
+          "path": "authentication/ldap",
+          "name": "AD/LDAP"
+        },
+        {
+          "path": "authentication/mfa",
+          "name": "MFA"
+        },
+        {
+          "path": "authentication/openid",
+          "name": "OpenID Connect"
+        },
+        {
+          "path": "authentication/password",
+          "name": "Password"
+        },
+        {
+          "path": "authentication/saml",
+          "name": "SAML 2.0"
+        },
+        {
+          "path": "authentication/signup",
+          "name": "Signup"
+        },
+        {
+          "path": "compliance/custom_terms_of_service",
+          "name": "Custom Terms of Service"
+        },
+        {
+          "path": "compliance/data_retention",
+          "name": "Data Retention Policy"
+        },
+        {
+          "path": "compliance/export",
+          "name": "Compliance Export"
+        },
+        {
+          "path": "environment/database",
+          "name": "Database"
+        },
+        {
+          "path": "environment/developer",
+          "name": "Developer"
+        },
+        {
+          "path": "environment/file_storage",
+          "name": "File Storage"
+        },
+        {
+          "path": "environment/image_proxy",
+          "name": "Image Proxy"
+        },
+        {
+          "path": "environment/logging",
+          "name": "Logging"
+        },
+        {
+          "path": "environment/mobile_security_feature_discovery",
+          "name": "Mobile Security"
+        },
+        {
+          "path": "environment/notifications",
+          "name": "Notifications"
+        },
+        {
+          "path": "environment/performance_monitoring",
+          "name": "Performance Monitoring"
+        },
+        {
+          "path": "environment/push_notification_server",
+          "name": "Push Notification Server"
+        },
+        {
+          "path": "environment/rate_limiting",
+          "name": "Rate Limiting"
+        },
+        {
+          "path": "environment/session_lengths",
+          "name": "Session Lengths"
+        },
+        {
+          "path": "environment/smtp",
+          "name": "SMTP"
+        },
+        {
+          "path": "environment/web_server",
+          "name": "Web Server"
+        },
+        {
+          "path": "experimental/feature_flags",
+          "name": "Feature Flags"
+        },
+        {
+          "path": "experimental/features",
+          "name": "Features"
+        },
+        {
+          "path": "integrations/bot_accounts",
+          "name": "Bot Accounts"
+        },
+        {
+          "path": "integrations/cors",
+          "name": "CORS"
+        },
+        {
+          "path": "integrations/embedding",
+          "name": "Embedding"
+        },
+        {
+          "path": "integrations/gif",
+          "name": "GIF"
+        },
+        {
+          "path": "integrations/integration_management",
+          "name": "Integration Management"
+        },
+        {
+          "path": "plugins/plugin_management",
+          "name": "Plugin Management"
+        },
+        {
+          "path": "reporting/server_logs",
+          "name": "Server Logs"
+        },
+        {
+          "path": "reporting/system_analytics",
+          "name": "System Statistics"
+        },
+        {
+          "path": "reporting/team_statistics",
+          "name": "Team Statistics"
+        },
+        {
+          "path": "reporting/workspace_optimization",
+          "name": "Workspace Optimization"
+        },
+        {
+          "path": "site_config/announcement_banner",
+          "name": "System-wide Notifications"
+        },
+        {
+          "path": "site_config/customization",
+          "name": "Customization"
+        },
+        {
+          "path": "site_config/emoji",
+          "name": "Emoji"
+        },
+        {
+          "path": "site_config/file_sharing_downloads",
+          "name": "File Sharing and Downloads"
+        },
+        {
+          "path": "site_config/localization",
+          "name": "Localization"
+        },
+        {
+          "path": "site_config/notices",
+          "name": "Notices"
+        },
+        {
+          "path": "site_config/posts",
+          "name": "Posts"
+        },
+        {
+          "path": "site_config/public_links",
+          "name": "Public Links"
+        },
+        {
+          "path": "site_config/users_and_teams",
+          "name": "Users and Teams"
+        },
+        {
+          "path": "system_attributes/attribute_based_access_control",
+          "name": "Attribute-Based Access"
+        },
+        {
+          "path": "system_attributes/user_attributes",
+          "name": "User Attributes"
+        },
+        {
+          "path": "user_management/channels",
+          "name": "Channels",
+          "children": [
+            {
+              "path": "{channel_id}"
+            }
+          ]
+        },
+        {
+          "path": "user_management/groups",
+          "name": "Groups",
+          "children": [
+            {
+              "path": "{group_id}"
+            }
+          ]
+        },
+        {
+          "path": "user_management/permissions",
+          "name": "Permissions"
+        },
+        {
+          "path": "user_management/permissions/system_scheme"
+        },
+        {
+          "path": "user_management/permissions/team_override_scheme",
+          "children": [
+            {
+              "path": "{scheme_id}"
+            }
+          ]
+        },
+        {
+          "path": "user_management/system_roles",
+          "name": "Delegated Granular Administration"
+        },
+        {
+          "path": "user_management/teams",
+          "name": "Teams",
+          "children": [
+            {
+              "path": "{team_id}"
+            }
+          ]
+        },
+        {
+          "path": "user_management/user/{user_id}"
+        },
+        {
+          "path": "user_management/users",
+          "name": "Users"
+        }
+      ]
+    },
+    {
+      "path": "create_team",
+      "name": "Create a team"
+    },
+    {
+      "path": "help",
+      "name": "Help",
+      "children": [
+        {
+          "path": "{page}"
+        }
+      ]
+    },
+    {
+      "path": "login",
+      "name": "Log in"
+    },
+    {
+      "path": "reset_password",
+      "name": "Reset password"
+    },
+    {
+      "path": "select_team",
+      "name": "Select a team"
+    },
+    {
+      "path": "{team}",
+      "name": "Team: opens its last channel",
+      "children": [
+        {
+          "path": "channels/{channel}",
+          "name": "Channel",
+          "children": [
+            {
+              "path": "{postId}",
+              "name": "Message in its channel"
+            }
+          ]
+        },
+        {
+          "path": "drafts",
+          "name": "Drafts"
+        },
+        {
+          "path": "emoji",
+          "name": "Custom emoji",
+          "children": [
+            {
+              "path": "add",
+              "name": "Add a custom emoji"
+            }
+          ]
+        },
+        {
+          "path": "integrations",
+          "name": "Integrations",
+          "children": [
+            {
+              "path": "bots",
+              "name": "Bot accounts",
+              "children": [
+                {
+                  "path": "add",
+                  "name": "Add a bot account"
+                }
+              ]
+            },
+            {
+              "path": "commands",
+              "name": "Slash commands",
+              "children": [
+                {
+                  "path": "add",
+                  "name": "Add a slash command"
+                },
+                {
+                  "path": "installed",
+                  "name": "Installed slash commands"
+                }
+              ]
+            },
+            {
+              "path": "incoming_webhooks",
+              "name": "Incoming webhooks",
+              "children": [
+                {
+                  "path": "add",
+                  "name": "Add an incoming webhook"
+                }
+              ]
+            },
+            {
+              "path": "outgoing_webhooks",
+              "name": "Outgoing webhooks",
+              "children": [
+                {
+                  "path": "add",
+                  "name": "Add an outgoing webhook"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "path": "messages/{user}",
+          "name": "Direct message (@username) or group message",
+          "children": [
+            {
+              "path": "{postId}",
+              "name": "Message in its conversation"
+            }
+          ]
+        },
+        {
+          "path": "pl/{postId}",
+          "name": "Message, by its link"
+        },
+        {
+          "path": "threads",
+          "name": "Threads",
+          "children": [
+            {
+              "path": "{threadId}",
+              "name": "Thread"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
