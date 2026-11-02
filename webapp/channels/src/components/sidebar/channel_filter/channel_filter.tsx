@@ -86,7 +86,7 @@ export class ChannelFilter extends React.PureComponent<Props> {
                         })}
                         data-testid='sidebar-unread-filter-button'
                         data-agentom-id='sidebar.unread-filter'
-                        onClick={this.toggleUnreadFilter}
+                        onClick={this.handleUnreadFilterClick}
                         aria-label={unreadsAriaLabel}
                     >
                         <i className='icon icon-filter-variant'/>

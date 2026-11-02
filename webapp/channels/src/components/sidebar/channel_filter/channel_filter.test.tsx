@@ -47,6 +47,15 @@ describe('components/sidebar/channel_filter', () => {
         expect(baseProps.actions.setUnreadFilterEnabled).toHaveBeenCalledWith(true);
     });
 
+    test('should not follow its link when toggled, so the address stays as it is', () => {
+        const {container} = renderWithContext(
+            <ChannelFilterIntl {...baseProps}/>,
+        );
+        const filterButton = container.querySelector('.SidebarFilters_filterButton')!;
+
+        expect(fireEvent.click(filterButton)).toBe(false);
+    });
+
     test('should disable the unread filter on toggle when it is enabled', () => {
         const props = {
             ...baseProps,
