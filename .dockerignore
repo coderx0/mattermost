@@ -6,7 +6,11 @@ docs
 e2e-tests
 tools
 webapp/channels/dist
+webapp/.parcel-cache
 webapp/platform/*/lib
+webapp/platform/*/dist
+webapp/platform/*/.rollup.cache
+**/*.tsbuildinfo
 server/bin
 server/dist
 server/go.work
