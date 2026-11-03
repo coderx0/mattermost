@@ -113,4 +113,17 @@ describe('PostAriaLabelDiv', () => {
         expect(div.getAttribute('data-something')).toBe('something');
         expect(screen.getByText('This is a paragraph.')).toBeInTheDocument();
     });
+
+    test('should be an article named by its label', () => {
+        (reactIntl.useIntl as jest.Mock).mockImplementation(() => reactIntl.createIntl({locale: 'en', messages: {}, defaultLocale: 'en'}));
+
+        renderWithContext(<PostAriaLabelDiv {...baseProps}/>, baseState, {
+            locale: 'en',
+            intlMessages: {},
+        });
+
+        const article = screen.getByRole('article');
+        expect(article).toHaveAccessibleName(expect.stringContaining(author.username));
+        expect(article).toHaveAccessibleName(expect.stringContaining('This is a test.'));
+    });
 });

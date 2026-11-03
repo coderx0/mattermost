@@ -21,11 +21,11 @@ describe('components/post_view/new_message_separator', () => {
             />,
         );
 
-        const newMessage = screen.getByText('New Messages');
+        const newMessage = screen.getByRole('heading', {name: 'New Messages'});
         const separator = screen.getByTestId('NotificationSeparator');
 
         expect(newMessage).toBeInTheDocument();
-        expect(newMessage).toHaveClass('separator__text');
+        expect(newMessage.parentElement).toHaveClass('separator__text');
 
         expect(separator).toBeInTheDocument();
         expect(separator).toHaveClass('Separator NotificationSeparator');

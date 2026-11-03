@@ -3,7 +3,7 @@
 
 import React from 'react';
 import type {JSX, KeyboardEvent, MouseEvent} from 'react';
-import {useIntl} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 
 import {PencilOutlineIcon} from '@mattermost/compass-icons/components';
 import {WithTooltip} from '@mattermost/shared/components/tooltip';
@@ -89,29 +89,47 @@ const PostEditedIndicator = ({postId, isMilitaryTime, timeZone, editedAt = 0, po
         </span>
     );
 
-    const editedIndicator = (postOwner && canEdit) ? (
+    // The button says when the message was edited, as its tooltip does, and what it opens.
+    const canShowHistory = postOwner && canEdit;
+    const descriptionId = `postEditedDescription_${postId}`;
+    const editedLabel = `${editedText} ${formattedTime}`;
+    const editedIndicator = canShowHistory ? (
         <button
             className={'style--none'}
             tabIndex={0}
             onClick={showPostEditHistory}
             onKeyUp={handleKeyPress}
-            aria-label={editedText}
+            aria-label={editedLabel}
+            aria-describedby={descriptionId}
         >
             {editedIndicatorContent}
         </button>
     ) : editedIndicatorContent;
 
     return !postId || editedAt === 0 ? null : (
-        <WithTooltip
-            title={
-                <>
-                    {`${editedText} ${formattedTime}`}
-                    {postOwnerTooltipInfo}
-                </>
-            }
-        >
-            {editedIndicator}
-        </WithTooltip>
+        <>
+            {canShowHistory && (
+                <span
+                    id={descriptionId}
+                    hidden={true}
+                >
+                    <FormattedMessage
+                        id='post_message_view.edited.description'
+                        defaultMessage="Shows the message's edit history"
+                    />
+                </span>
+            )}
+            <WithTooltip
+                title={
+                    <>
+                        {`${editedText} ${formattedTime}`}
+                        {postOwnerTooltipInfo}
+                    </>
+                }
+            >
+                {editedIndicator}
+            </WithTooltip>
+        </>
     );
 };
 

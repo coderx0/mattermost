@@ -22,9 +22,12 @@ const PostAriaLabelDiv = React.forwardRef((props: Props, ref: React.Ref<HTMLDivE
 
     const ariaLabel = usePostAriaLabel(post, autotranslated);
 
+    // A post is an article named by its label (who wrote it, when, and what), so it's read as one piece of
+    // content; a label on a plain div isn't used. A caller can pass another role.
     return (
         <div
             ref={ref}
+            role='article'
             aria-label={ariaLabel}
             {...otherProps}
         >

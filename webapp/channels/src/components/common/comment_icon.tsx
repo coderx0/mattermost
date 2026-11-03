@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import React, {type JSX} from 'react';
-import {useIntl} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 
 import {WithTooltip} from '@mattermost/shared/components/tooltip';
 
@@ -30,8 +30,23 @@ const CommentIcon = ({
     const intl = useIntl();
 
     let commentCountSpan: JSX.Element | null = null;
+    let commentCountDescription: JSX.Element | null = null;
+    const commentCountDescriptionId = `${location}_commentIconCount_${postId}`;
     let iconStyle = 'post-menu__item post-menu__item--wide';
     if (commentCount > 0) {
+        // The button's name is "reply", so the count it shows is its description.
+        commentCountDescription = (
+            <span
+                id={commentCountDescriptionId}
+                hidden={true}
+            >
+                <FormattedMessage
+                    id='threading.numReplies'
+                    defaultMessage='{totalReplies, plural, =0 {Reply} =1 {# reply} other {# replies}}'
+                    values={{totalReplies: commentCount}}
+                />
+            </span>
+        );
         iconStyle += ' post-menu__item--show';
         commentCountSpan = (
             <span className='post-menu__comment-count'>
@@ -54,6 +69,7 @@ const CommentIcon = ({
             <button
                 id={`${location}_commentIcon_${postId}`}
                 aria-label={replyTitle.toLowerCase()}
+                aria-describedby={commentCountDescription ? commentCountDescriptionId : undefined}
                 className={`${iconStyle} ${extraClass}`}
                 onClick={handleCommentClick}
             >
@@ -61,6 +77,7 @@ const CommentIcon = ({
                     <ReplyIcon className='icon icon--small'/>
                     {commentCountSpan}
                 </span>
+                {commentCountDescription}
             </button>
         </WithTooltip>
     );

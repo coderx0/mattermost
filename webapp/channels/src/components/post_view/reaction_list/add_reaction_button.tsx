@@ -13,6 +13,7 @@ import {Permissions} from 'mattermost-redux/constants';
 
 import useEmojiPicker from 'components/emoji_picker/use_emoji_picker';
 import ChannelPermissionGate from 'components/permissions_gates/channel_permission_gate';
+import {postReactionMessages} from 'components/post_view/post_reaction/post_reaction';
 import AddReactionIcon from 'components/widgets/icons/add_reaction_icon';
 
 type Props = {
@@ -49,6 +50,7 @@ export default function AddReactionButton({
     });
 
     const ariaLabel = intl.formatMessage({id: 'reaction.add.ariaLabel', defaultMessage: 'Add a reaction'});
+    const descriptionId = `addReactionDescription-${post.id}`;
 
     return (
         <span className='emoji-picker__container'>
@@ -62,6 +64,7 @@ export default function AddReactionButton({
                         id={`addReaction-${post.id}`}
                         ref={setReference}
                         aria-label={ariaLabel}
+                        aria-describedby={descriptionId}
                         className={classNames('Reaction Reaction__add', {
                             'Reaction__add--open': showEmojiPicker,
                         })}
@@ -70,6 +73,12 @@ export default function AddReactionButton({
                         <AddReactionIcon/>
                     </button>
                 </WithTooltip>
+                <span
+                    id={descriptionId}
+                    hidden={true}
+                >
+                    {intl.formatMessage(postReactionMessages.pickerDescription)}
+                </span>
             </ChannelPermissionGate>
             {emojiPicker}
         </span>

@@ -22207,6 +22207,10 @@
     "defaultMessage": "Search for an emoji",
     "description": "Accessibility label for the search input in the emoji picker."
   },
+  "emoji_picker.search.description": {
+    "defaultMessage": "Shows the emojis with a name that contains the text you type as one piece, ignoring case and a colon at its start or end: standard emojis by any of their names, custom emojis by their name (also searched on the server). Emojis you used recently come first, then names that start with the text, then standard emojis before custom ones, by name. Emojis with skin tones are shown in the one you chose. Results update as you type; Enter adds the selected emoji, the first one unless you move to another.",
+    "description": "Hidden description of the emoji picker's search field: which emojis it finds for the text typed, in what order, and what Enter does."
+  },
   "emoji_picker.searchResults": {
     "defaultMessage": "Search Results",
     "description": "Section header in the emoji picker shown above the results of an emoji search."
@@ -27143,6 +27147,10 @@
     "defaultMessage": "Visit the Marketplace",
     "description": "Button in the empty message-Actions popover linking to the App Marketplace."
   },
+  "post_info.add_reaction.description": {
+    "defaultMessage": "Opens the emoji picker, to find an emoji by name or by category, then adds it to the message as your reaction, or removes your reaction if you already reacted with it",
+    "description": "Hidden description of a message's 'Add Reaction' button: what the emoji picker it opens offers."
+  },
   "post_info.ai_generated.by_user": {
     "defaultMessage": "Message posted by @{username}",
     "description": "Tooltip on the AI-generated indicator of a message, identifying who posted it; {username} is that user's username preceded by @."
@@ -27166,6 +27174,14 @@
   "post_info.del": {
     "defaultMessage": "Delete",
     "description": "Destructive menu item in the message actions menu that deletes the message; 'Delete' is a verb."
+  },
+  "post_info.del.description": {
+    "defaultMessage": "Asks for confirmation, then deletes the message",
+    "description": "Hidden description of 'Delete' in a message's '...' menu: it opens a confirmation dialog."
+  },
+  "post_info.del.description_with_replies": {
+    "defaultMessage": "Asks for confirmation, then deletes the message and its replies",
+    "description": "Hidden description of 'Delete' in the '...' menu of a thread's first message that has replies: deleting it deletes the replies too."
   },
   "post_info.dot_menu.tooltip.more": {
     "defaultMessage": "More",
@@ -27203,6 +27219,10 @@
     "defaultMessage": "Undo",
     "description": "Undo button in the toast shown after restoring a previous version of a message; verb, compact."
   },
+  "post_info.forward.description": {
+    "defaultMessage": "Asks for the channel or people to forward the message to, and an optional comment, then forwards it",
+    "description": "Hidden description of 'Forward' in a message's '...' menu: what the forward dialog it opens asks for."
+  },
   "post_info.info.view_additional_info": {
     "defaultMessage": "View additional info",
     "description": "Tooltip/accessibility label of the info icon on a post that opens additional post details."
@@ -27235,9 +27255,17 @@
     "defaultMessage": "Move Thread",
     "description": "Menu item in the message actions menu that moves a thread to another channel; 'Move' is a verb, 'Thread' a noun."
   },
+  "post_info.move_thread.description": {
+    "defaultMessage": "Asks for the channel to move the thread to, then moves it",
+    "description": "Hidden description of 'Move Thread' in a message's '...' menu: what the dialog it opens asks for."
+  },
   "post_info.permalink": {
     "defaultMessage": "Copy Link",
     "description": "Menu item in the message actions menu that copies a permanent link to the message."
+  },
+  "post_info.permalink.description": {
+    "defaultMessage": "Copies the link to this message: {link}",
+    "description": "Hidden description of 'Copy Link' in a message's '...' menu. {link} is the address it copies."
   },
   "post_info.pin": {
     "defaultMessage": "Pin to Channel",
@@ -27250,6 +27278,10 @@
   "post_info.post_reminder.sub_menu.custom": {
     "defaultMessage": "Custom",
     "description": "Reminder submenu option opening a custom date/time picker."
+  },
+  "post_info.post_reminder.sub_menu.custom.description": {
+    "defaultMessage": "Asks for a date and time, then sets the reminder",
+    "description": "Hidden description of 'Custom' in a message's 'Remind' submenu: the dialog it opens asks when to remind."
   },
   "post_info.post_reminder.sub_menu.header": {
     "defaultMessage": "Set a reminder for:",
@@ -27275,6 +27307,10 @@
     "defaultMessage": "Quarantine for Review",
     "description": "Menu item in the message actions menu (content moderation feature) that flags the message for review by moderators; 'Quarantine' is a verb."
   },
+  "post_info.quarantine.description": {
+    "defaultMessage": "Asks for a reason and a comment, then sends the message to content reviewers",
+    "description": "Hidden description of 'Quarantine for Review' in a message's '...' menu: what the dialog it opens asks for, and what submitting it does."
+  },
   "post_info.reply": {
     "defaultMessage": "Reply",
     "description": "Menu item in the message actions menu that opens the thread to reply; 'Reply' is a verb."
@@ -27282,6 +27318,10 @@
   "post_info.show_translation": {
     "defaultMessage": "Show translation",
     "description": "Menu item in the message actions menu that reveals the automatic translation of the message; 'Show' is a verb."
+  },
+  "post_info.show_translation.description": {
+    "defaultMessage": "Shows the original message and its translation",
+    "description": "Hidden description of 'Show translation' in a message's '...' menu: what the dialog it opens shows."
   },
   "post_info.submenu.icon": {
     "defaultMessage": "submenu icon",
@@ -27331,6 +27371,42 @@
     "defaultMessage": "Mark as Unread",
     "description": "Menu item in the message actions menu that marks the message (and later ones) as unread."
   },
+  "post_list.description.beginning": {
+    "defaultMessage": "The beginning of the channel is shown.",
+    "description": "Part of the hidden description of a channel's message list: the channel's first messages are loaded."
+  },
+  "post_list.description.newer": {
+    "defaultMessage": "Newer messages load as you scroll down.",
+    "description": "Part of the hidden description of a channel's message list: newer messages exist and load when scrolling down."
+  },
+  "post_list.description.none_shown": {
+    "defaultMessage": "No messages shown.",
+    "description": "Part of the hidden description of a channel's message list, when it holds no messages."
+  },
+  "post_list.description.older": {
+    "defaultMessage": "Older messages load as you scroll up.",
+    "description": "Part of the hidden description of a channel's message list: older messages exist and load when scrolling up."
+  },
+  "post_list.description.shown": {
+    "defaultMessage": "{count, plural, one {# message} other {# messages}} shown, from {oldest} to {newest}, oldest first.",
+    "description": "Part of the hidden description of a channel's message list: how many messages are loaded, from which day to which. {oldest} and {newest} are dates such as 'Monday, November 3, 2026'."
+  },
+  "post_list.description.shown_one_day": {
+    "defaultMessage": "{count, plural, one {# message} other {# messages}} shown, all from {day}, oldest first.",
+    "description": "Part of the hidden description of a channel's message list, when every loaded message is from one day. {day} is a date such as 'Monday, November 3, 2026'."
+  },
+  "post_list.region.label": {
+    "defaultMessage": "Messages",
+    "description": "Accessible name of the scrolling list of a channel's messages."
+  },
+  "post_list.status.loading_newer": {
+    "defaultMessage": "Loading newer messages…",
+    "description": "Hidden status line while a channel's message list loads newer messages."
+  },
+  "post_list.status.loading_older": {
+    "defaultMessage": "Loading older messages…",
+    "description": "Hidden status line while a channel's message list loads older messages."
+  },
   "post_message_preview.channel": {
     "defaultMessage": "Only visible to users in ~{channel}",
     "description": "Footer under a forwarded/previewed message indicating its visibility; {channel} is the source channel's name prefixed with '~'."
@@ -27338,6 +27414,10 @@
   "post_message_view.edited": {
     "defaultMessage": "Edited",
     "description": "Small indicator label appended to a message that has been edited; compact space, also used as the button's accessible name."
+  },
+  "post_message_view.edited.description": {
+    "defaultMessage": "Shows the message's edit history",
+    "description": "Hidden description of the 'Edited' button on your own edited message: what it opens."
   },
   "post_message_view.view_post_edit_history": {
     "defaultMessage": "Click to view history",
@@ -27347,9 +27427,17 @@
     "defaultMessage": "Saved",
     "description": "Small badge above a message indicating the current user saved it; clickable to open the Saved messages list; compact space."
   },
+  "post_pre_header.flagged.description": {
+    "defaultMessage": "Shows your saved messages",
+    "description": "Hidden description of the 'Saved' link above a saved message: what it opens."
+  },
   "post_pre_header.pinned": {
     "defaultMessage": "Pinned",
     "description": "Small badge above a message indicating it is pinned to the channel; clickable to open the pinned messages list; compact space."
+  },
+  "post_pre_header.pinned.description": {
+    "defaultMessage": "Shows the channel's pinned messages",
+    "description": "Hidden description of the 'Pinned' link above a pinned message: what it opens."
   },
   "post_priority.acknowledgements.title": {
     "defaultMessage": "Acknowledgements",
@@ -27610,6 +27698,14 @@
   "posts_view.loadMore": {
     "defaultMessage": "Load more messages",
     "description": "Button row at the top of the message list that loads older messages when clicked."
+  },
+  "posts_view.loadMore.newer": {
+    "defaultMessage": "Load more messages, newer",
+    "description": "Accessible name of the 'Load more messages' button at the bottom of a channel's message list, which loads newer messages."
+  },
+  "posts_view.loadMore.older": {
+    "defaultMessage": "Load more messages, older",
+    "description": "Accessible name of the 'Load more messages' button at the top of a channel's message list, which loads older messages."
   },
   "posts_view.newMsg": {
     "defaultMessage": "New Messages",
@@ -31466,6 +31562,10 @@
   "timestamp.datetime": {
     "defaultMessage": "{relativeOrDate} at {time}",
     "description": "Pattern combining a day and a clock time (e.g. 'yesterday at 3:15 PM'); {relativeOrDate} is a day word or date and {time} a formatted time; used in tooltips and timestamps."
+  },
+  "toast.close": {
+    "defaultMessage": "Close notice",
+    "description": "Accessible name of the icon button that closes a notice over the message list, such as 'New messages'."
   },
   "trial_benefits_modal.trial_just_started.buttons.close": {
     "defaultMessage": "Close",

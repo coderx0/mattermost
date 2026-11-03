@@ -58,6 +58,11 @@ export interface DynamicVirtualizedListProps {
     correctScrollToBottom?: boolean;
     innerListStyle?: React.CSSProperties;
     loaderId?: string;
+
+    /**
+     * Attributes for the scrolling element, such as its role, name, description and busy state
+     */
+    outerElementProps?: React.HTMLAttributes<HTMLDivElement> & {'data-agentom-id'?: string};
 }
 
 interface State {
@@ -784,6 +789,7 @@ export class DynamicVirtualizedList extends PureComponent<DynamicVirtualizedList
             id,
             style,
             innerListStyle,
+            outerElementProps,
         } = this.props;
 
         const onScroll = this._onScrollVertical;
@@ -793,6 +799,7 @@ export class DynamicVirtualizedList extends PureComponent<DynamicVirtualizedList
         return createElement(
             'div',
             {
+                ...outerElementProps,
                 className,
                 id,
                 onScroll,

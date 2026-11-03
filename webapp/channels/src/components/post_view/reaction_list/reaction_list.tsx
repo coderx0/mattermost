@@ -11,6 +11,7 @@ import {getEmojiName} from 'mattermost-redux/utils/emoji_utils';
 
 import Reaction from 'components/post_view/reaction';
 
+import {agentomIdSegment} from 'utils/agentom_ids';
 import {localizeMessage} from 'utils/utils';
 
 import AddReactionButton from './add_reaction_button';
@@ -44,11 +45,21 @@ type Props = {
          */
         toggleReaction: (postId: string, emojiName: string) => void;
     };
+
+    /**
+     * The post's data-agentom-id; each reaction's id adds `.reaction.<emoji name>` to it
+     */
+    agentomIdPrefix?: string;
 };
 
 type State = {
     emojiNames: string[];
 };
+
+// An emoji name as an id segment: "+1" and "-1" would both become "1", so their signs are spelled out.
+function reactionIdSegment(emojiName: string) {
+    return agentomIdSegment(emojiName.replace(/\+/g, 'plus').replace(/^-/, 'minus'));
+}
 
 export default class ReactionList extends React.PureComponent<Props, State> {
     constructor(props: Props) {
@@ -103,6 +114,7 @@ export default class ReactionList extends React.PureComponent<Props, State> {
                         post={this.props.post}
                         emojiName={emojiName}
                         reactions={reactionsByName.get(emojiName) || []}
+                        agentomId={this.props.agentomIdPrefix ? `${this.props.agentomIdPrefix}.reaction.${reactionIdSegment(emojiName)}` : undefined}
                     />
                 );
             }
@@ -122,6 +134,7 @@ export default class ReactionList extends React.PureComponent<Props, State> {
 
         return (
             <div
+                role='group'
                 aria-label={localizeMessage({id: 'reaction.container.ariaLabel', defaultMessage: 'reactions'})}
                 className='post-reaction-list'
             >

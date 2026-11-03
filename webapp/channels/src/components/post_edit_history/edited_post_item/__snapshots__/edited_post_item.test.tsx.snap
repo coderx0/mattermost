@@ -9,6 +9,7 @@ exports[`components/post_edit_history/edited_post_item should match snapshot 1`]
       aria-label="At 12:00 AM Thursday, January 1, Someone wrote, post message"
       class="a11y__section post"
       id="searchResult_post_id"
+      role="article"
     >
       <div
         class="edit-post-history__title__container"
@@ -57,6 +58,7 @@ exports[`components/post_edit_history/edited_post_item should match snapshot whe
       aria-label="At 12:00 AM Thursday, January 1, Someone wrote, post message"
       class="a11y__section post"
       id="searchResult_post_id"
+      role="article"
     >
       <div
         class="edit-post-history__title__container"
@@ -156,6 +158,7 @@ exports[`components/post_edit_history/edited_post_item should match snapshot wit
       aria-label="At 12:00 AM Thursday, January 1, Someone wrote, post message"
       class="a11y__section post"
       id="searchResult_post_id"
+      role="article"
     >
       <div
         class="edit-post-history__title__container"
@@ -204,6 +207,7 @@ exports[`components/post_edit_history/edited_post_item should match snapshot wit
       aria-label="At 12:00 AM Thursday, January 1, Someone wrote, post message"
       class="a11y__section post"
       id="searchResult_post_id"
+      role="article"
     >
       <div
         class="edit-post-history__title__container"

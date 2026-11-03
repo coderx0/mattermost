@@ -31,6 +31,7 @@ export default function EditPostFooter(props: Props) {
             <button
                 onClick={props.onSave}
                 className='save'
+                data-agentom-id='post-edit.save'
             >
                 <FormattedMessage
                     id='edit_post.action_buttons.save'
@@ -40,6 +41,7 @@ export default function EditPostFooter(props: Props) {
             <button
                 onClick={handleCancel}
                 className='cancel'
+                data-agentom-id='post-edit.cancel'
             >
                 <FormattedMessage
                     id='edit_post.action_buttons.cancel'

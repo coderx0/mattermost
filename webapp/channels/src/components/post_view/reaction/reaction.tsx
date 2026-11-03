@@ -80,6 +80,11 @@ type Props = WrappedComponentProps & {
     // Names of users for tooltip-like aria label, computed via selector
     users?: string[];
 
+    /*
+     * A stable id for the Agent Object Model's projection: the button's label changes with who reacted
+     */
+    agentomId?: string;
+
 };
 
 export class Reaction extends React.PureComponent<Props, State> {
@@ -315,6 +320,7 @@ export class Reaction extends React.PureComponent<Props, State> {
             >
                 <button
                     id={`postReaction-${this.props.post.id}-${this.props.emojiName}`}
+                    data-agentom-id={this.props.agentomId}
                     aria-label={ariaLabelEmoji}
                     className={`Reaction ${this.state.reactedClass} ${readOnlyClass}`}
                     onClick={this.handleClick}

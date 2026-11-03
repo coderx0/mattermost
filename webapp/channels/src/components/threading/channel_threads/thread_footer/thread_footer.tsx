@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import React, {memo, useCallback, useEffect, useMemo} from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {WithTooltip} from '@mattermost/shared/components/tooltip';
@@ -32,13 +32,20 @@ import './thread_footer.scss';
 type Props = {
     threadId: UserThread['id'];
     replyClick?: React.EventHandler<React.MouseEvent>;
+
+    /**
+     * The data-agentom-id of the post the footer is under; the Follow button's id adds `.follow` to it
+     */
+    agentomIdPrefix?: string;
 };
 
 function ThreadFooter({
     threadId,
     replyClick,
+    agentomIdPrefix,
 }: Props) {
     const dispatch = useDispatch();
+    const {formatMessage} = useIntl();
     const currentTeamId = useSelector(getCurrentTeamId);
     const currentUserId = useSelector(getCurrentUserId);
     const post = useSelector((state: GlobalState) => getPost(state, threadId));
@@ -102,6 +109,13 @@ function ThreadFooter({
                     <div
                         className='indicator'
                         tabIndex={0}
+
+                        // The dot is the only sign of unread replies, so it says how many (as its tooltip does)
+                        role='img'
+                        aria-label={formatMessage({
+                            id: 'threading.numNewMessages',
+                            defaultMessage: '{newReplies, plural, =0 {No unread messages} =1 {One unread message} other {# unread messages}}',
+                        }, {newReplies: thread.unread_replies})}
                     >
                         <div className='dot-unreads'/>
                     </div>
@@ -138,6 +152,9 @@ function ThreadFooter({
                 isFollowing={isFollowing}
                 className='separated'
                 onClick={handleFollowing}
+
+                // The label flips between Follow and Following, so the id is pinned
+                data-agentom-id={agentomIdPrefix ? `${agentomIdPrefix}.follow` : undefined}
             />
 
             {Boolean(lastReplyAt) && (

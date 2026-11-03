@@ -57,9 +57,19 @@ exports[`components/PostPreHeader should properly handle flagged posts (and not 
       class="post-pre-header__text-container"
     >
       <span>
-        <a>
+        <a
+          aria-describedby="_r_0_"
+          role="button"
+          tabindex="0"
+        >
           Saved
         </a>
+        <span
+          hidden=""
+          id="_r_0_"
+        >
+          Shows your saved messages
+        </span>
       </span>
     </div>
   </div>
@@ -124,17 +134,38 @@ exports[`components/PostPreHeader should properly handle link clicks 1`] = `
       class="post-pre-header__text-container"
     >
       <span>
-        <a>
+        <a
+          aria-describedby="_r_6_"
+          role="button"
+          tabindex="0"
+        >
           Pinned
         </a>
         <span
+          hidden=""
+          id="_r_6_"
+        >
+          Shows the channel's pinned messages
+        </span>
+        <span
+          aria-hidden="true"
           class="post-pre-header__link-separator"
         >
           ⬤
         </span>
-        <a>
+        <a
+          aria-describedby="_r_7_"
+          role="button"
+          tabindex="0"
+        >
           Saved
         </a>
+        <span
+          hidden=""
+          id="_r_7_"
+        >
+          Shows your saved messages
+        </span>
       </span>
     </div>
   </div>
@@ -157,9 +188,19 @@ exports[`components/PostPreHeader should properly handle pinned posts (and not f
       class="post-pre-header__text-container"
     >
       <span>
-        <a>
+        <a
+          aria-describedby="_r_1_"
+          role="button"
+          tabindex="0"
+        >
           Pinned
         </a>
+        <span
+          hidden=""
+          id="_r_1_"
+        >
+          Shows the channel's pinned messages
+        </span>
       </span>
     </div>
   </div>
@@ -224,17 +265,38 @@ exports[`components/PostPreHeader should properly handle posts that are flagged 
       class="post-pre-header__text-container"
     >
       <span>
-        <a>
+        <a
+          aria-describedby="_r_2_"
+          role="button"
+          tabindex="0"
+        >
           Pinned
         </a>
         <span
+          hidden=""
+          id="_r_2_"
+        >
+          Shows the channel's pinned messages
+        </span>
+        <span
+          aria-hidden="true"
           class="post-pre-header__link-separator"
         >
           ⬤
         </span>
-        <a>
+        <a
+          aria-describedby="_r_3_"
+          role="button"
+          tabindex="0"
+        >
           Saved
         </a>
+        <span
+          hidden=""
+          id="_r_3_"
+        >
+          Shows your saved messages
+        </span>
       </span>
     </div>
   </div>
@@ -257,9 +319,19 @@ exports[`components/PostPreHeader should properly handle posts that are flagged 
       class="post-pre-header__text-container"
     >
       <span>
-        <a>
+        <a
+          aria-describedby="_r_4_"
+          role="button"
+          tabindex="0"
+        >
           Pinned
         </a>
+        <span
+          hidden=""
+          id="_r_4_"
+        >
+          Shows the channel's pinned messages
+        </span>
       </span>
     </div>
   </div>
@@ -319,9 +391,19 @@ exports[`components/PostPreHeader should properly handle posts that are flagged 
       class="post-pre-header__text-container"
     >
       <span>
-        <a>
+        <a
+          aria-describedby="_r_5_"
+          role="button"
+          tabindex="0"
+        >
           Saved
         </a>
+        <span
+          hidden=""
+          id="_r_5_"
+        >
+          Shows your saved messages
+        </span>
       </span>
     </div>
   </div>

@@ -4,7 +4,7 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {renderWithContext, screen} from 'tests/react_testing_utils';
+import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 
 import Toast from './toast';
 import type {Props} from './toast';
@@ -61,5 +61,32 @@ describe('components/Toast', () => {
     test('should match snapshot to have extraClasses', () => {
         const {container} = renderWithContext(<Toast {...{...defaultProps, extraClasses: 'extraClasses'}}><span>{'child'}</span></Toast>);
         expect(container).toMatchSnapshot();
+    });
+
+    test('should be a status whose jump and close are buttons the keyboard can use', async () => {
+        const onClick = jest.fn();
+        const onDismiss = jest.fn();
+        renderWithContext(
+            <Toast
+                {...defaultProps}
+                onClick={onClick}
+                onDismiss={onDismiss}
+            >
+                <span>{'3 new messages'}</span>
+            </Toast>,
+        );
+
+        expect(screen.getByRole('status')).toBeInTheDocument();
+
+        const jump = screen.getByRole('button', {name: 'Jump to recents'});
+        expect(jump).toHaveAccessibleDescription('3 new messages');
+        jump.focus();
+        await userEvent.keyboard('{Enter}');
+        expect(onClick).toHaveBeenCalledTimes(1);
+
+        const close = screen.getByRole('button', {name: 'Close notice'});
+        close.focus();
+        await userEvent.keyboard('{Enter}');
+        expect(onDismiss).toHaveBeenCalledTimes(1);
     });
 });

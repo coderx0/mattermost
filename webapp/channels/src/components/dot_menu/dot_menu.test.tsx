@@ -1,13 +1,14 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
+import {computeAccessibleName} from 'dom-accessibility-api';
 import React from 'react';
 
 import type {ChannelType} from '@mattermost/types/channels';
 import type {Post, PostType} from '@mattermost/types/posts';
 import type {DeepPartial} from '@mattermost/types/utilities';
 
-import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
+import {renderWithContext, screen, userEvent, within} from 'tests/react_testing_utils';
 import {Locations} from 'utils/constants';
 import {TestHelper} from 'utils/test_helper';
 
@@ -634,5 +635,74 @@ describe('components/dot_menu/DotMenu', () => {
 
         // Since reply option doesn't exist, keyboard shortcut should be blocked (no way to verify action wasn't called, but menu item being hidden confirms it)
         expect(replyOption).toBeNull();
+    });
+
+    test('should describe the actions its menu holds, name items without their shortcut keys, and mark the risky ones', async () => {
+        const props = {
+            ...baseProps,
+            canEdit: true,
+            canDelete: true,
+            canFlagContent: true,
+            location: Locations.CENTER,
+            teamUrl: 'http://localhost:8065/team',
+        };
+        renderWithContext(
+            <DotMenu {...props}/>,
+            initialState,
+        );
+
+        const button = screen.getByTestId(`PostDotMenu-Button-${baseProps.post.id}`);
+        expect(button).toHaveAttribute('data-agentom-id', `post.${baseProps.post.id}.menu`);
+
+        await userEvent.click(button);
+
+        // The description lists the items the open menu shows, in order
+        const names = within(screen.getByRole('menu')).getAllByRole('menuitem').map((item) => computeAccessibleName(item));
+        expect(names).toEqual([
+            'Reply',
+            'Forward',
+            'Follow message',
+            'Mark as Unread',
+            'Save Message',
+            'Remind',
+            'Pin to Channel',
+            'Move Thread',
+            'Copy Text',
+            'Copy Link',
+            'Edit',
+            'Quarantine for Review',
+            'Delete',
+        ]);
+        expect(button).toHaveAccessibleDescription(`Actions: ${names.join(', ')}`);
+
+        expect(screen.getByRole('menuitem', {name: 'Reply'})).toHaveAttribute('aria-keyshortcuts', 'R');
+
+        const deleteItem = screen.getByRole('menuitem', {name: 'Delete'});
+        expect(deleteItem).toHaveAttribute('data-agentom-risk', 'destructive');
+        expect(deleteItem).toHaveAttribute('data-agentom-confirmation', 'required');
+        expect(deleteItem).toHaveAttribute('aria-haspopup', 'dialog');
+        expect(deleteItem).toHaveAccessibleDescription('Asks for confirmation, then deletes the message');
+
+        expect(screen.getByRole('menuitem', {name: 'Save Message'})).toHaveAttribute('data-agentom-id', `post.${baseProps.post.id}.menu.save`);
+        expect(screen.getByRole('menuitem', {name: 'Pin to Channel'})).toHaveAttribute('data-agentom-id', `post.${baseProps.post.id}.menu.pin`);
+        expect(screen.getByRole('menuitem', {name: 'Copy Link'})).toHaveAccessibleDescription(`Copies the link to this message: http://localhost:8065/team/pl/${baseProps.post.id}`);
+        expect(screen.getByRole('menuitem', {name: 'Remind'})).toHaveAccessibleDescription('Choices: 30 mins, 1 hour, 2 hours, Tomorrow, Custom');
+    });
+
+    test('should say that deleting a thread\'s first message deletes its replies', async () => {
+        const props = {
+            ...baseProps,
+            canDelete: true,
+            commentCount: 2,
+            post: TestHelper.getPostMock({id: 'post_id_1', root_id: '', type: '' as PostType}),
+        };
+        renderWithContext(
+            <DotMenu {...props}/>,
+            initialState,
+        );
+
+        await userEvent.click(screen.getByTestId(`PostDotMenu-Button-${baseProps.post.id}`));
+
+        expect(screen.getByRole('menuitem', {name: 'Delete'})).toHaveAccessibleDescription('Asks for confirmation, then deletes the message and its replies');
     });
 });

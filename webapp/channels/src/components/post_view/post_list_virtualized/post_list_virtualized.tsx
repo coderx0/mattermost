@@ -11,7 +11,7 @@ import type {updateNewMessagesAtInChannel} from 'actions/global_actions';
 import type {CanLoadMorePosts} from 'actions/views/channel';
 
 import {DynamicVirtualizedList} from 'components/dynamic_virtualized_list';
-import type {OnItemsRenderedArgs, DynamicVirtualizedChildProps, InitialScrollIndex} from 'components/dynamic_virtualized_list';
+import type {OnItemsRenderedArgs, DynamicVirtualizedChildProps, DynamicVirtualizedListProps, InitialScrollIndex} from 'components/dynamic_virtualized_list';
 import FloatingTimestamp from 'components/post_view/floating_timestamp';
 import PostListRow from 'components/post_view/post_list_row';
 import ScrollToBottomArrows from 'components/post_view/scroll_to_bottom_arrows';
@@ -25,6 +25,7 @@ import {getPreviousPostId, getLatestPostId} from 'utils/post_utils';
 import * as Utils from 'utils/utils';
 
 import LatestPostReader from './latest_post_reader';
+import PostListDescription, {POST_LIST_DESCRIPTION_ID} from './post_list_description';
 
 const OVERSCAN_COUNT_BACKWARD = 80;
 const OVERSCAN_COUNT_FORWARD = 80;
@@ -624,6 +625,32 @@ export default class PostList extends React.PureComponent<Props, State> {
         this.props.actions.updateNewMessagesAtInChannel(this.props.channelId, lastViewedAt);
     };
 
+    // The scrolling list is a region named "Messages", described by what part of the channel it holds
+    // (PostListDescription) and busy while older or newer messages load. The same object is kept while nothing in
+    // it changes, so the list (a PureComponent) isn't rendered again for it.
+    scrollerProps: {busy: boolean; label: string; props: NonNullable<DynamicVirtualizedListProps['outerElementProps']>} | null = null;
+
+    getScrollerProps = () => {
+        const busy = this.props.loadingOlderPosts || this.props.loadingNewerPosts;
+        const label = Utils.localizeMessage({id: 'post_list.region.label', defaultMessage: 'Messages'});
+
+        if (!this.scrollerProps || this.scrollerProps.busy !== busy || this.scrollerProps.label !== label) {
+            this.scrollerProps = {
+                busy,
+                label,
+                props: {
+                    role: 'region',
+                    'aria-label': label,
+                    'aria-describedby': POST_LIST_DESCRIPTION_ID,
+                    'aria-busy': busy,
+                    'data-agentom-id': 'channel-view.messages',
+                },
+            };
+        }
+
+        return this.scrollerProps.props;
+    };
+
     renderToasts = (width: number) => {
         return (
             <ToastWrapper
@@ -688,6 +715,13 @@ export default class PostList extends React.PureComponent<Props, State> {
                                 postIds={this.props.postListIds}
                                 autotranslated={this.props.isChannelAutotranslated}
                             />
+                            <PostListDescription
+                                postListIds={this.props.postListIds}
+                                atOldestPost={this.props.atOldestPost}
+                                atLatestPost={this.props.atLatestPost}
+                                loadingOlderPosts={this.props.loadingOlderPosts}
+                                loadingNewerPosts={this.props.loadingNewerPosts}
+                            />
                             <AutoSizer>
                                 {({height, width}) => (
                                     <>
@@ -717,6 +751,7 @@ export default class PostList extends React.PureComponent<Props, State> {
                                             correctScrollToBottom={this.props.atLatestPost}
                                             onItemsRendered={this.onItemsRendered}
                                             scrollToFailed={this.scrollToFailed}
+                                            outerElementProps={this.getScrollerProps()}
                                         >
                                             {this.renderRow}
                                         </DynamicVirtualizedList>

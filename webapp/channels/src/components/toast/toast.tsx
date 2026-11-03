@@ -2,9 +2,9 @@
 // See LICENSE.txt for license information.
 
 import classNames from 'classnames';
-import React from 'react';
-import type {ReactNode, MouseEventHandler} from 'react';
-import {FormattedMessage} from 'react-intl';
+import React, {useId} from 'react';
+import type {ReactNode, MouseEventHandler, KeyboardEvent} from 'react';
+import {FormattedMessage, useIntl} from 'react-intl';
 
 import {WithTooltip} from '@mattermost/shared/components/tooltip';
 
@@ -39,6 +39,10 @@ export default function Toast({
     extraClasses = '',
     jumpDirection = 'down',
 }: Props) {
+    const {formatMessage} = useIntl();
+    const jumpId = useId();
+    const textId = useId();
+
     function handleDismiss() {
         if (typeof onDismiss === 'function') {
             onDismiss();
@@ -54,19 +58,50 @@ export default function Toast({
         toast__pointer: showActions,
     });
 
+    const showJumpMessage = width > Constants.MOBILE_SCREEN_WIDTH;
+
+    // The toast is a status line. When it can jump, its message is a button (by keyboard too), named by where it
+    // jumps and described by the toast's text; its close icon is a button too.
+    const handleJumpKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onClick?.(e as unknown as React.MouseEvent<HTMLDivElement>);
+        }
+    };
+
+    const handleDismissKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleDismiss();
+        }
+    };
+
     return (
-        <div className={toastClass}>
+        <div
+            className={toastClass}
+            role='status'
+        >
             <div
                 className={toastActionClass}
                 onClick={showActions ? onClick : undefined}
+                role={showActions ? 'button' : undefined}
+                tabIndex={showActions ? 0 : undefined}
+                onKeyDown={showActions ? handleJumpKeyDown : undefined}
+                aria-labelledby={showActions && showJumpMessage ? jumpId : undefined}
+                aria-describedby={showActions && showJumpMessage ? textId : undefined}
             >
                 {showActions && (
-                    <div className='toast__jump'>
-                        {jumpDirection === 'down' ? (<UnreadBelowIcon/>) : (<UnreadAboveIcon/>)}
-                        {width > Constants.MOBILE_SCREEN_WIDTH && onClickMessage}
+                    <div
+                        className='toast__jump'
+                        id={jumpId}
+                    >
+                        {jumpDirection === 'down' ? (<UnreadBelowIcon aria-hidden='true'/>) : (<UnreadAboveIcon aria-hidden='true'/>)}
+                        {showJumpMessage && onClickMessage}
                     </div>
                 )}
-                {children}
+                <span id={textId}>
+                    {children}
+                </span>
             </div>
             <WithTooltip
                 title={
@@ -88,6 +123,10 @@ export default function Toast({
                 <div
                     className='toast__dismiss'
                     onClick={handleDismiss}
+                    onKeyDown={handleDismissKeyDown}
+                    role='button'
+                    tabIndex={0}
+                    aria-label={formatMessage({id: 'toast.close', defaultMessage: 'Close notice'})}
                     data-testid={extraClasses ? `dismissToast-${extraClasses}` : 'dismissToast'}
                 >
                     <CloseIcon

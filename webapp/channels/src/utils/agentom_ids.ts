@@ -22,3 +22,25 @@ export function getCategoryAgentomId(category: ChannelCategory) {
     const name = category.type === CategoryTypes.CUSTOM ? category.display_name : category.type;
     return `category.${agentomIdSegment(name)}`;
 }
+
+/**
+ * The data-agentom-id of a post where it's shown (the controls in it add a segment: `.save`, `.menu`). A post can
+ * be in the center channel and in the thread on the right at once, so where it's shown is part of the id: the
+ * center channel's posts are `post.<id>`, the thread's `thread.post.<id>`, search results (and the saved and
+ * pinned lists) `search.post.<id>`.
+ */
+export function getPostAgentomId(location: string | undefined, postId: string): string {
+    const id = agentomIdSegment(postId);
+    switch (location) {
+    case undefined:
+    case 'CENTER':
+        return `post.${id}`;
+    case 'RHS_ROOT':
+    case 'RHS_COMMENT':
+        return `thread.post.${id}`;
+    case 'SEARCH':
+        return `search.post.${id}`;
+    default:
+        return `${agentomIdSegment(location)}.post.${id}`;
+    }
+}

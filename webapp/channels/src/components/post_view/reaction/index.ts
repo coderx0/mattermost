@@ -29,6 +29,7 @@ type Props = {
     emojiName: string;
     post: Post;
     reactions: ReactionType[];
+    agentomId?: string;
 };
 
 function makeMapStateToProps() {

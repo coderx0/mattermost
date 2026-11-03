@@ -3,8 +3,8 @@
 
 import classNames from 'classnames';
 import React, {type JSX} from 'react';
-import {FormattedMessage, injectIntl} from 'react-intl';
-import type {IntlShape} from 'react-intl';
+import {FormattedMessage, defineMessages, injectIntl} from 'react-intl';
+import type {IntlShape, MessageDescriptor} from 'react-intl';
 
 import {
     AlertOutlineIcon,
@@ -42,15 +42,17 @@ import MoveThreadModal from 'components/move_thread_modal';
 import ChannelPermissionGate from 'components/permissions_gates/channel_permission_gate';
 
 import {createBurnOnReadDeleteModalHandlers} from 'hooks/useBurnOnReadDeleteModal';
+import {getPostAgentomId} from 'utils/agentom_ids';
 import {Locations, ModalIdentifiers, Constants} from 'utils/constants';
 import DelayedAction from 'utils/delayed_action';
 import * as Keyboard from 'utils/keyboard';
+import {describeActions} from 'utils/popup_descriptions';
 import * as PostUtils from 'utils/post_utils';
 import * as Utils from 'utils/utils';
 
 import type {ModalData} from 'types/actions';
 
-import PostReminderSubMenu from './post_reminder_submenu';
+import PostReminderSubMenu, {postReminderMessages} from './post_reminder_submenu';
 
 import './dot_menu.scss';
 
@@ -60,11 +62,123 @@ type ShortcutKeyProps = {
     shortcutKey: string;
 };
 
+// The key is shown, and given to assistive technology by the item's aria-keyshortcuts, so it stays out of the
+// item's name ("Reply", not "Reply R").
 const ShortcutKey = ({shortcutKey: shortcut}: ShortcutKeyProps) => (
-    <span>
+    <span aria-hidden='true'>
         {shortcut}
     </span>
 );
+
+// The items' labels, used by the items and by the menu button's description of them
+export const dotMenuMessages = defineMessages({
+    reply: {
+        id: 'post_info.reply',
+        defaultMessage: 'Reply',
+    },
+    forward: {
+        id: 'forward_post_button.label',
+        defaultMessage: 'Forward',
+    },
+    addReaction: {
+        id: 'rhs_root.mobile.add_reaction',
+        defaultMessage: 'Add Reaction',
+    },
+    unfollowThread: {
+        id: 'threading.threadMenu.unfollow',
+        defaultMessage: 'Unfollow thread',
+    },
+    unfollowMessage: {
+        id: 'threading.threadMenu.unfollowMessage',
+        defaultMessage: 'Unfollow message',
+    },
+    followThread: {
+        id: 'threading.threadMenu.follow',
+        defaultMessage: 'Follow thread',
+    },
+    followMessage: {
+        id: 'threading.threadMenu.followMessage',
+        defaultMessage: 'Follow message',
+    },
+    markAsUnread: {
+        id: 'post_info.unread',
+        defaultMessage: 'Mark as Unread',
+    },
+    removeFromSaved: {
+        id: 'rhs_root.mobile.unflag',
+        defaultMessage: 'Remove from Saved',
+    },
+    save: {
+        id: 'rhs_root.mobile.flag',
+        defaultMessage: 'Save Message',
+    },
+    pin: {
+        id: 'post_info.pin',
+        defaultMessage: 'Pin to Channel',
+    },
+    unpin: {
+        id: 'post_info.unpin',
+        defaultMessage: 'Unpin from Channel',
+    },
+    moveThread: {
+        id: 'post_info.move_thread',
+        defaultMessage: 'Move Thread',
+    },
+    showTranslation: {
+        id: 'post_info.show_translation',
+        defaultMessage: 'Show translation',
+    },
+    copyText: {
+        id: 'post_info.copy',
+        defaultMessage: 'Copy Text',
+    },
+    copyLink: {
+        id: 'post_info.permalink',
+        defaultMessage: 'Copy Link',
+    },
+    edit: {
+        id: 'post_info.edit',
+        defaultMessage: 'Edit',
+    },
+    quarantine: {
+        id: 'post_info.quarantine',
+        defaultMessage: 'Quarantine for Review',
+    },
+    delete: {
+        id: 'post_info.del',
+        defaultMessage: 'Delete',
+    },
+
+    // Descriptions of the items that open a dialog (what it asks for) or that do more than their label says
+    forwardDescription: {
+        id: 'post_info.forward.description',
+        defaultMessage: 'Asks for the channel or people to forward the message to, and an optional comment, then forwards it',
+    },
+    moveThreadDescription: {
+        id: 'post_info.move_thread.description',
+        defaultMessage: 'Asks for the channel to move the thread to, then moves it',
+    },
+    showTranslationDescription: {
+        id: 'post_info.show_translation.description',
+        defaultMessage: 'Shows the original message and its translation',
+    },
+    copyLinkDescription: {
+        id: 'post_info.permalink.description',
+        defaultMessage: 'Copies the link to this message: {link}',
+    },
+    quarantineDescription: {
+        id: 'post_info.quarantine.description',
+        defaultMessage: 'Asks for a reason and a comment, then sends the message to content reviewers',
+    },
+    deleteDescription: {
+        id: 'post_info.del.description',
+        defaultMessage: 'Asks for confirmation, then deletes the message',
+    },
+    deleteWithRepliesDescription: {
+        id: 'post_info.del.description_with_replies',
+        defaultMessage: 'Asks for confirmation, then deletes the message and its replies',
+    },
+});
 
 function getMessageToCopy(post: Post, isChannelAutotranslated: boolean, locale: string): string {
     const originalMessage = post.message_source || post.message;
@@ -175,6 +289,16 @@ type Props = {
     isChannelAutotranslated: boolean;
     isBurnOnReadPost: boolean;
     isUnrevealedBurnOnReadPost: boolean;
+
+    /**
+     * Whether the user may add reactions in the post's channel (for the menu button's description)
+     */
+    canAddReaction?: boolean;
+
+    /**
+     * The number of replies to the post, which deleting it also deletes
+     */
+    commentCount?: number;
 };
 
 type State = {
@@ -253,8 +377,10 @@ export class DotMenuClass extends React.PureComponent<Props, State> {
         }
     };
 
+    getPermalink = () => `${this.props.teamUrl}/pl/${this.props.post.id}`;
+
     copyLink = () => {
-        Utils.copyToClipboard(`${this.props.teamUrl}/pl/${this.props.post.id}`);
+        Utils.copyToClipboard(this.getPermalink());
     };
 
     copyText = () => {
@@ -519,71 +645,19 @@ export class DotMenuClass extends React.PureComponent<Props, State> {
 
         const forwardPostItemText = (
             <span className={'dot-menu__item-new-badge'}>
-                <FormattedMessage
-                    id='forward_post_button.label'
-                    defaultMessage='Forward'
-                />
+                <FormattedMessage {...dotMenuMessages.forward}/>
             </span>
         );
 
-        const unFollowThreadLabel = (
-            <FormattedMessage
-                id='threading.threadMenu.unfollow'
-                defaultMessage='Unfollow thread'
-            />);
+        let followPostMessage: MessageDescriptor;
+        if (isFollowingThread) {
+            followPostMessage = this.props.threadReplyCount ? dotMenuMessages.unfollowThread : dotMenuMessages.unfollowMessage;
+        } else {
+            followPostMessage = this.props.threadReplyCount ? dotMenuMessages.followThread : dotMenuMessages.followMessage;
+        }
 
-        const unFollowMessageLabel = (
-            <FormattedMessage
-                id='threading.threadMenu.unfollowMessage'
-                defaultMessage='Unfollow message'
-            />);
-
-        const followThreadLabel = (
-            <FormattedMessage
-                id='threading.threadMenu.follow'
-                defaultMessage='Follow thread'
-            />);
-
-        const followMessageLabel = (
-            <FormattedMessage
-                id='threading.threadMenu.followMessage'
-                defaultMessage='Follow message'
-            />);
-
-        const followPostLabel = () => {
-            if (isFollowingThread) {
-                return this.props.threadReplyCount ? unFollowThreadLabel : unFollowMessageLabel;
-            }
-            return this.props.threadReplyCount ? followThreadLabel : followMessageLabel;
-        };
-
-        const removeFlag = (
-            <FormattedMessage
-                id='rhs_root.mobile.unflag'
-                defaultMessage='Remove from Saved'
-            />
-        );
-
-        const saveFlag = (
-            <FormattedMessage
-                id='rhs_root.mobile.flag'
-                defaultMessage='Save Message'
-            />
-        );
-
-        const pinPost = (
-            <FormattedMessage
-                id='post_info.pin'
-                defaultMessage='Pin to Channel'
-            />
-        );
-
-        const unPinPost = (
-            <FormattedMessage
-                id='post_info.unpin'
-                defaultMessage='Unpin from Channel'
-            />
-        );
+        const saveMessage = this.props.isFlagged ? dotMenuMessages.removeFromSaved : dotMenuMessages.save;
+        const pinMessage = this.props.post.is_pinned ? dotMenuMessages.unpin : dotMenuMessages.pin;
 
         const showReply = !isSystemMessage && !isBurnOnReadPost && this.props.location === Locations.CENTER;
         const showForward = this.props.canForward;
@@ -609,238 +683,339 @@ export class DotMenuClass extends React.PureComponent<Props, State> {
         const secondSectionHasItems = showShowTranslation || showCopyText || showCopyLink;
         const thirdSectionHasItems = showEdit || showDelete || showFlagContent;
 
+        // The menu button names the items the menu holds, in its order and under the same conditions (Add Reaction
+        // also needs the permission its gate checks)
+        const actionLabels: MessageDescriptor[] = [];
+        if (showReply) {
+            actionLabels.push(dotMenuMessages.reply);
+        }
+        if (showForward) {
+            actionLabels.push(dotMenuMessages.forward);
+        }
+        if (showReactions && this.props.canAddReaction) {
+            actionLabels.push(dotMenuMessages.addReaction);
+        }
+        if (showFollowPost) {
+            actionLabels.push(followPostMessage);
+        }
+        if (showMarkAsUnread) {
+            actionLabels.push(dotMenuMessages.markAsUnread);
+        }
+        if (showSave) {
+            actionLabels.push(saveMessage);
+        }
+        if (showRemind) {
+            actionLabels.push(postReminderMessages.remind);
+        }
+        if (showPin) {
+            actionLabels.push(pinMessage);
+        }
+        if (showMove) {
+            actionLabels.push(dotMenuMessages.moveThread);
+        }
+        if (showShowTranslation) {
+            actionLabels.push(dotMenuMessages.showTranslation);
+        }
+        if (showCopyText) {
+            actionLabels.push(dotMenuMessages.copyText);
+        }
+        if (showCopyLink) {
+            actionLabels.push(dotMenuMessages.copyLink);
+        }
+        if (showEdit) {
+            actionLabels.push(dotMenuMessages.edit);
+        }
+        if (showFlagContent) {
+            actionLabels.push(dotMenuMessages.quarantine);
+        }
+        if (showDelete) {
+            actionLabels.push(dotMenuMessages.delete);
+        }
+
+        const postAgentomId = getPostAgentomId(this.props.location, this.props.post.id);
+        const menuButtonId = `${this.props.location}_button_${this.props.post.id}`;
+        const descriptionId = (item: string) => `${this.props.location}_${item}_description_${this.props.post.id}`;
+
+        // Deleting a thread's first message deletes its replies too, which the dialog warns about
+        const deletesReplies = !this.props.post.root_id && (this.props.commentCount ?? 0) > 0;
+
         return (
-            <Menu.Container
-                menuButton={{
-                    id: `${this.props.location}_button_${this.props.post.id}`,
-                    dataTestId: `PostDotMenu-Button-${this.props.post.id}`,
-                    class: classNames('post-menu__item', {
-                        'post-menu__item--active': this.props.isMenuOpen,
-                    }),
-                    'aria-label': formatMessage({id: 'post_info.dot_menu.tooltip.more', defaultMessage: 'More'}).toLowerCase(),
-                    children: <DotsHorizontalIcon size={16}/>,
-                }}
-                menu={{
-                    id: `${this.props.location}_dropdown_${this.props.post.id}`,
-                    'aria-label': formatMessage({id: 'post_info.menuAriaLabel', defaultMessage: 'Post extra options'}),
-                    onKeyDown: this.handleMenuKeydown,
-                    width: '264px',
-                    onToggle: this.handleMenuToggle,
-                }}
-                menuButtonTooltip={{
-                    text: formatMessage({id: 'post_info.dot_menu.tooltip.more', defaultMessage: 'More'}),
-                    class: 'hidden-xs',
-                }}
-            >
-                {showReply &&
-                    <Menu.Item
-                        id={`reply_to_post_${this.props.post.id}`}
-                        data-testid={`reply_to_post_${this.props.post.id}`}
-                        labels={
-                            <FormattedMessage
-                                id='post_info.reply'
-                                defaultMessage='Reply'
-                            />
-                        }
-                        leadingElement={<ReplyOutlineIcon size={18}/>}
-                        trailingElements={<ShortcutKey shortcutKey='R'/>}
-                        onClick={this.handleCommentClick}
-                    />
-                }
-                {showForward &&
-                    <Menu.Item
-                        id={`forward_post_${this.props.post.id}`}
-                        data-testid={`forward_post_${this.props.post.id}`}
-                        labels={forwardPostItemText}
-                        isLabelsRowLayout={true}
-                        leadingElement={<ArrowRightBoldOutlineIcon size={18}/>}
-                        trailingElements={<ShortcutKey shortcutKey='Shift + F'/>}
-                        onClick={this.handleForwardMenuItemActivated}
-                    />
-                }
-                {showReactions &&
-                    <ChannelPermissionGate
-                        channelId={this.props.post.channel_id}
-                        teamId={this.props.teamId}
-                        permissions={[Permissions.ADD_REACTION]}
-                    >
+            <>
+                <Menu.Container
+                    menuButton={{
+                        id: menuButtonId,
+                        dataTestId: `PostDotMenu-Button-${this.props.post.id}`,
+                        class: classNames('post-menu__item', {
+                            'post-menu__item--active': this.props.isMenuOpen,
+                        }),
+                        'aria-label': formatMessage({id: 'post_info.dot_menu.tooltip.more', defaultMessage: 'More'}).toLowerCase(),
+                        'aria-describedby': actionLabels.length ? descriptionId('actions') : undefined,
+                        agentomId: `${postAgentomId}.menu`,
+                        children: <DotsHorizontalIcon size={16}/>,
+                    }}
+                    menu={{
+                        id: `${this.props.location}_dropdown_${this.props.post.id}`,
+                        'aria-label': formatMessage({id: 'post_info.menuAriaLabel', defaultMessage: 'Post extra options'}),
+                        onKeyDown: this.handleMenuKeydown,
+                        width: '264px',
+                        onToggle: this.handleMenuToggle,
+                    }}
+                    menuButtonTooltip={{
+                        text: formatMessage({id: 'post_info.dot_menu.tooltip.more', defaultMessage: 'More'}),
+                        class: 'hidden-xs',
+                    }}
+                >
+                    {showReply &&
                         <Menu.Item
-                            id={`post_reaction_${this.props.post.id}`}
-                            data-testid={`post_reaction_${this.props.post.id}`}
-                            labels={
-                                <FormattedMessage
-                                    id='rhs_root.mobile.add_reaction'
-                                    defaultMessage='Add Reaction'
-                                />
-                            }
-                            leadingElement={<EmoticonPlusOutlineIcon size={18}/>}
-                            onClick={this.handleAddReactionMenuItemActivated}
+                            id={`reply_to_post_${this.props.post.id}`}
+                            data-testid={`reply_to_post_${this.props.post.id}`}
+                            labels={<FormattedMessage {...dotMenuMessages.reply}/>}
+                            leadingElement={<ReplyOutlineIcon size={18}/>}
+                            trailingElements={<ShortcutKey shortcutKey='R'/>}
+                            aria-keyshortcuts='R'
+                            onClick={this.handleCommentClick}
                         />
-                    </ChannelPermissionGate>
-                }
-                {showFollowPost &&
-                    <Menu.Item
-                        id={`follow_post_thread_${this.props.post.id}`}
-                        data-testid={`follow_post_thread_${this.props.post.id}`}
-                        trailingElements={<ShortcutKey shortcutKey='F'/>}
-                        labels={followPostLabel()}
-                        leadingElement={
-                            isFollowingThread ? (
-                                <MessageMinusOutlineIcon size={18}/>
-                            ) : (
-                                <MessageCheckOutlineIcon size={18}/>
-                            )
-                        }
-                        onClick={this.handleSetThreadFollow}
-                    />
-                }
-                {showMarkAsUnread &&
-                    <Menu.Item
-                        id={`unread_post_${this.props.post.id}`}
-                        data-testid={`unread_post_${this.props.post.id}`}
-                        labels={
-                            <FormattedMessage
-                                id='post_info.unread'
-                                defaultMessage='Mark as Unread'
+                    }
+                    {showForward &&
+                        <Menu.Item
+                            id={`forward_post_${this.props.post.id}`}
+                            data-testid={`forward_post_${this.props.post.id}`}
+                            labels={forwardPostItemText}
+                            isLabelsRowLayout={true}
+                            leadingElement={<ArrowRightBoldOutlineIcon size={18}/>}
+                            trailingElements={<ShortcutKey shortcutKey='Shift + F'/>}
+                            aria-keyshortcuts='Shift+F'
+                            aria-haspopup='dialog'
+                            aria-describedby={descriptionId('forward')}
+                            onClick={this.handleForwardMenuItemActivated}
+                        >
+                            <span
+                                id={descriptionId('forward')}
+                                hidden={true}
+                            >
+                                {formatMessage(dotMenuMessages.forwardDescription)}
+                            </span>
+                        </Menu.Item>
+                    }
+                    {showReactions &&
+                        <ChannelPermissionGate
+                            channelId={this.props.post.channel_id}
+                            teamId={this.props.teamId}
+                            permissions={[Permissions.ADD_REACTION]}
+                        >
+                            <Menu.Item
+                                id={`post_reaction_${this.props.post.id}`}
+                                data-testid={`post_reaction_${this.props.post.id}`}
+                                labels={<FormattedMessage {...dotMenuMessages.addReaction}/>}
+                                leadingElement={<EmoticonPlusOutlineIcon size={18}/>}
+                                onClick={this.handleAddReactionMenuItemActivated}
                             />
-                        }
-                        leadingElement={<MarkAsUnreadIcon size={18}/>}
-                        trailingElements={<ShortcutKey shortcutKey='U'/>}
-                        onClick={this.handleMarkPostAsUnread}
-                    />
-                }
-                {showSave &&
-                    <Menu.Item
-                        id={`save_post_${this.props.post.id}`}
-                        data-testid={`save_post_${this.props.post.id}`}
-                        labels={this.props.isFlagged ? removeFlag : saveFlag}
-                        leadingElement={this.props.isFlagged ? <BookmarkIcon size={18}/> : <BookmarkOutlineIcon size={18}/>}
-                        trailingElements={<ShortcutKey shortcutKey='S'/>}
-                        onClick={this.handleFlagMenuItemActivated}
-                    />
-                }
-                {showRemind &&
-                    <PostReminderSubMenu
-                        userId={this.props.userId}
-                        post={this.props.post}
-                        isMilitaryTime={this.props.isMilitaryTime}
-                        timezone={this.props.timezone}
-                    />
-                }
-                {showPin &&
-                    <Menu.Item
-                        id={`${this.props.post.is_pinned ? 'unpin' : 'pin'}_post_${this.props.post.id}`}
-                        data-testid={`pin_post_${this.props.post.id}`}
-                        labels={this.props.post.is_pinned ? unPinPost : pinPost}
-                        leadingElement={this.props.post.is_pinned ? <PinIcon size={18}/> : <PinOutlineIcon size={18}/>}
-                        trailingElements={<ShortcutKey shortcutKey='P'/>}
-                        onClick={this.handlePinMenuItemActivated}
-                    />
-                }
-                {showMove &&
-                    <Menu.Item
-                        id={`move_thread_${this.props.post.id}`}
-                        labels={
-                            <FormattedMessage
-                                id={'post_info.move_thread'}
-                                defaultMessage={'Move Thread'}
-                            />}
-                        leadingElement={<MessageArrowRightOutlineIcon size={18}/>}
-                        trailingElements={<ShortcutKey shortcutKey='W'/>}
-                        onClick={this.handleMoveThreadMenuItemActivated}
-                    />
-                }
-                {firstSectionHasItems && secondSectionHasItems && <Menu.Separator/>}
-                {showShowTranslation && (
-                    <Menu.Item
-                        id={`show_translation_${this.props.post.id}`}
-                        data-testid={`show_translation_${this.props.post.id}`}
-                        labels={
-                            <FormattedMessage
-                                id='post_info.show_translation'
-                                defaultMessage='Show translation'
-                            />
-                        }
-                        leadingElement={<TranslateIcon size={18}/>}
-                        onClick={this.handleShowTranslation}
-                    />
+                        </ChannelPermissionGate>
+                    }
+                    {showFollowPost &&
+                        <Menu.Item
+                            id={`follow_post_thread_${this.props.post.id}`}
+                            data-testid={`follow_post_thread_${this.props.post.id}`}
+
+                            // The label flips between following and unfollowing, so the id is pinned
+                            data-agentom-id={`${postAgentomId}.menu.follow`}
+                            trailingElements={<ShortcutKey shortcutKey='F'/>}
+                            aria-keyshortcuts='F'
+                            labels={<FormattedMessage {...followPostMessage}/>}
+                            leadingElement={
+                                isFollowingThread ? (
+                                    <MessageMinusOutlineIcon size={18}/>
+                                ) : (
+                                    <MessageCheckOutlineIcon size={18}/>
+                                )
+                            }
+                            onClick={this.handleSetThreadFollow}
+                        />
+                    }
+                    {showMarkAsUnread &&
+                        <Menu.Item
+                            id={`unread_post_${this.props.post.id}`}
+                            data-testid={`unread_post_${this.props.post.id}`}
+                            labels={<FormattedMessage {...dotMenuMessages.markAsUnread}/>}
+                            leadingElement={<MarkAsUnreadIcon size={18}/>}
+                            trailingElements={<ShortcutKey shortcutKey='U'/>}
+                            aria-keyshortcuts='U'
+                            onClick={this.handleMarkPostAsUnread}
+                        />
+                    }
+                    {showSave &&
+                        <Menu.Item
+                            id={`save_post_${this.props.post.id}`}
+                            data-testid={`save_post_${this.props.post.id}`}
+                            data-agentom-id={`${postAgentomId}.menu.save`}
+                            labels={<FormattedMessage {...saveMessage}/>}
+                            leadingElement={this.props.isFlagged ? <BookmarkIcon size={18}/> : <BookmarkOutlineIcon size={18}/>}
+                            trailingElements={<ShortcutKey shortcutKey='S'/>}
+                            aria-keyshortcuts='S'
+                            onClick={this.handleFlagMenuItemActivated}
+                        />
+                    }
+                    {showRemind &&
+                        <PostReminderSubMenu
+                            userId={this.props.userId}
+                            post={this.props.post}
+                            isMilitaryTime={this.props.isMilitaryTime}
+                            timezone={this.props.timezone}
+                        />
+                    }
+                    {showPin &&
+                        <Menu.Item
+                            id={`${this.props.post.is_pinned ? 'unpin' : 'pin'}_post_${this.props.post.id}`}
+                            data-testid={`pin_post_${this.props.post.id}`}
+                            data-agentom-id={`${postAgentomId}.menu.pin`}
+                            labels={<FormattedMessage {...pinMessage}/>}
+                            leadingElement={this.props.post.is_pinned ? <PinIcon size={18}/> : <PinOutlineIcon size={18}/>}
+                            trailingElements={<ShortcutKey shortcutKey='P'/>}
+                            aria-keyshortcuts='P'
+                            onClick={this.handlePinMenuItemActivated}
+                        />
+                    }
+                    {showMove &&
+                        <Menu.Item
+                            id={`move_thread_${this.props.post.id}`}
+                            labels={<FormattedMessage {...dotMenuMessages.moveThread}/>}
+                            leadingElement={<MessageArrowRightOutlineIcon size={18}/>}
+                            trailingElements={<ShortcutKey shortcutKey='W'/>}
+                            aria-keyshortcuts='W'
+                            aria-haspopup='dialog'
+                            aria-describedby={descriptionId('move')}
+                            onClick={this.handleMoveThreadMenuItemActivated}
+                        >
+                            <span
+                                id={descriptionId('move')}
+                                hidden={true}
+                            >
+                                {formatMessage(dotMenuMessages.moveThreadDescription)}
+                            </span>
+                        </Menu.Item>
+                    }
+                    {firstSectionHasItems && secondSectionHasItems && <Menu.Separator/>}
+                    {showShowTranslation && (
+                        <Menu.Item
+                            id={`show_translation_${this.props.post.id}`}
+                            data-testid={`show_translation_${this.props.post.id}`}
+                            labels={<FormattedMessage {...dotMenuMessages.showTranslation}/>}
+                            leadingElement={<TranslateIcon size={18}/>}
+                            aria-haspopup='dialog'
+                            aria-describedby={descriptionId('translation')}
+                            onClick={this.handleShowTranslation}
+                        >
+                            <span
+                                id={descriptionId('translation')}
+                                hidden={true}
+                            >
+                                {formatMessage(dotMenuMessages.showTranslationDescription)}
+                            </span>
+                        </Menu.Item>
+                    )}
+                    {showCopyText &&
+                        <Menu.Item
+                            id={`copy_${this.props.post.id}`}
+                            data-testid={`copy_${this.props.post.id}`}
+                            labels={<FormattedMessage {...dotMenuMessages.copyText}/>}
+                            leadingElement={<ContentCopyIcon size={18}/>}
+                            trailingElements={<ShortcutKey shortcutKey='C'/>}
+                            aria-keyshortcuts='C'
+                            onClick={this.copyText}
+                        />
+                    }
+                    {showCopyLink &&
+                        <Menu.Item
+                            id={`permalink_${this.props.post.id}`}
+                            data-testid={`permalink_${this.props.post.id}`}
+                            labels={<FormattedMessage {...dotMenuMessages.copyLink}/>}
+                            leadingElement={<LinkVariantIcon size={18}/>}
+                            trailingElements={<ShortcutKey shortcutKey='K'/>}
+                            aria-keyshortcuts='K'
+                            aria-describedby={descriptionId('permalink')}
+                            onClick={this.copyLink}
+                        >
+                            <span
+                                id={descriptionId('permalink')}
+                                hidden={true}
+                            >
+                                {formatMessage(dotMenuMessages.copyLinkDescription, {link: this.getPermalink()})}
+                            </span>
+                        </Menu.Item>
+                    }
+                    {thirdSectionHasItems && (firstSectionHasItems || secondSectionHasItems) && <Menu.Separator/>}
+                    {showEdit &&
+                        <Menu.Item
+                            id={`edit_post_${this.props.post.id}`}
+                            data-testid={`edit_post_${this.props.post.id}`}
+                            labels={<FormattedMessage {...dotMenuMessages.edit}/>}
+                            leadingElement={<PencilOutlineIcon size={18}/>}
+                            trailingElements={<ShortcutKey shortcutKey='E'/>}
+                            aria-keyshortcuts='E'
+                            onClick={this.handleEditMenuItemActivated}
+                        />
+                    }
+                    {
+                        showFlagContent &&
+                        <Menu.Item
+                            id={`flag_post_${this.props.post.id}`}
+                            className='flag_post_menu_item'
+                            data-testid={`flag_post_${this.props.post.id}`}
+                            data-agentom-id={`${postAgentomId}.menu.quarantine`}
+                            data-agentom-risk='sensitive'
+                            data-agentom-confirmation='required'
+                            aria-haspopup='dialog'
+                            aria-describedby={descriptionId('quarantine')}
+                            leadingElement={<AlertOutlineIcon size={18}/>}
+                            labels={<FormattedMessage {...dotMenuMessages.quarantine}/>}
+                            onClick={this.handleFlagPostMenuItemClicked}
+                            isDestructive={true}
+                        >
+                            <span
+                                id={descriptionId('quarantine')}
+                                hidden={true}
+                            >
+                                {formatMessage(dotMenuMessages.quarantineDescription)}
+                            </span>
+                        </Menu.Item>
+                    }
+                    {showDelete &&
+                        <Menu.Item
+                            id={`delete_post_${this.props.post.id}`}
+                            data-testid={`delete_post_${this.props.post.id}`}
+
+                            // It always opens a dialog that asks to confirm (DeletePostModal, or for a burn-on-read
+                            // message BurnOnReadConfirmationModal)
+                            data-agentom-id={`${postAgentomId}.menu.delete`}
+                            data-agentom-risk='destructive'
+                            data-agentom-confirmation='required'
+                            aria-haspopup='dialog'
+                            aria-describedby={descriptionId('delete')}
+                            aria-keyshortcuts='Delete'
+                            leadingElement={<TrashCanOutlineIcon size={18}/>}
+                            trailingElements={<span aria-hidden='true'>{'delete'}</span>}
+                            labels={<FormattedMessage {...dotMenuMessages.delete}/>}
+                            onClick={this.handleDeleteMenuItemActivated}
+                            isDestructive={true}
+                        >
+                            <span
+                                id={descriptionId('delete')}
+                                hidden={true}
+                            >
+                                {formatMessage(deletesReplies ? dotMenuMessages.deleteWithRepliesDescription : dotMenuMessages.deleteDescription)}
+                            </span>
+                        </Menu.Item>
+                    }
+                </Menu.Container>
+                {actionLabels.length > 0 && (
+                    <span
+                        id={descriptionId('actions')}
+                        hidden={true}
+                    >
+                        {describeActions(this.props.intl, actionLabels)}
+                    </span>
                 )}
-                {showCopyText &&
-                    <Menu.Item
-                        id={`copy_${this.props.post.id}`}
-                        data-testid={`copy_${this.props.post.id}`}
-                        labels={
-                            <FormattedMessage
-                                id='post_info.copy'
-                                defaultMessage='Copy Text'
-                            />}
-                        leadingElement={<ContentCopyIcon size={18}/>}
-                        trailingElements={<ShortcutKey shortcutKey='C'/>}
-                        onClick={this.copyText}
-                    />
-                }
-                {showCopyLink &&
-                    <Menu.Item
-                        id={`permalink_${this.props.post.id}`}
-                        data-testid={`permalink_${this.props.post.id}`}
-                        labels={
-                            <FormattedMessage
-                                id='post_info.permalink'
-                                defaultMessage='Copy Link'
-                            />}
-                        leadingElement={<LinkVariantIcon size={18}/>}
-                        trailingElements={<ShortcutKey shortcutKey='K'/>}
-                        onClick={this.copyLink}
-                    />
-                }
-                {thirdSectionHasItems && (firstSectionHasItems || secondSectionHasItems) && <Menu.Separator/>}
-                {showEdit &&
-                    <Menu.Item
-                        id={`edit_post_${this.props.post.id}`}
-                        data-testid={`edit_post_${this.props.post.id}`}
-                        labels={
-                            <FormattedMessage
-                                id='post_info.edit'
-                                defaultMessage='Edit'
-                            />}
-                        leadingElement={<PencilOutlineIcon size={18}/>}
-                        trailingElements={<ShortcutKey shortcutKey='E'/>}
-                        onClick={this.handleEditMenuItemActivated}
-                    />
-                }
-                {
-                    showFlagContent &&
-                    <Menu.Item
-                        id={`flag_post_${this.props.post.id}`}
-                        className='flag_post_menu_item'
-                        data-testid={`flag_post_${this.props.post.id}`}
-                        leadingElement={<AlertOutlineIcon size={18}/>}
-                        labels={
-                            <FormattedMessage
-                                id='post_info.quarantine'
-                                defaultMessage='Quarantine for Review'
-                            />
-                        }
-                        onClick={this.handleFlagPostMenuItemClicked}
-                        isDestructive={true}
-                    />
-                }
-                {showDelete &&
-                    <Menu.Item
-                        id={`delete_post_${this.props.post.id}`}
-                        data-testid={`delete_post_${this.props.post.id}`}
-                        leadingElement={<TrashCanOutlineIcon size={18}/>}
-                        trailingElements={<span>{'delete'}</span>}
-                        labels={
-                            <FormattedMessage
-                                id='post_info.del'
-                                defaultMessage='Delete'
-                            />}
-                        onClick={this.handleDeleteMenuItemActivated}
-                        isDestructive={true}
-                    />
-                }
-            </Menu.Container>
+            </>
         );
     }
 }

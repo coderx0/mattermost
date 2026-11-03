@@ -18,6 +18,7 @@ exports[`components/emoji_picker/EmojiPicker should match snapshot 1`] = `
         class="icon-magnify icon emoji-picker__search-icon"
       />
       <input
+        aria-describedby="emojiPickerSearchDescription"
         aria-label="Search for an emoji"
         autocomplete="off"
         class="emoji-picker__search"
@@ -27,6 +28,12 @@ exports[`components/emoji_picker/EmojiPicker should match snapshot 1`] = `
         type="text"
         value=""
       />
+      <span
+        hidden=""
+        id="emojiPickerSearchDescription"
+      >
+        Shows the emojis with a name that contains the text you type as one piece, ignoring case and a colon at its start or end: standard emojis by any of their names, custom emojis by their name (also searched on the server). Emojis you used recently come first, then names that start with the text, then standard emojis before custom ones, by name. Emojis with skin tones are shown in the one you chose. Results update as you type; Enter adds the selected emoji, the first one unless you move to another.
+      </span>
     </div>
     <div />
   </div>

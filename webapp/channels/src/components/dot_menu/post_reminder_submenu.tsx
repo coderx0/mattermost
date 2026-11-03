@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import React, {memo} from 'react';
-import {FormattedMessage, FormattedDate, FormattedTime, useIntl} from 'react-intl';
+import {FormattedMessage, FormattedDate, FormattedTime, defineMessages, useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
 import {ChevronRightIcon, ClockOutlineIcon} from '@mattermost/compass-icons/components';
@@ -17,6 +17,7 @@ import PostReminderCustomTimePicker from 'components/post_reminder_custom_time_p
 
 import {ModalIdentifiers} from 'utils/constants';
 import {toUTCUnixInSeconds} from 'utils/datetime';
+import {describeChoices} from 'utils/popup_descriptions';
 import {getCurrentMomentForTimezone} from 'utils/timezone';
 
 type Props = {
@@ -34,8 +35,40 @@ const PostReminders = {
     CUSTOM: 'custom',
 } as const;
 
+export const postReminderMessages = defineMessages({
+    remind: {
+        id: 'post_info.post_reminder.menu',
+        defaultMessage: 'Remind',
+    },
+    [PostReminders.THIRTY_MINUTES]: {
+        id: 'post_info.post_reminder.sub_menu.thirty_minutes',
+        defaultMessage: '30 mins',
+    },
+    [PostReminders.ONE_HOUR]: {
+        id: 'post_info.post_reminder.sub_menu.one_hour',
+        defaultMessage: '1 hour',
+    },
+    [PostReminders.TWO_HOURS]: {
+        id: 'post_info.post_reminder.sub_menu.two_hours',
+        defaultMessage: '2 hours',
+    },
+    [PostReminders.TOMORROW]: {
+        id: 'post_info.post_reminder.sub_menu.tomorrow',
+        defaultMessage: 'Tomorrow',
+    },
+    [PostReminders.CUSTOM]: {
+        id: 'post_info.post_reminder.sub_menu.custom',
+        defaultMessage: 'Custom',
+    },
+    customDescription: {
+        id: 'post_info.post_reminder.sub_menu.custom.description',
+        defaultMessage: 'Asks for a date and time, then sets the reminder',
+    },
+});
+
 function PostReminderSubmenu(props: Props) {
-    const {formatMessage} = useIntl();
+    const intl = useIntl();
+    const {formatMessage} = intl;
     const dispatch = useDispatch();
 
     function handlePostReminderMenuClick(id: string) {
@@ -72,43 +105,7 @@ function PostReminderSubmenu(props: Props) {
     }
 
     const postReminderSubMenuItems = Object.values(PostReminders).map((postReminder) => {
-        let labels = null;
-        if (postReminder === PostReminders.THIRTY_MINUTES) {
-            labels = (
-                <FormattedMessage
-                    id='post_info.post_reminder.sub_menu.thirty_minutes'
-                    defaultMessage='30 mins'
-                />
-            );
-        } else if (postReminder === PostReminders.ONE_HOUR) {
-            labels = (
-                <FormattedMessage
-                    id='post_info.post_reminder.sub_menu.one_hour'
-                    defaultMessage='1 hour'
-                />
-            );
-        } else if (postReminder === PostReminders.TWO_HOURS) {
-            labels = (
-                <FormattedMessage
-                    id='post_info.post_reminder.sub_menu.two_hours'
-                    defaultMessage='2 hours'
-                />
-            );
-        } else if (postReminder === PostReminders.TOMORROW) {
-            labels = (
-                <FormattedMessage
-                    id='post_info.post_reminder.sub_menu.tomorrow'
-                    defaultMessage='Tomorrow'
-                />
-            );
-        } else {
-            labels = (
-                <FormattedMessage
-                    id='post_info.post_reminder.sub_menu.custom'
-                    defaultMessage='Custom'
-                />
-            );
-        }
+        const labels = <FormattedMessage {...postReminderMessages[postReminder]}/>;
 
         let trailingElements = null;
         if (postReminder === PostReminders.TOMORROW) {
@@ -132,6 +129,28 @@ function PostReminderSubmenu(props: Props) {
             );
         }
 
+        // Custom opens a dialog that asks when
+        if (postReminder === PostReminders.CUSTOM) {
+            return (
+                <Menu.Item
+                    id={`remind_post_options_${postReminder}`}
+                    key={`remind_post_options_${postReminder}`}
+                    labels={labels}
+                    trailingElements={trailingElements}
+                    onClick={() => handlePostReminderMenuClick(postReminder)}
+                    aria-haspopup='dialog'
+                    aria-describedby={`remind_post_options_${postReminder}_description`}
+                >
+                    <span
+                        id={`remind_post_options_${postReminder}_description`}
+                        hidden={true}
+                    >
+                        {formatMessage(postReminderMessages.customDescription)}
+                    </span>
+                </Menu.Item>
+            );
+        }
+
         return (
             <Menu.Item
                 id={`remind_post_options_${postReminder}`}
@@ -143,6 +162,9 @@ function PostReminderSubmenu(props: Props) {
         );
     });
 
+    // The submenu names its choices, from the same list as its items
+    const choicesId = `remind_post_${props.post.id}_choices`;
+
     return (
         <Menu.SubMenu
             id={`remind_post_${props.post.id}`}
@@ -150,14 +172,20 @@ function PostReminderSubmenu(props: Props) {
                 id: 'post_info.post_reminder.sub_menu.header',
                 defaultMessage: 'Set a reminder for:',
             })}
-            labels={
-                <FormattedMessage
-                    id='post_info.post_reminder.menu'
-                    defaultMessage='Remind'
-                />
-            }
+            labels={<FormattedMessage {...postReminderMessages.remind}/>}
+            aria-describedby={choicesId}
             leadingElement={<ClockOutlineIcon size={18}/>}
-            trailingElements={<span className={'dot-menu__item-trailing-icon'}><ChevronRightIcon size={16}/></span>}
+            trailingElements={
+                <>
+                    <span className={'dot-menu__item-trailing-icon'}><ChevronRightIcon size={16}/></span>
+                    <span
+                        id={choicesId}
+                        hidden={true}
+                    >
+                        {describeChoices(intl, Object.values(PostReminders).map((postReminder) => postReminderMessages[postReminder]))}
+                    </span>
+                </>
+            }
             menuId={`remind_post_${props.post.id}-menu`}
             subMenuHeader={
                 <h5 className={'dot-menu__post-reminder-menu-header'}>

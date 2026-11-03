@@ -163,6 +163,7 @@ export default class DeletePostModal extends React.PureComponent<Props, State> {
                 id='deletePostModal'
                 role='none'
                 aria-labelledby='deletePostModalLabel'
+                aria-modal='true'
             >
                 <Modal.Header closeButton={true}>
                     <Modal.Title
@@ -195,6 +196,8 @@ export default class DeletePostModal extends React.PureComponent<Props, State> {
                         variant='destructive'
                         onClick={this.handleDelete}
                         id='deletePostModalButton'
+                        data-agentom-id='delete-post.confirm'
+                        data-agentom-risk='destructive'
                     >
                         <FormattedMessage
                             id='delete_post.del'

@@ -575,6 +575,7 @@
 
         .Reaction__add {
             opacity: 1;
+            pointer-events: auto;
             visibility: visible;
         }
     }
@@ -1331,10 +1332,20 @@
         }
     }
 
+    // Unseen until the post is hovered or active, but still rendered (not visibility: hidden), so the keyboard
+    // and whatever reads the page can reach it; it shows when it has keyboard focus. On wide touch screens it
+    // doesn't take taps while unseen (narrow screens always show it).
     .Reaction__add {
         display: inline-block;
         opacity: 0;
-        visibility: hidden;
+
+        &:focus-visible {
+            opacity: 1;
+        }
+
+        @media (min-width: 769px) and (hover: none) {
+            pointer-events: none;
+        }
     }
 
     .post__body {

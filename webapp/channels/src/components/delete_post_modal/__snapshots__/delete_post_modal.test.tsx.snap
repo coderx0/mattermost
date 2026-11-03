@@ -71,6 +71,8 @@ exports[`components/delete_post_modal should match snapshot for delete_post_moda
           </button>
           <button
             class="btn btn-danger"
+            data-agentom-id="delete-post.confirm"
+            data-agentom-risk="destructive"
             id="deletePostModalButton"
             type="button"
           >
@@ -157,6 +159,8 @@ exports[`components/delete_post_modal should match snapshot for delete_post_moda
           </button>
           <button
             class="btn btn-danger"
+            data-agentom-id="delete-post.confirm"
+            data-agentom-risk="destructive"
             id="deletePostModalButton"
             type="button"
           >
@@ -240,6 +244,8 @@ exports[`components/delete_post_modal should match snapshot for post with 1 comm
           </button>
           <button
             class="btn btn-danger"
+            data-agentom-id="delete-post.confirm"
+            data-agentom-risk="destructive"
             id="deletePostModalButton"
             type="button"
           >

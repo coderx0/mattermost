@@ -1,9 +1,9 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React from 'react';
+import React, {useId} from 'react';
 import {FormattedMessage, defineMessages, injectIntl} from 'react-intl';
-import type {IntlShape} from 'react-intl';
+import type {IntlShape, MessageDescriptor} from 'react-intl';
 
 import FlagIconFilled from 'components/widgets/icons/flag_icon_filled';
 
@@ -107,27 +107,32 @@ class PostPreHeader extends React.PureComponent<Props> {
                     {messageKey &&
                     messageKey !== MessageInfoKey.PinnedAndFlagged && (
                         <span>
-                            <a onClick={() => this.handleLinkClick(messageKey, channelId)}>
-                                <FormattedMessage
-                                    {...messages[messageKey]}
-                                />
-                            </a>
+                            <PreHeaderLink
+                                label={messages[messageKey]}
+                                description={messageKey === MessageInfoKey.Pinned ? messages.pinnedDescription : messages.flaggedDescription}
+                                onActivate={() => this.handleLinkClick(messageKey, channelId)}
+                            />
                         </span>
                     )}
                     {messageKey &&
                     messageKey === MessageInfoKey.PinnedAndFlagged && (
                         <span>
-                            <a onClick={() => this.handleLinkClick(MessageInfoKey.Pinned, channelId)}>
-                                <FormattedMessage
-                                    {...messages[MessageInfoKey.Pinned]}
-                                />
-                            </a>
-                            <span className='post-pre-header__link-separator'>{'\u2B24'}</span>
-                            <a onClick={() => this.handleLinkClick(MessageInfoKey.Flagged)}>
-                                <FormattedMessage
-                                    {...messages[MessageInfoKey.Flagged]}
-                                />
-                            </a>
+                            <PreHeaderLink
+                                label={messages[MessageInfoKey.Pinned]}
+                                description={messages.pinnedDescription}
+                                onActivate={() => this.handleLinkClick(MessageInfoKey.Pinned, channelId)}
+                            />
+                            <span
+                                className='post-pre-header__link-separator'
+                                aria-hidden='true'
+                            >
+                                {'\u2B24'}
+                            </span>
+                            <PreHeaderLink
+                                label={messages[MessageInfoKey.Flagged]}
+                                description={messages.flaggedDescription}
+                                onActivate={() => this.handleLinkClick(MessageInfoKey.Flagged)}
+                            />
                         </span>
                     )}
                 </div>
@@ -145,6 +150,53 @@ const messages = defineMessages({
         id: 'post_pre_header.pinned',
         defaultMessage: 'Pinned',
     },
+    pinnedDescription: {
+        id: 'post_pre_header.pinned.description',
+        defaultMessage: "Shows the channel's pinned messages",
+    },
+    flaggedDescription: {
+        id: 'post_pre_header.flagged.description',
+        defaultMessage: 'Shows your saved messages',
+    },
 });
+
+type PreHeaderLinkProps = {
+    label: MessageDescriptor;
+    description: MessageDescriptor;
+    onActivate: () => void;
+};
+
+// "Pinned" and "Saved" say what the post is and open the list it's in. They're anchors without an address, so
+// they're made buttons that the keyboard can reach and use, described by the list they show.
+function PreHeaderLink({label, description, onActivate}: PreHeaderLinkProps) {
+    const descriptionId = useId();
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onActivate();
+        }
+    };
+
+    return (
+        <>
+            <a
+                role='button'
+                tabIndex={0}
+                aria-describedby={descriptionId}
+                onClick={onActivate}
+                onKeyDown={handleKeyDown}
+            >
+                <FormattedMessage {...label}/>
+            </a>
+            <span
+                id={descriptionId}
+                hidden={true}
+            >
+                <FormattedMessage {...description}/>
+            </span>
+        </>
+    );
+}
 
 export default injectIntl(PostPreHeader);

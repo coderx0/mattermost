@@ -8,7 +8,7 @@ import React, {
 import type {
     ChangeEvent,
     KeyboardEvent} from 'react';
-import {useIntl} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 
 import {EMOJI_PER_ROW} from 'components/emoji_picker/constants';
 import {NavigationDirection} from 'components/emoji_picker/types';
@@ -125,6 +125,7 @@ const EmojiPickerSearch = forwardRef<HTMLInputElement, Props>(({value, cursorCat
                 ref={ref}
                 id='emojiPickerSearch'
                 aria-label={formatMessage({id: 'emoji_picker.search_emoji', defaultMessage: 'Search for an emoji'})}
+                aria-describedby='emojiPickerSearchDescription'
                 className='emoji-picker__search'
                 data-testid='emojiInputSearch'
                 type='text'
@@ -134,6 +135,23 @@ const EmojiPickerSearch = forwardRef<HTMLInputElement, Props>(({value, cursorCat
                 placeholder={formatMessage({id: 'emoji_picker.search', defaultMessage: 'Search emojis'})}
                 value={value}
             />
+            {/*
+                How the text matches, as the picker does it: handleChange drops a colon at either end; getFilteredEmojis
+                (emoji_picker/utils) keeps the emojis one of whose names (a standard emoji's short_names, a custom
+                emoji's name) contains the text, lowercased, puts recently used ones first and keeps only the chosen
+                skin tone; compareEmojis (utils/emoji_utils) sorts names starting with the text first, then standard
+                before custom, then by name; custom emojis are also searched on the server; the first result is
+                selected and Enter adds the selected one.
+            */}
+            <span
+                id='emojiPickerSearchDescription'
+                hidden={true}
+            >
+                <FormattedMessage
+                    id='emoji_picker.search.description'
+                    defaultMessage='Shows the emojis with a name that contains the text you type as one piece, ignoring case and a colon at its start or end: standard emojis by any of their names, custom emojis by their name (also searched on the server). Emojis you used recently come first, then names that start with the text, then standard emojis before custom ones, by name. Emojis with skin tones are shown in the one you chose. Results update as you type; Enter adds the selected emoji, the first one unless you move to another.'
+                />
+            </span>
         </div>
     );
 },

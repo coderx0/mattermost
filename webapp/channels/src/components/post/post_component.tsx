@@ -46,6 +46,7 @@ import InfoSmallIcon from 'components/widgets/icons/info_small_icon';
 
 import {createBurnOnReadDeleteModalHandlers} from 'hooks/useBurnOnReadDeleteModal';
 import Pluggable from 'plugins/pluggable';
+import {getPostAgentomId} from 'utils/agentom_ids';
 import {getHistory} from 'utils/browser_history';
 import {getArchiveIconComponent} from 'utils/channel_utils';
 import Constants, {A11yCustomEventTypes, AppEvents, Locations, PostTypes, ModalIdentifiers} from 'utils/constants';
@@ -667,6 +668,7 @@ function PostComponent(props: Props) {
         <ThreadFooter
             threadId={post.id}
             replyClick={handleThreadClick}
+            agentomIdPrefix={getPostAgentomId(props.location, post.id)}
         />
     ) : null;
     const channelDisplayName = getChannelName();
@@ -776,6 +778,7 @@ function PostComponent(props: Props) {
                 ref={postRef}
                 id={getTestId()}
                 data-testid={postAriaLabelDivTestId}
+                data-agentom-id={getPostAgentomId(props.location, post.id)}
                 post={post}
                 className={getClassName()}
                 style={props.preventClickInteraction ? preventInteractionStyle : undefined}
@@ -880,6 +883,7 @@ function PostComponent(props: Props) {
                                         }
                                     >
                                         <button
+                                            aria-label={formatMessage({id: 'post_info.info.view_additional_info', defaultMessage: 'View additional info'})}
                                             className={'card-icon__container icon--show style--none ' + (props.isCardOpen ? 'active' : '')}
                                             onClick={(e) => {
                                                 e.preventDefault();
@@ -944,7 +948,12 @@ function PostComponent(props: Props) {
                                         postId={post.id}
                                     />
                                 )}
-                                {showReactions && <ReactionList post={post}/>}
+                                {showReactions && (
+                                    <ReactionList
+                                        post={post}
+                                        agentomIdPrefix={getPostAgentomId(props.location, post.id)}
+                                    />
+                                )}
                             </div>
                             {threadFooter}
                         </div>

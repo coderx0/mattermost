@@ -56,10 +56,16 @@ const NewMessageSeparator = ({
             className='new-separator'
         >
             <NotificationSeparator>
-                <FormattedMessage
-                    id='posts_view.newMsg'
-                    defaultMessage='New Messages'
-                />
+                {/* A heading, so the line is read in its place in the list: the messages after it are new */}
+                <span
+                    role='heading'
+                    aria-level={2}
+                >
+                    <FormattedMessage
+                        id='posts_view.newMsg'
+                        defaultMessage='New Messages'
+                    />
+                </span>
                 {pluginItems}
             </NotificationSeparator>
         </div>

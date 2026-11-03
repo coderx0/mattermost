@@ -4,14 +4,22 @@ exports[`components/Toast should match snapshot for hiding toast 1`] = `
 <div>
   <div
     class="toast"
+    role="status"
   >
     <div
+      aria-describedby="_r_5_"
+      aria-labelledby="_r_4_"
       class="toast__message toast__pointer"
+      role="button"
+      tabindex="0"
     >
       <div
         class="toast__jump"
+        id="_r_4_"
       >
-        <span>
+        <span
+          aria-hidden="true"
+        >
           <svg
             aria-label="Down Arrow Icon"
             height="16"
@@ -27,13 +35,20 @@ exports[`components/Toast should match snapshot for hiding toast 1`] = `
         </span>
         Jump to recents
       </div>
-      <span>
-        child
+      <span
+        id="_r_5_"
+      >
+        <span>
+          child
+        </span>
       </span>
     </div>
     <div
+      aria-label="Close notice"
       class="toast__dismiss"
       data-testid="dismissToast"
+      role="button"
+      tabindex="0"
     >
       <span
         class="close-btn"
@@ -61,14 +76,22 @@ exports[`components/Toast should match snapshot for showing toast 1`] = `
 <div>
   <div
     class="toast toast__visible"
+    role="status"
   >
     <div
+      aria-describedby="_r_1_"
+      aria-labelledby="_r_0_"
       class="toast__message toast__pointer"
+      role="button"
+      tabindex="0"
     >
       <div
         class="toast__jump"
+        id="_r_0_"
       >
-        <span>
+        <span
+          aria-hidden="true"
+        >
           <svg
             aria-label="Down Arrow Icon"
             height="16"
@@ -84,13 +107,20 @@ exports[`components/Toast should match snapshot for showing toast 1`] = `
         </span>
         Jump to recents
       </div>
-      <span>
-        child
+      <span
+        id="_r_1_"
+      >
+        <span>
+          child
+        </span>
       </span>
     </div>
     <div
+      aria-label="Close notice"
       class="toast__dismiss"
       data-testid="dismissToast"
+      role="button"
+      tabindex="0"
     >
       <span
         class="close-btn"
@@ -118,14 +148,22 @@ exports[`components/Toast should match snapshot for toast width less than 780px 
 <div>
   <div
     class="toast toast__visible"
+    role="status"
   >
     <div
+      aria-describedby="_r_9_"
+      aria-labelledby="_r_8_"
       class="toast__message toast__pointer"
+      role="button"
+      tabindex="0"
     >
       <div
         class="toast__jump"
+        id="_r_8_"
       >
-        <span>
+        <span
+          aria-hidden="true"
+        >
           <svg
             aria-label="Down Arrow Icon"
             height="16"
@@ -141,13 +179,20 @@ exports[`components/Toast should match snapshot for toast width less than 780px 
         </span>
         Jump to recents
       </div>
-      <span>
-        child
+      <span
+        id="_r_9_"
+      >
+        <span>
+          child
+        </span>
       </span>
     </div>
     <div
+      aria-label="Close notice"
       class="toast__dismiss"
       data-testid="dismissToast"
+      role="button"
+      tabindex="0"
     >
       <span
         class="close-btn"
@@ -175,14 +220,22 @@ exports[`components/Toast should match snapshot to have extraClasses 1`] = `
 <div>
   <div
     class="toast toast__visible extraClasses"
+    role="status"
   >
     <div
+      aria-describedby="_r_l_"
+      aria-labelledby="_r_k_"
       class="toast__message toast__pointer"
+      role="button"
+      tabindex="0"
     >
       <div
         class="toast__jump"
+        id="_r_k_"
       >
-        <span>
+        <span
+          aria-hidden="true"
+        >
           <svg
             aria-label="Down Arrow Icon"
             height="16"
@@ -198,13 +251,20 @@ exports[`components/Toast should match snapshot to have extraClasses 1`] = `
         </span>
         Jump to recents
       </div>
-      <span>
-        child
+      <span
+        id="_r_l_"
+      >
+        <span>
+          child
+        </span>
       </span>
     </div>
     <div
+      aria-label="Close notice"
       class="toast__dismiss"
       data-testid="dismissToast-extraClasses"
+      role="button"
+      tabindex="0"
     >
       <span
         class="close-btn"
@@ -232,17 +292,25 @@ exports[`components/Toast should match snapshot to not have actions 1`] = `
 <div>
   <div
     class="toast toast__visible"
+    role="status"
   >
     <div
       class="toast__message"
     >
-      <span>
-        child
+      <span
+        id="_r_d_"
+      >
+        <span>
+          child
+        </span>
       </span>
     </div>
     <div
+      aria-label="Close notice"
       class="toast__dismiss"
       data-testid="dismissToast"
+      role="button"
+      tabindex="0"
     >
       <span
         class="close-btn"

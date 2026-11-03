@@ -10,10 +10,12 @@ import type {Post} from '@mattermost/types/posts';
 
 import {savePreferences} from 'mattermost-redux/actions/preferences';
 import {setThreadFollow} from 'mattermost-redux/actions/threads';
+import Permissions from 'mattermost-redux/constants/permissions';
 import {getChannel} from 'mattermost-redux/selectors/entities/channels';
 import {getLicense, getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getPost} from 'mattermost-redux/selectors/entities/posts';
+import {getPost, makeGetCommentCountForPost} from 'mattermost-redux/selectors/entities/posts';
 import {getBool, isCollapsedThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
+import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
 import {
     getCurrentTeamId,
     getCurrentTeam,
@@ -58,6 +60,7 @@ type Props = {
 function makeMapStateToProps() {
     const getThreadOrSynthetic = makeGetThreadOrSynthetic();
     const canWrangler = makeCanWrangler();
+    const getCommentCount = makeGetCommentCountForPost();
 
     return function mapStateToProps(state: GlobalState, ownProps: Props) {
         const {post} = ownProps;
@@ -109,13 +112,14 @@ function makeMapStateToProps() {
 
         const isBoRPost = isBurnOnReadPost(state, post.id);
         const isPostSender = post.user_id === userId;
+        const teamId = getCurrentTeamId(state);
 
         return {
             channelIsArchived: isArchivedChannel(channel),
             components: state.plugins.components,
             postEditTimeLimit: config.PostEditTimeLimit,
             isLicensed: license.IsLicensed === 'true',
-            teamId: getCurrentTeamId(state),
+            teamId,
             canEdit: PostUtils.canEditPost(state, post, license, config, channel, userId),
             canDelete: PostUtils.canDeletePost(state, post, channel),
             teamUrl,
@@ -142,6 +146,11 @@ function makeMapStateToProps() {
             canFlagContent,
             isBurnOnReadPost: isBoRPost,
             isUnrevealedBurnOnReadPost: shouldDisplayConcealedPlaceholder(state, post.id),
+
+            // For the menu button's description: the same permission the Add Reaction item's gate checks, and the
+            // replies the delete dialog warns about
+            canAddReaction: Boolean(post.channel_id) && haveIChannelPermission(state, teamId, post.channel_id, Permissions.ADD_REACTION),
+            commentCount: getCommentCount(state, post),
         };
     };
 }

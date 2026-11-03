@@ -19,12 +19,18 @@ type Props = {
 const DateSeparator: FC<Props> = ({date}) => {
     return (
         <BasicSeparator>
-            <Timestamp
-                value={date}
-                useTime={false}
-                useSemanticOutput={false}
-                ranges={DATE_RANGES}
-            />
+            {/* A heading, so the day is read with the messages under it, in their place in the list */}
+            <span
+                role='heading'
+                aria-level={2}
+            >
+                <Timestamp
+                    value={date}
+                    useTime={false}
+                    useSemanticOutput={false}
+                    ranges={DATE_RANGES}
+                />
+            </span>
         </BasicSeparator>
     );
 };

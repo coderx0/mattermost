@@ -10,6 +10,7 @@ import {WithTooltip} from '@mattermost/shared/components/tooltip';
 import FlagIcon from 'components/widgets/icons/flag_icon';
 import FlagIconFilled from 'components/widgets/icons/flag_icon_filled';
 
+import {getPostAgentomId} from 'utils/agentom_ids';
 import {Locations, A11yCustomEventTypes} from 'utils/constants';
 
 export type Actions = {
@@ -101,6 +102,9 @@ const PostFlagIcon = ({
             <button
                 ref={buttonRef}
                 id={`${location}_flagIcon_${postId}`}
+
+                // The label flips between saving and removing, so the id is pinned
+                data-agentom-id={`${getPostAgentomId(location, postId)}.save`}
                 aria-label={isFlagged ? intl.formatMessage({id: 'flag_post.unflag', defaultMessage: 'Remove from Saved'}).toLowerCase() : intl.formatMessage({id: 'flag_post.flag', defaultMessage: 'Save Message'}).toLowerCase()}
                 className='post-menu__item'
                 onClick={handlePress}

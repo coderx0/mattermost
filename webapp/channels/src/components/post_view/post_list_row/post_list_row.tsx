@@ -3,7 +3,7 @@
 
 import classNames from 'classnames';
 import React from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, defineMessages} from 'react-intl';
 
 import type {Post} from '@mattermost/types/posts';
 import type {UserProfile} from '@mattermost/types/users';
@@ -21,6 +21,7 @@ import NewMessageSeparator from 'components/post_view/new_message_separator/new_
 
 import {PostListRowListIds, Locations} from 'utils/constants';
 import {isIdNotPost} from 'utils/post_utils';
+import {localizeMessage} from 'utils/utils';
 
 import type {NewMessagesSeparatorActionComponent} from 'types/store/plugins';
 
@@ -66,6 +67,17 @@ export type PostListRowProps = {
         emitShortcutReactToLastPostFrom: typeof emitShortcutReactToLastPostFrom;
     };
 };
+
+const messages = defineMessages({
+    loadOlder: {
+        id: 'posts_view.loadMore.older',
+        defaultMessage: 'Load more messages, older',
+    },
+    loadNewer: {
+        id: 'posts_view.loadMore.newer',
+        defaultMessage: 'Load more messages, newer',
+    },
+});
 
 export default class PostListRow extends React.PureComponent<PostListRowProps> {
     blockShortcutReactToLastPostForNonMessages(listId: string) {
@@ -133,10 +145,13 @@ export default class PostListRow extends React.PureComponent<PostListRowProps> {
         }
 
         if (listId === LOAD_OLDER_MESSAGES_TRIGGER || listId === LOAD_NEWER_MESSAGES_TRIGGER) {
+            // The list can show both buttons at once, at its top and its bottom, so each is named by what it loads
+            const isOlder = listId === LOAD_OLDER_MESSAGES_TRIGGER;
             return (
                 <button
                     className='more-messages-text theme style--none color--link'
-                    onClick={listId === LOAD_OLDER_MESSAGES_TRIGGER ? this.props.loadOlderPosts : this.props.loadNewerPosts}
+                    onClick={isOlder ? this.props.loadOlderPosts : this.props.loadNewerPosts}
+                    aria-label={localizeMessage(isOlder ? messages.loadOlder : messages.loadNewer)}
                 >
                     <FormattedMessage
                         id='posts_view.loadMore'

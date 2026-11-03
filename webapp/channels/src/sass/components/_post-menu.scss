@@ -73,12 +73,29 @@
 }
 
 @media (min-width: 768px) {
+    // A post's actions stay rendered while the post isn't hovered, at opacity 0 rather than display: none, so
+    // the keyboard and whatever reads the page can reach them. They show on hover, while the post is active or
+    // its menu is open, and when one has keyboard focus. On touch screens they don't take taps while unseen.
     .post-menu__item {
-        display: none;
+        display: inline-flex;
+        opacity: 0;
+
+        &:focus-visible {
+            opacity: 1;
+        }
+
+        @media (hover: none) {
+            pointer-events: none;
+        }
     }
 
     .post-menu__item--show {
         display: block;
+        opacity: 1;
+
+        @media (hover: none) {
+            pointer-events: auto;
+        }
     }
 
     .post {
@@ -103,6 +120,8 @@
                 display: inline-flex;
                 color: rgba(functions.v(center-channel-color-rgb), 0.64);
                 fill: rgba(functions.v(center-channel-color-rgb), 0.64);
+                opacity: 1;
+                pointer-events: auto;
 
                 &:hover {
                     background: rgba(functions.v(center-channel-color-rgb), 0.08);

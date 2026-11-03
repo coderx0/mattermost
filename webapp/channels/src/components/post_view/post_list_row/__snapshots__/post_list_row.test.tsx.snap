@@ -77,6 +77,7 @@ exports[`components/post_view/post_list_row should render date line 1`] = `
 exports[`components/post_view/post_list_row should render manual load messages trigger 1`] = `
 <div>
   <button
+    aria-label="Load more messages, older"
     class="more-messages-text theme style--none color--link"
   >
     Load more messages
