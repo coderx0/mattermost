@@ -185,7 +185,7 @@ describe('components/PostPreHeader', () => {
         expect(baseProps.actions.showFlaggedPosts).toHaveBeenNthCalledWith(1);
     });
 
-    test('should make Pinned and Saved buttons the keyboard can use, described by what they show', async () => {
+    test('should make Pinned and Saved buttons, described by what they show, adding no tab stops', async () => {
         const showPinnedPosts = jest.fn();
         const showFlaggedPosts = jest.fn();
         renderWithContext(
@@ -199,14 +199,14 @@ describe('components/PostPreHeader', () => {
 
         const pinned = screen.getByRole('button', {name: 'Pinned'});
         expect(pinned).toHaveAccessibleDescription('Shows the channel\'s pinned messages');
-        pinned.focus();
-        await userEvent.keyboard('{Enter}');
+        expect(pinned).not.toHaveAttribute('tabindex');
+        await userEvent.click(pinned);
         expect(showPinnedPosts).toHaveBeenCalledWith(baseProps.channelId);
 
         const saved = screen.getByRole('button', {name: 'Saved'});
         expect(saved).toHaveAccessibleDescription('Shows your saved messages');
-        saved.focus();
-        await userEvent.keyboard(' ');
+        expect(saved).not.toHaveAttribute('tabindex');
+        await userEvent.click(saved);
         expect(showFlaggedPosts).toHaveBeenCalledTimes(1);
     });
 });

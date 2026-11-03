@@ -56,12 +56,15 @@ describe('SaveChangesPanel', () => {
         renderWithContext(
             <SaveChangesPanel
                 {...defaultProps}
-                customSavedMessage='Channel info saved'
+                savedSubject='Channel info'
                 agentomId='channel-settings.info'
             />,
         );
 
-        expect(screen.getByRole('status')).toHaveTextContent('Channel info saved');
+        // what was saved is named in hidden text; what shows is unchanged
+        expect(screen.getByRole('status')).toHaveTextContent('Channel info: Settings saved');
+        expect(screen.getByText('Channel info:')).toHaveClass('sr-only');
+        expect(screen.getByText('Settings saved')).toBeInTheDocument();
         expect(screen.getByRole('button', {name: 'Close notice'})).toHaveAttribute('data-agentom-id', 'channel-settings.info.close');
     });
 

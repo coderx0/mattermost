@@ -4,7 +4,10 @@ exports[`ListItem should match snapshot when rendering GroupChannel 1`] = `
 <div>
   <div
     class="more-modal__row clickable"
+    data-agentom-id="direct-messages-dialog.option.channel_id_1"
+    data-agentom-reveals="Add option"
     data-testid="group-message-row"
+    role="group"
   >
     <div
       class="more-modal__gm-icon"
@@ -42,7 +45,10 @@ exports[`ListItem should match snapshot when rendering user 1`] = `
 <div>
   <div
     class="more-modal__row clickable"
+    data-agentom-id="direct-messages-dialog.option.username1"
+    data-agentom-reveals="Add option"
     data-testid="direct-message-row"
+    role="group"
   >
     <span
       class="status-wrapper style--none"

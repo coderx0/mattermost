@@ -19,6 +19,8 @@ import ProfilePopover from 'components/profile_popover';
 import SharedChannelIndicator from 'components/shared_channel_indicator';
 import GuestTag from 'components/widgets/tag/guest_tag';
 
+import {agentomIdSegment} from 'utils/agentom_ids';
+
 import type {ChannelMember as ChannelMemberType} from './member_list';
 
 interface Props {
@@ -50,6 +52,13 @@ const Member = ({channel, member, index, totalUsers, editing, actions}: Props) =
             className='channel-members-rhs__member'
             style={{height: '48px'}}
             data-testid={`memberline-${member.user.id}`}
+
+            // The row, named by the member; hovering it shows its send-message button ("Send message to …"), named by
+            // the tooltip's words, as a member's name can hold commas
+            role='group'
+            aria-label={member.displayName}
+            data-agentom-id={`channel-members.member.${agentomIdSegment(member.user.username)}`}
+            data-agentom-reveals={editing ? undefined : formatMessage({id: 'channel_members_rhs.member.send_message', defaultMessage: 'Send message'})}
         >
             <span className='ProfileSpan'>
                 <div className='channel-members-rhs__avatar'>

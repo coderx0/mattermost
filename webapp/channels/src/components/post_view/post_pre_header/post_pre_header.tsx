@@ -166,26 +166,17 @@ type PreHeaderLinkProps = {
     onActivate: () => void;
 };
 
-// "Pinned" and "Saved" say what the post is and open the list it's in. They're anchors without an address, so
-// they're made buttons that the keyboard can reach and use, described by the list they show.
+// "Pinned" and "Saved" say what the post is and open the list it's in. They're anchors without an address that
+// act on click, so they say they're buttons, described by the list they show (the keyboard reaches them as before).
 function PreHeaderLink({label, description, onActivate}: PreHeaderLinkProps) {
     const descriptionId = useId();
-
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            onActivate();
-        }
-    };
 
     return (
         <>
             <a
                 role='button'
-                tabIndex={0}
                 aria-describedby={descriptionId}
                 onClick={onActivate}
-                onKeyDown={handleKeyDown}
             >
                 <FormattedMessage {...label}/>
             </a>

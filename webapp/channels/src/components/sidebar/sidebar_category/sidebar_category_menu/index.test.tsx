@@ -133,7 +133,7 @@ describe('components/sidebar/sidebar_category/sidebar_category_menu', () => {
         expect(screen.getByRole('menuitem', {name: /mute category/i})).toBeInTheDocument();
     });
 
-    test('should mark deleting as destructive, name its choices, and open Sort with a click alone', async () => {
+    test('should mark deleting as destructive, name its choices, and open Sort on hover', async () => {
         renderWithContext(
             <SidebarCategoryMenu {...baseProps}/>,
             initialState,
@@ -153,8 +153,8 @@ describe('components/sidebar/sidebar_category/sidebar_category_menu', () => {
         const sortItem = screen.getByRole('menuitem', {name: /sort/i});
         expect(sortItem).toHaveAccessibleDescription('Choices: Alphabetically, Recent activity, Manually');
 
-        // A click with no hover first opens the submenu, whose current choice is checked
-        await userEvent.click(sortItem, {skipHover: true});
+        // Hovering opens the submenu, whose current choice is checked
+        await userEvent.hover(sortItem);
         expect(screen.getByRole('menuitemradio', {name: 'Alphabetically'})).toHaveAttribute('aria-checked', 'true');
         expect(screen.getByRole('menuitemradio', {name: 'Manually'})).toHaveAttribute('aria-checked', 'false');
     });

@@ -102,7 +102,6 @@ type Props = WrappedComponentProps & {
 
 type State = {
     isMenuOpen: boolean;
-    isMenuFocused: boolean;
     showTooltip: boolean;
 };
 
@@ -116,7 +115,6 @@ export class SidebarChannelLink extends React.PureComponent<Props, State> {
 
         this.state = {
             isMenuOpen: false,
-            isMenuFocused: false,
             showTooltip: false,
         };
     }
@@ -212,22 +210,6 @@ export class SidebarChannelLink extends React.PureComponent<Props, State> {
 
     handleMenuToggle = (isMenuOpen: boolean) => {
         this.setState({isMenuOpen});
-    };
-
-    // The options button is shown on hover and while it has keyboard focus; when it's focused from the
-    // keyboard, the row looks as it does on hover, so the button doesn't cover the mention badge.
-    handleMenuFocus = (event: React.FocusEvent<HTMLDivElement>) => {
-        let isFocusVisible = false;
-        try {
-            isFocusVisible = event.target.matches(':focus-visible');
-        } catch {
-            // A browser that doesn't know the selector shows the button over the badge instead
-        }
-        this.setState({isMenuFocused: isFocusVisible});
-    };
-
-    handleMenuBlur = () => {
-        this.setState({isMenuFocused: false});
     };
 
     render(): JSX.Element {
@@ -339,8 +321,6 @@ export class SidebarChannelLink extends React.PureComponent<Props, State> {
                     {menuOpen: this.state.isMenuOpen},
                     {'MenuWrapper--open': this.state.isMenuOpen},
                 )}
-                onFocus={this.handleMenuFocus}
-                onBlur={this.handleMenuBlur}
             >
                 <SidebarChannelMenu
                     channel={channel}
@@ -364,7 +344,7 @@ export class SidebarChannelLink extends React.PureComponent<Props, State> {
             'SidebarLink--withMenu',
             {
                 'SidebarLink--withMentionBadge': unreadMentions > 0,
-                menuOpen: this.state.isMenuOpen || this.state.isMenuFocused,
+                menuOpen: this.state.isMenuOpen,
                 muted: isMuted,
                 'unread-title': this.props.isUnread,
                 selected: isChannelSelected,
@@ -378,6 +358,10 @@ export class SidebarChannelLink extends React.PureComponent<Props, State> {
                     aria-label={this.getAriaLabel()}
                     aria-current={this.props.isCurrentChannel ? 'page' : undefined}
                     data-agentom-id={this.getAgentomId()}
+
+                    // Hovering the row shows its options button ("Channel options for …"), named here by the words it
+                    // starts with (the tooltip's), as a channel's name can hold commas
+                    data-agentom-reveals={this.props.intl.formatMessage({id: 'sidebar_left.sidebar_channel_menu.editChannel', defaultMessage: 'Channel options'})}
                     to={link}
                     onClick={this.handleChannelClick}
                     tabIndex={0}

@@ -20,6 +20,7 @@ import KeyboardShortcutSequence, {
 } from 'components/keyboard_shortcuts/keyboard_shortcuts_sequence';
 import {moreDirectChannelsMessages} from 'components/more_direct_channels/list/list';
 
+import {getCategoryAgentomId} from 'utils/agentom_ids';
 import Constants, {A11yCustomEventTypes, DraggingStateTypes, DraggingStates} from 'utils/constants';
 import {isKeyPressed} from 'utils/keyboard';
 
@@ -444,6 +445,11 @@ export default class SidebarCategory extends React.PureComponent<Props, State> {
                                                 isDraggingOver={droppableSnapshot.isDraggingOver}
                                                 muted={category.muted}
                                                 onClick={this.handleCollapse}
+                                                agentomId={getCategoryAgentomId(category)}
+
+                                                // Hovering the header shows the category's options button ("… category
+                                                // options"), named by its fixed words, as a category's name can hold commas
+                                                reveals={categoryMenu ? localizeMessage({id: 'sidebar_left.sidebar_category.reveals', defaultMessage: 'Category options'}) : undefined}
                                             >
                                                 {newLabel}
                                                 {directMessagesModalButton}

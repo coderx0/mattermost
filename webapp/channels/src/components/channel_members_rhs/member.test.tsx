@@ -267,4 +267,28 @@ describe('components/channel_members_rhs/Member', () => {
 
         expect(screen.getByRole('button', {name: 'Send message to Test User'})).toBeInTheDocument();
     });
+
+    test('should be a row named by the member, saying hovering it shows its send message button', () => {
+        const {rerender} = renderWithContext(
+            <Member
+                {...baseProps}
+                member={{...baseMember, user: {...mockUser, remote_id: ''}}}
+            />,
+            initialState,
+        );
+
+        const row = screen.getByRole('group', {name: 'Test User'});
+        expect(row).toHaveAttribute('data-agentom-id', 'channel-members.member.testuser');
+        expect(row).toHaveAttribute('data-agentom-reveals', 'Send message');
+
+        // While editing, the row has no send message button to show
+        rerender(
+            <Member
+                {...baseProps}
+                editing={true}
+                member={{...baseMember, user: {...mockUser, remote_id: ''}}}
+            />,
+        );
+        expect(screen.getByRole('group', {name: 'Test User'})).not.toHaveAttribute('data-agentom-reveals');
+    });
 });

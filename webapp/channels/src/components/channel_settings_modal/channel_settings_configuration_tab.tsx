@@ -1213,9 +1213,9 @@ function ChannelSettingsConfigurationTab({
                         id: 'channel_settings.save_changes_panel.reset',
                         defaultMessage: 'Reset',
                     })}
-                    customSavedMessage={formatMessage({
-                        id: 'channel_settings.save_changes_panel.configuration_saved',
-                        defaultMessage: 'Channel configuration saved',
+                    savedSubject={formatMessage({
+                        id: 'channel_settings.save_changes_panel.configuration_subject',
+                        defaultMessage: 'Channel configuration',
                     })}
                     saveButtonDescription={saveButtonDescription}
                     agentomId='channel-settings.configuration'

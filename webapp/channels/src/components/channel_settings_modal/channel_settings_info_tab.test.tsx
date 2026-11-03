@@ -638,7 +638,7 @@ describe('ChannelSettingsInfoTab', () => {
 
         await userEvent.click(screen.getByRole('button', {name: 'Save'}));
 
-        expect(await screen.findByRole('status')).toHaveTextContent('Channel info saved');
+        expect(await screen.findByRole('status')).toHaveTextContent('Channel info: Settings saved');
     });
 
     it('should show ConvertConfirmModal when converting from public to private', async () => {

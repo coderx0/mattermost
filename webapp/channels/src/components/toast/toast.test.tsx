@@ -63,7 +63,7 @@ describe('components/Toast', () => {
         expect(container).toMatchSnapshot();
     });
 
-    test('should be a status whose jump and close are buttons the keyboard can use', async () => {
+    test('should be a status whose jump and close are buttons, adding no tab stops', async () => {
         const onClick = jest.fn();
         const onDismiss = jest.fn();
         renderWithContext(
@@ -80,13 +80,13 @@ describe('components/Toast', () => {
 
         const jump = screen.getByRole('button', {name: 'Jump to recents'});
         expect(jump).toHaveAccessibleDescription('3 new messages');
-        jump.focus();
-        await userEvent.keyboard('{Enter}');
+        expect(jump).not.toHaveAttribute('tabindex');
+        await userEvent.click(jump);
         expect(onClick).toHaveBeenCalledTimes(1);
 
         const close = screen.getByRole('button', {name: 'Close notice'});
-        close.focus();
-        await userEvent.keyboard('{Enter}');
+        expect(close).not.toHaveAttribute('tabindex');
+        await userEvent.click(close);
         expect(onDismiss).toHaveBeenCalledTimes(1);
     });
 });

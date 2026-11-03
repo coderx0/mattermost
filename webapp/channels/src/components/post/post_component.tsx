@@ -61,7 +61,7 @@ import type {PostActionComponent, PostPluginComponent} from 'types/store/plugins
 
 import {withPostErrorBoundary} from './post_error_boundary';
 import PostHeaderTranslateIcon from './post_header_translate_icon';
-import PostOptions from './post_options';
+import PostOptions, {getPostHoverReveals} from './post_options';
 import PostUserProfile from './user_profile';
 
 export type Props = {
@@ -779,6 +779,7 @@ function PostComponent(props: Props) {
                 id={getTestId()}
                 data-testid={postAriaLabelDivTestId}
                 data-agentom-id={getPostAgentomId(props.location, post.id)}
+                data-agentom-reveals={isModal ? undefined : getPostHoverReveals(props, {formatMessage})}
                 post={post}
                 className={getClassName()}
                 style={props.preventClickInteraction ? preventInteractionStyle : undefined}

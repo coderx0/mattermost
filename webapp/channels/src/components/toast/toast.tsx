@@ -3,7 +3,7 @@
 
 import classNames from 'classnames';
 import React, {useId} from 'react';
-import type {ReactNode, MouseEventHandler, KeyboardEvent} from 'react';
+import type {ReactNode, MouseEventHandler} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
 import {WithTooltip} from '@mattermost/shared/components/tooltip';
@@ -60,21 +60,8 @@ export default function Toast({
 
     const showJumpMessage = width > Constants.MOBILE_SCREEN_WIDTH;
 
-    // The toast is a status line. When it can jump, its message is a button (by keyboard too), named by where it
-    // jumps and described by the toast's text; its close icon is a button too.
-    const handleJumpKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            onClick?.(e as unknown as React.MouseEvent<HTMLDivElement>);
-        }
-    };
-
-    const handleDismissKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            handleDismiss();
-        }
-    };
+    // The toast is a status line. When it can jump, its message is a button, named by where it jumps and described
+    // by the toast's text; its close icon is a button too (the keyboard reaches them as before).
 
     return (
         <div
@@ -85,8 +72,6 @@ export default function Toast({
                 className={toastActionClass}
                 onClick={showActions ? onClick : undefined}
                 role={showActions ? 'button' : undefined}
-                tabIndex={showActions ? 0 : undefined}
-                onKeyDown={showActions ? handleJumpKeyDown : undefined}
                 aria-labelledby={showActions && showJumpMessage ? jumpId : undefined}
                 aria-describedby={showActions && showJumpMessage ? textId : undefined}
             >
@@ -123,9 +108,7 @@ export default function Toast({
                 <div
                     className='toast__dismiss'
                     onClick={handleDismiss}
-                    onKeyDown={handleDismissKeyDown}
                     role='button'
-                    tabIndex={0}
                     aria-label={formatMessage({id: 'toast.close', defaultMessage: 'Close notice'})}
                     data-testid={extraClasses ? `dismissToast-${extraClasses}` : 'dismissToast'}
                 >

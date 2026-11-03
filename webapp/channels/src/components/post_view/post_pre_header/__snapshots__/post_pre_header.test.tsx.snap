@@ -60,7 +60,6 @@ exports[`components/PostPreHeader should properly handle flagged posts (and not 
         <a
           aria-describedby="_r_0_"
           role="button"
-          tabindex="0"
         >
           Saved
         </a>
@@ -137,7 +136,6 @@ exports[`components/PostPreHeader should properly handle link clicks 1`] = `
         <a
           aria-describedby="_r_6_"
           role="button"
-          tabindex="0"
         >
           Pinned
         </a>
@@ -156,7 +154,6 @@ exports[`components/PostPreHeader should properly handle link clicks 1`] = `
         <a
           aria-describedby="_r_7_"
           role="button"
-          tabindex="0"
         >
           Saved
         </a>
@@ -191,7 +188,6 @@ exports[`components/PostPreHeader should properly handle pinned posts (and not f
         <a
           aria-describedby="_r_1_"
           role="button"
-          tabindex="0"
         >
           Pinned
         </a>
@@ -268,7 +264,6 @@ exports[`components/PostPreHeader should properly handle posts that are flagged 
         <a
           aria-describedby="_r_2_"
           role="button"
-          tabindex="0"
         >
           Pinned
         </a>
@@ -287,7 +282,6 @@ exports[`components/PostPreHeader should properly handle posts that are flagged 
         <a
           aria-describedby="_r_3_"
           role="button"
-          tabindex="0"
         >
           Saved
         </a>
@@ -322,7 +316,6 @@ exports[`components/PostPreHeader should properly handle posts that are flagged 
         <a
           aria-describedby="_r_4_"
           role="button"
-          tabindex="0"
         >
           Pinned
         </a>
@@ -394,7 +387,6 @@ exports[`components/PostPreHeader should properly handle posts that are flagged 
         <a
           aria-describedby="_r_5_"
           role="button"
-          tabindex="0"
         >
           Saved
         </a>

@@ -137,6 +137,7 @@ const ChannelMoveToSubMenu = (props: Props) => {
                     role='menuitemradio'
                     aria-checked={isCurrentCategory}
                     forceCloseOnSelect={true}
+                    clickAfterClose={true}
                     leadingElement={category.type === CategoryTypes.FAVORITES ? (<StarOutlineIcon size={18}/>) : (<FolderOutlineIcon size={18}/>)}
                     labels={text}
                     trailingElements={selectedCategory}

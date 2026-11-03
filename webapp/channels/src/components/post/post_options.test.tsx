@@ -2,6 +2,7 @@
 // See LICENSE.txt for license information.
 
 import React from 'react';
+import type {IntlShape} from 'react-intl';
 
 import type {SystemEmoji} from '@mattermost/types/emojis';
 
@@ -14,7 +15,7 @@ import {TestHelper} from 'utils/test_helper';
 
 import type {PostActionComponent} from 'types/store/plugins';
 
-import PostOptions from './post_options';
+import PostOptions, {getPostHoverReveals} from './post_options';
 
 // Minimal Redux state: grant ADD_REACTION to the current user so that
 // ChannelPermissionGate lets the quick-reaction emoji buttons render.
@@ -175,5 +176,36 @@ describe('PostOptions - plugin post actions (MM-68323)', () => {
         );
 
         expect(screen.getByRole('button', {name: 'AI Actions'})).toBeInTheDocument();
+    });
+});
+
+describe('getPostHoverReveals', () => {
+    const intl = {formatMessage: ({defaultMessage}: {defaultMessage?: string}) => defaultMessage ?? ''} as unknown as Pick<IntlShape, 'formatMessage'>;
+    const center = {...baseProps, location: Locations.CENTER as keyof typeof Locations, collapsedThreadsEnabled: true};
+
+    test('names the buttons hovering shows, each rendered under that name once hovered', () => {
+        const reveals = getPostHoverReveals(center, intl);
+        expect(reveals).toBe('Add Reaction, save message, reply, more');
+
+        renderWithContext(
+            <PostOptions
+                {...center}
+                hover={true}
+            />,
+            baseState,
+        );
+        for (const name of reveals!.split(', ')) {
+            expect(screen.getByRole('button', {name})).toBeInTheDocument();
+        }
+    });
+
+    test('leaves out a reply button that shows its count without hover, and says which way saving goes', () => {
+        expect(getPostHoverReveals({...center, collapsedThreadsEnabled: false, replyCount: 2, isFlagged: true}, intl)).toBe('Add Reaction, remove from saved, more');
+    });
+
+    test('declares nothing where nothing waits for hover', () => {
+        expect(getPostHoverReveals({...center, isMobileView: true}, intl)).toBeUndefined();
+        expect(getPostHoverReveals({...center, location: Locations.SEARCH as keyof typeof Locations}, intl)).toBeUndefined();
+        expect(getPostHoverReveals({...center, isPostBeingEdited: true}, intl)).toBeUndefined();
     });
 });

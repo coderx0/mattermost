@@ -20243,9 +20243,9 @@
     "defaultMessage": "Saves this tab's settings: {sections}",
     "description": "Hidden description of the Save button on the Configuration tab of Channel Settings; {sections} lists the tab's sections, by their headings."
   },
-  "channel_settings.save_changes_panel.configuration_saved": {
-    "defaultMessage": "Channel configuration saved",
-    "description": "Status message shown after the Configuration tab of Channel Settings is saved."
+  "channel_settings.save_changes_panel.configuration_subject": {
+    "defaultMessage": "Channel configuration",
+    "description": "Visually hidden text read before 'Settings saved' once the Configuration tab of Channel Settings is saved: what was saved."
   },
   "channel_settings.save_changes_panel.field.default_category": {
     "defaultMessage": "default sidebar category",
@@ -20283,9 +20283,9 @@
     "defaultMessage": "Saves the channel's {fields}",
     "description": "Hidden description of the Save button on the Info tab of Channel Settings; {fields} lists the fields the tab shows, joined as a list."
   },
-  "channel_settings.save_changes_panel.info_saved": {
-    "defaultMessage": "Channel info saved",
-    "description": "Status message shown after the Info tab of Channel Settings is saved."
+  "channel_settings.save_changes_panel.info_subject": {
+    "defaultMessage": "Channel info",
+    "description": "Visually hidden text read before 'Settings saved' once the Info tab of Channel Settings is saved: what was saved."
   },
   "channel_settings.save_changes_panel.reset": {
     "defaultMessage": "Reset",
@@ -26027,6 +26027,10 @@
     "defaultMessage": "Add option {label}",
     "description": "Accessibility label for an option row in the Direct Messages people selector; {label} is the person's display name."
   },
+  "more_direct_channels.new_convo_add.reveals": {
+    "defaultMessage": "Add option",
+    "description": "Not shown: what hovering a row of the direct messages dialog shows, for software that reads the page (the row's add button, 'Add option …', named by its fixed words)."
+  },
   "more_direct_channels.new_convo_note": {
     "defaultMessage": "This will start a new conversation. If you're adding a lot of people, consider creating a private channel instead.",
     "description": "Note in the Direct Messages dialog shown when selecting multiple people, warning that this starts a new group conversation."
@@ -29966,6 +29970,10 @@
   "sidebar_left.sidebar_category.newLabel": {
     "defaultMessage": "new",
     "description": "Small lowercase 'new' badge shown next to a just-created sidebar category; very compact space."
+  },
+  "sidebar_left.sidebar_category.reveals": {
+    "defaultMessage": "Category options",
+    "description": "Not shown: what hovering a sidebar category's header shows, for software that reads the page (the category's options button, named by its fixed words)."
   },
   "sidebar_left.sidebar_channel_menu_convert_to_channel": {
     "defaultMessage": "Convert to Private Channel",

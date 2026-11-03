@@ -5,6 +5,7 @@ import classnames from 'classnames';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import type {JSX, ReactNode} from 'react';
 import {FormattedMessage} from 'react-intl';
+import type {IntlShape} from 'react-intl';
 
 import type {Emoji} from '@mattermost/types/emojis';
 import type {Post} from '@mattermost/types/posts';
@@ -62,6 +63,61 @@ type Props = {
     };
 };
 
+type ShownProps = Pick<Props, 'post' | 'location' | 'isMobileView' | 'hasReplies' | 'isFirstReply' | 'isReadOnly' | 'enableEmojiPicker' | 'channelIsArchived' | 'shouldDisplayBurnOnReadConcealed' | 'isBurnOnReadPost'>;
+
+/**
+ * Which of a post's options are rendered, given whether it's hovered (or active, or one of its menus is open): one
+ * source for the options below and for what the post says its hover shows (getPostHoverReveals).
+ */
+function postOptionsShown(props: ShownProps, hoverLocal: boolean) {
+    const {post} = props;
+    const isEphemeral = isPostEphemeral(post);
+    const systemMessage = isSystemMessage(post);
+    const isFromAutoResponder = fromAutoResponder(post);
+    const isBurnOnReadPost = props.isBurnOnReadPost || false;
+    return {
+        comment: !isBurnOnReadPost && (isFromAutoResponder || (!systemMessage && (props.isMobileView ||
+            hoverLocal || (!post.root_id && Boolean(props.hasReplies)) ||
+            props.isFirstReply) && props.location === Locations.CENTER)),
+
+        // Don't show emoji picker button for unrevealed BoR posts
+        reaction: !systemMessage && !props.isReadOnly && !isEphemeral && !post.failed && props.enableEmojiPicker && !props.channelIsArchived && !props.shouldDisplayBurnOnReadConcealed,
+
+        // Don't show save button for unrevealed BoR posts
+        flag: !props.isMobileView && (!isEphemeral && !post.failed && !systemMessage) && !props.shouldDisplayBurnOnReadConcealed,
+    };
+}
+
+/**
+ * The names of a post's options that are shown only while the pointer is over it (wider screens, where the post
+ * menu's items are hidden until then), comma-separated for data-agentom-reveals; undefined when there are none.
+ * Each name is its button's own accessible name. Recent reactions are left out: they're shortcuts for Add Reaction.
+ */
+export function getPostHoverReveals(props: ShownProps & Pick<Props, 'isFlagged' | 'collapsedThreadsEnabled' | 'replyCount' | 'isPostBeingEdited' | 'canDelete'>, intl: Pick<IntlShape, 'formatMessage'>): string | undefined {
+    const {post} = props;
+    const systemMessage = isSystemMessage(post);
+    if (props.isMobileView || props.location === Locations.SEARCH || props.isPostBeingEdited || isPostEphemeral(post) ||
+        post.state === Posts.POST_DELETED || (systemMessage && !props.canDelete)) {
+        return undefined;
+    }
+    const shown = postOptionsShown(props, true);
+    const names: string[] = [];
+    if (shown.reaction) {
+        names.push(intl.formatMessage({id: 'post_info.tooltip.add_reactions', defaultMessage: 'Add Reaction'}));
+    }
+    if (shown.flag) {
+        names.push((props.isFlagged ? intl.formatMessage({id: 'flag_post.unflag', defaultMessage: 'Remove from Saved'}) : intl.formatMessage({id: 'flag_post.flag', defaultMessage: 'Save Message'})).toLowerCase());
+    }
+
+    // A reply button showing a count is shown without hover too
+    const commentCount = props.collapsedThreadsEnabled ? 0 : (props.replyCount ?? 0);
+    if (shown.comment && commentCount === 0) {
+        names.push(intl.formatMessage({id: 'post_info.comment_icon.tooltip.reply', defaultMessage: 'Reply'}).toLowerCase());
+    }
+    names.push(intl.formatMessage({id: 'post_info.dot_menu.tooltip.more', defaultMessage: 'More'}).toLowerCase());
+    return names.join(', ');
+}
+
 const PostOptions = (props: Props): JSX.Element => {
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [showDotMenu, setShowDotMenu] = useState(false);
@@ -105,7 +161,6 @@ const PostOptions = (props: Props): JSX.Element => {
 
     const isEphemeral = isPostEphemeral(post);
     const systemMessage = isSystemMessage(post);
-    const isFromAutoResponder = fromAutoResponder(post);
 
     function removePost() {
         props.removePost(props.post);
@@ -129,9 +184,8 @@ const PostOptions = (props: Props): JSX.Element => {
     const isPostDeleted = post && post.state === Posts.POST_DELETED;
     const hoverLocal = props.hover || showEmojiPicker || showDotMenu || showActionsMenu || showPluginMenu;
     const isBurnOnReadPost = props.isBurnOnReadPost || false;
-    const showCommentIcon = !isBurnOnReadPost && (isFromAutoResponder || (!systemMessage && (isMobileView ||
-            hoverLocal || (!post.root_id && Boolean(props.hasReplies)) ||
-            props.isFirstReply) && props.location === Locations.CENTER));
+    const shown = postOptionsShown(props, hoverLocal);
+    const showCommentIcon = shown.comment;
     const commentIconExtraClass = isMobileView ? '' : 'pull-right';
 
     let commentIcon;
@@ -168,8 +222,7 @@ const PostOptions = (props: Props): JSX.Element => {
         );
     }
 
-    // Don't show emoji picker button for unrevealed BoR posts
-    const showReactionIcon = !systemMessage && !isReadOnly && !isEphemeral && !post.failed && props.enableEmojiPicker && !channelIsArchived && !props.shouldDisplayBurnOnReadConcealed;
+    const showReactionIcon = shown.reaction;
     let postReaction;
     if (showReactionIcon) {
         postReaction = (
@@ -186,9 +239,8 @@ const PostOptions = (props: Props): JSX.Element => {
         );
     }
 
-    // Don't show save button for unrevealed BoR posts
     let flagIcon: ReactNode = null;
-    if (!isMobileView && (!isEphemeral && !post.failed && !systemMessage) && !props.shouldDisplayBurnOnReadConcealed) {
+    if (shown.flag) {
         flagIcon = (
             <li>
                 <PostFlagIcon

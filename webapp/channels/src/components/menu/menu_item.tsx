@@ -88,6 +88,12 @@ export interface Props extends MuiMenuItemProps {
     forceCloseOnSelect?: boolean;
 
     /**
+     * With forceCloseOnSelect on a checkbox or radio item: run onClick once the menu has closed, as a plain item does,
+     * rather than at once. An item that says it's a radio keeps the timing it had as a plain item.
+     */
+    clickAfterClose?: boolean;
+
+    /**
      * When true, selecting this item will not close the menu.
      * Inverse of forceCloseOnSelect for non-checkbox/radio roles.
      */
@@ -147,6 +153,7 @@ export const MenuItem = forwardRef<HTMLLIElement, Props>((props, ref) => {
         onClick,
         role = 'menuitem',
         forceCloseOnSelect = false,
+        clickAfterClose = false,
         disableCloseOnSelect = false,
         ...otherProps
     } = props;
@@ -187,7 +194,7 @@ export const MenuItem = forwardRef<HTMLLIElement, Props>((props, ref) => {
                 // Execute immediately when the menu isn't closing on select
                 // (mobile modal, checkbox/radio, or disableCloseOnSelect).
                 // Otherwise defer to after the close animation.
-                if (isMobileView || isRoleCheckboxOrRadio(role) || disableCloseOnSelect) {
+                if (isMobileView || (isRoleCheckboxOrRadio(role) && !(forceCloseOnSelect && clickAfterClose)) || disableCloseOnSelect) {
                     onClick(event);
                 } else {
                     // Clone the event since we delay the click handler until after the menu has closed.

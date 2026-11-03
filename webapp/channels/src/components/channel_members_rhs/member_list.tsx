@@ -53,8 +53,8 @@ const DESCRIPTION_ID = 'channelMembersRhsListDescription';
 // The list's name, given to the element that scrolls (react-window renders it, from outerElementType)
 const ListLabelContext = createContext<string | undefined>(undefined);
 
-// Only the rows in view are rendered, so the scrolling container is a named, focusable region: the keyboard can
-// scroll it, and its description says how many members the list holds
+// Only the rows in view are rendered, so the scrolling container is a named region, whose description says how many
+// members the list holds
 const ListOuterElement = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>((props, ref) => {
     const label = useContext(ListLabelContext);
 
@@ -65,9 +65,6 @@ const ListOuterElement = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
             role='region'
             aria-label={label}
             aria-describedby={DESCRIPTION_ID}
-
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- the list scrolls, and only the rows in view are rendered: the keyboard reaches the rest by scrolling it
-            tabIndex={0}
             data-agentom-id='channel-members.list'
         />
     );

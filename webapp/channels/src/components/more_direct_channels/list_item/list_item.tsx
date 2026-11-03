@@ -8,6 +8,8 @@ import {useIntl} from 'react-intl';
 import {useUserIdsInGroupChannel} from 'components/common/hooks/useUserIdsInGroupChannel';
 import Timestamp from 'components/timestamp';
 
+import {agentomIdSegment} from 'utils/agentom_ids';
+
 import UserDetails from './user_details';
 
 import {isGroupChannel} from '../types';
@@ -66,6 +68,13 @@ const ListItem = React.forwardRef((props: Props, ref?: React.Ref<HTMLDivElement>
             className={classNames('more-modal__row clickable', {'more-modal__row--selected': isSelected})}
             onClick={handleClick}
             onMouseEnter={handleMouseEnter}
+
+            // The row, named by whom it adds; hovering it highlights it, which shows its add button ("Add option …"),
+            // named by its fixed words, as a group's name holds commas
+            role='group'
+            aria-label={option.label}
+            data-agentom-id={`direct-messages-dialog.option.${agentomIdSegment((isGroupChannel(option) ? option.name : option.username) ?? option.id)}`}
+            data-agentom-reveals={isMobileView ? undefined : intl.formatMessage({id: 'more_direct_channels.new_convo_add.reveals', defaultMessage: 'Add option'})}
         >
             {details}
 

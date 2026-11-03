@@ -24,6 +24,8 @@ exports[`components/sidebar/sidebar_category should match snapshot 1`] = `
             aria-expanded="true"
             aria-label="custom_category_1"
             class="SidebarChannelGroupHeader_groupButton"
+            data-agentom-id="category.custom_category_1"
+            data-agentom-reveals="Category options"
             id="sidebarCategoryHeader-category1"
           >
             <i
@@ -87,6 +89,8 @@ exports[`components/sidebar/sidebar_category should match snapshot when collapse
             aria-expanded="false"
             aria-label="custom_category_1"
             class="SidebarChannelGroupHeader_groupButton"
+            data-agentom-id="category.custom_category_1"
+            data-agentom-reveals="Category options"
             id="sidebarCategoryHeader-category1"
           >
             <i
@@ -150,6 +154,8 @@ exports[`components/sidebar/sidebar_category should match snapshot when isNewCat
             aria-expanded="true"
             aria-label="custom_category_1"
             class="SidebarChannelGroupHeader_groupButton"
+            data-agentom-id="category.custom_category_1"
+            data-agentom-reveals="Category options"
             id="sidebarCategoryHeader-category1"
           >
             <i
@@ -238,6 +244,8 @@ exports[`components/sidebar/sidebar_category should match snapshot when sorting 
             aria-expanded="true"
             aria-label="DIRECT MESSAGES"
             class="SidebarChannelGroupHeader_groupButton"
+            data-agentom-id="category.direct_messages"
+            data-agentom-reveals="Category options"
             id="sidebarCategoryHeader-category1"
           >
             <i
@@ -321,6 +329,8 @@ exports[`components/sidebar/sidebar_category should match snapshot when the cate
             aria-expanded="true"
             aria-label="DIRECT MESSAGES"
             class="SidebarChannelGroupHeader_groupButton"
+            data-agentom-id="category.direct_messages"
+            data-agentom-reveals="Category options"
             id="sidebarCategoryHeader-category1"
           >
             <i

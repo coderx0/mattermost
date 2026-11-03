@@ -258,6 +258,7 @@ const SidebarCategoryMenu = ({
                     role='menuitemradio'
                     aria-checked={category.sorting === choice.sorting}
                     forceCloseOnSelect={true}
+                    clickAfterClose={true}
                     labels={<FormattedMessage {...choice.label}/>}
                     onClick={() => handleSortChannels(choice.sorting)}
                     trailingElements={category.sorting === choice.sorting ? <CheckIcon size={16}/> : null}

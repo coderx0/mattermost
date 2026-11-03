@@ -115,19 +115,6 @@ export function SubMenu(props: Props) {
         setAnchorElement(null);
     }
 
-    // A click on the item opens its submenu, as hovering it does (WAI-ARIA menu pattern), so a pointer
-    // that clicks without hovering first can open it too. It's handled while the click is captured,
-    // before the item's own click handler, which would close the whole menu. Clicks inside the
-    // submenu reach here through the React tree too, but aren't inside the item in the DOM.
-    function handleClickCapture(event: MouseEvent<HTMLLIElement>) {
-        if (event.button !== 0 || !event.currentTarget.contains(event.target as Node)) {
-            return;
-        }
-
-        event.stopPropagation();
-        setAnchorElement(event.currentTarget);
-    }
-
     function handleKeyDown(event: KeyboardEvent<HTMLLIElement>) {
         if (
             isKeyPressed(event, Constants.KeyCodes.ENTER) ||
@@ -187,12 +174,7 @@ export function SubMenu(props: Props) {
             {...passedInTriggerButtonProps}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            onClickCapture={handleClickCapture}
             onKeyDown={handleKeyDown}
-
-            // Enter on the item opens its submenu (handleKeyDown), as Space does (WAI-ARIA menu pattern). MUI then
-            // also treats Enter as a click on the item, which must not close the menu that holds it.
-            disableCloseOnSelect={true}
         >
             <SubMenuContext.Provider value={providerValue}>
                 <MuiPopover

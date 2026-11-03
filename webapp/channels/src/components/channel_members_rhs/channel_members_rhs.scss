@@ -53,15 +53,10 @@
         &:hover {
             background: rgba(var(--center-channel-color-rgb), 0.08);
             color: rgba(var(--center-channel-color-rgb), 0.75);
-        }
 
-        // Shown on hover, and while it has keyboard focus, so it can be reached without a pointer
-        &:hover,
-        &:focus-within {
             .channel-members-rhs__send-message {
-                margin-left: 8px;
-                opacity: 1;
-                pointer-events: auto;
+                display: block;
+                flex: 0 0 auto;
             }
         }
 
@@ -111,23 +106,15 @@
         line-height: 18px;
     }
 
-    // Unseen until its row is hovered or focused: rendered (not display: none), so it stays reachable by the
-    // keyboard, and laid over the row's end with a net width of 0, so it takes no room until shown
     &__send-message {
-        display: block;
+        display: none;
         width: 24px;
         height: 24px;
-        flex: 0 0 auto;
         padding: 0;
         border: 0;
         border-radius: 4px;
-        margin-left: -24px;
+        margin-left: 8px;
         background-color: transparent;
-        opacity: 0;
-
-        @media (hover: none) {
-            pointer-events: none;
-        }
 
         &:hover {
             background-color: rgba(var(--center-channel-color-rgb), 0.12);

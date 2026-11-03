@@ -48,6 +48,12 @@ type Props = StaticProps & {
     isManaged?: boolean;
     muted: boolean;
     onClick: (event: React.MouseEvent<HTMLElement>) => void;
+
+    /**
+     * The button's data-agentom-id, and what hovering the header shows (data-agentom-reveals)
+     */
+    agentomId?: string;
+    reveals?: string;
 };
 
 export const SidebarCategoryHeader = React.forwardRef(({
@@ -62,6 +68,8 @@ export const SidebarCategoryHeader = React.forwardRef(({
     isManaged = false,
     muted,
     onClick,
+    agentomId,
+    reveals,
 }: Props, ref?: React.Ref<HTMLButtonElement>) => {
     // (Accessibility) Ensures interactive controls are not nested as they are not always announced
     // by screen readers or can cause focus problems for assistive technologies.
@@ -84,6 +92,8 @@ export const SidebarCategoryHeader = React.forwardRef(({
                 onClick={onClick}
                 aria-expanded={!isCollapsed}
                 aria-controls={controlsId}
+                data-agentom-id={agentomId}
+                data-agentom-reveals={agentomId ? reveals : undefined}
             >
                 <i
                     className={classNames('icon icon-chevron-down', {

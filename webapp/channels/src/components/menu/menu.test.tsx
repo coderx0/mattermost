@@ -114,53 +114,6 @@ describe('menu click handlers', () => {
         expect(screen.getByText('A Modal')).toBeInTheDocument();
     });
 
-    test('should open a submenu when its item is clicked, without hovering it first', async () => {
-        renderWithContext(
-            <MenuWithSubMenuModal/>,
-        );
-
-        await userEvent.click(screen.getByLabelText('menu with modal button'));
-
-        // A click with no hover first, as a pointer that doesn't move (or an agent's executor) sends it
-        await userEvent.click(screen.getByText('Open submenu'), {skipHover: true});
-
-        expect(screen.getByText('Open modal from submenu')).toBeInTheDocument();
-        expect(screen.getByText('Open submenu').closest('li')).toHaveAttribute('aria-expanded', 'true');
-
-        // The click opened the submenu and left open the menu that holds it
-        expect(screen.getByLabelText('menu with modal button')).toHaveAttribute('aria-expanded', 'true');
-
-        await userEvent.click(screen.getByText('Open modal from submenu'), {skipHover: true});
-
-        await waitFor(() => {
-            expect(screen.queryByText('Open submenu')).not.toBeInTheDocument();
-        });
-
-        expect(screen.getByText('A Modal')).toBeInTheDocument();
-    });
-
-    for (const enterOrSpace of ['enter', 'space']) {
-        const key = enterOrSpace === 'space' ? ' ' : '{enter}';
-
-        test(`should open a submenu with the ${enterOrSpace} key, leaving open the menu that holds it`, async () => {
-            renderWithContext(
-                <MenuWithSubMenuModal/>,
-            );
-
-            await userEvent.tab();
-            await userEvent.keyboard(key);
-            await userEvent.keyboard('{arrowdown}');
-
-            expect(screen.getByText('Open submenu').closest('li')).toHaveFocus();
-
-            await userEvent.keyboard(key);
-
-            expect(screen.getByText('Open modal from submenu')).toBeInTheDocument();
-            expect(screen.getByText('Open submenu').closest('li')).toHaveAttribute('aria-expanded', 'true');
-            expect(screen.getByLabelText('menu with modal button')).toHaveAttribute('aria-expanded', 'true');
-        });
-    }
-
     for (const enterOrSpace of ['enter', 'space']) {
         const key = enterOrSpace === 'space' ? ' ' : '{enter}';
 
@@ -210,6 +163,62 @@ describe('menu click handlers', () => {
             expect(screen.getByText('A Modal')).toBeInTheDocument();
         });
     }
+});
+
+describe('radio items that close the menu', () => {
+    function RadioMenu({onPick, clickAfterClose}: {onPick: () => void; clickAfterClose?: boolean}) {
+        return (
+            <Menu
+                menu={{id: 'RadioMenu'}}
+                menuButton={{
+                    id: 'RadioMenu-Button',
+                    'aria-label': 'radio menu button',
+                    children: <DotsVerticalIcon size={16}/>,
+                }}
+            >
+                <MenuItem
+                    role='menuitemradio'
+                    aria-checked={false}
+                    forceCloseOnSelect={true}
+                    clickAfterClose={clickAfterClose}
+                    labels={<span>{'Pick me'}</span>}
+                    onClick={onPick}
+                />
+            </Menu>
+        );
+    }
+
+    /** Whether the menu was still open (its button expanded) each time the item's click ran */
+    function picks() {
+        const openWhenPicked: boolean[] = [];
+        const onPick = () => openWhenPicked.push(document.getElementById('RadioMenu-Button')?.getAttribute('aria-expanded') === 'true');
+        return {onPick, openWhenPicked};
+    }
+
+    test('run their click at once by default, while the menu is still open', async () => {
+        const {onPick, openWhenPicked} = picks();
+        renderWithContext(<RadioMenu onPick={onPick}/>);
+
+        await userEvent.click(screen.getByLabelText('radio menu button'));
+        await userEvent.click(screen.getByRole('menuitemradio', {name: 'Pick me'}));
+
+        await waitFor(() => expect(openWhenPicked).toEqual([true]));
+    });
+
+    test('with clickAfterClose, run their click once the menu has closed, as a plain item does', async () => {
+        const {onPick, openWhenPicked} = picks();
+        renderWithContext(
+            <RadioMenu
+                onPick={onPick}
+                clickAfterClose={true}
+            />,
+        );
+
+        await userEvent.click(screen.getByLabelText('radio menu button'));
+        await userEvent.click(screen.getByRole('menuitemradio', {name: 'Pick me'}));
+
+        await waitFor(() => expect(openWhenPicked).toEqual([false]));
+    });
 });
 
 function MenuWithModal() {

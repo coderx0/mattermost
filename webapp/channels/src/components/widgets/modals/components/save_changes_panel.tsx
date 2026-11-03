@@ -24,6 +24,12 @@ type Props = {
     state: SaveChangesPanelState;
     customErrorMessage?: string;
     customSavedMessage?: string;
+
+    /**
+     * What was saved ("Channel info"), said before "Settings saved" in visually hidden text, so the notice names it
+     * without changing what it shows
+     */
+    savedSubject?: string;
     saveButtonText?: React.ReactNode;
     cancelButtonText?: React.ReactNode;
     saving?: boolean;
@@ -52,6 +58,7 @@ function SaveChangesPanel({
     state = 'editing',
     customErrorMessage,
     customSavedMessage,
+    savedSubject,
     saveButtonText,
     cancelButtonText,
     saving = false,
@@ -102,10 +109,13 @@ function SaveChangesPanel({
             return <span>{customSavedMessage}</span>;
         }
         return (
-            <FormattedMessage
-                id='saveChangesPanel.saved'
-                defaultMessage='Settings saved'
-            />
+            <>
+                {savedSubject && <span className='sr-only'>{`${savedSubject}: `}</span>}
+                <FormattedMessage
+                    id='saveChangesPanel.saved'
+                    defaultMessage='Settings saved'
+                />
+            </>
         );
     };
 

@@ -685,6 +685,7 @@ export class SearchableChannelList extends React.PureComponent<Props, State> {
                     role='menuitemradio'
                     aria-checked={this.props.filter === choice.filter}
                     forceCloseOnSelect={true}
+                    clickAfterClose={true}
                     onClick={() => this.filterChange(choice.filter)}
                     leadingElement={choice.icon}
                     labels={<FormattedMessage {...filterItemLabels[choice.filter]}/>}

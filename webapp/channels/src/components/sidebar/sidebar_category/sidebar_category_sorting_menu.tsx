@@ -130,6 +130,7 @@ const SidebarCategorySortingMenu = ({
                     role='menuitemradio'
                     aria-checked={category.sorting === choice.sorting}
                     forceCloseOnSelect={true}
+                    clickAfterClose={true}
                     labels={<FormattedMessage {...choice.label}/>}
                     onClick={() => handleSortDirectMessages(choice.sorting)}
                     trailingElements={category.sorting === choice.sorting ? <CheckIcon size={16}/> : null}
@@ -181,6 +182,7 @@ const SidebarCategorySortingMenu = ({
                     role='menuitemradio'
                     aria-checked={selectedDmNumber === dmGmShowCount}
                     forceCloseOnSelect={true}
+                    clickAfterClose={true}
                     labels={<span>{dmGmShowCount}</span>}
                     onClick={() => handlelimitVisibleDMsGMs(dmGmShowCount)}
                     trailingElements={selectedDmNumber === dmGmShowCount ? <CheckIcon size={16}/> : null}

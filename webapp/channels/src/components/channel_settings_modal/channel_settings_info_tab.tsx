@@ -42,9 +42,9 @@ import Constants from 'utils/constants';
 import type {GlobalState} from 'types/store';
 
 const messages = defineMessages({
-    saved: {
-        id: 'channel_settings.save_changes_panel.info_saved',
-        defaultMessage: 'Channel info saved',
+    savedSubject: {
+        id: 'channel_settings.save_changes_panel.info_subject',
+        defaultMessage: 'Channel info',
     },
     saveDescription: {
         id: 'channel_settings.save_changes_panel.info_save_description',
@@ -807,7 +807,7 @@ function ChannelSettingsInfoTab({
                         id: 'channel_settings.save_changes_panel.reset',
                         defaultMessage: 'Reset',
                     })}
-                    customSavedMessage={formatMessage(messages.saved)}
+                    savedSubject={formatMessage(messages.savedSubject)}
                     saveButtonDescription={saveButtonDescription}
                     agentomId='channel-settings.info'
                     saveButtonAttributes={isChangingToPrivate ? {

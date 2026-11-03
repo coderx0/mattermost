@@ -582,7 +582,7 @@ describe('ChannelSettingsConfigurationTab', () => {
             await userEvent.click(screen.getByRole('button', {name: 'Save'}));
 
             await waitFor(() => {
-                expect(screen.getByText('Channel configuration saved')).toBeInTheDocument();
+                expect(screen.getByText('Settings saved')).toBeInTheDocument();
             });
 
             await waitFor(() => {
@@ -2033,7 +2033,7 @@ describe('ChannelSettingsConfigurationTab', () => {
             editor.textContent = 'Handle with care';
             fireEvent.input(editor);
             await userEvent.click(screen.getByRole('button', {name: 'Save'}));
-            await screen.findByText('Channel configuration saved');
+            await screen.findByText('Settings saved');
 
             // What the save hands back: the new text, and a banner no longer driven
             // by the attribute.
@@ -2047,7 +2047,7 @@ describe('ChannelSettingsConfigurationTab', () => {
 
             // The saved notice closes itself.
             await waitFor(() => {
-                expect(screen.queryByText('Channel configuration saved')).not.toBeInTheDocument();
+                expect(screen.queryByText('Settings saved')).not.toBeInTheDocument();
             }, {timeout: 5000});
 
             const nextEdit = screen.getByTestId('bannerTextEditor');
@@ -2141,7 +2141,7 @@ describe('ChannelSettingsConfigurationTab', () => {
             editor.textContent = 'Handle with care';
             fireEvent.input(editor);
             await userEvent.click(screen.getByRole('button', {name: 'Save'}));
-            await screen.findByText('Channel configuration saved');
+            await screen.findByText('Settings saved');
 
             // What the save hands back, before the attribute banner has caught up.
             mockedUseChannelClassificationBanner.mockReturnValue({

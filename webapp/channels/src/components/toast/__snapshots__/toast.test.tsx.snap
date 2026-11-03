@@ -11,7 +11,6 @@ exports[`components/Toast should match snapshot for hiding toast 1`] = `
       aria-labelledby="_r_4_"
       class="toast__message toast__pointer"
       role="button"
-      tabindex="0"
     >
       <div
         class="toast__jump"
@@ -48,7 +47,6 @@ exports[`components/Toast should match snapshot for hiding toast 1`] = `
       class="toast__dismiss"
       data-testid="dismissToast"
       role="button"
-      tabindex="0"
     >
       <span
         class="close-btn"
@@ -83,7 +81,6 @@ exports[`components/Toast should match snapshot for showing toast 1`] = `
       aria-labelledby="_r_0_"
       class="toast__message toast__pointer"
       role="button"
-      tabindex="0"
     >
       <div
         class="toast__jump"
@@ -120,7 +117,6 @@ exports[`components/Toast should match snapshot for showing toast 1`] = `
       class="toast__dismiss"
       data-testid="dismissToast"
       role="button"
-      tabindex="0"
     >
       <span
         class="close-btn"
@@ -155,7 +151,6 @@ exports[`components/Toast should match snapshot for toast width less than 780px 
       aria-labelledby="_r_8_"
       class="toast__message toast__pointer"
       role="button"
-      tabindex="0"
     >
       <div
         class="toast__jump"
@@ -192,7 +187,6 @@ exports[`components/Toast should match snapshot for toast width less than 780px 
       class="toast__dismiss"
       data-testid="dismissToast"
       role="button"
-      tabindex="0"
     >
       <span
         class="close-btn"
@@ -227,7 +221,6 @@ exports[`components/Toast should match snapshot to have extraClasses 1`] = `
       aria-labelledby="_r_k_"
       class="toast__message toast__pointer"
       role="button"
-      tabindex="0"
     >
       <div
         class="toast__jump"
@@ -264,7 +257,6 @@ exports[`components/Toast should match snapshot to have extraClasses 1`] = `
       class="toast__dismiss"
       data-testid="dismissToast-extraClasses"
       role="button"
-      tabindex="0"
     >
       <span
         class="close-btn"
@@ -310,7 +302,6 @@ exports[`components/Toast should match snapshot to not have actions 1`] = `
       class="toast__dismiss"
       data-testid="dismissToast"
       role="button"
-      tabindex="0"
     >
       <span
         class="close-btn"
