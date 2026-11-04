@@ -3,6 +3,7 @@
 
 /* eslint-disable no-console, no-process-env */
 
+const fs = require('fs');
 const path = require('path');
 const url = require('url');
 
@@ -29,8 +30,15 @@ const targetIsEsLint = !targetIsBuild && !targetIsRun && !targetIsDevServer;
 const DEV = targetIsRun || targetIsStats || targetIsDevServer;
 
 const STANDARD_EXCLUDE = [
-    /node_modules/,
+
+    // except the Agent Object Model's actions and agent, which ship their TypeScript source (dev-mode chat only)
+    /node_modules\/(?!@agent-om\/(actions|agent)\/)/,
 ];
+
+// The Agent Object Model's chat (src/agent_om/chat/), which runs Claude on the
+// page: in the dev server only, never in a build, and not with AGENT_OM=off.
+// The Anthropic key it needs comes from ANTHROPIC_API_KEY.
+const AGENT_OM_CHAT = targetIsDevServer && process.env.AGENT_OM !== 'off';
 
 let publicPath = '/static/';
 
@@ -467,7 +475,15 @@ if (DEV) {
 
 // AGENT_OM=off builds without the Agent Object Model's projector and sitemap
 // link: the markup only, as agents other than ours see it.
-const env = {AGENT_OM: JSON.stringify(process.env.AGENT_OM || '')};
+// AGENT_OM_CHAT is always defined, so that without the chat its import is
+// left out of the bundle, not only never run; the key only with the chat.
+const env = {
+    AGENT_OM: JSON.stringify(process.env.AGENT_OM || ''),
+    AGENT_OM_CHAT: JSON.stringify(AGENT_OM_CHAT ? 'on' : ''),
+};
+if (AGENT_OM_CHAT) {
+    env.AGENT_OM_ANTHROPIC_KEY = JSON.stringify(process.env.ANTHROPIC_API_KEY || '');
+}
 if (DEV) {
     env.PUBLIC_PATH = JSON.stringify(publicPath);
 } else {
@@ -477,6 +493,40 @@ if (DEV) {
 config.plugins.push(new webpack.DefinePlugin({
     'process.env': env,
 }));
+
+/**
+ * The chat posts each run here as it goes, and it's written to transcripts/
+ * (git-ignored), for debugging; the same run (its start time and request)
+ * overwrites its file.
+ */
+function saveTranscript(req, res, next) {
+    if (req.method !== 'POST') {
+        next();
+        return;
+    }
+    const chunks = [];
+    req.on('data', (chunk) => chunks.push(chunk));
+    req.on('end', () => {
+        try {
+            const transcript = JSON.parse(Buffer.concat(chunks).toString('utf8'));
+            const stamp = String(transcript.startedAt ?? new Date().toISOString()).replace(/[:.]/g, '-');
+            const slug = String(transcript.query ?? '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 60);
+            const dir = path.join(__dirname, 'transcripts');
+            fs.mkdirSync(dir, {recursive: true});
+            const file = path.join(dir, `${stamp}${slug ? `-${slug}` : ''}.json`);
+
+            // written whole, then renamed into place: a reader never sees half of one
+            const tmp = `${file}.${process.pid}-${Date.now()}.tmp`;
+            fs.writeFileSync(tmp, `${JSON.stringify(transcript, null, 2)}\n`);
+            fs.renameSync(tmp, file);
+            res.statusCode = 201;
+            res.end(path.relative(__dirname, file));
+        } catch (e) {
+            res.statusCode = 400;
+            res.end(String(e));
+        }
+    });
+}
 
 if (targetIsDevServer) {
     const proxyToServer = {
@@ -495,6 +545,10 @@ if (targetIsDevServer) {
                     context: '/api',
                     ...proxyToServer,
                     ws: true,
+
+                    // with the chat, the server's SiteURL is its own address (the benchmark's builds), not the dev
+                    // server's, and the server takes a websocket only from its SiteURL: the request is sent as from it
+                    ...(AGENT_OM_CHAT ? {onProxyReqWs: (proxyReq) => proxyReq.setHeader('origin', proxyToServer.target)} : {}),
                 },
                 {
                     context: '/plugins',
@@ -504,7 +558,23 @@ if (targetIsDevServer) {
                     context: '/static/plugins',
                     ...proxyToServer,
                 },
+
+                // the app's semantic sitemap, which the server serves at the site's root
+                {
+                    context: '/semantic-sitemap.json',
+                    ...proxyToServer,
+                },
             ],
+
+            // the chat's transcripts (src/agent_om/chat/transcript.ts)
+            setupMiddlewares: (middlewares) => (AGENT_OM_CHAT ? [{name: 'agent-om-transcripts', path: '/agent-om/transcripts', middleware: saveTranscript}, ...middlewares] : middlewares),
+
+            // with the chat, the overlay shows only build errors: one over the page (the styles' warnings, an
+            // error the app recovers from) would stand between the agent and the page
+            ...(AGENT_OM_CHAT ? {client: {overlay: {errors: true, warnings: false, runtimeErrors: false}}} : {}),
+
+            // with the chat, the bundle holds the Anthropic key: served to this machine only
+            ...(AGENT_OM_CHAT ? {host: 'localhost'} : {}),
             port: 9005,
             devMiddleware: {
                 writeToDisk: false,

@@ -14,3 +14,6 @@ platform/*/lib
 
 config.override.mk
 build/test-results*.xml
+
+# the Agent Object Model chat's transcripts (channels/src/agent_om/chat/transcript.ts)
+channels/transcripts

@@ -17,6 +17,9 @@ const Root = makeAsyncComponent('Root', LazyRoot);
 // The Agent Object Model's projector (agent_om/); a build with AGENT_OM=off leaves it out.
 const AgentOm = process.env.AGENT_OM === 'off' ? null : lazy(() => import('agent_om/agent_om')); // eslint-disable-line no-process-env
 
+// The Agent Object Model's chat, which runs Claude on the page (agent_om/chat/): in the dev server only, never in a build.
+const AgentOmChat = process.env.AGENT_OM_CHAT === 'on' ? lazy(() => import('agent_om/chat')) : null; // eslint-disable-line no-process-env
+
 const App = () => {
     return (
         <Provider store={store}>
@@ -25,6 +28,11 @@ const App = () => {
                 {AgentOm && (
                     <Suspense fallback={null}>
                         <AgentOm/>
+                    </Suspense>
+                )}
+                {AgentOmChat && (
+                    <Suspense fallback={null}>
+                        <AgentOmChat/>
                     </Suspense>
                 )}
             </Router>

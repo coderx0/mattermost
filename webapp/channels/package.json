@@ -6,6 +6,8 @@
   "version": "12.0.1",
   "private": true,
   "dependencies": {
+    "@agent-om/actions": "file:../vendor/agent-om/agent-om-actions-0.0.0.tgz",
+    "@agent-om/agent": "file:../vendor/agent-om/agent-om-agent-0.0.0.tgz",
     "@agent-om/core": "file:../vendor/agent-om/agent-om-core-0.0.0.tgz",
     "@atlaskit/pragmatic-drag-and-drop": "1.7.7",
     "@atlaskit/pragmatic-drag-and-drop-hitbox": "1.1.0",

@@ -97,7 +97,11 @@
     "postcss": "8.5.13",
     "rollup@<2.80.0": "2.80.0",
     "yaml@<1.10.3": "1.10.3",
-    "yaml@>=2.0.0 <2.8.3": "2.8.4"
+    "yaml@>=2.0.0 <2.8.3": "2.8.4",
+    "@agent-om/agent": {
+      "@agent-om/actions": "file:vendor/agent-om/agent-om-actions-0.0.0.tgz",
+      "@agent-om/core": "file:vendor/agent-om/agent-om-core-0.0.0.tgz"
+    }
   },
   "workspaces": [
     "channels",
