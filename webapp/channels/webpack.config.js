@@ -581,6 +581,9 @@ if (targetIsDevServer) {
             },
             historyApiFallback: {
                 index: '/static/root.html',
+
+                // with the chat, reloading on a page whose address has a dot (a direct message's "@ashley.berry") opens the app too
+                ...(AGENT_OM_CHAT ? {disableDotRule: true} : {}),
             },
         },
         performance: false,

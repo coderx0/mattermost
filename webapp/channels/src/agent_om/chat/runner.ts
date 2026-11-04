@@ -6,6 +6,7 @@
 import {indexNodes, presentedPage, siteOutline, StepFailed} from '@agent-om/agent';
 import type {AgentEvent, AgentPage, AgentResult} from '@agent-om/agent';
 import {CLAUDE_LIMITS, HAIKU, projectionView, runClaude} from '@agent-om/agent/claude';
+import type {FindQuery, FindResult} from '@agent-om/agent/claude';
 import type {SemanticProjector} from '@agent-om/core';
 
 import {loadSitemap} from './load_sitemap';
@@ -60,6 +61,9 @@ export type ChatRunner = {
     respond: (ok: boolean) => void;
     enterSecret: (value: string | null) => void;
     whatClaudeSees: () => Promise<string>;
+
+    /** find_items without the model, as Claude's tool runs it: for trying it by hand */
+    findItems: (query: FindQuery) => Promise<FindResult | string>;
 };
 
 declare global {
@@ -116,6 +120,29 @@ async function whatClaudeSees(): Promise<string> {
         '',
         warnings.length ? `Warnings (${warnings.length}):\n${warnings.join('\n')}` : 'No warnings.',
     ].join('\n');
+}
+
+/** find_items on the current page, through the executor, as Claude's tool runs it. */
+async function findItems(query: FindQuery): Promise<FindResult | string> {
+    const projector = window.__semanticUI;
+    if (!projector) {
+        return 'The projector is not running.';
+    }
+    const page = presentedPage(projector, nodeResolver(projector));
+    const view = projectionView({
+        snapshot: () => page.observe(),
+        now: () => page.snapshot(),
+        run: async (step) => {
+            try {
+                await page.act(step);
+                return {ok: true};
+            } catch (e) {
+                return {ok: false, reason: (e as {reason?: string}).reason ?? 'error', message: e instanceof Error ? e.message : String(e)};
+            }
+        },
+        exclude: EXCLUDE,
+    });
+    return view.find!(query);
 }
 
 export function createChatRunner(): ChatRunner {
@@ -252,5 +279,6 @@ export function createChatRunner(): ChatRunner {
         respond: (ok) => pendingConfirm?.(ok),
         enterSecret: (value) => pendingSecret?.(value),
         whatClaudeSees,
+        findItems,
     };
 }
