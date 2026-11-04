@@ -1,6 +1,10 @@
 {
   "path": "/",
   "name": "Home: opens your last team and channel",
+  "holds": [
+    "Messages",
+    "Town Square"
+  ],
   "children": [
     {
       "path": "admin_console",
@@ -12,7 +16,13 @@
         },
         {
           "path": "authentication/email",
-          "name": "Email"
+          "name": "Email",
+          "holds": [
+            "Enable account creation with email:",
+            "Require Email Verification:",
+            "Enable sign-in with email:",
+            "Enable sign-in with username:"
+          ]
         },
         {
           "path": "authentication/gitlab",
@@ -28,7 +38,10 @@
         },
         {
           "path": "authentication/mfa",
-          "name": "MFA"
+          "name": "MFA",
+          "holds": [
+            "Enable Multi-factor Authentication:"
+          ]
         },
         {
           "path": "authentication/openid",
@@ -36,7 +49,11 @@
         },
         {
           "path": "authentication/password",
-          "name": "Password"
+          "name": "Password",
+          "holds": [
+            "Password Requirements:",
+            "Enable Forgot Password Link:"
+          ]
         },
         {
           "path": "authentication/saml",
@@ -44,7 +61,12 @@
         },
         {
           "path": "authentication/signup",
-          "name": "Signup"
+          "name": "Signup",
+          "holds": [
+            "Enable Account Creation:",
+            "Enable Open Server:",
+            "Enable Email Invitations:"
+          ]
         },
         {
           "path": "compliance/custom_terms_of_service",
@@ -60,23 +82,47 @@
         },
         {
           "path": "environment/database",
-          "name": "Database"
+          "name": "Database",
+          "holds": [
+            "SQL Statement Logging:",
+            "Disable database search:",
+            "Schema Migrations:"
+          ]
         },
         {
           "path": "environment/developer",
-          "name": "Developer"
+          "name": "Developer",
+          "holds": [
+            "Enable Testing Commands:",
+            "Enable Developer Mode:",
+            "Enable Client Performance Debugging:"
+          ]
         },
         {
           "path": "environment/file_storage",
-          "name": "File Storage"
+          "name": "File Storage",
+          "holds": [
+            "Enable document search by content:"
+          ]
         },
         {
           "path": "environment/image_proxy",
-          "name": "Image Proxy"
+          "name": "Image Proxy",
+          "holds": [
+            "Enable Image Proxy:"
+          ]
         },
         {
           "path": "environment/logging",
-          "name": "Logging"
+          "name": "Logging",
+          "holds": [
+            "Output logs to console:",
+            "Output console logs as JSON:",
+            "Output logs to file:",
+            "Output file logs as JSON:",
+            "Enable Webhook Debugging:",
+            "Enable Diagnostics and Error Reporting:"
+          ]
         },
         {
           "path": "environment/mobile_security_feature_discovery",
@@ -84,11 +130,22 @@
         },
         {
           "path": "environment/notifications",
-          "name": "Notifications"
+          "name": "Notifications",
+          "holds": [
+            "Enable Email Notifications:",
+            "Enable Preview Mode Banner:",
+            "Enable Email Batching:",
+            "Use Channel Name in Email Notifications:",
+            "Enable Notification Monitoring:"
+          ]
         },
         {
           "path": "environment/performance_monitoring",
-          "name": "Performance Monitoring"
+          "name": "Performance Monitoring",
+          "holds": [
+            "Enable Performance Monitoring:",
+            "Enable Client Performance Monitoring:"
+          ]
         },
         {
           "path": "environment/push_notification_server",
@@ -96,19 +153,39 @@
         },
         {
           "path": "environment/rate_limiting",
-          "name": "Rate Limiting"
+          "name": "Rate Limiting",
+          "holds": [
+            "Enable Rate Limiting:",
+            "Vary rate limit by remote address:",
+            "Vary rate limit by user:"
+          ]
         },
         {
           "path": "environment/session_lengths",
-          "name": "Session Lengths"
+          "name": "Session Lengths",
+          "holds": [
+            "Extend session length with activity:",
+            "Terminate Sessions on Password Change:"
+          ]
         },
         {
           "path": "environment/smtp",
-          "name": "SMTP"
+          "name": "SMTP",
+          "holds": [
+            "Enable SMTP Authentication:",
+            "Skip Server Certificate Verification:",
+            "Enable Security Alerts:"
+          ]
         },
         {
           "path": "environment/web_server",
-          "name": "Web Server"
+          "name": "Web Server",
+          "holds": [
+            "Forward port 80 to 443:",
+            "Use Let's Encrypt:",
+            "Enable Insecure Outgoing Connections:",
+            "Enable Hardened Mode:"
+          ]
         },
         {
           "path": "experimental/feature_flags",
@@ -116,15 +193,29 @@
         },
         {
           "path": "experimental/features",
-          "name": "Features"
+          "name": "Features",
+          "holds": [
+            "Enable Automatic Replies:",
+            "Disable Apps Bar:",
+            "Disable Wake Up Reconnect Handler:",
+            "Delay Channel Autocomplete:",
+            "YouTube Referrer Policy:"
+          ]
         },
         {
           "path": "integrations/bot_accounts",
-          "name": "Bot Accounts"
+          "name": "Bot Accounts",
+          "holds": [
+            "Enable Bot Account Creation:"
+          ]
         },
         {
           "path": "integrations/cors",
-          "name": "CORS"
+          "name": "CORS",
+          "holds": [
+            "CORS Allow Credentials:",
+            "CORS Debug:"
+          ]
         },
         {
           "path": "integrations/embedding",
@@ -132,15 +223,34 @@
         },
         {
           "path": "integrations/gif",
-          "name": "GIF"
+          "name": "GIF",
+          "holds": [
+            "Enable GIF Picker:"
+          ]
         },
         {
           "path": "integrations/integration_management",
-          "name": "Integration Management"
+          "name": "Integration Management",
+          "holds": [
+            "Enable Incoming Webhooks:",
+            "Enable Outgoing Webhooks:",
+            "Enable Outgoing OAuth Connections:",
+            "Enable Custom Slash Commands:",
+            "Enable OAuth 2.0 Service Provider:",
+            "Enable Personal Access Tokens:"
+          ]
         },
         {
           "path": "plugins/plugin_management",
-          "name": "Plugin Management"
+          "name": "Plugin Management",
+          "holds": [
+            "Enable Plugins:",
+            "Require Plugin Signature:",
+            "Enable Automatic Prepackaged Plugins:",
+            "Upload Plugin:",
+            "Enable Marketplace:",
+            "Enable Remote Marketplace:"
+          ]
         },
         {
           "path": "reporting/server_logs",
@@ -156,7 +266,12 @@
         },
         {
           "path": "reporting/workspace_optimization",
-          "name": "Workspace Optimization"
+          "name": "Workspace Optimization",
+          "holds": [
+            "Session lengths is set to default",
+            "Misconfigured web server",
+            "Become more data aware"
+          ]
         },
         {
           "path": "site_config/announcement_banner",
@@ -164,35 +279,80 @@
         },
         {
           "path": "site_config/customization",
-          "name": "Customization"
+          "name": "Customization",
+          "holds": [
+            "Enable Custom Branding:",
+            "Custom Brand Image:",
+            "Enable Ask Community Link:",
+            "Allow Mobile App Log Downloads:",
+            "Enable Tutorial:",
+            "Enable Onboarding:",
+            "Enable Desktop App Landing Page:"
+          ]
         },
         {
           "path": "site_config/emoji",
-          "name": "Emoji"
+          "name": "Emoji",
+          "holds": [
+            "Enable Emoji Picker:",
+            "Enable Custom Emoji:"
+          ]
         },
         {
           "path": "site_config/file_sharing_downloads",
-          "name": "File Sharing and Downloads"
+          "name": "File Sharing and Downloads",
+          "holds": [
+            "Allow File Sharing:"
+          ]
         },
         {
           "path": "site_config/localization",
-          "name": "Localization"
+          "name": "Localization",
+          "holds": [
+            "Languages"
+          ]
         },
         {
           "path": "site_config/notices",
-          "name": "Notices"
+          "name": "Notices",
+          "holds": [
+            "Enable Admin Notices:",
+            "Enable End User Notices:"
+          ]
         },
         {
           "path": "site_config/posts",
-          "name": "Posts"
+          "name": "Posts",
+          "holds": [
+            "Threads",
+            "Automatically Follow Threads",
+            "Drafts and Scheduled Posts",
+            "Enable server syncing of message drafts:",
+            "Priority & Urgent Notifications",
+            "Message Priority",
+            "Persistent Notifications",
+            "Content & Previews"
+          ]
         },
         {
           "path": "site_config/public_links",
-          "name": "Public Links"
+          "name": "Public Links",
+          "holds": [
+            "Enable Public File Links:"
+          ]
         },
         {
           "path": "site_config/users_and_teams",
-          "name": "Users and Teams"
+          "name": "Users and Teams",
+          "holds": [
+            "Channel category sorting:",
+            "Enable join/leave messages by default:",
+            "Show Email Address:",
+            "Show Full Name:",
+            "Enable Custom Statuses:",
+            "Enable last active time:",
+            "Enable Account Deactivation:"
+          ]
         },
         {
           "path": "system_attributes/attribute_based_access_control",
@@ -207,31 +367,37 @@
           "name": "Channels",
           "children": [
             {
-              "path": "{channel_id}"
+              "path": "{channel_id}",
+              "holds": [
+                "Channel Profile",
+                "Channel Management",
+                "Members",
+                "Channel Admin",
+                "Member"
+              ]
             }
           ]
         },
         {
           "path": "user_management/groups",
-          "name": "Groups",
-          "children": [
-            {
-              "path": "{group_id}"
-            }
-          ]
+          "name": "Groups"
         },
         {
           "path": "user_management/permissions",
-          "name": "Permissions"
-        },
-        {
-          "path": "user_management/permissions/system_scheme"
-        },
-        {
-          "path": "user_management/permissions/team_override_scheme",
+          "name": "Permissions",
+          "holds": [
+            "System Scheme"
+          ],
           "children": [
             {
-              "path": "{scheme_id}"
+              "path": "system_scheme",
+              "holds": [
+                "All Members",
+                "Channel Administrators",
+                "Playbook Administrators",
+                "Team Administrators",
+                "System Administrators"
+              ]
             }
           ]
         },
@@ -244,7 +410,14 @@
           "name": "Teams",
           "children": [
             {
-              "path": "{team_id}"
+              "path": "{team_id}",
+              "holds": [
+                "Team Profile",
+                "Team Management",
+                "Members",
+                "Member",
+                "Team Admin"
+              ]
             }
           ]
         },
@@ -253,13 +426,19 @@
         },
         {
           "path": "user_management/users",
-          "name": "Users"
+          "name": "Users",
+          "holds": [
+            "System Users"
+          ]
         }
       ]
     },
     {
       "path": "create_team",
-      "name": "Create a team"
+      "name": "Create a team",
+      "holds": [
+        "Mattermost"
+      ]
     },
     {
       "path": "help",
@@ -280,7 +459,11 @@
     },
     {
       "path": "select_team",
-      "name": "Select a team"
+      "name": "Select a team",
+      "holds": [
+        "Mattermost",
+        "Teams you can join:"
+      ]
     },
     {
       "path": "{team}",
@@ -289,6 +472,9 @@
         {
           "path": "channels/{channel}",
           "name": "Channel",
+          "holds": [
+            "Messages"
+          ],
           "children": [
             {
               "path": "{postId}",
@@ -377,6 +563,9 @@
         {
           "path": "threads",
           "name": "Threads",
+          "holds": [
+            "No followed threads yet"
+          ],
           "children": [
             {
               "path": "{threadId}",

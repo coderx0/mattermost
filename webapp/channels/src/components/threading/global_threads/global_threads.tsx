@@ -163,6 +163,9 @@ const GlobalThreads = () => {
         <div
             id='app-content'
             className={classNames('GlobalThreads app__content', {'thread-selected': Boolean(selectedThread)})}
+
+            // The page's own content, beside the sidebars, as the channel view's message list is
+            role='main'
         >
             {isLoading || isEmptyList ? (
                 <div className='no-results__holder'>

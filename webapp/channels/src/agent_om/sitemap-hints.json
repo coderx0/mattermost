@@ -1,0 +1,202 @@
+{
+  "/": [
+    "Messages",
+    "Town Square"
+  ],
+  "/admin_console/authentication/email": [
+    "Enable account creation with email:",
+    "Require Email Verification:",
+    "Enable sign-in with email:",
+    "Enable sign-in with username:"
+  ],
+  "/admin_console/authentication/mfa": [
+    "Enable Multi-factor Authentication:"
+  ],
+  "/admin_console/authentication/password": [
+    "Password Requirements:",
+    "Enable Forgot Password Link:"
+  ],
+  "/admin_console/authentication/signup": [
+    "Enable Account Creation:",
+    "Enable Open Server:",
+    "Enable Email Invitations:"
+  ],
+  "/admin_console/environment/database": [
+    "SQL Statement Logging:",
+    "Disable database search:",
+    "Schema Migrations:"
+  ],
+  "/admin_console/environment/developer": [
+    "Enable Testing Commands:",
+    "Enable Developer Mode:",
+    "Enable Client Performance Debugging:"
+  ],
+  "/admin_console/environment/file_storage": [
+    "Enable document search by content:"
+  ],
+  "/admin_console/environment/image_proxy": [
+    "Enable Image Proxy:"
+  ],
+  "/admin_console/environment/logging": [
+    "Output logs to console:",
+    "Output console logs as JSON:",
+    "Output logs to file:",
+    "Output file logs as JSON:",
+    "Enable Webhook Debugging:",
+    "Enable Diagnostics and Error Reporting:"
+  ],
+  "/admin_console/environment/notifications": [
+    "Enable Email Notifications:",
+    "Enable Preview Mode Banner:",
+    "Enable Email Batching:",
+    "Use Channel Name in Email Notifications:",
+    "Enable Notification Monitoring:"
+  ],
+  "/admin_console/environment/performance_monitoring": [
+    "Enable Performance Monitoring:",
+    "Enable Client Performance Monitoring:"
+  ],
+  "/admin_console/environment/rate_limiting": [
+    "Enable Rate Limiting:",
+    "Vary rate limit by remote address:",
+    "Vary rate limit by user:"
+  ],
+  "/admin_console/environment/session_lengths": [
+    "Extend session length with activity:",
+    "Terminate Sessions on Password Change:"
+  ],
+  "/admin_console/environment/smtp": [
+    "Enable SMTP Authentication:",
+    "Skip Server Certificate Verification:",
+    "Enable Security Alerts:"
+  ],
+  "/admin_console/environment/web_server": [
+    "Forward port 80 to 443:",
+    "Use Let's Encrypt:",
+    "Enable Insecure Outgoing Connections:",
+    "Enable Hardened Mode:"
+  ],
+  "/admin_console/experimental/features": [
+    "Enable Automatic Replies:",
+    "Disable Apps Bar:",
+    "Disable Wake Up Reconnect Handler:",
+    "Delay Channel Autocomplete:",
+    "YouTube Referrer Policy:"
+  ],
+  "/admin_console/integrations/bot_accounts": [
+    "Enable Bot Account Creation:"
+  ],
+  "/admin_console/integrations/cors": [
+    "CORS Allow Credentials:",
+    "CORS Debug:"
+  ],
+  "/admin_console/integrations/gif": [
+    "Enable GIF Picker:"
+  ],
+  "/admin_console/integrations/integration_management": [
+    "Enable Incoming Webhooks:",
+    "Enable Outgoing Webhooks:",
+    "Enable Outgoing OAuth Connections:",
+    "Enable Custom Slash Commands:",
+    "Enable OAuth 2.0 Service Provider:",
+    "Enable Personal Access Tokens:"
+  ],
+  "/admin_console/plugins/plugin_management": [
+    "Enable Plugins:",
+    "Require Plugin Signature:",
+    "Enable Automatic Prepackaged Plugins:",
+    "Upload Plugin:",
+    "Enable Marketplace:",
+    "Enable Remote Marketplace:"
+  ],
+  "/admin_console/reporting/workspace_optimization": [
+    "Session lengths is set to default",
+    "Misconfigured web server",
+    "Become more data aware"
+  ],
+  "/admin_console/site_config/customization": [
+    "Enable Custom Branding:",
+    "Custom Brand Image:",
+    "Enable Ask Community Link:",
+    "Allow Mobile App Log Downloads:",
+    "Enable Tutorial:",
+    "Enable Onboarding:",
+    "Enable Desktop App Landing Page:"
+  ],
+  "/admin_console/site_config/emoji": [
+    "Enable Emoji Picker:",
+    "Enable Custom Emoji:"
+  ],
+  "/admin_console/site_config/file_sharing_downloads": [
+    "Allow File Sharing:"
+  ],
+  "/admin_console/site_config/localization": [
+    "Languages"
+  ],
+  "/admin_console/site_config/notices": [
+    "Enable Admin Notices:",
+    "Enable End User Notices:"
+  ],
+  "/admin_console/site_config/posts": [
+    "Threads",
+    "Automatically Follow Threads",
+    "Drafts and Scheduled Posts",
+    "Enable server syncing of message drafts:",
+    "Priority & Urgent Notifications",
+    "Message Priority",
+    "Persistent Notifications",
+    "Content & Previews"
+  ],
+  "/admin_console/site_config/public_links": [
+    "Enable Public File Links:"
+  ],
+  "/admin_console/site_config/users_and_teams": [
+    "Channel category sorting:",
+    "Enable join/leave messages by default:",
+    "Show Email Address:",
+    "Show Full Name:",
+    "Enable Custom Statuses:",
+    "Enable last active time:",
+    "Enable Account Deactivation:"
+  ],
+  "/admin_console/user_management/channels/{channel_id}": [
+    "Channel Profile",
+    "Channel Management",
+    "Members",
+    "Channel Admin",
+    "Member"
+  ],
+  "/admin_console/user_management/permissions": [
+    "System Scheme"
+  ],
+  "/admin_console/user_management/permissions/system_scheme": [
+    "All Members",
+    "Channel Administrators",
+    "Playbook Administrators",
+    "Team Administrators",
+    "System Administrators"
+  ],
+  "/admin_console/user_management/teams/{team_id}": [
+    "Team Profile",
+    "Team Management",
+    "Members",
+    "Member",
+    "Team Admin"
+  ],
+  "/admin_console/user_management/users": [
+    "System Users"
+  ],
+  "/create_team": [
+    "Mattermost"
+  ],
+  "/select_team": [
+    "Mattermost",
+    "Teams you can join:"
+  ],
+  "/{team}/channels/{channel}": [
+    "Messages"
+  ],
+  "/{team}/threads": [
+    "No followed threads yet"
+  ]
+}

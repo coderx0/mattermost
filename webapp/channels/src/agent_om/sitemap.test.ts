@@ -8,7 +8,7 @@ import {validateSitemap} from '@agent-om/core/sitemap';
 
 import AdminDefinition from 'components/admin_console/admin_definition';
 
-import {buildSitemap, CONSOLE_HIDDEN, consolePages, declaredPages, findRoutes, ROUTES, SITEMAP_FILE, sitemapJson} from './sitemap';
+import {buildSitemap, CONSOLE_HIDDEN, consolePages, declaredPages, findRoutes, HINTS_FILE, ROUTES, SITEMAP_FILE, sitemapJson, withHints} from './sitemap';
 
 // The semantic sitemap is generated from the routes (sitemap.ts). This test
 // fails when a route isn't declared, a declaration has no route, the map is
@@ -25,7 +25,9 @@ describe('agent_om/sitemap', () => {
     });
 
     test('the map is valid, and its file is current', () => {
-        const map = buildSitemap(declaredPages(consolePages(AdminDefinition)));
+        const hintsFile = path.join(channels, HINTS_FILE);
+        const hints = fs.existsSync(hintsFile) ? JSON.parse(fs.readFileSync(hintsFile, 'utf8')) : {};
+        const map = buildSitemap(withHints(declaredPages(consolePages(AdminDefinition)), hints));
         const file = path.join(channels, SITEMAP_FILE);
         if (process.env.AGENT_OM_WRITE_SITEMAP) { // eslint-disable-line no-process-env
             fs.writeFileSync(file, sitemapJson(map));
@@ -37,6 +39,15 @@ describe('agent_om/sitemap', () => {
     test("the System Console's pages left out are its pages", () => {
         const urls = Object.values(AdminDefinition).flatMap((section) => Object.values(section.subsections).map((item) => item.url));
         expect(Object.keys(CONSOLE_HIDDEN).filter((url) => !urls.includes(url))).toEqual([]);
+    });
+
+    test('gives each page what it holds, and refuses hints for a page not on the map', () => {
+        const pages = [{path: '/'}, {path: '/{team}/threads', name: 'Threads'}];
+        expect(buildSitemap(withHints(pages, {'/{team}/threads': ['Followed threads']}))).toEqual({
+            path: '/',
+            children: [{path: '{team}/threads', name: 'Threads', holds: ['Followed threads']}],
+        });
+        expect(() => withHints(pages, {'/{team}/drafts': ['Drafts']})).toThrow('/{team}/drafts');
     });
 
     test('puts each page under the nearest page above it', () => {

@@ -253,6 +253,9 @@ const AdminConsole = (props: Props) => {
                 className='admin-console__wrapper admin-console'
                 id='adminConsoleWrapper'
                 ref={handleFocusScroller}
+
+                // The page's own content, beside the console's menu
+                role='main'
             >
                 <SearchKeywordMarking
                     keyword={search}

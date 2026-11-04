@@ -16,6 +16,9 @@ export default function DraftsAndSchedulePostsPageHeader(props: Props) {
         <div
             id='app-content'
             className='Drafts app__content'
+
+            // The page's own content, beside the sidebars, as the channel view's message list is
+            role='main'
         >
             <Header
                 level={2}
