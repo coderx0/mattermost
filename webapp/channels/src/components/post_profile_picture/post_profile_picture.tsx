@@ -25,6 +25,9 @@ type Props = {
     user: UserProfile;
     isBot?: boolean;
     overwriteIcon?: string;
+
+    /** the picture's id for agents (data-agentom-id): a message's `.avatar` */
+    agentomId?: string;
 };
 
 export default class PostProfilePicture extends React.PureComponent<Props> {
@@ -100,6 +103,7 @@ export default class PostProfilePicture extends React.PureComponent<Props> {
 
         return (
             <ProfilePicture
+                agentomId={this.props.agentomId}
                 size={this.props.compactDisplay ? 'inherit' : 'md'}
                 src={src}
                 profileSrc={profileSrc}

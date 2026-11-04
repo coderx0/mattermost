@@ -16,7 +16,7 @@ import SharedChannelIndicator from 'components/shared_channel_indicator';
 import {ChannelsAndDirectMessagesTour} from 'components/tours/onboarding_tour';
 
 import Pluggable from 'plugins/pluggable';
-import {agentomIdSegment} from 'utils/agentom_ids';
+import {getSidebarChannelAgentomId} from 'utils/agentom_ids';
 import Constants, {RHSStates} from 'utils/constants';
 import {wrapEmojis} from 'utils/emoji_utils';
 import {cmdOrCtrlPressed} from 'utils/keyboard';
@@ -177,7 +177,7 @@ export class SidebarChannelLink extends React.PureComponent<Props, State> {
     };
 
     getAgentomId = (): string => {
-        return this.props.agentomId ?? `channel.${agentomIdSegment(this.props.channel.name)}`;
+        return this.props.agentomId ?? getSidebarChannelAgentomId(this.props.channel);
     };
 
     handleChannelClick = (event: React.MouseEvent<HTMLAnchorElement>): void => {
@@ -357,11 +357,7 @@ export class SidebarChannelLink extends React.PureComponent<Props, State> {
                     id={`sidebarItem_${channel.name}`}
                     aria-label={this.getAriaLabel()}
                     aria-current={this.props.isCurrentChannel ? 'page' : undefined}
-                    data-agentom-id={this.getAgentomId()}
-
-                    // Hovering the row shows its options button ("Channel options for …"), named here by the words it
-                    // starts with (the tooltip's), as a channel's name can hold commas
-                    data-agentom-reveals={this.props.intl.formatMessage({id: 'sidebar_left.sidebar_channel_menu.editChannel', defaultMessage: 'Channel options'})}
+                    data-agentom-id={`${this.getAgentomId()}.link`}
                     to={link}
                     onClick={this.handleChannelClick}
                     tabIndex={0}

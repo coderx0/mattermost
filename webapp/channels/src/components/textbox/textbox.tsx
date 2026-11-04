@@ -79,6 +79,12 @@ export type Props = {
      * Given to the text field, so a label and help text shown beside it name and describe it
      */
     'aria-labelledby'?: string;
+
+    /** a name of its own, when no visible label names it (the message box: its placeholder) */
+    'aria-label'?: string;
+
+    /** its id for agents (data-agentom-id): which message box it is */
+    agentomId?: string;
     'aria-describedby'?: string;
     'aria-invalid'?: boolean;
 };
@@ -348,6 +354,8 @@ export default class Textbox extends React.PureComponent<Props> {
                     openWhenEmpty={this.props.openWhenEmpty}
                     alignWithTextbox={this.props.alignWithTextbox}
                     aria-labelledby={this.props['aria-labelledby']}
+                    aria-label={this.props['aria-label']}
+                    data-agentom-id={this.props.agentomId}
                     aria-describedby={this.props['aria-describedby']}
                     aria-invalid={this.props['aria-invalid']}
                 />

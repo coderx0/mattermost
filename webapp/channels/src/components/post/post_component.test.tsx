@@ -78,6 +78,35 @@ describe('PostComponent', () => {
         isChannelAutotranslated: false,
     };
 
+    describe('agent ids', () => {
+        // a message's controls have ids relative to the message (guideline 2.6), so a list of
+        // messages reads as one kind of item: its author, time and picture
+        test('gives the author, the time and the picture ids under the message', () => {
+            const user = TestHelper.getUserMock({id: 'ann_id', username: 'ann'});
+            const post = TestHelper.getPostMock({id: 'post_id', channel_id: channel.id, user_id: user.id, type: ''});
+            const state: DeepPartial<GlobalState> = {entities: {users: {profiles: {[user.id]: user}}}};
+            renderWithContext(<PostComponent {...{...baseProps, post}}/>, state);
+
+            const id = 'post.post_id';
+            expect(document.querySelector(`[data-agentom-id="${id}"]`)).toHaveAttribute('role', 'article');
+            expect(document.querySelector(`[data-agentom-id="${id}.author"]`)?.tagName).toBe('BUTTON');
+            expect(document.querySelector(`[data-agentom-id="${id}.time"]`)?.tagName).toBe('A');
+            expect(document.querySelector(`[data-agentom-id="${id}.avatar"]`)?.tagName).toBe('BUTTON');
+        });
+
+        test('says where a search result was posted, and that Jump is a button opening it, by an id under the result', () => {
+            const user = TestHelper.getUserMock({id: 'ann_id', username: 'ann'});
+            const post = TestHelper.getPostMock({id: 'post_id', channel_id: channel.id, user_id: user.id, type: ''});
+            const state: DeepPartial<GlobalState> = {entities: {users: {profiles: {[user.id]: user}}}};
+            renderWithContext(<PostComponent {...{...baseProps, post, location: Locations.SEARCH, isMentionSearch: true, channelName: 'aut', teamDisplayName: 'minus'}}/>, state);
+
+            expect(screen.getByText('In aut, minus team')).toHaveClass('sr-only');
+            const jump = document.querySelector('[data-agentom-id="search.post.post_id.jump"]');
+            expect(jump).toHaveAttribute('role', 'button');
+            expect(jump).toHaveAccessibleDescription('Opens the message in its channel');
+        });
+    });
+
     describe('reactions', () => {
         const baseState: DeepPartial<GlobalState> = {
             entities: {

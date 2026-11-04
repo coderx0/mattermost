@@ -37,6 +37,9 @@ interface Props<TriggerComponentType> {
     triggerComponentClass?: HtmlHTMLAttributes<TriggerComponentType>['className'];
     triggerComponentStyle?: HtmlHTMLAttributes<TriggerComponentType>['style'];
 
+    /** the trigger's id for agents (the Agent Object Model's data-agentom-id), e.g. a message's author */
+    triggerComponentAgentomId?: string;
+
     /**
      * Source URL from the image to display in the popover
      */
@@ -131,6 +134,7 @@ export function ProfilePopoverController<TriggerComponentType = HTMLSpanElement>
                 ref={refs.setReference}
                 className={props.triggerComponentClass}
                 style={props.triggerComponentStyle}
+                data-agentom-id={props.triggerComponentAgentomId}
                 {...getReferenceProps()}
                 type={triggerType}
             >

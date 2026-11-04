@@ -5,8 +5,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_direct_channel should match 
   <a
     aria-label="channel_display_name"
     class="SidebarLink SidebarLink--withMenu"
-    data-agentom-id="dm.some-user"
-    data-agentom-reveals="Channel options"
+    data-agentom-id="dm.some-user.link"
     href="/team_name/messages/@some-user"
     id="sidebarItem_"
     tabindex="0"
@@ -87,8 +86,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_direct_channel should match 
   <a
     aria-label="channel_display_name"
     class="SidebarLink SidebarLink--withMenu"
-    data-agentom-id="dm.some-user"
-    data-agentom-reveals="Channel options"
+    data-agentom-id="dm.some-user.link"
     href="/team_name/messages/@some-user"
     id="sidebarItem_"
     tabindex="0"
@@ -169,8 +167,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_direct_channel should match 
   <a
     aria-label="channel_display_name (you)"
     class="SidebarLink SidebarLink--withMenu"
-    data-agentom-id="dm.some-user"
-    data-agentom-reveals="Channel options"
+    data-agentom-id="dm.some-user.link"
     href="/team_name/messages/@some-user"
     id="sidebarItem_"
     tabindex="0"
@@ -251,8 +248,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_direct_channel should match 
   <a
     aria-label="channel_display_name"
     class="SidebarLink SidebarLink--withMenu"
-    data-agentom-id="dm.some-user"
-    data-agentom-reveals="Channel options"
+    data-agentom-id="dm.some-user.link"
     href="/team_name/messages/@some-user"
     id="sidebarItem_"
     tabindex="0"

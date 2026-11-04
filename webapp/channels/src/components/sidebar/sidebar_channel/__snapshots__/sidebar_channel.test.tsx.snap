@@ -4,13 +4,14 @@ exports[`components/sidebar/sidebar_channel should match snapshot 1`] = `
 <div>
   <li
     class="SidebarChannel expanded"
+    data-agentom-id="channel.channel-name"
+    data-agentom-reveals="Channel options"
     role="listitem"
   >
     <a
       aria-label="channel_display_name public channel"
       class="SidebarLink SidebarLink--withMenu"
-      data-agentom-id="channel."
-      data-agentom-reveals="Channel options"
+      data-agentom-id="channel..link"
       href="/team_name/channels/"
       id="sidebarItem_"
       tabindex="0"
@@ -69,6 +70,8 @@ exports[`components/sidebar/sidebar_channel should match snapshot when DM channe
 <div>
   <li
     class="SidebarChannel expanded"
+    data-agentom-id="channel.channel-name"
+    data-agentom-reveals="Channel options"
     role="listitem"
   >
     <div>
@@ -82,6 +85,8 @@ exports[`components/sidebar/sidebar_channel should match snapshot when GM channe
 <div>
   <li
     class="SidebarChannel expanded"
+    data-agentom-id="channel.channel-name"
+    data-agentom-reveals="Channel options"
     role="listitem"
   >
     <div>
@@ -95,13 +100,14 @@ exports[`components/sidebar/sidebar_channel should match snapshot when active 1`
 <div>
   <li
     class="SidebarChannel expanded active"
+    data-agentom-id="channel.channel-name"
+    data-agentom-reveals="Channel options"
     role="listitem"
   >
     <a
       aria-label="channel_display_name public channel"
       class="SidebarLink SidebarLink--withMenu"
-      data-agentom-id="channel."
-      data-agentom-reveals="Channel options"
+      data-agentom-id="channel..link"
       href="/team_name/channels/"
       id="sidebarItem_"
       tabindex="0"
@@ -160,13 +166,14 @@ exports[`components/sidebar/sidebar_channel should match snapshot when collapsed
 <div>
   <li
     class="SidebarChannel collapsed"
+    data-agentom-id="channel.channel-name"
+    data-agentom-reveals="Channel options"
     role="listitem"
   >
     <a
       aria-label="channel_display_name public channel"
       class="SidebarLink SidebarLink--withMenu"
-      data-agentom-id="channel."
-      data-agentom-reveals="Channel options"
+      data-agentom-id="channel..link"
       href="/team_name/channels/"
       id="sidebarItem_"
       tabindex="0"
@@ -225,13 +232,14 @@ exports[`components/sidebar/sidebar_channel should match snapshot when unread 1`
 <div>
   <li
     class="SidebarChannel expanded unread"
+    data-agentom-id="channel.channel-name"
+    data-agentom-reveals="Channel options"
     role="listitem"
   >
     <a
       aria-label="channel_display_name public channel"
       class="SidebarLink SidebarLink--withMenu"
-      data-agentom-id="channel."
-      data-agentom-reveals="Channel options"
+      data-agentom-id="channel..link"
       href="/team_name/channels/"
       id="sidebarItem_"
       tabindex="0"

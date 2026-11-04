@@ -97,6 +97,14 @@ import './advanced_text_editor.scss';
 
 const FileLimitStickyBanner = makeAsyncComponent('FileLimitStickyBanner', lazy(() => import('components/file_limit_sticky_banner')));
 
+/** Each message box's id for agents (data-agentom-id), by which box it is */
+const MESSAGE_BOX_AGENTOM_IDS: Record<string, string> = {
+    [AdvancedTextEditorTextboxIds.InCenter]: 'channel-view.message-box',
+    [AdvancedTextEditorTextboxIds.InRHSComment]: 'thread.reply-box',
+    [AdvancedTextEditorTextboxIds.InEditMode]: 'post-edit.message-box',
+    [AdvancedTextEditorTextboxIds.InModal]: 'dialog.message-box',
+};
+
 export type Props = {
 
     /**
@@ -966,6 +974,11 @@ const AdvancedTextEditor = ({
                                 createMessage={createMessage}
                                 channelId={channelId}
                                 id={textboxId}
+
+                                // named by its placeholder ("Write to town-square", "Reply to thread"), as browsers do,
+                                // and by which box it is: two can show at once, the channel's and the thread's
+                                aria-label={createMessage}
+                                agentomId={MESSAGE_BOX_AGENTOM_IDS[textboxId]}
                                 ref={textboxRef!}
                                 disabled={isDisabled && !rewriteIsProcessing}
                                 characterLimit={maxPostSize}

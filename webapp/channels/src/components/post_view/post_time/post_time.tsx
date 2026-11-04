@@ -38,6 +38,9 @@ type Props = {
     postId: string;
     teamUrl: string;
     timestampProps?: ComponentProps<typeof Timestamp>;
+
+    /** the link's id for agents (data-agentom-id): a message's `.time` */
+    agentomId?: string;
 };
 
 export default class PostTime extends React.PureComponent<Props> {
@@ -60,6 +63,7 @@ export default class PostTime extends React.PureComponent<Props> {
             postId,
             teamUrl,
             timestampProps = {},
+            agentomId,
         } = this.props;
 
         const postTime = (
@@ -85,6 +89,7 @@ export default class PostTime extends React.PureComponent<Props> {
                 className='post__permalink'
                 onClick={this.handleClick}
                 aria-labelledby={eventTime.toString()}
+                data-agentom-id={agentomId}
             >
                 {postTime}
             </Link>

@@ -6,8 +6,11 @@ import type {ConnectedProps} from 'react-redux';
 
 import {getCurrentChannelId, makeGetChannel, makeGetChannelUnreadCount} from 'mattermost-redux/selectors/entities/channels';
 import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+import {getUser} from 'mattermost-redux/selectors/entities/users';
 
 import {getAutoSortedCategoryIds, getDraggingState, isChannelSelected} from 'selectors/views/channel_sidebar';
+
+import {getSidebarChannelAgentomId} from 'utils/agentom_ids';
 
 import type {GlobalState} from 'types/store';
 
@@ -49,6 +52,9 @@ function makeMapStateToProps() {
             isChannelSelected: isChannelSelected(state, ownProps.channelId),
             multiSelectedChannelIds: state.views.channelSidebar.multiSelectedChannelIds,
             autoSortedCategoryIds: getAutoSortedCategoryIds(state),
+
+            // the row's id for agents, as its link computes it (a direct message's by the other person's username)
+            agentomId: channel ? getSidebarChannelAgentomId(channel, channel.teammate_id ? getUser(state, channel.teammate_id)?.username : undefined) : undefined,
         };
     };
 }

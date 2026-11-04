@@ -240,7 +240,7 @@ describe('components/sidebar/sidebar_channel/sidebar_channel_link', () => {
 
         const link = screen.getByRole('link');
         expect(link).toHaveAttribute('aria-current', 'page');
-        expect(link).toHaveAttribute('data-agentom-id', 'channel.off-topic');
+        expect(link).toHaveAttribute('data-agentom-id', 'channel.off-topic.link');
         expect(link).toHaveAccessibleName('channel_label muted');
 
         const menuButton = screen.getByRole('button', {name: 'Channel options for channel_label'});

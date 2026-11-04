@@ -28,6 +28,9 @@ type Props = {
     totalUsers?: number;
     size?: ComponentProps<typeof Avatar>['size'];
     fetchMissingUsers?: boolean;
+
+    /** for agents (data-agentom-id): each avatar's id is this, `.participant.` and the user's username (guideline 2.6) */
+    agentomIdPrefix?: string;
 };
 
 const OTHERS_DISPLAY_LIMIT = 99;
@@ -51,9 +54,11 @@ const displayNameGetter = makeDisplayNameGetter();
 
 function UserAvatar({
     userId,
+    agentomIdPrefix,
     ...props
 }: {
     userId: UserProfile['id'];
+    agentomIdPrefix?: string;
 } & ComponentProps<typeof Avatar>) {
     const user = useSelector((state: GlobalState) => selectUser(state, userId)) as UserProfile | undefined;
     const name = useSelector((state: GlobalState) => displayNameGetter(state, true)(user));
@@ -65,6 +70,7 @@ function UserAvatar({
         <ProfilePopover<HTMLButtonElement>
             triggerComponentAs='button'
             triggerComponentClass='style--none btn-round'
+            triggerComponentAgentomId={agentomIdPrefix ? `${agentomIdPrefix}.participant.${user?.username ?? userId}` : undefined}
             userId={userId}
             src={profilePictureURL}
         >
@@ -87,6 +93,7 @@ function Avatars({
     userIds,
     totalUsers,
     fetchMissingUsers = true,
+    agentomIdPrefix,
 }: Props) {
     const {formatMessage} = useIntl();
     const dispatch = useDispatch();
@@ -140,6 +147,7 @@ function Avatars({
                     key={id}
                     userId={id}
                     size={size}
+                    agentomIdPrefix={agentomIdPrefix}
                 />
             ))}
             {Boolean(nonDisplayCount) && (

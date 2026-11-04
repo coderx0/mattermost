@@ -265,6 +265,20 @@ describe('components/avanced_text_editor/advanced_text_editor', () => {
         });
     });
 
+    // two message boxes can show at once (the channel's and a thread's): each is named by its placeholder and has
+    // an id of its own for agents
+    it('should name the message box by its placeholder, and give the channel\'s and the thread\'s their own ids', () => {
+        const state = mergeObjects(initialState, {entities: {roles: {roles: {user_roles: {permissions: [Permissions.CREATE_POST]}}}}});
+        const {unmount} = renderWithContext(<AdvancedTextEditor {...baseProps}/>, state);
+        const center = screen.getByTestId('post_textbox');
+        expect(center).toHaveAttribute('data-agentom-id', 'channel-view.message-box');
+        expect(center).toHaveAccessibleName(center.getAttribute('placeholder')!);
+        unmount();
+
+        renderWithContext(<AdvancedTextEditor {...{...baseProps, location: Locations.RHS_COMMENT, rootId: 'root_id'}}/>, state);
+        expect(screen.getByTestId('reply_textbox')).toHaveAttribute('data-agentom-id', 'thread.reply-box');
+    });
+
     it('should set the textbox value to an existing draft on mount and when changing channels', async () => {
         const {rerender} = renderWithContext(
             <AdvancedTextEditor

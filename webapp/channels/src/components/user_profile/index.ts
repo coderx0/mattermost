@@ -28,6 +28,9 @@ export type OwnProps = {
     hideStatus?: boolean;
     hideGuestTag?: boolean;
     channelId?: Channel['id'];
+
+    /** the name's id for agents (data-agentom-id), e.g. a message's author */
+    agentomId?: string;
 };
 
 function makeMapStateToProps() {

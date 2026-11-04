@@ -39,6 +39,9 @@ const CommentIcon = ({
             <span
                 id={commentCountDescriptionId}
                 hidden={true}
+
+                // never shown, whatever a stylesheet does to the button's spans (search results show them)
+                style={{display: 'none'}}
             >
                 <FormattedMessage
                     id='threading.numReplies'

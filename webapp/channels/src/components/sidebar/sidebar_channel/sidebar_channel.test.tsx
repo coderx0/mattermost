@@ -50,6 +50,7 @@ describe('components/sidebar/sidebar_channel', () => {
         draggingState: {},
         multiSelectedChannelIds: [],
         autoSortedCategoryIds: new Set<string>(),
+        agentomId: 'channel.channel-name',
         isChannelSelected: false,
     };
 
@@ -59,6 +60,18 @@ describe('components/sidebar/sidebar_channel', () => {
         );
 
         expect(container).toMatchSnapshot();
+    });
+
+    // a category's list is a collection of rows (guideline 2.6): each row has its channel's id, its link and options
+    // ids under it, and says what hovering over it shows
+    test('should give the row its id, and say what hovering over it shows', () => {
+        renderWithContext(
+            <SidebarChannel {...baseProps}/>,
+        );
+
+        const row = screen.getByRole('listitem');
+        expect(row).toHaveAttribute('data-agentom-id', 'channel.channel-name');
+        expect(row).toHaveAttribute('data-agentom-reveals', 'Channel options');
     });
 
     test('should match snapshot when collapsed', () => {

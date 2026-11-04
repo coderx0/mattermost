@@ -22735,6 +22735,10 @@
     "defaultMessage": "Previous",
     "description": "Previous-page button in a paginated list footer."
   },
+  "formatting_bar.aria_label": {
+    "defaultMessage": "Formatting",
+    "description": ""
+  },
   "formatting_bar.text_style.aria_label": {
     "defaultMessage": "Text style",
     "description": "Accessibility label for the text style dropdown (normal text / headings) in the rich text editor toolbar."
@@ -29158,6 +29162,18 @@
   "search_item.jump": {
     "defaultMessage": "Jump",
     "description": "Link on a search result or pinned/saved message that jumps to the message in its channel; verb, compact space."
+  },
+  "search_item.jump.description": {
+    "defaultMessage": "Opens the message in its channel",
+    "description": ""
+  },
+  "search_item.posted_in": {
+    "defaultMessage": "In {channel}",
+    "description": ""
+  },
+  "search_item.posted_in_team": {
+    "defaultMessage": "In {channel}, {team} team",
+    "description": ""
   },
   "search_item.thread": {
     "defaultMessage": "Thread in {channel}",

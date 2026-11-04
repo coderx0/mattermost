@@ -602,6 +602,7 @@ function PostComponent(props: Props) {
                 compactDisplay={props.compactDisplay}
                 post={post}
                 userId={post.user_id}
+                agentomId={`${getPostAgentomId(props.location, post.id)}.avatar`}
             />
         );
 
@@ -814,6 +815,14 @@ function PostComponent(props: Props) {
                         }
                     </div>
                 }
+                {(Boolean(isSearchResultItem) || props.isFlaggedPosts) && Boolean(channelDisplayName) &&
+
+                    // The channel and team shown above are hidden from assistive technology; said here instead,
+                    // so a result says where it was posted
+                    <span className='sr-only'>
+                        {props.teamDisplayName ? formatMessage({id: 'search_item.posted_in_team', defaultMessage: 'In {channel}, {team} team'}, {channel: channelDisplayName, team: props.teamDisplayName}) : formatMessage({id: 'search_item.posted_in', defaultMessage: 'In {channel}'}, {channel: channelDisplayName})}
+                    </span>
+                }
                 <PostPreHeader
                     isFlagged={props.isFlagged}
                     isPinned={post.is_pinned}
@@ -847,6 +856,7 @@ function PostComponent(props: Props) {
                                         eventTime={post.create_at}
                                         postId={post.id}
                                         location={props.location}
+                                        agentomId={`${getPostAgentomId(props.location, post.id)}.time`}
                                         timestampProps={{...props.timestampProps, style: props.isConsecutivePost && !props.compactDisplay ? 'narrow' : undefined}}
                                     />
                                 }

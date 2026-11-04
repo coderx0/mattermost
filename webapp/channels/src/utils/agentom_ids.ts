@@ -2,7 +2,9 @@
 // See LICENSE.txt for license information.
 
 import type {ChannelCategory} from '@mattermost/types/channel_categories';
+import type {Channel} from '@mattermost/types/channels';
 
+import {General} from 'mattermost-redux/constants';
 import {CategoryTypes} from 'mattermost-redux/constants/channel_categories';
 
 /**
@@ -21,6 +23,22 @@ export function agentomIdSegment(name: string): string {
 export function getCategoryAgentomId(category: ChannelCategory) {
     const name = category.type === CategoryTypes.CUSTOM ? category.display_name : category.type;
     return `category.${agentomIdSegment(name)}`;
+}
+
+/**
+ * The data-agentom-id of a channel's row in the sidebar, an item of its category's list (guideline 2.6):
+ * `dm.<username>` for a direct message (the other person's), `gm.<names>` for a group message,
+ * `channel.<name>` otherwise. The row's link adds `.link`, its options menu `.options`.
+ */
+export function getSidebarChannelAgentomId(channel: Channel, teammateUsername?: string): string {
+    // only a direct message has a teammate
+    if (teammateUsername) {
+        return `dm.${agentomIdSegment(teammateUsername)}`;
+    }
+    if (channel.type === General.GM_CHANNEL) {
+        return `gm.${agentomIdSegment(channel.display_name)}`;
+    }
+    return `channel.${agentomIdSegment(channel.name)}`;
 }
 
 /**

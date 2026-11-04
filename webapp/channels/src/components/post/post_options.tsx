@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import classnames from 'classnames';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useId, useRef, useState} from 'react';
 import type {JSX, ReactNode} from 'react';
 import {FormattedMessage} from 'react-intl';
 import type {IntlShape} from 'react-intl';
@@ -21,6 +21,7 @@ import PostReaction from 'components/post_view/post_reaction';
 import PostRecentReactions from 'components/post_view/post_recent_reactions';
 
 import PluggableErrorBoundary from 'plugins/pluggable/error_boundary';
+import {getPostAgentomId} from 'utils/agentom_ids';
 import {Locations, Constants} from 'utils/constants';
 import {isSystemMessage, fromAutoResponder} from 'utils/post_utils';
 
@@ -119,6 +120,7 @@ export function getPostHoverReveals(props: ShownProps & Pick<Props, 'isFlagged' 
 }
 
 const PostOptions = (props: Props): JSX.Element => {
+    const jumpDescriptionId = useId();
     const [showEmojiPicker, setShowEmojiPicker] = useState(false);
     const [showDotMenu, setShowDotMenu] = useState(false);
     const [showActionsMenu, setShowActionsMenu] = useState(false);
@@ -344,16 +346,30 @@ const PostOptions = (props: Props): JSX.Element => {
                 </li>
                 }
                 <li>
+                    {/* An anchor without an address that opens the message in its channel on click: it says it's a
+                        button, described by what it does (the keyboard reaches it as before) */}
                     <a
                         href='#'
                         onClick={props.handleJumpClick}
                         className='search-item__jump'
+                        role='button'
+                        aria-describedby={jumpDescriptionId}
+                        data-agentom-id={`${getPostAgentomId(props.location, post.id)}.jump`}
                     >
                         <FormattedMessage
                             id='search_item.jump'
                             defaultMessage='Jump'
                         />
                     </a>
+                    <span
+                        id={jumpDescriptionId}
+                        hidden={true}
+                    >
+                        <FormattedMessage
+                            id='search_item.jump.description'
+                            defaultMessage='Opens the message in its channel'
+                        />
+                    </span>
                 </li>
             </ul>
         );

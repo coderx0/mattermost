@@ -35,6 +35,7 @@ export default function UserProfile({
     overwriteIcon,
     remoteNames,
     actions,
+    agentomId,
 }: Props) {
     // Fetch remote info when component mounts for remote users
     useEffect(() => {
@@ -85,6 +86,7 @@ export default function UserProfile({
                 triggerComponentAs='button'
                 triggerComponentClass='user-popover style--none'
                 triggerComponentStyle={userStyle}
+                triggerComponentAgentomId={agentomId}
                 userId={userId}
                 src={profileImg}
                 channelId={channelId}

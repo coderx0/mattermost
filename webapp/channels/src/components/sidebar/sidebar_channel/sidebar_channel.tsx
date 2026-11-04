@@ -5,7 +5,7 @@ import {Draggable} from '@hello-pangea/dnd';
 import classNames from 'classnames';
 import React, {useState} from 'react';
 import type {AnimationEvent, ReactNode} from 'react';
-import {FormattedMessage} from 'react-intl';
+import {FormattedMessage, useIntl} from 'react-intl';
 
 import Constants from 'utils/constants';
 
@@ -30,7 +30,18 @@ function SidebarChannel({
     channelIndex,
     isAutoSortedCategory,
     autoSortedCategoryIds,
+    agentomId,
 }: Props) {
+    const {formatMessage} = useIntl();
+
+    // The row is an item of its category's list (guideline 2.6): its id, and what hovering over it shows, its options
+    // button ("Channel options for …"), named here by the words it starts with (the tooltip's), as a channel's name
+    // can hold commas
+    const agentom = {
+        'data-agentom-id': agentomId,
+        'data-agentom-reveals': formatMessage({id: 'sidebar_left.sidebar_channel_menu.editChannel', defaultMessage: 'Channel options'}),
+    };
+
     const [show, setShow] = useState(true);
     if (!channel) {
         return null;
@@ -129,6 +140,7 @@ function SidebarChannel({
                             onAnimationEnd={handleAnimationEnd}
                             role='listitem'
                             tabIndex={-1}
+                            {...agentom}
                         >
                             {component}
                             {selectedCount}
@@ -151,6 +163,7 @@ function SidebarChannel({
             onAnimationStart={handleAnimationStart}
             onAnimationEnd={handleAnimationEnd}
             role='listitem'
+            {...agentom}
         >
             {component}
         </li>

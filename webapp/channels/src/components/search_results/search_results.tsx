@@ -470,6 +470,10 @@ const SearchResults: React.FC<Props> = (props: Props): JSX.Element => {
                     <div
                         id={`${searchType}Panel`}
                         className='files-or-messages-panel'
+
+                        // a feed of results named by the panel's title: its messages are items of one kind (guideline 2.6)
+                        role='feed'
+                        aria-label={formattedTitle}
                     >
                         {contentItems}
                     </div>

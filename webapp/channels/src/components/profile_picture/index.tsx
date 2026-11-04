@@ -27,6 +27,9 @@ type Props = {
     overwriteName?: string;
     newStatusIcon?: boolean;
     statusClass?: string;
+
+    /** the picture's id for agents (data-agentom-id): a message's `.avatar` */
+    agentomId?: string;
 };
 
 function ProfilePicture(props: Props) {
@@ -51,6 +54,7 @@ function ProfilePicture(props: Props) {
                 overwriteName={props.overwriteName}
                 fromWebhook={props.fromWebhook}
                 triggerComponentAs='button'
+                triggerComponentAgentomId={props.agentomId}
                 triggerComponentStyle={{
                     borderRadius: '50%',
                     width: getAvatarWidth(props?.size ?? 'md'),

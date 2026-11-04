@@ -126,6 +126,7 @@ function ThreadFooter({
                 <Avatars
                     userIds={participantIds}
                     size='sm'
+                    agentomIdPrefix={agentomIdPrefix}
                 />
             ) : null}
 
@@ -134,6 +135,7 @@ function ThreadFooter({
                     onClick={handleReply}
                     className='ReplyButton separated'
                     data-testid='thread-footer-reply-button'
+                    data-agentom-id={agentomIdPrefix ? `${agentomIdPrefix}.replies` : undefined}
                     prepend={
                         <span className='icon'>
                             <i className='icon-reply-outline'/>

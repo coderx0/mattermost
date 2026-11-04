@@ -307,6 +307,10 @@ const FormattingBar = forwardRef<FormattingBarHandle, FormattingBarProps>((props
         <FormattingBarContainer
             ref={formattingBarRef}
             data-testid='formattingBarContainer'
+
+            // a named toolbar, so its buttons read as one set
+            role='toolbar'
+            aria-label={formatMessage({id: 'formatting_bar.aria_label', defaultMessage: 'Formatting'})}
         >
             {aiActionsMenu}
             {aiActionsMenu && showSeparators && <Separator/>}

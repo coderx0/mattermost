@@ -5,8 +5,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_link should fetch sh
   <a
     aria-label="channel_label"
     class="SidebarLink SidebarLink--withMenu"
-    data-agentom-id="channel."
-    data-agentom-reveals="Channel options"
+    data-agentom-id="channel..link"
     href="/team/channels/town-square"
     id="sidebarItem_"
     tabindex="0"
@@ -66,8 +65,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_link should match sn
   <a
     aria-label="channel_label"
     class="SidebarLink SidebarLink--withMenu"
-    data-agentom-id="channel."
-    data-agentom-reveals="Channel options"
+    data-agentom-id="channel..link"
     href="/team/channels/town-square"
     id="sidebarItem_"
     tabindex="0"
@@ -123,8 +121,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_link should match sn
   <a
     aria-label="channel_label"
     class="SidebarLink SidebarLink--withMenu"
-    data-agentom-id="channel."
-    data-agentom-reveals="Channel options"
+    data-agentom-id="channel..link"
     href="/team/channels/town-square"
     id="sidebarItem_"
     tabindex="0"
@@ -180,8 +177,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_link should match sn
   <a
     aria-label="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     class="SidebarLink SidebarLink--withMenu"
-    data-agentom-id="channel."
-    data-agentom-reveals="Channel options"
+    data-agentom-id="channel..link"
     href="/team/channels/town-square"
     id="sidebarItem_"
     tabindex="0"
@@ -237,8 +233,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_link should match sn
   <a
     aria-label="channel_label aria_label_prefix_ 2 mentions"
     class="SidebarLink SidebarLink--withMenu SidebarLink--withMentionBadge unread-title"
-    data-agentom-id="channel."
-    data-agentom-reveals="Channel options"
+    data-agentom-id="channel..link"
     data-testid="sidebar-unread-channel"
     href="/team/channels/town-square"
     id="sidebarItem_"
@@ -305,8 +300,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_link should not fetc
   <a
     aria-label="channel_label"
     class="SidebarLink SidebarLink--withMenu"
-    data-agentom-id="channel."
-    data-agentom-reveals="Channel options"
+    data-agentom-id="channel..link"
     href="/team/channels/town-square"
     id="sidebarItem_"
     tabindex="0"
@@ -366,8 +360,7 @@ exports[`components/sidebar/sidebar_channel/sidebar_channel_link should not fetc
   <a
     aria-label="channel_label"
     class="SidebarLink SidebarLink--withMenu"
-    data-agentom-id="channel."
-    data-agentom-reveals="Channel options"
+    data-agentom-id="channel..link"
     href="/team/channels/town-square"
     id="sidebarItem_"
     tabindex="0"

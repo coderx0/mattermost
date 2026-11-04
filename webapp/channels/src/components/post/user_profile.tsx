@@ -15,6 +15,7 @@ import UserProfile from 'components/user_profile';
 import BotTag from 'components/widgets/tag/bot_tag';
 import Tag from 'components/widgets/tag/tag';
 
+import {getPostAgentomId} from 'utils/agentom_ids';
 import {fromAutoResponder, hasAiGeneratedMetadata, isFromWebhook} from 'utils/post_utils';
 
 type Props = {
@@ -32,6 +33,9 @@ type Props = {
 const PostUserProfile = (props: Props): JSX.Element | null => {
     const intl = useIntl();
     const {post, compactDisplay, isMobileView, isConsecutivePost, enablePostUsernameOverride, isBot, isSystemMessage, colorizeUsernames, location} = props;
+
+    // the author's name, by the message's id for agents (guideline 2.6): `post.<id>.author`
+    const authorId = `${getPostAgentomId(location, post.id)}.author`;
     const isFromAutoResponder = fromAutoResponder(post);
     const colorize = compactDisplay && colorizeUsernames;
 
@@ -71,6 +75,7 @@ const PostUserProfile = (props: Props): JSX.Element | null => {
         userProfile = (
             <UserProfile
                 userId={post.user_id}
+                agentomId={authorId}
                 channelId={post.channel_id}
                 colorize={colorize}
                 hideGuestTag={hideGuestTag}
@@ -82,6 +87,7 @@ const PostUserProfile = (props: Props): JSX.Element | null => {
         userProfile = (
             <UserProfile
                 userId={post.user_id}
+                agentomId={authorId}
                 channelId={post.channel_id}
                 colorize={colorize}
                 hideGuestTag={hideGuestTag}
@@ -91,6 +97,7 @@ const PostUserProfile = (props: Props): JSX.Element | null => {
         userProfile = (
             <UserProfile
                 userId={post.user_id}
+                agentomId={authorId}
                 channelId={post.channel_id}
                 colorize={colorize}
                 hideGuestTag={hideGuestTag}
@@ -105,6 +112,7 @@ const PostUserProfile = (props: Props): JSX.Element | null => {
             userProfile = (
                 <UserProfile
                     userId={post.user_id}
+                    agentomId={authorId}
                     channelId={post.channel_id}
                     hideStatus={true}
                     hideGuestTag={hideGuestTag}
@@ -124,6 +132,7 @@ const PostUserProfile = (props: Props): JSX.Element | null => {
                 <span className='auto-responder'>
                     <UserProfile
                         userId={post.user_id}
+                        agentomId={authorId}
                         channelId={post.channel_id}
                         hideStatus={true}
                         colorize={colorize}
@@ -144,6 +153,7 @@ const PostUserProfile = (props: Props): JSX.Element | null => {
             userProfile = (
                 <UserProfile
                     userId={post.user_id}
+                    agentomId={authorId}
                     channelId={post.channel_id}
                     hideStatus={true}
                     hideGuestTag={hideGuestTag}
@@ -153,6 +163,7 @@ const PostUserProfile = (props: Props): JSX.Element | null => {
         } else if (isSystemMessage) {
             userProfile = (
                 <UserProfile
+                    agentomId={authorId}
                     overwriteName={intl.formatMessage({
                         id: 'post_info.system',
                         defaultMessage: 'System',

@@ -639,7 +639,9 @@ export default class PostList extends React.PureComponent<Props, State> {
                 busy,
                 label,
                 props: {
-                    role: 'region',
+
+                    // a feed of messages (the ARIA feed pattern): its articles are items of one kind (guideline 2.6)
+                    role: 'feed',
                     'aria-label': label,
                     'aria-describedby': POST_LIST_DESCRIPTION_ID,
                     'aria-busy': busy,

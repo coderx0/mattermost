@@ -20,6 +20,16 @@ describe('FormattingBar', () => {
         location: Locations.CENTER,
     };
 
+    test('should be a toolbar named Formatting, so its buttons read as one set', () => {
+        jest.spyOn(Hooks, 'useFormattingBarControls').mockReturnValue({layoutMode: LayoutModes.Wide, ...splitFormattingBarControls('wide')});
+
+        renderWithContext(
+            <FormattingBar {...baseProps}/>,
+        );
+
+        expect(screen.getByRole('toolbar', {name: 'Formatting'})).toContainElement(screen.getByRole('button', {name: 'bold'}));
+    });
+
     test('should render hidden formatting button when screen size is min', () => {
         jest.spyOn(Hooks, 'useFormattingBarControls').mockReturnValue({layoutMode: LayoutModes.Min, ...splitFormattingBarControls('min')});
 
