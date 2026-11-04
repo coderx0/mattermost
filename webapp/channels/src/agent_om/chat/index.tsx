@@ -1,51 +1,20 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import React, {useEffect, useState} from 'react';
-import {createPortal} from 'react-dom';
+import React from 'react';
 
-import ChatPanel, {STRIP, WIDTH} from './chat_panel';
+import InFrame from './in_frame';
+import Shell from './shell';
 
 // The dev server's chat (webpack.config.js; never in a build): a request in,
 // Claude Haiku carries it out on the page, through the Agent Object Model.
 //
-// It sits in a column of its own at the right, beside the app and never over
-// it, so the agent can reach all of the page. Mattermost lays #root out as a
-// grid and puts its dialogs and menus in <body>, so the column is made at the
-// body: the body is narrowed by the column's width and made the containing
-// block of its fixed elements (a transform), so the app's dialogs and menus
-// stay inside it; the chat is put outside the body, in <html>, outside the
-// projection (data-agentom-ignore).
+// The top window shows the chat beside a frame that holds the app (shell.tsx):
+// the app's window is then only as wide as its column, so its menus and
+// dialogs fit it, as they would a narrower window, and none of the app is ever
+// under the chat. The run itself goes on in the app's window, beside the
+// app's projector (in_frame.tsx, runner.ts); the chat shows it from above.
 
 export default function AgentOmChat() {
-    const [host] = useState(() => {
-        const div = document.createElement('div');
-        div.id = 'agent-om-chat';
-        div.setAttribute('data-agentom-ignore', '');
-        return div;
-    });
-    const [open, setOpen] = useState(true);
-
-    useEffect(() => {
-        document.documentElement.appendChild(host);
-        return () => host.remove();
-    }, [host]);
-
-    useEffect(() => {
-        const body = document.body.style;
-        body.width = `calc(100% - ${open ? WIDTH : STRIP}px)`;
-        body.transform = 'translate(0)';
-        return () => {
-            body.width = '';
-            body.transform = '';
-        };
-    }, [open]);
-
-    return createPortal(
-        <ChatPanel
-            open={open}
-            setOpen={setOpen}
-        />,
-        host,
-    );
+    return window.self === window.top ? <Shell/> : <InFrame/>;
 }

@@ -7,15 +7,15 @@ import {indexNodes, presentedPage, siteOutline, StepFailed} from '@agent-om/agen
 import type {AgentEvent, AgentPage, AgentResult} from '@agent-om/agent';
 import {CLAUDE_LIMITS, HAIKU, projectionView, runClaude} from '@agent-om/agent/claude';
 import type {SemanticProjector} from '@agent-om/core';
-import {useCallback, useRef, useState} from 'react';
 
 import {loadSitemap} from './load_sitemap';
 import {createTranscript, saveTranscript, secretFields} from './transcript';
 import type {Totals} from './transcript';
 
-// Claude Haiku on the app's projection, run in the page: the loop, tools and
-// view the Agent Object Model's agent package gives every host. This hook
-// keeps the run's progress for the chat panel and settles what the run asks
+// Claude Haiku on the app's projection, run in the app's own window (the
+// frame, index.tsx): the loop, tools and view the Agent Object Model's agent
+// package gives every host. The runner keeps the run's progress for the chat
+// panel, which shows it from the window above, and settles what the run asks
 // the user (a risky step, a secret).
 
 /** The Anthropic key, in the dev server only (webpack.config.js, from ANTHROPIC_API_KEY). */
@@ -46,9 +46,29 @@ export type ChatView = {
     totals?: Totals;
 };
 
-const IDLE: ChatView = {status: 'idle', query: '', steps: [], thinking: false};
+export const IDLE: ChatView = {status: 'idle', query: '', steps: [], thinking: false};
 
-/** No host UI to skip: the chat is outside the page's body and the projection (data-agentom-ignore). */
+/** What the chat panel calls, from the window above the app's. */
+export type ChatRunner = {
+    view: () => ChatView;
+
+    /** the listener gets the view each time it changes; returns what stops it */
+    subscribe: (listener: (view: ChatView) => void) => () => void;
+    start: (query: string) => void;
+    stop: () => void;
+    clear: () => void;
+    respond: (ok: boolean) => void;
+    enterSecret: (value: string | null) => void;
+    whatClaudeSees: () => Promise<string>;
+};
+
+declare global {
+    interface Window {
+        __agentOmChat?: ChatRunner;
+    }
+}
+
+/** No host UI to skip: the chat is in the window above, not on the page. */
 const EXCLUDE: ReadonlySet<string> = new Set();
 
 /** The element a node id names, read from a fresh snapshot (the executor's targets). */
@@ -78,7 +98,7 @@ function failFast(page: AgentPage, projector: SemanticProjector): AgentPage {
 }
 
 /** The current page as Claude reads it (read_page in full), and the projector's warnings. */
-export async function whatClaudeSees(): Promise<string> {
+async function whatClaudeSees(): Promise<string> {
     const projector = window.__semanticUI;
     if (!projector) {
         return 'The projector is not running.';
@@ -98,42 +118,47 @@ export async function whatClaudeSees(): Promise<string> {
     ].join('\n');
 }
 
-export function useClaude() {
-    const [view, setView] = useState<ChatView>(IDLE);
-    const abort = useRef<AbortController | null>(null);
-    const pendingConfirm = useRef<((ok: boolean) => void) | null>(null);
-    const pendingSecret = useRef<((value: string | null) => void) | null>(null);
+export function createChatRunner(): ChatRunner {
+    let view: ChatView = IDLE;
+    const listeners = new Set<(view: ChatView) => void>();
+    let abort: AbortController | null = null;
+    let pendingConfirm: ((ok: boolean) => void) | null = null;
+    let pendingSecret: ((value: string | null) => void) | null = null;
 
+    const set = (next: ChatView) => {
+        view = next;
+        listeners.forEach((listener) => listener(view));
+    };
     const settlePrompts = () => {
-        pendingConfirm.current?.(false);
-        pendingSecret.current?.(null);
+        pendingConfirm?.(false);
+        pendingSecret?.(null);
     };
 
-    const start = useCallback(async (query: string) => {
-        abort.current?.abort();
+    async function start(query: string) {
+        abort?.abort();
         settlePrompts();
         const projector = window.__semanticUI;
         if (!API_KEY || !projector) {
             const message = API_KEY ? 'The projector is not running.' : 'No Anthropic key: start the dev server with ANTHROPIC_API_KEY set.';
-            setView({...IDLE, status: 'failed', query, message});
+            set({...IDLE, status: 'failed', query, message});
             return;
         }
         const controller = new AbortController();
-        abort.current = controller;
+        abort = controller;
 
         // Only the current run updates the view.
         const update = (patch: Partial<ChatView> | ((v: ChatView) => Partial<ChatView>)) => {
-            if (abort.current !== controller) {
+            if (abort !== controller) {
                 return;
             }
-            setView((v) => ({...v, ...(typeof patch === 'function' ? patch(v) : patch)}));
+            set({...view, ...(typeof patch === 'function' ? patch(view) : patch)});
         };
-        setView({...IDLE, status: 'running', query});
+        set({...IDLE, status: 'running', query});
         const record = createTranscript(query, HAIKU);
 
         const confirm = (prompt: string) => new Promise<boolean>((resolve) => {
-            pendingConfirm.current = (ok) => {
-                pendingConfirm.current = null;
+            pendingConfirm = (ok) => {
+                pendingConfirm = null;
                 record.confirm(prompt, ok);
                 update({confirm: undefined});
                 resolve(ok);
@@ -141,8 +166,8 @@ export function useClaude() {
             update({confirm: prompt, thinking: false});
         });
         const askSecret = (field: string) => new Promise<string | null>((resolve) => {
-            pendingSecret.current = (value) => {
-                pendingSecret.current = null;
+            pendingSecret = (value) => {
+                pendingSecret = null;
                 record.secret(field, value !== null);
                 update({secret: undefined});
                 resolve(value);
@@ -199,28 +224,33 @@ export function useClaude() {
         record.result(result);
         saveTranscript(record.transcript);
         update({...result, totals: record.transcript.totals, thinking: false, reading: undefined, confirm: undefined, secret: undefined});
-        if (abort.current === controller) {
-            abort.current = null;
+        if (abort === controller) {
+            abort = null;
         }
-    }, []);
+    }
 
-    const stop = useCallback(() => {
-        abort.current?.abort();
+    const stop = () => {
+        abort?.abort();
         settlePrompts();
-    }, []);
-
-    const clear = useCallback(() => {
-        stop();
-        abort.current = null;
-        setView(IDLE);
-    }, [stop]);
+    };
 
     return {
-        view,
-        start,
+        view: () => view,
+        subscribe: (listener) => {
+            listeners.add(listener);
+            return () => listeners.delete(listener);
+        },
+        start: (query) => {
+            start(query);
+        },
         stop,
-        clear,
-        respond: (ok: boolean) => pendingConfirm.current?.(ok),
-        enterSecret: (value: string | null) => pendingSecret.current?.(value),
+        clear: () => {
+            stop();
+            abort = null;
+            set(IDLE);
+        },
+        respond: (ok) => pendingConfirm?.(ok),
+        enterSecret: (value) => pendingSecret?.(value),
+        whatClaudeSees,
     };
 }

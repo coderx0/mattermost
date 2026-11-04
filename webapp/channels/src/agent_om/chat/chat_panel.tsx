@@ -4,14 +4,15 @@
 import React, {useEffect, useRef, useState} from 'react';
 import type {CSSProperties, ReactNode} from 'react';
 
-import {useClaude, whatClaudeSees} from './use_claude';
+import type {ChatView} from './runner';
 
-// The chat itself: a request in, Claude Haiku carries it out on the page.
-// Plain elements and inline styles: it isn't Mattermost's UI.
+// The chat itself, in the top window beside the app's frame (shell.tsx): a
+// request in, Claude Haiku carries it out on the page. Plain elements and
+// inline styles: it isn't Mattermost's UI.
 
 /** Collapsed: a strip with the button that opens it. */
-export const STRIP = 44;
-export const WIDTH = 400;
+const STRIP = 44;
+const WIDTH = 400;
 
 const font = '13px/1.45 system-ui, sans-serif';
 const button: CSSProperties = {
@@ -30,12 +31,7 @@ const button: CSSProperties = {
 const primary: CSSProperties = {...button, background: '#2563eb', borderColor: '#2563eb', color: '#fff'};
 const box: CSSProperties = {padding: 10, borderRadius: 8, background: 'rgba(127,127,127,.12)'};
 
-/**
- * A question to the user (a risky step, a secret), as a native modal dialog:
- * the browser's top layer is above everything, so it can be answered while
- * one of the app's dialogs is open (the step it asks about is usually in one).
- * Escape answers no.
- */
+/** A question to the user (a risky step, a secret), as a native modal dialog. Escape answers no. */
 function Prompt({children, onDismiss}: {children: ReactNode; onDismiss: () => void}) {
     const ref = useRef<HTMLDialogElement>(null);
 
@@ -50,7 +46,6 @@ function Prompt({children, onDismiss}: {children: ReactNode; onDismiss: () => vo
     return (
         <dialog
             ref={ref}
-            data-agentom-ignore=''
             onCancel={(e) => {
                 e.preventDefault();
                 onDismiss();
@@ -63,8 +58,19 @@ function Prompt({children, onDismiss}: {children: ReactNode; onDismiss: () => vo
     );
 }
 
-export default function ChatPanel({open, setOpen}: {open: boolean; setOpen: (open: boolean) => void}) {
-    const {view, start, stop, clear, respond, enterSecret} = useClaude();
+type Props = {
+    open: boolean;
+    setOpen: (open: boolean) => void;
+    view: ChatView;
+    start: (query: string) => void;
+    stop: () => void;
+    clear: () => void;
+    respond: (ok: boolean) => void;
+    enterSecret: (value: string | null) => void;
+    whatClaudeSees: () => Promise<string>;
+};
+
+export default function ChatPanel({open, setOpen, view, start, stop, clear, respond, enterSecret, whatClaudeSees}: Props) {
     const [query, setQuery] = useState('');
     const [secret, setSecret] = useState('');
     const [seen, setSeen] = useState<string | null>(null);
@@ -87,18 +93,15 @@ export default function ChatPanel({open, setOpen}: {open: boolean; setOpen: (ope
     };
 
     const column: CSSProperties = {
-        position: 'fixed',
-        top: 0,
-        right: 0,
+        flex: 'none',
         width: open ? WIDTH : STRIP,
-        height: '100vh',
+        height: '100%',
         display: 'flex',
         flexDirection: 'column',
         background: '#fff',
         color: '#111',
         borderLeft: '1px solid rgba(127,127,127,.35)',
         font,
-        zIndex: 2147483647,
     };
 
     const prompts = (
@@ -166,7 +169,6 @@ export default function ChatPanel({open, setOpen}: {open: boolean; setOpen: (ope
     if (!open) {
         return (
             <aside
-                data-agentom-ignore=''
                 style={{...column, alignItems: 'center'}}
             >
                 {prompts}
@@ -183,7 +185,6 @@ export default function ChatPanel({open, setOpen}: {open: boolean; setOpen: (ope
 
     return (
         <aside
-            data-agentom-ignore=''
             style={column}
         >
             {prompts}
