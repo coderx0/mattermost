@@ -15,6 +15,8 @@ import {getUser, makeDisplayNameGetter, makeGetProfilesByIdsAndUsernames} from '
 
 import type {Value} from 'components/multiselect/multiselect';
 
+import type {OptionSemantics} from 'components/multiselect/multiselect_list';
+
 import Constants from 'utils/constants';
 
 type UserProfileValue = Value & UserProfile;
@@ -27,7 +29,7 @@ export type Props = {
     selectedItemRef: React.RefObject<HTMLDivElement | null>;
     onMouseMove: (group: GroupValue) => void;
     addUserProfile: (profile: UserProfileValue) => void;
-};
+} & OptionSemantics;
 
 const displayNameGetter = makeDisplayNameGetter();
 
@@ -39,6 +41,7 @@ const GroupOption = (props: Props) => {
         selectedItemRef,
         onMouseMove,
         addUserProfile,
+        ...semantics
     } = props;
 
     const getProfilesByIdsAndUsernames = useMemo(() => makeGetProfilesByIdsAndUsernames(), []);
@@ -80,6 +83,9 @@ const GroupOption = (props: Props) => {
             className={'more-modal__row clickable ' + rowSelected}
             onClick={onAdd}
             onMouseMove={() => onMouseMove(group)}
+
+            // an option of the results' listbox, when the list says so (multiselect_list.tsx)
+            {...semantics}
         >
             <span
                 className='more-modal__group-image'

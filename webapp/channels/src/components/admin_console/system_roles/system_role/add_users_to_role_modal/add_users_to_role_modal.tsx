@@ -251,6 +251,7 @@ export class AddUsersToRoleModal extends React.PureComponent<Props, State> {
                 <Modal.Body>
                     {addError}
                     <MultiSelect
+                        optionIdPrefix='add-users-to-role'
                         key='addUsersToRoleKey'
                         options={options}
                         optionRenderer={this.renderOption}

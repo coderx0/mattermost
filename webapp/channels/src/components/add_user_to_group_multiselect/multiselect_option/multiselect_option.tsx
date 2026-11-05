@@ -11,6 +11,7 @@ import {Client4} from 'mattermost-redux/client';
 import {isGuest} from 'mattermost-redux/utils/user_utils';
 
 import type {Value} from 'components/multiselect/multiselect';
+import type {OptionSemantics} from 'components/multiselect/multiselect_list';
 import ProfilePicture from 'components/profile_picture';
 import BotTag from 'components/widgets/tag/bot_tag';
 import GuestTag from 'components/widgets/tag/guest_tag';
@@ -25,7 +26,7 @@ type Props = {
     onMouseMove: (user: UserProfileValue) => void;
     userStatuses: RelationOneToOne<UserProfile, string>;
     isSelected: boolean;
-};
+} & OptionSemantics;
 
 const MultiSelectOption = React.forwardRef(({
     option,
@@ -33,6 +34,7 @@ const MultiSelectOption = React.forwardRef(({
     onMouseMove,
     userStatuses,
     isSelected,
+    ...semantics
 }: Props, ref?: React.Ref<HTMLDivElement>) => {
     return (
         <div
@@ -41,6 +43,9 @@ const MultiSelectOption = React.forwardRef(({
             onClick={() => onAdd(option)}
             ref={ref}
             onMouseMove={() => onMouseMove(option)}
+
+            // an option of the results' listbox, when the list says so (multiselect_list.tsx)
+            {...semantics}
         >
             <ProfilePicture
                 src={Client4.getProfilePictureUrl(option.id, option.last_picture_update)}

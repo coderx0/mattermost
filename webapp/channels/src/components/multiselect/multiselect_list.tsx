@@ -7,6 +7,7 @@ import type {GetOptionValue} from 'react-select';
 
 import LoadingScreen from 'components/loading_screen';
 
+import {agentomIdSegment} from 'utils/agentom_ids';
 import Constants from 'utils/constants';
 import {cmdOrCtrlPressed} from 'utils/keyboard';
 
@@ -27,6 +28,24 @@ export type Props<T extends Value> = {
     selectedItemRef?: React.RefObject<HTMLDivElement | null>;
     options: T[];
     customNoOptionsMessage?: React.ReactNode;
+
+    /**
+     * The results' name: with it, the results are a listbox and each row an option (guideline 1.2)
+     */
+    listLabel?: string;
+
+    /**
+     * The rows' ids: `<optionIdPrefix>.option.<the option's label>`
+     */
+    optionIdPrefix?: string;
+};
+
+/** What a result row is told when the results are a listbox; a row rendered by a component passes it to its root. */
+export type OptionSemantics = {
+    role?: 'option';
+    'aria-selected'?: boolean;
+    'aria-label'?: string;
+    'data-agentom-id'?: string;
 };
 
 type State = {
@@ -126,6 +145,25 @@ export default class MultiSelectList<T extends Value> extends React.PureComponen
         this.props.onSelect(options[selected]);
     };
 
+    /**
+     * A result row as an option of the listbox, when the list is named: the row a click (or Enter, on the highlighted
+     * one) adds, said to be an option, selected while highlighted, named by its label (what the list already
+     * announces for the highlighted row, not its picture's text and status), with the id
+     * `<optionIdPrefix>.option.<its label>`. Only attributes are added: the row looks and behaves as before (the
+     * keyboard still goes through the search field).
+     */
+    private asOption = (row: React.ReactNode, option: T, isSelected: boolean) => {
+        if (!this.props.listLabel || !React.isValidElement(row)) {
+            return row;
+        }
+        const label = String(this.props.ariaLabelRenderer(option) ?? '');
+        const semantics: OptionSemantics = {role: 'option', 'aria-selected': isSelected, ...(label ? {'aria-label': label} : {})};
+        if (this.props.optionIdPrefix && label) {
+            semantics['data-agentom-id'] = `${this.props.optionIdPrefix}.option.${agentomIdSegment(label)}`;
+        }
+        return React.cloneElement(row as React.ReactElement<OptionSemantics>, semantics);
+    };
+
     private defaultOptionRenderer = (
         option: T,
         isSelected: boolean,
@@ -203,7 +241,7 @@ export default class MultiSelectList<T extends Value> extends React.PureComponen
                 renderer = this.defaultOptionRenderer;
             }
 
-            const optionControls = options.map((o, i) => renderer(o, this.state.selected === i, this.props.onAdd, this.select));
+            const optionControls = options.map((o, i) => this.asOption(renderer(o, this.state.selected === i, this.props.onAdd, this.select), o, this.state.selected === i));
 
             const selectedOption = options[this.state.selected];
             const ariaLabel = this.props.ariaLabelRenderer(selectedOption);
@@ -235,7 +273,10 @@ export default class MultiSelectList<T extends Value> extends React.PureComponen
                         ref={this.listRef}
                         id='multiSelectList'
                         className='more-modal__options'
-                        role='presentation'
+
+                        // with a name, the results are a listbox of options (asOption); without, as before
+                        role={this.props.listLabel ? 'listbox' : 'presentation'}
+                        aria-label={this.props.listLabel}
                     >
                         {optionControls}
                     </div>

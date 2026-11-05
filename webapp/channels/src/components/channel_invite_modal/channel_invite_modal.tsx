@@ -801,6 +801,7 @@ const ChannelInviteModalComponent = (props: Props) => {
 
     const content = (
         <MultiSelect
+            optionIdPrefix='channel-invite'
             key='addUsersToChannelKey'
             options={groupAndUserOptions}
             optionRenderer={renderOption}

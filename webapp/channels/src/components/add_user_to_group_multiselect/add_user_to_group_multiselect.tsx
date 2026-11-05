@@ -217,6 +217,7 @@ export class AddUserToGroupMultiSelect extends React.PureComponent<Props, State>
 
         return (
             <MultiSelect
+                optionIdPrefix='add-users-to-group'
                 key={this.props.multilSelectKey}
                 options={users}
                 optionRenderer={this.renderOption}

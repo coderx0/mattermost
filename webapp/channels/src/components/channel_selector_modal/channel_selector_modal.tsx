@@ -304,6 +304,7 @@ export class ChannelSelectorModal extends React.PureComponent<Props, State> {
                 id='channelSelectorModal'
             >
                 <MultiSelect<ChannelWithTeamDataValue>
+                    optionIdPrefix='channel-selector'
                     key='addChannelsToSchemeKey'
                     options={options}
                     optionRenderer={this.renderOption}

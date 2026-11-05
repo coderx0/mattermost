@@ -288,6 +288,7 @@ export class AddGroupsToChannelModal extends React.PureComponent<Props, State> {
                 <Modal.Body>
                     {addError}
                     <MultiSelect
+                        optionIdPrefix='add-groups-to-channel'
                         key='addGroupsToChannelKey'
                         options={groupsToShowValues}
                         optionRenderer={this.renderOption}

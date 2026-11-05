@@ -159,6 +159,9 @@ export class TeamSelectorModal extends React.PureComponent<Props, State> {
         this.props.actions.setModalSearchTerm(term);
     };
 
+    // a team as its row shows it, by its display name (its label is its URL name): what the list announces and names its option by
+    renderAriaLabel = (option: TeamValue) => option?.display_name ?? '';
+
     renderOption = (option: TeamValue, isSelected: boolean, onAdd: (value: TeamValue) => void, onMouseMove: (value: TeamValue) => void) => {
         let rowSelected = '';
         if (isSelected) {
@@ -297,6 +300,8 @@ export class TeamSelectorModal extends React.PureComponent<Props, State> {
                 <Modal.Body>
                     {confirmModal}
                     <MultiSelect<TeamValue>
+                        optionIdPrefix='team-selector'
+                        ariaLabelRenderer={this.renderAriaLabel}
                         key='addTeamsToSchemeKey'
                         options={teamsValues}
                         optionRenderer={this.renderOption}

@@ -26139,6 +26139,10 @@
     "defaultMessage": "Go",
     "description": "Default label of the submit button in multi-select dialogs (e.g. starting a direct message with the selected people); very short button text."
   },
+  "multiselect.list.ariaLabel": {
+    "defaultMessage": "Search results",
+    "description": "Accessible name of the list of matches under a multi-select search field (add people, groups, teams or channels), read by assistive technology and agents."
+  },
   "multiselect.list.notFound": {
     "defaultMessage": "No results found matching <b>{searchQuery}</b>",
     "description": "Empty-state text in a multi-select list when no options match the search; {searchQuery} is the user's search text and <b> wraps it in bold."

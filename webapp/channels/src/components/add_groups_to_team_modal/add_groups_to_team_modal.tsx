@@ -307,6 +307,7 @@ export class AddGroupsToTeamModal extends React.PureComponent<Props, State> {
                 <Modal.Body>
                     {addError}
                     <MultiSelect
+                        optionIdPrefix='add-groups-to-team'
                         key='addGroupsToTeamKey'
                         options={groupsOptionsToShow}
                         optionRenderer={this.renderOption}

@@ -79,6 +79,12 @@ export type Props<T extends Value> = {
      * What the submit button does, given to it as its description
      */
     submitDescription?: string;
+
+    /**
+     * With it, the results are a listbox named "Search results", each row an option with the id
+     * `<optionIdPrefix>.option.<its label>` (multiselect_list.tsx)
+     */
+    optionIdPrefix?: string;
 };
 
 export type State = {
@@ -96,6 +102,9 @@ const ERROR_ID = 'multiSelectMessageError';
 
 export class MultiSelect<T extends Value> extends React.PureComponent<Props<T>, State> {
     private listRef = React.createRef<MultiSelectList<T>>();
+
+    /** The results' name when they're a listbox of options (with optionIdPrefix): the same in every dialog */
+    private listLabel = () => (this.props.optionIdPrefix ? this.props.intl.formatMessage({id: 'multiselect.list.ariaLabel', defaultMessage: 'Search results'}) : undefined);
     private reactSelectRef = React.createRef<SelectInstance<T>>();
     private selected: T | null = null;
 
@@ -486,6 +495,8 @@ export class MultiSelect<T extends Value> extends React.PureComponent<Props<T>, 
                         query={this.state.input}
                         selectedItemRef={this.props.selectedItemRef}
                         customNoOptionsMessage={this.props.customNoOptionsMessage || undefined}
+                        listLabel={this.listLabel()}
+                        optionIdPrefix={this.props.optionIdPrefix}
                     />
                 );
             }
@@ -502,6 +513,8 @@ export class MultiSelect<T extends Value> extends React.PureComponent<Props<T>, 
                     query={this.state.input}
                     selectedItemRef={this.props.selectedItemRef}
                     customNoOptionsMessage={this.props.customNoOptionsMessage || undefined}
+                    listLabel={this.listLabel()}
+                    optionIdPrefix={this.props.optionIdPrefix}
                 />
             );
         }
