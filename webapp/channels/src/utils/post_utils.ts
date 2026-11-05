@@ -24,21 +24,23 @@ import {getChannel} from 'mattermost-redux/selectors/entities/channels';
 import {getConfig} from 'mattermost-redux/selectors/entities/general';
 import {getAllGroupsForReferenceByName} from 'mattermost-redux/selectors/entities/groups';
 import {isPostFlagged, makeGetReactionsForPost} from 'mattermost-redux/selectors/entities/posts';
-import {getTeammateNameDisplaySetting, isCollapsedThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
+import {getBool, getTeammateNameDisplaySetting, isCollapsedThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
 import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
 import {getCurrentTeamId, getTeam} from 'mattermost-redux/selectors/entities/teams';
+import {getCurrentTimezoneFull} from 'mattermost-redux/selectors/entities/timezone';
 import {makeGetDisplayName, getCurrentUserId, getUser, getUsersByUsername} from 'mattermost-redux/selectors/entities/users';
 import type {UserMentionKey} from 'mattermost-redux/selectors/entities/users';
 import {getUserIdFromChannelName} from 'mattermost-redux/utils/channel_utils';
 import {memoizeResult} from 'mattermost-redux/utils/helpers';
 import * as PostListUtils from 'mattermost-redux/utils/post_list';
 import {canEditPost as canEditPostRedux} from 'mattermost-redux/utils/post_utils';
+import {getUserCurrentTimezone} from 'mattermost-redux/utils/timezone_utils';
 import {displayUsername} from 'mattermost-redux/utils/user_utils';
 
 import {getEmojiMap} from 'selectors/emojis';
 import {getIsMobileView} from 'selectors/views/browser';
 
-import Constants, {PostListRowListIds} from 'utils/constants';
+import Constants, {PostListRowListIds, Preferences} from 'utils/constants';
 import * as Keyboard from 'utils/keyboard';
 import {formatWithRenderer} from 'utils/markdown';
 import MentionableRenderer from 'utils/markdown/mentionable_renderer';
@@ -503,6 +505,10 @@ export function usePostAriaLabel(post: Post | undefined, autotranslated: boolean
         const mentions = getMentionsFromMessage(state, post);
         const teammateNameDisplaySetting = getTeammateNameDisplaySetting(state);
 
+        // the time as the post shows it (components/timestamp): in the user's time zone, 12 or 24 hours as they chose
+        const timeZone = getUserCurrentTimezone(getCurrentTimezoneFull(state)) || undefined;
+        const hour12 = !getBool(state, Preferences.CATEGORY_DISPLAY_SETTINGS, Preferences.USE_MILITARY_TIME, false);
+
         return createAriaLabelMemoized(
             post,
             authorDisplayName,
@@ -513,12 +519,20 @@ export function usePostAriaLabel(post: Post | undefined, autotranslated: boolean
             mentions,
             teammateNameDisplaySetting,
             autotranslated,
+            timeZone,
+            hour12,
         );
     });
 }
 
-export function createAriaLabelForPost(post: Post, author: string, isFlagged: boolean, reactions: Record<string, Reaction> | undefined, intl: IntlShape, emojiMap: EmojiMap, mentions: Record<string, UserProfile>, teammateNameDisplaySetting: string, autotranslated: boolean): string {
-    const {formatMessage, formatTime, formatDate} = intl;
+/**
+ * The post's label: when, who, what. `timeZone` and `hour12` give its time as the post shows it (the user's time
+ * zone and clock); without them, the browser's.
+ */
+export function createAriaLabelForPost(post: Post, author: string, isFlagged: boolean, reactions: Record<string, Reaction> | undefined, intl: IntlShape, emojiMap: EmojiMap, mentions: Record<string, UserProfile>, teammateNameDisplaySetting: string, autotranslated: boolean, timeZone?: string, hour12?: boolean): string {
+    const {formatMessage} = intl;
+    const formatTime = (time: number) => intl.formatTime(time, {timeZone, ...(hour12 === undefined ? {} : {hour12})});
+    const formatDate = (time: number, options: Parameters<IntlShape['formatDate']>[1]) => intl.formatDate(time, {...options, timeZone});
 
     const translation = getPostTranslation(post, intl.locale);
     const isTranslated = autotranslated && post.type === '' && translation?.state === 'ready';

@@ -940,6 +940,22 @@ describe('PostUtils.createAriaLabelForPost', () => {
         expect(ariaLabel.indexOf('replied')).not.toBe(-1);
     });
 
+    test('says the time as the post shows it: in the user\'s time zone and clock, not the browser\'s', () => {
+        const intl = createIntl({locale: 'en', messages: {}, defaultLocale: 'en'});
+
+        // 16:35 UTC on Thursday, November 5, 2026: 22:05 in Kolkata
+        const testPost = TestHelper.getPostMock({message: 'test_message', create_at: Date.UTC(2026, 10, 5, 16, 35)});
+        const label = (timeZone?: string, hour12?: boolean) => PostUtils.createAriaLabelForPost(testPost, 'ashley', false, {}, intl, emojiMap, users, teammateNameDisplaySetting, false, timeZone, hour12);
+
+        expect(label('UTC', true)).toMatch(/^At 4:35\sPM Thursday, November 5, ashley wrote/);
+        expect(label('Asia/Kolkata', true)).toMatch(/^At 10:05\sPM Thursday, November 5, ashley wrote/);
+        expect(label('UTC', false)).toMatch(/^At 16:35 Thursday, November 5, ashley wrote/);
+
+        // the date is the user's too: 01:30 UTC on Friday is still Thursday in Chicago
+        const late = TestHelper.getPostMock({message: 'test_message', create_at: Date.UTC(2026, 10, 6, 1, 30)});
+        expect(PostUtils.createAriaLabelForPost(late, 'ashley', false, {}, intl, emojiMap, users, teammateNameDisplaySetting, false, 'America/Chicago', true)).toMatch(/^At 7:30\sPM Thursday, November 5,/);
+    });
+
     test('Should translate emoji into {emoji-name} emoji', () => {
         const intl = createIntl({locale: 'en', messages: {}, defaultLocale: 'en'});
 
