@@ -471,9 +471,11 @@ const SearchResults: React.FC<Props> = (props: Props): JSX.Element => {
                         id={`${searchType}Panel`}
                         className='files-or-messages-panel'
 
-                        // a feed of results named by the panel's title: its messages are items of one kind (guideline 2.6)
+                        // a feed of results named by the panel's title: its messages are items of one kind (guideline 2.6),
+                        // `search.post.<id>` in a list of its own id (search, saved and pinned share the one panel)
                         role='feed'
                         aria-label={formattedTitle}
+                        data-agentom-id='search.results'
                     >
                         {contentItems}
                     </div>

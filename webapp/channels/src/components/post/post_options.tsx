@@ -89,33 +89,60 @@ function postOptionsShown(props: ShownProps, hoverLocal: boolean) {
     };
 }
 
+type RevealProps = ShownProps & Pick<Props, 'isFlagged' | 'collapsedThreadsEnabled' | 'replyCount' | 'isPostBeingEdited' | 'canDelete' | 'canReply'> & {
+
+    /** the post shows its reactions with an Add a reaction button after them, which only shows on hover */
+    reactionAddShown?: boolean;
+};
+
 /**
  * The names of a post's options that are shown only while the pointer is over it (wider screens, where the post
  * menu's items are hidden until then), comma-separated for data-agentom-reveals; undefined when there are none.
  * Each name is its button's own accessible name. Recent reactions are left out: they're shortcuts for Add Reaction.
+ * In search results (and the saved and pinned lists) the menu and save button are rendered all along and shown on
+ * hover, and so is a reply button with no count; a post's reactions end with an Add a reaction button that shows on
+ * hover wherever they're shown.
  */
-export function getPostHoverReveals(props: ShownProps & Pick<Props, 'isFlagged' | 'collapsedThreadsEnabled' | 'replyCount' | 'isPostBeingEdited' | 'canDelete'>, intl: Pick<IntlShape, 'formatMessage'>): string | undefined {
+export function getPostHoverReveals(props: RevealProps, intl: Pick<IntlShape, 'formatMessage'>): string | undefined {
     const {post} = props;
     const systemMessage = isSystemMessage(post);
-    if (props.isMobileView || props.location === Locations.SEARCH || props.isPostBeingEdited || isPostEphemeral(post) ||
+    if (props.isMobileView || props.isPostBeingEdited || isPostEphemeral(post) ||
         post.state === Posts.POST_DELETED || (systemMessage && !props.canDelete)) {
         return undefined;
     }
     const shown = postOptionsShown(props, true);
+    const more = intl.formatMessage({id: 'post_info.dot_menu.tooltip.more', defaultMessage: 'More'}).toLowerCase();
+    const flag = (props.isFlagged ? intl.formatMessage({id: 'flag_post.unflag', defaultMessage: 'Remove from Saved'}) : intl.formatMessage({id: 'flag_post.flag', defaultMessage: 'Save Message'})).toLowerCase();
+    const reply = intl.formatMessage({id: 'post_info.comment_icon.tooltip.reply', defaultMessage: 'Reply'}).toLowerCase();
     const names: string[] = [];
-    if (shown.reaction) {
-        names.push(intl.formatMessage({id: 'post_info.tooltip.add_reactions', defaultMessage: 'Add Reaction'}));
-    }
-    if (shown.flag) {
-        names.push((props.isFlagged ? intl.formatMessage({id: 'flag_post.unflag', defaultMessage: 'Remove from Saved'}) : intl.formatMessage({id: 'flag_post.flag', defaultMessage: 'Save Message'})).toLowerCase());
-    }
+    if (props.location === Locations.SEARCH) {
+        // as PostOptions renders them there: the menu, save, and reply unless a thread footer replaces it or a count keeps it shown
+        names.push(more);
+        if (shown.flag) {
+            names.push(flag);
+        }
+        const hasCRTFooter = props.collapsedThreadsEnabled && !post.root_id && (post.reply_count > 0 || post.is_following);
+        if (props.canReply && !hasCRTFooter && !props.replyCount) {
+            names.push(reply);
+        }
+    } else {
+        if (shown.reaction) {
+            names.push(intl.formatMessage({id: 'post_info.tooltip.add_reactions', defaultMessage: 'Add Reaction'}));
+        }
+        if (shown.flag) {
+            names.push(flag);
+        }
 
-    // A reply button showing a count is shown without hover too
-    const commentCount = props.collapsedThreadsEnabled ? 0 : (props.replyCount ?? 0);
-    if (shown.comment && commentCount === 0) {
-        names.push(intl.formatMessage({id: 'post_info.comment_icon.tooltip.reply', defaultMessage: 'Reply'}).toLowerCase());
+        // A reply button showing a count is shown without hover too
+        const commentCount = props.collapsedThreadsEnabled ? 0 : (props.replyCount ?? 0);
+        if (shown.comment && commentCount === 0) {
+            names.push(reply);
+        }
+        names.push(more);
     }
-    names.push(intl.formatMessage({id: 'post_info.dot_menu.tooltip.more', defaultMessage: 'More'}).toLowerCase());
+    if (props.reactionAddShown) {
+        names.push(intl.formatMessage({id: 'reaction.add.ariaLabel', defaultMessage: 'Add a reaction'}));
+    }
     return names.join(', ');
 }
 

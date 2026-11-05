@@ -123,6 +123,10 @@ export type Props = {
     isMobileView: boolean;
     canReply?: boolean;
     replyCount?: number;
+
+    /** the post has reactions, and the user may add one: its reactions end with an Add a reaction button */
+    hasReactions?: boolean;
+    canAddReactions?: boolean;
     isFlaggedPosts?: boolean;
     isPinnedPosts?: boolean;
     clickToReply?: boolean;
@@ -780,7 +784,7 @@ function PostComponent(props: Props) {
                 id={getTestId()}
                 data-testid={postAriaLabelDivTestId}
                 data-agentom-id={getPostAgentomId(props.location, post.id)}
-                data-agentom-reveals={isModal ? undefined : getPostHoverReveals(props, {formatMessage})}
+                data-agentom-reveals={isModal ? undefined : getPostHoverReveals({...props, reactionAddShown: showReactions && props.hasReactions && props.canAddReactions}, {formatMessage})}
                 post={post}
                 className={getClassName()}
                 style={props.preventClickInteraction ? preventInteractionStyle : undefined}

@@ -205,7 +205,19 @@ describe('getPostHoverReveals', () => {
 
     test('declares nothing where nothing waits for hover', () => {
         expect(getPostHoverReveals({...center, isMobileView: true}, intl)).toBeUndefined();
-        expect(getPostHoverReveals({...center, location: Locations.SEARCH as keyof typeof Locations}, intl)).toBeUndefined();
         expect(getPostHoverReveals({...center, isPostBeingEdited: true}, intl)).toBeUndefined();
+    });
+
+    test('in search results names the menu, save, and reply unless a count or a thread footer shows instead', () => {
+        const search = {...center, location: Locations.SEARCH as keyof typeof Locations, canReply: true};
+        expect(getPostHoverReveals(search, intl)).toBe('more, save message, reply');
+        expect(getPostHoverReveals({...search, isFlagged: true, replyCount: 3}, intl)).toBe('more, remove from saved');
+        expect(getPostHoverReveals({...search, post: {...search.post, reply_count: 2}}, intl)).toBe('more, save message');
+        expect(getPostHoverReveals({...search, canReply: false}, intl)).toBe('more, save message');
+    });
+
+    test("names the reactions' Add a reaction button where it waits for hover", () => {
+        expect(getPostHoverReveals({...center, reactionAddShown: true}, intl)).toBe('Add Reaction, save message, reply, more, Add a reaction');
+        expect(getPostHoverReveals({...center, location: Locations.SEARCH as keyof typeof Locations, reactionAddShown: true}, intl)).toBe('more, save message, Add a reaction');
     });
 });

@@ -21,6 +21,7 @@ import {
     getBool,
     isCollapsedThreadsEnabled,
 } from 'mattermost-redux/selectors/entities/preferences';
+import {canAddReactions} from 'mattermost-redux/selectors/entities/reactions';
 import {getCurrentTeam, getTeam, getTeamMemberships} from 'mattermost-redux/selectors/entities/teams';
 import {getCurrentUserId, getUser} from 'mattermost-redux/selectors/entities/users';
 
@@ -40,7 +41,7 @@ import {getIsMobileView} from 'selectors/views/browser';
 import {isArchivedChannel} from 'utils/channel_utils';
 import {Locations, Preferences, RHSStates} from 'utils/constants';
 import {isPopoutWindow} from 'utils/popouts/popout_windows';
-import {areConsecutivePostsBySameUser, canDeletePost, getPostTranslation, shouldShowActionsMenu, shouldShowDotMenu} from 'utils/post_utils';
+import {areConsecutivePostsBySameUser, canDeletePost, getPostTranslation, makeGetUniqueReactionsToPost, shouldShowActionsMenu, shouldShowDotMenu} from 'utils/post_utils';
 import {getDisplayNameByUser} from 'utils/utils';
 
 import type {GlobalState} from 'types/store';
@@ -101,6 +102,9 @@ function isConsecutivePost(state: GlobalState, ownProps: OwnProps, locale: strin
 function makeMapStateToProps() {
     const isPostCommentMention = makeIsPostCommentMention();
     const getReplyCount = makeGetCommentCountForPost();
+
+    // the reactions the post's reaction list shows (the same selector): with any, the list ends with Add a reaction
+    const getUniqueReactions = makeGetUniqueReactionsToPost();
 
     return function mapStateToProps(state: GlobalState, ownProps: OwnProps) {
         let post;
@@ -201,6 +205,8 @@ function makeMapStateToProps() {
             hasReplies: getReplyCount(state, post) > 0,
             replyCount: getReplyCount(state, post),
             canReply,
+            hasReactions: Object.keys(getUniqueReactions(state, post.id) ?? {}).length > 0,
+            canAddReactions: canAddReactions(state, post.channel_id),
             pluginPostTypes: state.plugins.postTypes,
             channel,
             channelIsArchived: isArchivedChannel(channel),
