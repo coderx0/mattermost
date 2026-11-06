@@ -57,4 +57,24 @@ describe('components/analytics/statistic_count.tsx', () => {
 
         expect(screen.getByTestId('test-stat')).toHaveTextContent('42%');
     });
+
+    test('names each card by its title and value, so they can\'t be read against each other', () => {
+        renderWithContext(
+            <>
+                <StatisticCount
+                    title='Public Channels'
+                    icon='fa-users'
+                    count={7}
+                />
+                <StatisticCount
+                    title='Private Channels'
+                    icon='fa-lock'
+                    count={5}
+                />
+            </>,
+        );
+
+        expect(screen.getByRole('group', {name: 'Public Channels 7'})).toBeInTheDocument();
+        expect(screen.getByRole('group', {name: 'Private Channels 5'})).toBeInTheDocument();
+    });
 });

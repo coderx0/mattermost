@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 import classNames from 'classnames';
-import React from 'react';
+import React, {useId} from 'react';
 import type {ReactNode} from 'react';
 import {FormattedMessage} from 'react-intl';
 
@@ -25,6 +25,7 @@ const StatisticCount = ({
     status,
     formatter,
 }: Props) => {
+    const uid = useId();
     const loading = (
         <FormattedMessage
             id='analytics.chart.loading'
@@ -39,6 +40,8 @@ const StatisticCount = ({
         <div
             data-testid={id ? `${id}Card` : undefined}
             className='grid-statistics__card'
+            role='group'
+            aria-labelledby={`${uid}-title ${uid}-value`}
         >
             <div
                 className={classNames({
@@ -47,6 +50,7 @@ const StatisticCount = ({
                 })}
             >
                 <div
+                    id={`${uid}-title`}
                     data-testid={`${id}Title`}
                     className={classNames({
                         title: true,
@@ -58,6 +62,7 @@ const StatisticCount = ({
                     <i className={'fa ' + icon}/>
                 </div>
                 <div
+                    id={`${uid}-value`}
                     data-testid={id}
                     className={classNames({
                         content: true,
