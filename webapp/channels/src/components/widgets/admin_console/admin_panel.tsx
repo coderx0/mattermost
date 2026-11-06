@@ -31,13 +31,15 @@ const AdminPanel: React.FC<Props> = ({
     <div
         className={'AdminPanel clearfix ' + className}
         id={id}
+        role={id ? 'region' : undefined}
+        aria-labelledby={id ? `${id}-title` : undefined}
     >
         <div
             className='header'
             onClick={onHeaderClick}
         >
             <div>
-                <h3>
+                <h3 id={id ? `${id}-title` : undefined}>
                     <FormattedMessage
                         {...title}
                     />

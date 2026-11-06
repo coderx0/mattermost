@@ -65,14 +65,18 @@ exports[`components/admin_console/permission_schemes_settings/permission_schemes
           </div>
         </div>
         <div
+          aria-labelledby="systemScheme-title"
           class="AdminPanel clearfix AdminPanelWithLink "
           id="systemScheme"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="systemScheme-title"
+              >
                 System Scheme
               </h3>
               <div
@@ -104,14 +108,18 @@ exports[`components/admin_console/permission_schemes_settings/permission_schemes
           </div>
         </div>
         <div
+          aria-labelledby="team-override-schemes-title"
           class="AdminPanel clearfix AdminPanelWithLink permissions-block"
           id="team-override-schemes"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="team-override-schemes-title"
+              >
                 Team Override Schemes
               </h3>
               <div
@@ -303,14 +311,18 @@ exports[`components/admin_console/permission_schemes_settings/permission_schemes
           </div>
         </div>
         <div
+          aria-labelledby="systemScheme-title"
           class="AdminPanel clearfix AdminPanelWithLink "
           id="systemScheme"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="systemScheme-title"
+              >
                 System Scheme
               </h3>
               <div
@@ -342,14 +354,18 @@ exports[`components/admin_console/permission_schemes_settings/permission_schemes
           </div>
         </div>
         <div
+          aria-labelledby="team-override-schemes-title"
           class="AdminPanel clearfix AdminPanelWithLink permissions-block"
           id="team-override-schemes"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="team-override-schemes-title"
+              >
                 Team Override Schemes
               </h3>
               <div
@@ -429,14 +445,18 @@ exports[`components/admin_console/permission_schemes_settings/permission_schemes
           </div>
         </div>
         <div
+          aria-labelledby="systemScheme-title"
           class="AdminPanel clearfix AdminPanelWithLink "
           id="systemScheme"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="systemScheme-title"
+              >
                 System Scheme
               </h3>
               <div
@@ -468,14 +488,18 @@ exports[`components/admin_console/permission_schemes_settings/permission_schemes
           </div>
         </div>
         <div
+          aria-labelledby="team-override-schemes-title"
           class="AdminPanel clearfix AdminPanelWithLink permissions-block"
           id="team-override-schemes"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="team-override-schemes-title"
+              >
                 Team Override Schemes
               </h3>
               <div
@@ -685,14 +709,18 @@ exports[`components/admin_console/permission_schemes_settings/permission_schemes
           </div>
         </div>
         <div
+          aria-labelledby="systemScheme-title"
           class="AdminPanel clearfix AdminPanelWithLink "
           id="systemScheme"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="systemScheme-title"
+              >
                 System Scheme
               </h3>
               <div
@@ -724,14 +752,18 @@ exports[`components/admin_console/permission_schemes_settings/permission_schemes
           </div>
         </div>
         <div
+          aria-labelledby="team-override-schemes-title"
           class="AdminPanel clearfix AdminPanelWithLink permissions-block"
           id="team-override-schemes"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="team-override-schemes-title"
+              >
                 Team Override Schemes
               </h3>
               <div
@@ -941,14 +973,18 @@ exports[`components/admin_console/permission_schemes_settings/permission_schemes
           </div>
         </div>
         <div
+          aria-labelledby="systemScheme-title"
           class="AdminPanel clearfix AdminPanelWithLink "
           id="systemScheme"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="systemScheme-title"
+              >
                 System Scheme
               </h3>
               <div
@@ -980,14 +1016,18 @@ exports[`components/admin_console/permission_schemes_settings/permission_schemes
           </div>
         </div>
         <div
+          aria-labelledby="team-override-schemes-title"
           class="AdminPanel clearfix AdminPanelWithLink permissions-block"
           id="team-override-schemes"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="team-override-schemes-title"
+              >
                 Team Override Schemes
               </h3>
               <div

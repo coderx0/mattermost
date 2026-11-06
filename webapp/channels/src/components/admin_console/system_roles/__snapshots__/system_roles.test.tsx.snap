@@ -18,14 +18,18 @@ exports[`admin_console/system_roles should match snapshot 1`] = `
         class="admin-console__content"
       >
         <div
+          aria-labelledby="SystemRoles-title"
           class="AdminPanel clearfix "
           id="SystemRoles"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="SystemRoles-title"
+              >
                 Admin Roles
               </h3>
               <div

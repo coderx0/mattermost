@@ -3,14 +3,18 @@
 exports[`admin_console/system_role_permissions should match snapshot 1`] = `
 <div>
   <div
+    aria-labelledby="SystemRolePermissions-title"
     class="AdminPanel clearfix "
     id="SystemRolePermissions"
+    role="region"
   >
     <div
       class="header"
     >
       <div>
-        <h3>
+        <h3
+          id="SystemRolePermissions-title"
+        >
           Privileges
         </h3>
         <div
@@ -707,14 +711,18 @@ exports[`admin_console/system_role_permissions should match snapshot 1`] = `
 exports[`admin_console/system_role_permissions should match snapshot with isLicensedForCloud = true 1`] = `
 <div>
   <div
+    aria-labelledby="SystemRolePermissions-title"
     class="AdminPanel clearfix "
     id="SystemRolePermissions"
+    role="region"
   >
     <div
       class="header"
     >
       <div>
-        <h3>
+        <h3
+          id="SystemRolePermissions-title"
+        >
           Privileges
         </h3>
         <div

@@ -9,6 +9,7 @@ exports[`components/AdminConsole/CustomEnableDisableGuestAccountsSetting renders
   >
     <legend
       class="control-label form-legend col-sm-4"
+      id="MySetting-label"
     >
       Enable Guest Access: 
     </legend>
@@ -19,18 +20,24 @@ exports[`components/AdminConsole/CustomEnableDisableGuestAccountsSetting renders
         class="Label-eJcoMl iShgPr"
       >
         <input
+          aria-labelledby="MySetting-label MySettingtrue-label"
           data-testid="MySettingtrue"
           id="MySettingtrue"
           name="MySetting"
           type="radio"
           value="true"
         />
-        True
+        <span
+          id="MySettingtrue-label"
+        >
+          True
+        </span>
       </label>
       <label
         class="Label-eJcoMl iShgPr"
       >
         <input
+          aria-labelledby="MySetting-label MySettingfalse-label"
           checked=""
           data-testid="MySettingfalse"
           id="MySettingfalse"
@@ -38,7 +45,11 @@ exports[`components/AdminConsole/CustomEnableDisableGuestAccountsSetting renders
           type="radio"
           value="false"
         />
-        False
+        <span
+          id="MySettingfalse-label"
+        >
+          False
+        </span>
       </label>
       <div
         class="help-text"
@@ -66,6 +77,7 @@ exports[`components/AdminConsole/CustomEnableDisableGuestAccountsSetting renders
   >
     <legend
       class="control-label form-legend col-sm-4"
+      id="MySetting-label"
     >
       Enable Guest Access: 
     </legend>
@@ -76,6 +88,7 @@ exports[`components/AdminConsole/CustomEnableDisableGuestAccountsSetting renders
         class="Label-eJcoMl iShgPr"
       >
         <input
+          aria-labelledby="MySetting-label MySettingtrue-label"
           checked=""
           data-testid="MySettingtrue"
           id="MySettingtrue"
@@ -83,19 +96,28 @@ exports[`components/AdminConsole/CustomEnableDisableGuestAccountsSetting renders
           type="radio"
           value="true"
         />
-        True
+        <span
+          id="MySettingtrue-label"
+        >
+          True
+        </span>
       </label>
       <label
         class="Label-eJcoMl iShgPr"
       >
         <input
+          aria-labelledby="MySetting-label MySettingfalse-label"
           data-testid="MySettingfalse"
           id="MySettingfalse"
           name="MySetting"
           type="radio"
           value="false"
         />
-        False
+        <span
+          id="MySettingfalse-label"
+        >
+          False
+        </span>
       </label>
       <div
         class="help-text"

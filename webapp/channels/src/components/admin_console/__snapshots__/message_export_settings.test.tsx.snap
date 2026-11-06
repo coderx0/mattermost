@@ -28,6 +28,7 @@ exports[`components/MessageExportSettings should match snapshot, disabled, actia
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="enableComplianceExport-label"
             >
               Enable Compliance Export:
             </legend>
@@ -38,18 +39,24 @@ exports[`components/MessageExportSettings should match snapshot, disabled, actia
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="enableComplianceExport-label enableComplianceExporttrue-label"
                   data-testid="enableComplianceExporttrue"
                   id="enableComplianceExporttrue"
                   name="enableComplianceExport"
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="enableComplianceExporttrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="enableComplianceExport-label enableComplianceExportfalse-label"
                   checked=""
                   data-testid="enableComplianceExportfalse"
                   id="enableComplianceExportfalse"
@@ -57,7 +64,11 @@ exports[`components/MessageExportSettings should match snapshot, disabled, actia
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="enableComplianceExportfalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"
@@ -268,6 +279,7 @@ exports[`components/MessageExportSettings should match snapshot, disabled, globa
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="enableComplianceExport-label"
             >
               Enable Compliance Export:
             </legend>
@@ -278,18 +290,24 @@ exports[`components/MessageExportSettings should match snapshot, disabled, globa
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="enableComplianceExport-label enableComplianceExporttrue-label"
                   data-testid="enableComplianceExporttrue"
                   id="enableComplianceExporttrue"
                   name="enableComplianceExport"
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="enableComplianceExporttrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="enableComplianceExport-label enableComplianceExportfalse-label"
                   checked=""
                   data-testid="enableComplianceExportfalse"
                   id="enableComplianceExportfalse"
@@ -297,7 +315,11 @@ exports[`components/MessageExportSettings should match snapshot, disabled, globa
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="enableComplianceExportfalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"
@@ -714,6 +736,7 @@ exports[`components/MessageExportSettings should match snapshot, enabled, actian
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="enableComplianceExport-label"
             >
               Enable Compliance Export:
             </legend>
@@ -724,6 +747,7 @@ exports[`components/MessageExportSettings should match snapshot, enabled, actian
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="enableComplianceExport-label enableComplianceExporttrue-label"
                   checked=""
                   data-testid="enableComplianceExporttrue"
                   id="enableComplianceExporttrue"
@@ -731,19 +755,28 @@ exports[`components/MessageExportSettings should match snapshot, enabled, actian
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="enableComplianceExporttrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="enableComplianceExport-label enableComplianceExportfalse-label"
                   data-testid="enableComplianceExportfalse"
                   id="enableComplianceExportfalse"
                   name="enableComplianceExport"
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="enableComplianceExportfalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"
@@ -951,6 +984,7 @@ exports[`components/MessageExportSettings should match snapshot, enabled, global
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="enableComplianceExport-label"
             >
               Enable Compliance Export:
             </legend>
@@ -961,6 +995,7 @@ exports[`components/MessageExportSettings should match snapshot, enabled, global
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="enableComplianceExport-label enableComplianceExporttrue-label"
                   checked=""
                   data-testid="enableComplianceExporttrue"
                   id="enableComplianceExporttrue"
@@ -968,19 +1003,28 @@ exports[`components/MessageExportSettings should match snapshot, enabled, global
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="enableComplianceExporttrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="enableComplianceExport-label enableComplianceExportfalse-label"
                   data-testid="enableComplianceExportfalse"
                   id="enableComplianceExportfalse"
                   name="enableComplianceExport"
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="enableComplianceExportfalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"
@@ -1387,6 +1431,7 @@ exports[`components/MessageExportSettings should match snapshot, enabled, global
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="enableComplianceExport-label"
             >
               Enable Compliance Export:
             </legend>
@@ -1397,6 +1442,7 @@ exports[`components/MessageExportSettings should match snapshot, enabled, global
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="enableComplianceExport-label enableComplianceExporttrue-label"
                   checked=""
                   data-testid="enableComplianceExporttrue"
                   id="enableComplianceExporttrue"
@@ -1404,19 +1450,28 @@ exports[`components/MessageExportSettings should match snapshot, enabled, global
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="enableComplianceExporttrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="enableComplianceExport-label enableComplianceExportfalse-label"
                   data-testid="enableComplianceExportfalse"
                   id="enableComplianceExportfalse"
                   name="enableComplianceExport"
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="enableComplianceExportfalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"

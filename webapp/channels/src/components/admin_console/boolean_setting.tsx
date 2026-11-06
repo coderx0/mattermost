@@ -134,11 +134,12 @@ const BooleanSetting = ({
                     value='true'
                     id={Utils.createSafeId(id) + 'true'}
                     name={id}
+                    aria-labelledby={`${id}-label ${Utils.createSafeId(id)}true-label`}
                     checked={value}
                     onChange={handleChange}
                     disabled={disabled || setByEnv}
                 />
-                {trueText}
+                <span id={`${Utils.createSafeId(id)}true-label`}>{trueText}</span>
             </Label>
             <Label isDisabled={disabled || setByEnv}>
                 <input
@@ -147,11 +148,12 @@ const BooleanSetting = ({
                     value='false'
                     id={Utils.createSafeId(id) + 'false'}
                     name={id}
+                    aria-labelledby={`${id}-label ${Utils.createSafeId(id)}false-label`}
                     checked={!value}
                     onChange={handleChange}
                     disabled={disabled || setByEnv}
                 />
-                {falseText}
+                <span id={`${Utils.createSafeId(id)}false-label`}>{falseText}</span>
             </Label>
         </SettingSet>
     );

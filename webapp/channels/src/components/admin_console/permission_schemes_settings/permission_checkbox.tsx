@@ -9,9 +9,16 @@ import CheckboxPartialIcon from 'components/widgets/icons/checkbox_partial_icon'
 type Props = {
     value?: string;
     id?: string;
+
+    /** the ids of what names and describes it, and whether its row can't be changed, for assistive technology and agents */
+    labelledBy?: string;
+    describedBy?: string;
+    readOnly?: boolean;
 };
 
-const PermissionCheckbox = ({value = '', id = ''}: Props): JSX.Element => {
+const CHECKED: Record<string, 'true' | 'mixed'> = {checked: 'true', intermediate: 'mixed'};
+
+const PermissionCheckbox = ({value = '', id = '', labelledBy, describedBy, readOnly}: Props): JSX.Element => {
     let icon = null;
     let extraClass = '';
     if (value === 'checked') {
@@ -29,6 +36,14 @@ const PermissionCheckbox = ({value = '', id = ''}: Props): JSX.Element => {
         <div
             className={'permission-check ' + extraClass}
             data-testid={id}
+            {...(labelledBy ? {
+                role: 'checkbox',
+                'aria-checked': CHECKED[value] ?? 'false',
+                'aria-labelledby': labelledBy,
+                'aria-describedby': describedBy,
+                'aria-disabled': readOnly ? true : undefined,
+                'data-agentom-id': id || undefined,
+            } : {})}
         >
             {icon}
         </div>

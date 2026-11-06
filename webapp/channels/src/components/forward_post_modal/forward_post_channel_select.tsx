@@ -303,6 +303,7 @@ function ForwardPostChannelSelect({onSelect, value, currentBodyHeight, validChan
             components={{DropdownIndicator, Option, SingleValue}}
             styles={baseStyles}
             placeholder='Select channel or people'
+            aria-label={formatMessage({id: 'forward_post_modal.channel_select', defaultMessage: 'Select channel or people'})}
             className='forward-post__select'
             data-testid='forward-post-select'
         />

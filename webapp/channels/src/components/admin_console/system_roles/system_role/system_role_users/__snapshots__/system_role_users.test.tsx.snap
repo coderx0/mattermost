@@ -3,14 +3,18 @@
 exports[`admin_console/system_role_users should match snapshot 1`] = `
 <div>
   <div
+    aria-labelledby="SystemRoleUsers-title"
     class="AdminPanel clearfix "
     id="SystemRoleUsers"
+    role="region"
   >
     <div
       class="header"
     >
       <div>
-        <h3>
+        <h3
+          id="SystemRoleUsers-title"
+        >
           Assigned People
         </h3>
         <div
@@ -143,14 +147,18 @@ exports[`admin_console/system_role_users should match snapshot 1`] = `
 exports[`admin_console/system_role_users should match snapshot with readOnly true 1`] = `
 <div>
   <div
+    aria-labelledby="SystemRoleUsers-title"
     class="AdminPanel clearfix "
     id="SystemRoleUsers"
+    role="region"
   >
     <div
       class="header"
     >
       <div>
-        <h3>
+        <h3
+          id="SystemRoleUsers-title"
+        >
           Assigned People
         </h3>
         <div

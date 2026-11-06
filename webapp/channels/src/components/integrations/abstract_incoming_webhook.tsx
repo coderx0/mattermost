@@ -263,6 +263,7 @@ export default class AbstractIncomingWebhook extends PureComponent<Props, State>
                         </div>
                         <div className='form-group'>
                             <label
+                                id='channelIdLabel'
                                 className='control-label col-sm-4'
                                 htmlFor='channelId'
                             >
@@ -273,6 +274,7 @@ export default class AbstractIncomingWebhook extends PureComponent<Props, State>
                             </label>
                             <div className='col-md-5 col-sm-8'>
                                 <ChannelSelect
+                                    ariaLabelledBy='channelIdLabel'
                                     value={this.state.channelId}
                                     onChange={this.updateChannelId}
                                     selectOpen={true}

@@ -3,14 +3,18 @@
 exports[`admin_console/team_channel_settings/channel/ChannelModeration Should match fifth Snapshot 1`] = `
 <div>
   <div
+    aria-labelledby="channel_moderation-title"
     class="AdminPanel clearfix "
     id="channel_moderation"
+    role="region"
   >
     <div
       class="header"
     >
       <div>
-        <h3>
+        <h3
+          id="channel_moderation-title"
+        >
           Advanced Access Control
         </h3>
         <div
@@ -242,14 +246,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelModeration Should ma
 exports[`admin_console/team_channel_settings/channel/ChannelModeration Should match first Snapshot 1`] = `
 <div>
   <div
+    aria-labelledby="channel_moderation-title"
     class="AdminPanel clearfix "
     id="channel_moderation"
+    role="region"
   >
     <div
       class="header"
     >
       <div>
-        <h3>
+        <h3
+          id="channel_moderation-title"
+        >
           Advanced Access Control
         </h3>
         <div
@@ -435,14 +443,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelModeration Should ma
 exports[`admin_console/team_channel_settings/channel/ChannelModeration Should match fourth Snapshot 1`] = `
 <div>
   <div
+    aria-labelledby="channel_moderation-title"
     class="AdminPanel clearfix "
     id="channel_moderation"
+    role="region"
   >
     <div
       class="header"
     >
       <div>
-        <h3>
+        <h3
+          id="channel_moderation-title"
+        >
           Advanced Access Control
         </h3>
         <div
@@ -789,14 +801,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelModeration Should ma
 exports[`admin_console/team_channel_settings/channel/ChannelModeration Should match snapshot with create_post guests off and members on, private channel 1`] = `
 <div>
   <div
+    aria-labelledby="channel_moderation-title"
     class="AdminPanel clearfix "
     id="channel_moderation"
+    role="region"
   >
     <div
       class="header"
     >
       <div>
-        <h3>
+        <h3
+          id="channel_moderation-title"
+        >
           Advanced Access Control
         </h3>
         <div
@@ -977,14 +993,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelModeration Should ma
 exports[`admin_console/team_channel_settings/channel/ChannelModeration Should match snapshot with no team scheme and guest accounts disabled 1`] = `
 <div>
   <div
+    aria-labelledby="channel_moderation-title"
     class="AdminPanel clearfix "
     id="channel_moderation"
+    role="region"
   >
     <div
       class="header"
     >
       <div>
-        <h3>
+        <h3
+          id="channel_moderation-title"
+        >
           Advanced Access Control
         </h3>
         <div
@@ -1104,14 +1124,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelModeration Should ma
 exports[`admin_console/team_channel_settings/channel/ChannelModeration Should match third Snapshot 1`] = `
 <div>
   <div
+    aria-labelledby="channel_moderation-title"
     class="AdminPanel clearfix "
     id="channel_moderation"
+    role="region"
   >
     <div
       class="header"
     >
       <div>
-        <h3>
+        <h3
+          id="channel_moderation-title"
+        >
           Advanced Access Control
         </h3>
         <div

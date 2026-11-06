@@ -92,6 +92,7 @@ exports[`components/admin_console/CustomPluginSettings should match snapshot wit
               >
                 <legend
                   class="control-label form-legend col-sm-4"
+                  id="settingb-label"
                 >
                   Setting Two
                 </legend>
@@ -102,6 +103,7 @@ exports[`components/admin_console/CustomPluginSettings should match snapshot wit
                     class="Label-eJcoMl iShgPr"
                   >
                     <input
+                      aria-labelledby="settingb-label settingbtrue-label"
                       checked=""
                       data-testid="settingbtrue"
                       id="settingbtrue"
@@ -109,19 +111,28 @@ exports[`components/admin_console/CustomPluginSettings should match snapshot wit
                       type="radio"
                       value="true"
                     />
-                    True
+                    <span
+                      id="settingbtrue-label"
+                    >
+                      True
+                    </span>
                   </label>
                   <label
                     class="Label-eJcoMl iShgPr"
                   >
                     <input
+                      aria-labelledby="settingb-label settingbfalse-label"
                       data-testid="settingbfalse"
                       id="settingbfalse"
                       name="settingb"
                       type="radio"
                       value="false"
                     />
-                    False
+                    <span
+                      id="settingbfalse-label"
+                    >
+                      False
+                    </span>
                   </label>
                   <div
                     class="help-text"
@@ -525,6 +536,7 @@ exports[`components/admin_console/CustomPluginSettings should match snapshot wit
               >
                 <legend
                   class="control-label form-legend col-sm-4"
+                  id="PluginSettings.Plugins.testplugin.settingb-label"
                 >
                   Setting Two
                 </legend>
@@ -535,18 +547,24 @@ exports[`components/admin_console/CustomPluginSettings should match snapshot wit
                     class="Label-eJcoMl iShgPr"
                   >
                     <input
+                      aria-labelledby="PluginSettings.Plugins.testplugin.settingb-label PluginSettings.Plugins.testplugin.settingbtrue-label"
                       data-testid="PluginSettings.Plugins.testplugin.settingbtrue"
                       id="PluginSettings.Plugins.testplugin.settingbtrue"
                       name="PluginSettings.Plugins.testplugin.settingb"
                       type="radio"
                       value="true"
                     />
-                    True
+                    <span
+                      id="PluginSettings.Plugins.testplugin.settingbtrue-label"
+                    >
+                      True
+                    </span>
                   </label>
                   <label
                     class="Label-eJcoMl iShgPr"
                   >
                     <input
+                      aria-labelledby="PluginSettings.Plugins.testplugin.settingb-label PluginSettings.Plugins.testplugin.settingbfalse-label"
                       checked=""
                       data-testid="PluginSettings.Plugins.testplugin.settingbfalse"
                       id="PluginSettings.Plugins.testplugin.settingbfalse"
@@ -554,7 +572,11 @@ exports[`components/admin_console/CustomPluginSettings should match snapshot wit
                       type="radio"
                       value="false"
                     />
-                    False
+                    <span
+                      id="PluginSettings.Plugins.testplugin.settingbfalse-label"
+                    >
+                      False
+                    </span>
                   </label>
                   <div
                     class="help-text"

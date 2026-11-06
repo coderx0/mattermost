@@ -89,6 +89,7 @@ exports[`components/integrations/EditIncomingWebhook should have called submitHo
           <label
             class="control-label col-sm-4"
             for="channelId"
+            id="channelIdLabel"
           >
             Channel
           </label>
@@ -96,6 +97,7 @@ exports[`components/integrations/EditIncomingWebhook should have called submitHo
             class="col-md-5 col-sm-8"
           >
             <select
+              aria-labelledby="channelIdLabel"
               class="form-control"
               id="channelSelect"
             >
@@ -292,6 +294,7 @@ exports[`components/integrations/EditIncomingWebhook should have called submitHo
           <label
             class="control-label col-sm-4"
             for="channelId"
+            id="channelIdLabel"
           >
             Channel
           </label>
@@ -299,6 +302,7 @@ exports[`components/integrations/EditIncomingWebhook should have called submitHo
             class="col-md-5 col-sm-8"
           >
             <select
+              aria-labelledby="channelIdLabel"
               class="form-control"
               id="channelSelect"
             >
@@ -522,6 +526,7 @@ exports[`components/integrations/EditIncomingWebhook should show AbstractIncomin
           <label
             class="control-label col-sm-4"
             for="channelId"
+            id="channelIdLabel"
           >
             Channel
           </label>
@@ -529,6 +534,7 @@ exports[`components/integrations/EditIncomingWebhook should show AbstractIncomin
             class="col-md-5 col-sm-8"
           >
             <select
+              aria-labelledby="channelIdLabel"
               class="form-control"
               id="channelSelect"
             >

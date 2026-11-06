@@ -262,14 +262,18 @@ exports[`SystemUserDetail should match default snapshot 1`] = `
           </div>
         </div>
         <div
+          aria-labelledby="teamMembershipPanel-title"
           class="AdminPanel clearfix "
           id="teamMembershipPanel"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="teamMembershipPanel-title"
+              >
                 Team Membership
               </h3>
               <div
@@ -600,14 +604,18 @@ exports[`SystemUserDetail should match snapshot if MFA is enabled 1`] = `
           </div>
         </div>
         <div
+          aria-labelledby="teamMembershipPanel-title"
           class="AdminPanel clearfix "
           id="teamMembershipPanel"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="teamMembershipPanel-title"
+              >
                 Team Membership
               </h3>
               <div
@@ -938,14 +946,18 @@ exports[`SystemUserDetail should not fetch CPA data if disabled 1`] = `
           </div>
         </div>
         <div
+          aria-labelledby="teamMembershipPanel-title"
           class="AdminPanel clearfix "
           id="teamMembershipPanel"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="teamMembershipPanel-title"
+              >
                 Team Membership
               </h3>
               <div
@@ -1276,14 +1288,18 @@ exports[`SystemUserDetail should not show manage user settings button when user 
           </div>
         </div>
         <div
+          aria-labelledby="teamMembershipPanel-title"
           class="AdminPanel clearfix "
           id="teamMembershipPanel"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="teamMembershipPanel-title"
+              >
                 Team Membership
               </h3>
               <div
@@ -1620,14 +1636,18 @@ exports[`SystemUserDetail should show manage user settings button as activated 1
           </div>
         </div>
         <div
+          aria-labelledby="teamMembershipPanel-title"
           class="AdminPanel clearfix "
           id="teamMembershipPanel"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="teamMembershipPanel-title"
+              >
                 Team Membership
               </h3>
               <div
@@ -1958,14 +1978,18 @@ exports[`SystemUserDetail should show manage user settings button as disabled wh
           </div>
         </div>
         <div
+          aria-labelledby="teamMembershipPanel-title"
           class="AdminPanel clearfix "
           id="teamMembershipPanel"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="teamMembershipPanel-title"
+              >
                 Team Membership
               </h3>
               <div
@@ -2327,14 +2351,18 @@ exports[`SystemUserDetail should show the activate user button as disabled when 
           </div>
         </div>
         <div
+          aria-labelledby="teamMembershipPanel-title"
           class="AdminPanel clearfix "
           id="teamMembershipPanel"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="teamMembershipPanel-title"
+              >
                 Team Membership
               </h3>
               <div

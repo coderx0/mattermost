@@ -35,14 +35,18 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
           </div>
         </div>
         <div
+          aria-labelledby="group_profile-title"
           class="AdminPanel clearfix "
           id="group_profile"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="group_profile-title"
+              >
                 Group Profile
               </h3>
               <div
@@ -139,14 +143,18 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
           </div>
         </div>
         <div
+          aria-labelledby="group_teams_and_channels-title"
           class="AdminPanel clearfix "
           id="group_teams_and_channels"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="group_teams_and_channels-title"
+              >
                 Team and Channel Membership
               </h3>
               <div
@@ -191,14 +199,18 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
           </div>
         </div>
         <div
+          aria-labelledby="group_users-title"
           class="AdminPanel clearfix "
           id="group_users"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="group_users-title"
+              >
                 Users
               </h3>
               <div
@@ -446,14 +458,18 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
           </div>
         </div>
         <div
+          aria-labelledby="group_profile-title"
           class="AdminPanel clearfix "
           id="group_profile"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="group_profile-title"
+              >
                 Group Profile
               </h3>
               <div
@@ -550,14 +566,18 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
           </div>
         </div>
         <div
+          aria-labelledby="group_teams_and_channels-title"
           class="AdminPanel clearfix "
           id="group_teams_and_channels"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="group_teams_and_channels-title"
+              >
                 Team and Channel Membership
               </h3>
               <div
@@ -602,14 +622,18 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
           </div>
         </div>
         <div
+          aria-labelledby="group_users-title"
           class="AdminPanel clearfix "
           id="group_users"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="group_users-title"
+              >
                 Users
               </h3>
               <div
@@ -855,14 +879,18 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
           </div>
         </div>
         <div
+          aria-labelledby="group_profile-title"
           class="AdminPanel clearfix "
           id="group_profile"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="group_profile-title"
+              >
                 Group Profile
               </h3>
               <div
@@ -959,14 +987,18 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
           </div>
         </div>
         <div
+          aria-labelledby="group_teams_and_channels-title"
           class="AdminPanel clearfix "
           id="group_teams_and_channels"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="group_teams_and_channels-title"
+              >
                 Team and Channel Membership
               </h3>
               <div
@@ -1011,14 +1043,18 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
           </div>
         </div>
         <div
+          aria-labelledby="group_users-title"
           class="AdminPanel clearfix "
           id="group_users"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="group_users-title"
+              >
                 Users
               </h3>
               <div
@@ -1264,14 +1300,18 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
           </div>
         </div>
         <div
+          aria-labelledby="group_profile-title"
           class="AdminPanel clearfix "
           id="group_profile"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="group_profile-title"
+              >
                 Group Profile
               </h3>
               <div
@@ -1368,14 +1408,18 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
           </div>
         </div>
         <div
+          aria-labelledby="group_teams_and_channels-title"
           class="AdminPanel clearfix "
           id="group_teams_and_channels"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="group_teams_and_channels-title"
+              >
                 Team and Channel Membership
               </h3>
               <div
@@ -1418,14 +1462,18 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
           </div>
         </div>
         <div
+          aria-labelledby="group_users-title"
           class="AdminPanel clearfix "
           id="group_users"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="group_users-title"
+              >
                 Users
               </h3>
               <div

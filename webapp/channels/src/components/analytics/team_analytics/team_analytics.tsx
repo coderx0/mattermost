@@ -81,6 +81,10 @@ type State = {
 };
 
 const messages = defineMessages({
+    teamFilter: {
+        id: 'analytics.team.teamFilter',
+        defaultMessage: 'Team',
+    },
     title: {id: 'analytics.team.title', defaultMessage: 'Team Statistics for {team}'},
     info: {id: 'analytics.system.info', defaultMessage: 'Use data for only the chosen team. Exclude posts in direct message channels that are not tied to a team.'},
     totalPosts: {id: 'analytics.team.totalPosts', defaultMessage: 'Total Posts'},
@@ -312,8 +316,15 @@ export default class TeamAnalytics extends React.PureComponent<Props, State> {
                         />
                     </div>
                     <div className='team-statistics__team-filter'>
+                        <span
+                            id='teamFilterLabel'
+                            className='sr-only'
+                        >
+                            <FormattedMessage {...messages.teamFilter}/>
+                        </span>
                         <select
                             data-testid='teamFilter'
+                            aria-labelledby='teamFilterLabel'
                             className='form-control team-statistics__team-filter__dropdown'
                             onChange={this.handleTeamChange}
                             value={this.state.team.id}

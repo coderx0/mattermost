@@ -17351,6 +17351,10 @@
     "defaultMessage": "Recent Active Users",
     "description": "Title of the table listing recently active users on the admin console Team Statistics page."
   },
+  "analytics.team.teamFilter": {
+    "defaultMessage": "Team",
+    "description": "Accessible name of the team filter on the Team Statistics page, read by assistive technology and agents."
+  },
   "analytics.team.title": {
     "defaultMessage": "Team Statistics for {team}",
     "description": "Page header of the admin console Team Statistics page; {team} is the selected team's display name."
@@ -22782,6 +22786,10 @@
   "forward_post_modal.button.forward": {
     "defaultMessage": "Forward",
     "description": "Confirm button in the Forward Message modal; verb, sends the message to the selected channel."
+  },
+  "forward_post_modal.channel_select": {
+    "defaultMessage": "Select channel or people",
+    "description": "Accessible name of the field choosing where a message is forwarded, read by assistive technology and agents."
   },
   "forward_post_modal.comment.placeholder": {
     "defaultMessage": "Add a comment (optional)",

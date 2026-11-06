@@ -8,8 +8,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_row sho
     id="uniqId"
   >
     <div
+      aria-checked="true"
+      aria-describedby="uniqId-description"
+      aria-labelledby="uniqId-name"
       class="permission-check checked"
+      data-agentom-id="uniqId-checkbox"
       data-testid="uniqId-checkbox"
+      role="checkbox"
     >
       <span
         data-testid="permissionCheckbox-checked"
@@ -73,11 +78,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_row sho
     </div>
     <span
       class="permission-name"
+      id="uniqId-name"
     >
       id
     </span>
     <span
       class="permission-description"
+      id="uniqId-description"
     >
       <span
         class="inherit-link-wrapper"
@@ -101,8 +108,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_row sho
     id="uniqId"
   >
     <div
+      aria-checked="true"
+      aria-describedby="uniqId-description"
+      aria-labelledby="uniqId-name"
       class="permission-check checked"
+      data-agentom-id="uniqId-checkbox"
       data-testid="uniqId-checkbox"
+      role="checkbox"
     >
       <span
         data-testid="permissionCheckbox-checked"
@@ -166,11 +178,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_row sho
     </div>
     <span
       class="permission-name"
+      id="uniqId-name"
     >
       id
     </span>
     <span
       class="permission-description"
+      id="uniqId-description"
     />
   </div>
 </div>
@@ -184,8 +198,14 @@ exports[`components/admin_console/permission_schemes_settings/permission_row sho
     id="uniqId"
   >
     <div
+      aria-checked="true"
+      aria-describedby="uniqId-description"
+      aria-disabled="true"
+      aria-labelledby="uniqId-name"
       class="permission-check checked"
+      data-agentom-id="uniqId-checkbox"
       data-testid="uniqId-checkbox"
+      role="checkbox"
     >
       <span
         data-testid="permissionCheckbox-checked"
@@ -249,11 +269,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_row sho
     </div>
     <span
       class="permission-name"
+      id="uniqId-name"
     >
       id
     </span>
     <span
       class="permission-description"
+      id="uniqId-description"
     >
       <span
         class="inherit-link-wrapper"
@@ -277,8 +299,14 @@ exports[`components/admin_console/permission_schemes_settings/permission_row sho
     id="uniqId"
   >
     <div
+      aria-checked="true"
+      aria-describedby="uniqId-description"
+      aria-disabled="true"
+      aria-labelledby="uniqId-name"
       class="permission-check checked"
+      data-agentom-id="uniqId-checkbox"
       data-testid="uniqId-checkbox"
+      role="checkbox"
     >
       <span
         data-testid="permissionCheckbox-checked"
@@ -342,11 +370,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_row sho
     </div>
     <span
       class="permission-name"
+      id="uniqId-name"
     >
       id
     </span>
     <span
       class="permission-description"
+      id="uniqId-description"
     />
   </div>
 </div>
@@ -360,8 +390,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_row sho
     id="uniqId"
   >
     <div
+      aria-checked="true"
+      aria-describedby="uniqId-description"
+      aria-labelledby="uniqId-name"
       class="permission-check checked"
+      data-agentom-id="uniqId-checkbox"
       data-testid="uniqId-checkbox"
+      role="checkbox"
     >
       <span
         data-testid="permissionCheckbox-checked"
@@ -425,11 +460,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_row sho
     </div>
     <span
       class="permission-name"
+      id="uniqId-name"
     >
       id
     </span>
     <span
       class="permission-description"
+      id="uniqId-description"
     />
   </div>
 </div>

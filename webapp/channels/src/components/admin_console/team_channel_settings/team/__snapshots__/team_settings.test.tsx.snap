@@ -18,14 +18,18 @@ exports[`admin_console/team_channel_settings/team/TeamSettings should match snap
         class="admin-console__content"
       >
         <div
+          aria-labelledby="teams-title"
           class="AdminPanel clearfix "
           id="teams"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="teams-title"
+              >
                 Teams
               </h3>
               <div

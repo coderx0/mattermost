@@ -16,6 +16,9 @@ type Props = {
     selectOpen: boolean;
     selectPrivate: boolean;
     selectDm: boolean;
+
+    /** the id of what names the field, for assistive technology and agents */
+    ariaLabelledBy?: string;
 };
 
 const ChannelSelect = ({
@@ -25,6 +28,7 @@ const ChannelSelect = ({
     selectDm,
     value,
     onChange,
+    ariaLabelledBy,
 }: Props) => {
     const intl = useIntl();
 
@@ -78,6 +82,7 @@ const ChannelSelect = ({
             value={value}
             onChange={onChange}
             id='channelSelect'
+            aria-labelledby={ariaLabelledBy}
         >
             {options}
         </select>

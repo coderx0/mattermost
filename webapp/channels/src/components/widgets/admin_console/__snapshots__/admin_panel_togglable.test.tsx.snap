@@ -3,14 +3,18 @@
 exports[`components/widgets/admin_console/AdminPanelTogglable should match snapshot 1`] = `
 <div>
   <div
+    aria-labelledby="test-id-title"
     class="AdminPanel clearfix AdminPanelTogglable test-class-name"
     id="test-id"
+    role="region"
   >
     <div
       class="header"
     >
       <div>
-        <h3>
+        <h3
+          id="test-id-title"
+        >
           test-title-default
         </h3>
         <div
@@ -92,14 +96,18 @@ exports[`components/widgets/admin_console/AdminPanelTogglable should match snaps
 exports[`components/widgets/admin_console/AdminPanelTogglable should match snapshot closed 1`] = `
 <div>
   <div
+    aria-labelledby="test-id-title"
     class="AdminPanel clearfix AdminPanelTogglable test-class-name closed"
     id="test-id"
+    role="region"
   >
     <div
       class="header"
     >
       <div>
-        <h3>
+        <h3
+          id="test-id-title"
+        >
           test-title-default
         </h3>
         <div

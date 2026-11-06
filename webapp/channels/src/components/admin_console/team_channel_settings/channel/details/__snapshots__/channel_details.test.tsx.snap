@@ -24,14 +24,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelDetails should match
         class="admin-console__content"
       >
         <div
+          aria-labelledby="channel_profile-title"
           class="AdminPanel clearfix "
           id="channel_profile"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="channel_profile-title"
+              >
                 Channel Profile
               </h3>
               <div
@@ -82,14 +86,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelDetails should match
           </div>
         </div>
         <div
+          aria-labelledby="channel_moderation-title"
           class="AdminPanel clearfix "
           id="channel_moderation"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="channel_moderation-title"
+              >
                 Advanced Access Control
               </h3>
               <div
@@ -128,14 +136,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelDetails should match
           </div>
         </div>
         <div
+          aria-labelledby="channel_manage-title"
           class="AdminPanel clearfix "
           id="channel_manage"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="channel_manage-title"
+              >
                 Channel Management
               </h3>
               <div
@@ -309,14 +321,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelDetails should match
           </div>
         </div>
         <div
+          aria-labelledby="channel_groups-title"
           class="AdminPanel clearfix "
           id="channel_groups"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="channel_groups-title"
+              >
                 Groups
               </h3>
               <div
@@ -468,14 +484,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelDetails should match
         class="admin-console__content"
       >
         <div
+          aria-labelledby="channel_profile-title"
           class="AdminPanel clearfix "
           id="channel_profile"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="channel_profile-title"
+              >
                 Channel Profile
               </h3>
               <div
@@ -525,14 +545,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelDetails should match
           </div>
         </div>
         <div
+          aria-labelledby="channel_moderation-title"
           class="AdminPanel clearfix "
           id="channel_moderation"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="channel_moderation-title"
+              >
                 Advanced Access Control
               </h3>
               <div
@@ -571,14 +595,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelDetails should match
           </div>
         </div>
         <div
+          aria-labelledby="channel_manage-title"
           class="AdminPanel clearfix "
           id="channel_manage"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="channel_manage-title"
+              >
                 Channel Management
               </h3>
               <div
@@ -752,14 +780,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelDetails should match
           </div>
         </div>
         <div
+          aria-labelledby="channel_groups-title"
           class="AdminPanel clearfix "
           id="channel_groups"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="channel_groups-title"
+              >
                 Groups
               </h3>
               <div
@@ -911,14 +943,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelDetails should match
         class="admin-console__content"
       >
         <div
+          aria-labelledby="channel_profile-title"
           class="AdminPanel clearfix "
           id="channel_profile"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="channel_profile-title"
+              >
                 Channel Profile
               </h3>
               <div
@@ -969,14 +1005,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelDetails should match
           </div>
         </div>
         <div
+          aria-labelledby="channel_moderation-title"
           class="AdminPanel clearfix "
           id="channel_moderation"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="channel_moderation-title"
+              >
                 Advanced Access Control
               </h3>
               <div
@@ -1015,14 +1055,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelDetails should match
           </div>
         </div>
         <div
+          aria-labelledby="channel_manage-title"
           class="AdminPanel clearfix "
           id="channel_manage"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="channel_manage-title"
+              >
                 Channel Management
               </h3>
               <div
@@ -1198,14 +1242,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelDetails should match
         class="admin-console__content"
       >
         <div
+          aria-labelledby="channel_profile-title"
           class="AdminPanel clearfix "
           id="channel_profile"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="channel_profile-title"
+              >
                 Channel Profile
               </h3>
               <div
@@ -1255,14 +1303,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelDetails should match
           </div>
         </div>
         <div
+          aria-labelledby="channel_moderation-title"
           class="AdminPanel clearfix "
           id="channel_moderation"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="channel_moderation-title"
+              >
                 Advanced Access Control
               </h3>
               <div
@@ -1301,14 +1353,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelDetails should match
           </div>
         </div>
         <div
+          aria-labelledby="channel_manage-title"
           class="AdminPanel clearfix "
           id="channel_manage"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="channel_manage-title"
+              >
                 Channel Management
               </h3>
               <div
@@ -1484,14 +1540,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelDetails should match
         class="admin-console__content"
       >
         <div
+          aria-labelledby="channel_profile-title"
           class="AdminPanel clearfix "
           id="channel_profile"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="channel_profile-title"
+              >
                 Channel Profile
               </h3>
               <div
@@ -1542,14 +1602,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelDetails should match
           </div>
         </div>
         <div
+          aria-labelledby="channel_moderation-title"
           class="AdminPanel clearfix "
           id="channel_moderation"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="channel_moderation-title"
+              >
                 Advanced Access Control
               </h3>
               <div
@@ -1588,14 +1652,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelDetails should match
           </div>
         </div>
         <div
+          aria-labelledby="channel_manage-title"
           class="AdminPanel clearfix "
           id="channel_manage"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="channel_manage-title"
+              >
                 Channel Management
               </h3>
               <div
@@ -1730,14 +1798,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelDetails should match
         class="admin-console__content"
       >
         <div
+          aria-labelledby="channel_profile-title"
           class="AdminPanel clearfix "
           id="channel_profile"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="channel_profile-title"
+              >
                 Channel Profile
               </h3>
               <div
@@ -1787,14 +1859,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelDetails should match
           </div>
         </div>
         <div
+          aria-labelledby="channel_moderation-title"
           class="AdminPanel clearfix "
           id="channel_moderation"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="channel_moderation-title"
+              >
                 Advanced Access Control
               </h3>
               <div
@@ -1833,14 +1909,18 @@ exports[`admin_console/team_channel_settings/channel/ChannelDetails should match
           </div>
         </div>
         <div
+          aria-labelledby="channel_manage-title"
           class="AdminPanel clearfix "
           id="channel_manage"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="channel_manage-title"
+              >
                 Channel Management
               </h3>
               <div

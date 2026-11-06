@@ -10,11 +10,20 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
       id="uniqId"
     >
       <div
+        aria-expanded="true"
+        aria-labelledby="uniqId-name"
         class="fa fa-caret-right permission-arrow open"
+        data-agentom-id="uniqId-toggle"
+        role="button"
       />
       <div
+        aria-checked="true"
+        aria-describedby="uniqId-description"
+        aria-labelledby="uniqId-name"
         class="permission-check checked"
+        data-agentom-id="uniqId-checkbox"
         data-testid="uniqId-checkbox"
+        role="checkbox"
       >
         <span
           data-testid="permissionCheckbox-checked"
@@ -78,11 +87,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
       </div>
       <span
         class="permission-name"
+        id="uniqId-name"
       >
         name
       </span>
       <span
         class="permission-description"
+        id="uniqId-description"
       />
     </div>
     <div
@@ -94,8 +105,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         id="uniqId-invite_user"
       >
         <div
+          aria-checked="true"
+          aria-describedby="uniqId-invite_user-description"
+          aria-labelledby="uniqId-invite_user-name"
           class="permission-check checked"
+          data-agentom-id="uniqId-invite_user-checkbox"
           data-testid="uniqId-invite_user-checkbox"
+          role="checkbox"
         >
           <span
             data-testid="permissionCheckbox-checked"
@@ -159,11 +175,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         </div>
         <span
           class="permission-name"
+          id="uniqId-invite_user-name"
         >
           invite_user
         </span>
         <span
           class="permission-description"
+          id="uniqId-invite_user-description"
         />
       </div>
       <div
@@ -172,8 +190,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         id="uniqId-add_user_to_team"
       >
         <div
+          aria-checked="true"
+          aria-describedby="uniqId-add_user_to_team-description"
+          aria-labelledby="uniqId-add_user_to_team-name"
           class="permission-check checked"
+          data-agentom-id="uniqId-add_user_to_team-checkbox"
           data-testid="uniqId-add_user_to_team-checkbox"
+          role="checkbox"
         >
           <span
             data-testid="permissionCheckbox-checked"
@@ -237,11 +260,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         </div>
         <span
           class="permission-name"
+          id="uniqId-add_user_to_team-name"
         >
           add_user_to_team
         </span>
         <span
           class="permission-description"
+          id="uniqId-add_user_to_team-description"
         />
       </div>
     </div>
@@ -259,11 +284,21 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
       id="uniqId"
     >
       <div
+        aria-expanded="true"
+        aria-labelledby="uniqId-name"
         class="fa fa-caret-right permission-arrow open"
+        data-agentom-id="uniqId-toggle"
+        role="button"
       />
       <div
+        aria-checked="true"
+        aria-describedby="uniqId-description"
+        aria-disabled="true"
+        aria-labelledby="uniqId-name"
         class="permission-check checked"
+        data-agentom-id="uniqId-checkbox"
         data-testid="uniqId-checkbox"
+        role="checkbox"
       >
         <span
           data-testid="permissionCheckbox-checked"
@@ -327,11 +362,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
       </div>
       <span
         class="permission-name"
+        id="uniqId-name"
       >
         name
       </span>
       <span
         class="permission-description"
+        id="uniqId-description"
       />
     </div>
     <div
@@ -343,8 +380,14 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         id="uniqId-invite_user"
       >
         <div
+          aria-checked="true"
+          aria-describedby="uniqId-invite_user-description"
+          aria-disabled="true"
+          aria-labelledby="uniqId-invite_user-name"
           class="permission-check checked"
+          data-agentom-id="uniqId-invite_user-checkbox"
           data-testid="uniqId-invite_user-checkbox"
+          role="checkbox"
         >
           <span
             data-testid="permissionCheckbox-checked"
@@ -408,11 +451,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         </div>
         <span
           class="permission-name"
+          id="uniqId-invite_user-name"
         >
           invite_user
         </span>
         <span
           class="permission-description"
+          id="uniqId-invite_user-description"
         />
       </div>
       <div
@@ -421,8 +466,14 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         id="uniqId-add_user_to_team"
       >
         <div
+          aria-checked="true"
+          aria-describedby="uniqId-add_user_to_team-description"
+          aria-disabled="true"
+          aria-labelledby="uniqId-add_user_to_team-name"
           class="permission-check checked"
+          data-agentom-id="uniqId-add_user_to_team-checkbox"
           data-testid="uniqId-add_user_to_team-checkbox"
+          role="checkbox"
         >
           <span
             data-testid="permissionCheckbox-checked"
@@ -486,11 +537,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         </div>
         <span
           class="permission-name"
+          id="uniqId-add_user_to_team-name"
         >
           add_user_to_team
         </span>
         <span
           class="permission-description"
+          id="uniqId-add_user_to_team-description"
         />
       </div>
     </div>
@@ -508,11 +561,21 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
       id="uniqId"
     >
       <div
+        aria-expanded="true"
+        aria-labelledby="uniqId-name"
         class="fa fa-caret-right permission-arrow open"
+        data-agentom-id="uniqId-toggle"
+        role="button"
       />
       <div
+        aria-checked="true"
+        aria-describedby="uniqId-description"
+        aria-disabled="true"
+        aria-labelledby="uniqId-name"
         class="permission-check checked"
+        data-agentom-id="uniqId-checkbox"
         data-testid="uniqId-checkbox"
+        role="checkbox"
       >
         <span
           data-testid="permissionCheckbox-checked"
@@ -576,11 +639,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
       </div>
       <span
         class="permission-name"
+        id="uniqId-name"
       >
         name
       </span>
       <span
         class="permission-description"
+        id="uniqId-description"
       />
     </div>
     <div
@@ -592,8 +657,14 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         id="uniqId-invite_user"
       >
         <div
+          aria-checked="true"
+          aria-describedby="uniqId-invite_user-description"
+          aria-disabled="true"
+          aria-labelledby="uniqId-invite_user-name"
           class="permission-check checked"
+          data-agentom-id="uniqId-invite_user-checkbox"
           data-testid="uniqId-invite_user-checkbox"
+          role="checkbox"
         >
           <span
             data-testid="permissionCheckbox-checked"
@@ -657,11 +728,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         </div>
         <span
           class="permission-name"
+          id="uniqId-invite_user-name"
         >
           invite_user
         </span>
         <span
           class="permission-description"
+          id="uniqId-invite_user-description"
         />
       </div>
       <div
@@ -670,8 +743,14 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         id="uniqId-add_user_to_team"
       >
         <div
+          aria-checked="true"
+          aria-describedby="uniqId-add_user_to_team-description"
+          aria-disabled="true"
+          aria-labelledby="uniqId-add_user_to_team-name"
           class="permission-check checked"
+          data-agentom-id="uniqId-add_user_to_team-checkbox"
           data-testid="uniqId-add_user_to_team-checkbox"
+          role="checkbox"
         >
           <span
             data-testid="permissionCheckbox-checked"
@@ -735,11 +814,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         </div>
         <span
           class="permission-name"
+          id="uniqId-add_user_to_team-name"
         >
           add_user_to_team
         </span>
         <span
           class="permission-description"
+          id="uniqId-add_user_to_team-description"
         />
       </div>
     </div>
@@ -757,11 +838,20 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
       id="uniqId"
     >
       <div
+        aria-expanded="true"
+        aria-labelledby="uniqId-name"
         class="fa fa-caret-right permission-arrow open"
+        data-agentom-id="uniqId-toggle"
+        role="button"
       />
       <div
+        aria-checked="mixed"
+        aria-describedby="uniqId-description"
+        aria-labelledby="uniqId-name"
         class="permission-check intermediate"
+        data-agentom-id="uniqId-checkbox"
         data-testid="uniqId-checkbox"
+        role="checkbox"
       >
         <svg
           height="18px"
@@ -821,11 +911,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
       </div>
       <span
         class="permission-name"
+        id="uniqId-name"
       >
         name
       </span>
       <span
         class="permission-description"
+        id="uniqId-description"
       />
     </div>
     <div
@@ -837,8 +929,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         id="uniqId-invite_user"
       >
         <div
+          aria-checked="true"
+          aria-describedby="uniqId-invite_user-description"
+          aria-labelledby="uniqId-invite_user-name"
           class="permission-check checked"
+          data-agentom-id="uniqId-invite_user-checkbox"
           data-testid="uniqId-invite_user-checkbox"
+          role="checkbox"
         >
           <span
             data-testid="permissionCheckbox-checked"
@@ -902,11 +999,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         </div>
         <span
           class="permission-name"
+          id="uniqId-invite_user-name"
         >
           invite_user
         </span>
         <span
           class="permission-description"
+          id="uniqId-invite_user-description"
         />
       </div>
       <div
@@ -915,16 +1014,23 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         id="uniqId-add_user_to_team"
       >
         <div
+          aria-checked="false"
+          aria-describedby="uniqId-add_user_to_team-description"
+          aria-labelledby="uniqId-add_user_to_team-name"
           class="permission-check "
+          data-agentom-id="uniqId-add_user_to_team-checkbox"
           data-testid="uniqId-add_user_to_team-checkbox"
+          role="checkbox"
         />
         <span
           class="permission-name"
+          id="uniqId-add_user_to_team-name"
         >
           add_user_to_team
         </span>
         <span
           class="permission-description"
+          id="uniqId-add_user_to_team-description"
         />
       </div>
     </div>
@@ -942,11 +1048,21 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
       id="uniqId"
     >
       <div
+        aria-expanded="true"
+        aria-labelledby="uniqId-name"
         class="fa fa-caret-right permission-arrow open"
+        data-agentom-id="uniqId-toggle"
+        role="button"
       />
       <div
+        aria-checked="mixed"
+        aria-describedby="uniqId-description"
+        aria-disabled="true"
+        aria-labelledby="uniqId-name"
         class="permission-check intermediate"
+        data-agentom-id="uniqId-checkbox"
         data-testid="uniqId-checkbox"
+        role="checkbox"
       >
         <svg
           height="18px"
@@ -1006,11 +1122,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
       </div>
       <span
         class="permission-name"
+        id="uniqId-name"
       >
         name
       </span>
       <span
         class="permission-description"
+        id="uniqId-description"
       />
     </div>
     <div
@@ -1022,8 +1140,14 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         id="uniqId-invite_user"
       >
         <div
+          aria-checked="true"
+          aria-describedby="uniqId-invite_user-description"
+          aria-disabled="true"
+          aria-labelledby="uniqId-invite_user-name"
           class="permission-check checked"
+          data-agentom-id="uniqId-invite_user-checkbox"
           data-testid="uniqId-invite_user-checkbox"
+          role="checkbox"
         >
           <span
             data-testid="permissionCheckbox-checked"
@@ -1087,11 +1211,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         </div>
         <span
           class="permission-name"
+          id="uniqId-invite_user-name"
         >
           invite_user
         </span>
         <span
           class="permission-description"
+          id="uniqId-invite_user-description"
         />
       </div>
       <div
@@ -1100,16 +1226,24 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         id="uniqId-add_user_to_team"
       >
         <div
+          aria-checked="false"
+          aria-describedby="uniqId-add_user_to_team-description"
+          aria-disabled="true"
+          aria-labelledby="uniqId-add_user_to_team-name"
           class="permission-check "
+          data-agentom-id="uniqId-add_user_to_team-checkbox"
           data-testid="uniqId-add_user_to_team-checkbox"
+          role="checkbox"
         />
         <span
           class="permission-name"
+          id="uniqId-add_user_to_team-name"
         >
           add_user_to_team
         </span>
         <span
           class="permission-description"
+          id="uniqId-add_user_to_team-description"
         />
       </div>
     </div>
@@ -1127,11 +1261,20 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
       id="uniqId"
     >
       <div
+        aria-expanded="true"
+        aria-labelledby="uniqId-name"
         class="fa fa-caret-right permission-arrow open"
+        data-agentom-id="uniqId-toggle"
+        role="button"
       />
       <div
+        aria-checked="mixed"
+        aria-describedby="uniqId-description"
+        aria-labelledby="uniqId-name"
         class="permission-check intermediate"
+        data-agentom-id="uniqId-checkbox"
         data-testid="uniqId-checkbox"
+        role="checkbox"
       >
         <svg
           height="18px"
@@ -1191,11 +1334,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
       </div>
       <span
         class="permission-name"
+        id="uniqId-name"
       >
         name
       </span>
       <span
         class="permission-description"
+        id="uniqId-description"
       />
     </div>
     <div
@@ -1207,8 +1352,14 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         id="uniqId-invite_user"
       >
         <div
+          aria-checked="true"
+          aria-describedby="uniqId-invite_user-description"
+          aria-disabled="true"
+          aria-labelledby="uniqId-invite_user-name"
           class="permission-check checked"
+          data-agentom-id="uniqId-invite_user-checkbox"
           data-testid="uniqId-invite_user-checkbox"
+          role="checkbox"
         >
           <span
             data-testid="permissionCheckbox-checked"
@@ -1272,11 +1423,13 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         </div>
         <span
           class="permission-name"
+          id="uniqId-invite_user-name"
         >
           invite_user
         </span>
         <span
           class="permission-description"
+          id="uniqId-invite_user-description"
         />
       </div>
       <div
@@ -1285,16 +1438,23 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         id="uniqId-add_user_to_team"
       >
         <div
+          aria-checked="false"
+          aria-describedby="uniqId-add_user_to_team-description"
+          aria-labelledby="uniqId-add_user_to_team-name"
           class="permission-check "
+          data-agentom-id="uniqId-add_user_to_team-checkbox"
           data-testid="uniqId-add_user_to_team-checkbox"
+          role="checkbox"
         />
         <span
           class="permission-name"
+          id="uniqId-add_user_to_team-name"
         >
           add_user_to_team
         </span>
         <span
           class="permission-description"
+          id="uniqId-add_user_to_team-description"
         />
       </div>
     </div>
@@ -1312,19 +1472,30 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
       id="uniqId"
     >
       <div
+        aria-expanded="true"
+        aria-labelledby="uniqId-name"
         class="fa fa-caret-right permission-arrow open"
+        data-agentom-id="uniqId-toggle"
+        role="button"
       />
       <div
+        aria-checked="false"
+        aria-describedby="uniqId-description"
+        aria-labelledby="uniqId-name"
         class="permission-check "
+        data-agentom-id="uniqId-checkbox"
         data-testid="uniqId-checkbox"
+        role="checkbox"
       />
       <span
         class="permission-name"
+        id="uniqId-name"
       >
         name
       </span>
       <span
         class="permission-description"
+        id="uniqId-description"
       />
     </div>
     <div
@@ -1336,16 +1507,23 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         id="uniqId-invite_user"
       >
         <div
+          aria-checked="false"
+          aria-describedby="uniqId-invite_user-description"
+          aria-labelledby="uniqId-invite_user-name"
           class="permission-check "
+          data-agentom-id="uniqId-invite_user-checkbox"
           data-testid="uniqId-invite_user-checkbox"
+          role="checkbox"
         />
         <span
           class="permission-name"
+          id="uniqId-invite_user-name"
         >
           invite_user
         </span>
         <span
           class="permission-description"
+          id="uniqId-invite_user-description"
         />
       </div>
       <div
@@ -1354,16 +1532,23 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         id="uniqId-add_user_to_team"
       >
         <div
+          aria-checked="false"
+          aria-describedby="uniqId-add_user_to_team-description"
+          aria-labelledby="uniqId-add_user_to_team-name"
           class="permission-check "
+          data-agentom-id="uniqId-add_user_to_team-checkbox"
           data-testid="uniqId-add_user_to_team-checkbox"
+          role="checkbox"
         />
         <span
           class="permission-name"
+          id="uniqId-add_user_to_team-name"
         >
           add_user_to_team
         </span>
         <span
           class="permission-description"
+          id="uniqId-add_user_to_team-description"
         />
       </div>
     </div>
@@ -1381,19 +1566,30 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
       id="uniqId"
     >
       <div
+        aria-expanded="true"
+        aria-labelledby="uniqId-name"
         class="fa fa-caret-right permission-arrow open"
+        data-agentom-id="uniqId-toggle"
+        role="button"
       />
       <div
+        aria-checked="false"
+        aria-describedby="uniqId-description"
+        aria-labelledby="uniqId-name"
         class="permission-check "
+        data-agentom-id="uniqId-checkbox"
         data-testid="uniqId-checkbox"
+        role="checkbox"
       />
       <span
         class="permission-name"
+        id="uniqId-name"
       >
         name
       </span>
       <span
         class="permission-description"
+        id="uniqId-description"
       />
     </div>
     <div
@@ -1405,16 +1601,23 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         id="uniqId-invite_user"
       >
         <div
+          aria-checked="false"
+          aria-describedby="uniqId-invite_user-description"
+          aria-labelledby="uniqId-invite_user-name"
           class="permission-check "
+          data-agentom-id="uniqId-invite_user-checkbox"
           data-testid="uniqId-invite_user-checkbox"
+          role="checkbox"
         />
         <span
           class="permission-name"
+          id="uniqId-invite_user-name"
         >
           invite_user
         </span>
         <span
           class="permission-description"
+          id="uniqId-invite_user-description"
         />
       </div>
       <div
@@ -1423,16 +1626,23 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         id="uniqId-add_user_to_team"
       >
         <div
+          aria-checked="false"
+          aria-describedby="uniqId-add_user_to_team-description"
+          aria-labelledby="uniqId-add_user_to_team-name"
           class="permission-check "
+          data-agentom-id="uniqId-add_user_to_team-checkbox"
           data-testid="uniqId-add_user_to_team-checkbox"
+          role="checkbox"
         />
         <span
           class="permission-name"
+          id="uniqId-add_user_to_team-name"
         >
           add_user_to_team
         </span>
         <span
           class="permission-description"
+          id="uniqId-add_user_to_team-description"
         />
       </div>
     </div>
@@ -1450,19 +1660,31 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
       id="uniqId"
     >
       <div
+        aria-expanded="true"
+        aria-labelledby="uniqId-name"
         class="fa fa-caret-right permission-arrow open"
+        data-agentom-id="uniqId-toggle"
+        role="button"
       />
       <div
+        aria-checked="false"
+        aria-describedby="uniqId-description"
+        aria-disabled="true"
+        aria-labelledby="uniqId-name"
         class="permission-check "
+        data-agentom-id="uniqId-checkbox"
         data-testid="uniqId-checkbox"
+        role="checkbox"
       />
       <span
         class="permission-name"
+        id="uniqId-name"
       >
         name
       </span>
       <span
         class="permission-description"
+        id="uniqId-description"
       />
     </div>
     <div
@@ -1474,16 +1696,24 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         id="uniqId-invite_user"
       >
         <div
+          aria-checked="false"
+          aria-describedby="uniqId-invite_user-description"
+          aria-disabled="true"
+          aria-labelledby="uniqId-invite_user-name"
           class="permission-check "
+          data-agentom-id="uniqId-invite_user-checkbox"
           data-testid="uniqId-invite_user-checkbox"
+          role="checkbox"
         />
         <span
           class="permission-name"
+          id="uniqId-invite_user-name"
         >
           invite_user
         </span>
         <span
           class="permission-description"
+          id="uniqId-invite_user-description"
         />
       </div>
       <div
@@ -1492,16 +1722,24 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         id="uniqId-add_user_to_team"
       >
         <div
+          aria-checked="false"
+          aria-describedby="uniqId-add_user_to_team-description"
+          aria-disabled="true"
+          aria-labelledby="uniqId-add_user_to_team-name"
           class="permission-check "
+          data-agentom-id="uniqId-add_user_to_team-checkbox"
           data-testid="uniqId-add_user_to_team-checkbox"
+          role="checkbox"
         />
         <span
           class="permission-name"
+          id="uniqId-add_user_to_team-name"
         >
           add_user_to_team
         </span>
         <span
           class="permission-description"
+          id="uniqId-add_user_to_team-description"
         />
       </div>
     </div>
@@ -1519,19 +1757,30 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
       id="uniqId"
     >
       <div
+        aria-expanded="true"
+        aria-labelledby="uniqId-name"
         class="fa fa-caret-right permission-arrow open"
+        data-agentom-id="uniqId-toggle"
+        role="button"
       />
       <div
+        aria-checked="false"
+        aria-describedby="uniqId-description"
+        aria-labelledby="uniqId-name"
         class="permission-check "
+        data-agentom-id="uniqId-checkbox"
         data-testid="uniqId-checkbox"
+        role="checkbox"
       />
       <span
         class="permission-name"
+        id="uniqId-name"
       >
         name
       </span>
       <span
         class="permission-description"
+        id="uniqId-description"
       />
     </div>
     <div
@@ -1543,16 +1792,23 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         id="uniqId-invite_user"
       >
         <div
+          aria-checked="false"
+          aria-describedby="uniqId-invite_user-description"
+          aria-labelledby="uniqId-invite_user-name"
           class="permission-check "
+          data-agentom-id="uniqId-invite_user-checkbox"
           data-testid="uniqId-invite_user-checkbox"
+          role="checkbox"
         />
         <span
           class="permission-name"
+          id="uniqId-invite_user-name"
         >
           invite_user
         </span>
         <span
           class="permission-description"
+          id="uniqId-invite_user-description"
         />
       </div>
       <div
@@ -1561,16 +1817,23 @@ exports[`components/admin_console/permission_schemes_settings/permission_group s
         id="uniqId-add_user_to_team"
       >
         <div
+          aria-checked="false"
+          aria-describedby="uniqId-add_user_to_team-description"
+          aria-labelledby="uniqId-add_user_to_team-name"
           class="permission-check "
+          data-agentom-id="uniqId-add_user_to_team-checkbox"
           data-testid="uniqId-add_user_to_team-checkbox"
+          role="checkbox"
         />
         <span
           class="permission-name"
+          id="uniqId-add_user_to_team-name"
         >
           add_user_to_team
         </span>
         <span
           class="permission-description"
+          id="uniqId-add_user_to_team-description"
         />
       </div>
     </div>

@@ -37,14 +37,18 @@ For more information on Groups, please see
           </div>
         </div>
         <div
+          aria-labelledby="ldap_groups-title"
           class="AdminPanel clearfix "
           id="ldap_groups"
+          role="region"
         >
           <div
             class="header"
           >
             <div>
-              <h3>
+              <h3
+                id="ldap_groups-title"
+              >
                 AD/LDAP Groups
               </h3>
               <div

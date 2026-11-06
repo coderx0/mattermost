@@ -305,12 +305,22 @@ export default class PermissionGroup extends React.PureComponent<Props, State> {
                             <div
                                 className={'fa fa-caret-right permission-arrow ' + (this.state.expanded ? 'open' : '')}
                                 onClick={this.toggleExpanded}
+                                role='button'
+                                aria-expanded={this.state.expanded}
+                                aria-labelledby={`${uniqId}-name`}
+                                data-agentom-id={`${uniqId}-toggle`}
                             />}
                         <PermissionCheckbox
                             value={this.getStatus(this.props.permissions)}
                             id={`${uniqId}-checkbox`}
+                            labelledBy={`${uniqId}-name`}
+                            describedBy={`${uniqId}-description`}
+                            readOnly={readOnly || this.allPermissionsFromParent(this.props.permissions)}
                         />
-                        <span className='permission-name'>
+                        <span
+                            id={`${uniqId}-name`}
+                            className='permission-name'
+                        >
                             {name}
                         </span>
                         <PermissionDescription
@@ -319,6 +329,7 @@ export default class PermissionGroup extends React.PureComponent<Props, State> {
                             id={id}
                             selectRow={this.props.selectRow}
                             description={description}
+                            elementId={`${uniqId}-description`}
                         />
                     </div>}
                 {!combined &&

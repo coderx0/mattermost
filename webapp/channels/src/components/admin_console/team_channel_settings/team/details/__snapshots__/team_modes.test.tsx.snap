@@ -3,14 +3,18 @@
 exports[`admin_console/team_channel_settings/team/TeamModes should match snapshot 1`] = `
 <div>
   <div
+    aria-labelledby="team_manage-title"
     class="AdminPanel clearfix "
     id="team_manage"
+    role="region"
   >
     <div
       class="header"
     >
       <div>
-        <h3>
+        <h3
+          id="team_manage-title"
+        >
           Team Management
         </h3>
         <div

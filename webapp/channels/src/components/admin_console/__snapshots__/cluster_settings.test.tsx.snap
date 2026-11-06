@@ -55,6 +55,7 @@ exports[`components/ClusterSettings should match snapshot, compression disabled 
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="Enable-label"
             >
               Enable High Availability Mode:
             </legend>
@@ -65,6 +66,7 @@ exports[`components/ClusterSettings should match snapshot, compression disabled 
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="Enable-label Enabletrue-label"
                   checked=""
                   data-testid="Enabletrue"
                   id="Enabletrue"
@@ -72,19 +74,28 @@ exports[`components/ClusterSettings should match snapshot, compression disabled 
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="Enabletrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="Enable-label Enablefalse-label"
                   data-testid="Enablefalse"
                   id="Enablefalse"
                   name="Enable"
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="Enablefalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"
@@ -172,6 +183,7 @@ exports[`components/ClusterSettings should match snapshot, compression disabled 
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="UseIPAddress-label"
             >
               Use IP Address:
             </legend>
@@ -182,18 +194,24 @@ exports[`components/ClusterSettings should match snapshot, compression disabled 
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="UseIPAddress-label UseIPAddresstrue-label"
                   data-testid="UseIPAddresstrue"
                   id="UseIPAddresstrue"
                   name="UseIPAddress"
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="UseIPAddresstrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="UseIPAddress-label UseIPAddressfalse-label"
                   checked=""
                   data-testid="UseIPAddressfalse"
                   id="UseIPAddressfalse"
@@ -201,7 +219,11 @@ exports[`components/ClusterSettings should match snapshot, compression disabled 
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="UseIPAddressfalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"
@@ -218,6 +240,7 @@ exports[`components/ClusterSettings should match snapshot, compression disabled 
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="EnableGossipEncryption-label"
             >
               Enable Gossip encryption:
             </legend>
@@ -228,18 +251,24 @@ exports[`components/ClusterSettings should match snapshot, compression disabled 
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="EnableGossipEncryption-label EnableGossipEncryptiontrue-label"
                   data-testid="EnableGossipEncryptiontrue"
                   id="EnableGossipEncryptiontrue"
                   name="EnableGossipEncryption"
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="EnableGossipEncryptiontrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="EnableGossipEncryption-label EnableGossipEncryptionfalse-label"
                   checked=""
                   data-testid="EnableGossipEncryptionfalse"
                   id="EnableGossipEncryptionfalse"
@@ -247,7 +276,11 @@ exports[`components/ClusterSettings should match snapshot, compression disabled 
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="EnableGossipEncryptionfalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"
@@ -264,6 +297,7 @@ exports[`components/ClusterSettings should match snapshot, compression disabled 
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="EnableGossipCompression-label"
             >
               Enable Gossip compression:
             </legend>
@@ -274,18 +308,24 @@ exports[`components/ClusterSettings should match snapshot, compression disabled 
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="EnableGossipCompression-label EnableGossipCompressiontrue-label"
                   data-testid="EnableGossipCompressiontrue"
                   id="EnableGossipCompressiontrue"
                   name="EnableGossipCompression"
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="EnableGossipCompressiontrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="EnableGossipCompression-label EnableGossipCompressionfalse-label"
                   checked=""
                   data-testid="EnableGossipCompressionfalse"
                   id="EnableGossipCompressionfalse"
@@ -293,7 +333,11 @@ exports[`components/ClusterSettings should match snapshot, compression disabled 
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="EnableGossipCompressionfalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"
@@ -414,6 +458,7 @@ exports[`components/ClusterSettings should match snapshot, compression enabled 1
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="Enable-label"
             >
               Enable High Availability Mode:
             </legend>
@@ -424,6 +469,7 @@ exports[`components/ClusterSettings should match snapshot, compression enabled 1
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="Enable-label Enabletrue-label"
                   checked=""
                   data-testid="Enabletrue"
                   id="Enabletrue"
@@ -431,19 +477,28 @@ exports[`components/ClusterSettings should match snapshot, compression enabled 1
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="Enabletrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="Enable-label Enablefalse-label"
                   data-testid="Enablefalse"
                   id="Enablefalse"
                   name="Enable"
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="Enablefalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"
@@ -531,6 +586,7 @@ exports[`components/ClusterSettings should match snapshot, compression enabled 1
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="UseIPAddress-label"
             >
               Use IP Address:
             </legend>
@@ -541,18 +597,24 @@ exports[`components/ClusterSettings should match snapshot, compression enabled 1
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="UseIPAddress-label UseIPAddresstrue-label"
                   data-testid="UseIPAddresstrue"
                   id="UseIPAddresstrue"
                   name="UseIPAddress"
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="UseIPAddresstrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="UseIPAddress-label UseIPAddressfalse-label"
                   checked=""
                   data-testid="UseIPAddressfalse"
                   id="UseIPAddressfalse"
@@ -560,7 +622,11 @@ exports[`components/ClusterSettings should match snapshot, compression enabled 1
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="UseIPAddressfalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"
@@ -577,6 +643,7 @@ exports[`components/ClusterSettings should match snapshot, compression enabled 1
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="EnableGossipEncryption-label"
             >
               Enable Gossip encryption:
             </legend>
@@ -587,18 +654,24 @@ exports[`components/ClusterSettings should match snapshot, compression enabled 1
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="EnableGossipEncryption-label EnableGossipEncryptiontrue-label"
                   data-testid="EnableGossipEncryptiontrue"
                   id="EnableGossipEncryptiontrue"
                   name="EnableGossipEncryption"
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="EnableGossipEncryptiontrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="EnableGossipEncryption-label EnableGossipEncryptionfalse-label"
                   checked=""
                   data-testid="EnableGossipEncryptionfalse"
                   id="EnableGossipEncryptionfalse"
@@ -606,7 +679,11 @@ exports[`components/ClusterSettings should match snapshot, compression enabled 1
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="EnableGossipEncryptionfalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"
@@ -623,6 +700,7 @@ exports[`components/ClusterSettings should match snapshot, compression enabled 1
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="EnableGossipCompression-label"
             >
               Enable Gossip compression:
             </legend>
@@ -633,6 +711,7 @@ exports[`components/ClusterSettings should match snapshot, compression enabled 1
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="EnableGossipCompression-label EnableGossipCompressiontrue-label"
                   checked=""
                   data-testid="EnableGossipCompressiontrue"
                   id="EnableGossipCompressiontrue"
@@ -640,19 +719,28 @@ exports[`components/ClusterSettings should match snapshot, compression enabled 1
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="EnableGossipCompressiontrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="EnableGossipCompression-label EnableGossipCompressionfalse-label"
                   data-testid="EnableGossipCompressionfalse"
                   id="EnableGossipCompressionfalse"
                   name="EnableGossipCompression"
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="EnableGossipCompressionfalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"
@@ -773,6 +861,7 @@ exports[`components/ClusterSettings should match snapshot, encryption disabled 1
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="Enable-label"
             >
               Enable High Availability Mode:
             </legend>
@@ -783,6 +872,7 @@ exports[`components/ClusterSettings should match snapshot, encryption disabled 1
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="Enable-label Enabletrue-label"
                   checked=""
                   data-testid="Enabletrue"
                   id="Enabletrue"
@@ -790,19 +880,28 @@ exports[`components/ClusterSettings should match snapshot, encryption disabled 1
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="Enabletrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="Enable-label Enablefalse-label"
                   data-testid="Enablefalse"
                   id="Enablefalse"
                   name="Enable"
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="Enablefalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"
@@ -890,6 +989,7 @@ exports[`components/ClusterSettings should match snapshot, encryption disabled 1
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="UseIPAddress-label"
             >
               Use IP Address:
             </legend>
@@ -900,18 +1000,24 @@ exports[`components/ClusterSettings should match snapshot, encryption disabled 1
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="UseIPAddress-label UseIPAddresstrue-label"
                   data-testid="UseIPAddresstrue"
                   id="UseIPAddresstrue"
                   name="UseIPAddress"
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="UseIPAddresstrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="UseIPAddress-label UseIPAddressfalse-label"
                   checked=""
                   data-testid="UseIPAddressfalse"
                   id="UseIPAddressfalse"
@@ -919,7 +1025,11 @@ exports[`components/ClusterSettings should match snapshot, encryption disabled 1
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="UseIPAddressfalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"
@@ -936,6 +1046,7 @@ exports[`components/ClusterSettings should match snapshot, encryption disabled 1
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="EnableGossipEncryption-label"
             >
               Enable Gossip encryption:
             </legend>
@@ -946,18 +1057,24 @@ exports[`components/ClusterSettings should match snapshot, encryption disabled 1
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="EnableGossipEncryption-label EnableGossipEncryptiontrue-label"
                   data-testid="EnableGossipEncryptiontrue"
                   id="EnableGossipEncryptiontrue"
                   name="EnableGossipEncryption"
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="EnableGossipEncryptiontrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="EnableGossipEncryption-label EnableGossipEncryptionfalse-label"
                   checked=""
                   data-testid="EnableGossipEncryptionfalse"
                   id="EnableGossipEncryptionfalse"
@@ -965,7 +1082,11 @@ exports[`components/ClusterSettings should match snapshot, encryption disabled 1
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="EnableGossipEncryptionfalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"
@@ -982,6 +1103,7 @@ exports[`components/ClusterSettings should match snapshot, encryption disabled 1
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="EnableGossipCompression-label"
             >
               Enable Gossip compression:
             </legend>
@@ -992,18 +1114,24 @@ exports[`components/ClusterSettings should match snapshot, encryption disabled 1
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="EnableGossipCompression-label EnableGossipCompressiontrue-label"
                   data-testid="EnableGossipCompressiontrue"
                   id="EnableGossipCompressiontrue"
                   name="EnableGossipCompression"
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="EnableGossipCompressiontrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="EnableGossipCompression-label EnableGossipCompressionfalse-label"
                   checked=""
                   data-testid="EnableGossipCompressionfalse"
                   id="EnableGossipCompressionfalse"
@@ -1011,7 +1139,11 @@ exports[`components/ClusterSettings should match snapshot, encryption disabled 1
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="EnableGossipCompressionfalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"
@@ -1132,6 +1264,7 @@ exports[`components/ClusterSettings should match snapshot, encryption enabled 1`
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="Enable-label"
             >
               Enable High Availability Mode:
             </legend>
@@ -1142,6 +1275,7 @@ exports[`components/ClusterSettings should match snapshot, encryption enabled 1`
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="Enable-label Enabletrue-label"
                   checked=""
                   data-testid="Enabletrue"
                   id="Enabletrue"
@@ -1149,19 +1283,28 @@ exports[`components/ClusterSettings should match snapshot, encryption enabled 1`
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="Enabletrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="Enable-label Enablefalse-label"
                   data-testid="Enablefalse"
                   id="Enablefalse"
                   name="Enable"
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="Enablefalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"
@@ -1249,6 +1392,7 @@ exports[`components/ClusterSettings should match snapshot, encryption enabled 1`
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="UseIPAddress-label"
             >
               Use IP Address:
             </legend>
@@ -1259,18 +1403,24 @@ exports[`components/ClusterSettings should match snapshot, encryption enabled 1`
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="UseIPAddress-label UseIPAddresstrue-label"
                   data-testid="UseIPAddresstrue"
                   id="UseIPAddresstrue"
                   name="UseIPAddress"
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="UseIPAddresstrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="UseIPAddress-label UseIPAddressfalse-label"
                   checked=""
                   data-testid="UseIPAddressfalse"
                   id="UseIPAddressfalse"
@@ -1278,7 +1428,11 @@ exports[`components/ClusterSettings should match snapshot, encryption enabled 1`
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="UseIPAddressfalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"
@@ -1295,6 +1449,7 @@ exports[`components/ClusterSettings should match snapshot, encryption enabled 1`
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="EnableGossipEncryption-label"
             >
               Enable Gossip encryption:
             </legend>
@@ -1305,6 +1460,7 @@ exports[`components/ClusterSettings should match snapshot, encryption enabled 1`
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="EnableGossipEncryption-label EnableGossipEncryptiontrue-label"
                   checked=""
                   data-testid="EnableGossipEncryptiontrue"
                   id="EnableGossipEncryptiontrue"
@@ -1312,19 +1468,28 @@ exports[`components/ClusterSettings should match snapshot, encryption enabled 1`
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="EnableGossipEncryptiontrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="EnableGossipEncryption-label EnableGossipEncryptionfalse-label"
                   data-testid="EnableGossipEncryptionfalse"
                   id="EnableGossipEncryptionfalse"
                   name="EnableGossipEncryption"
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="EnableGossipEncryptionfalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"
@@ -1341,6 +1506,7 @@ exports[`components/ClusterSettings should match snapshot, encryption enabled 1`
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="EnableGossipCompression-label"
             >
               Enable Gossip compression:
             </legend>
@@ -1351,18 +1517,24 @@ exports[`components/ClusterSettings should match snapshot, encryption enabled 1`
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="EnableGossipCompression-label EnableGossipCompressiontrue-label"
                   data-testid="EnableGossipCompressiontrue"
                   id="EnableGossipCompressiontrue"
                   name="EnableGossipCompression"
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="EnableGossipCompressiontrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="EnableGossipCompression-label EnableGossipCompressionfalse-label"
                   checked=""
                   data-testid="EnableGossipCompressionfalse"
                   id="EnableGossipCompressionfalse"
@@ -1370,7 +1542,11 @@ exports[`components/ClusterSettings should match snapshot, encryption enabled 1`
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="EnableGossipCompressionfalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"

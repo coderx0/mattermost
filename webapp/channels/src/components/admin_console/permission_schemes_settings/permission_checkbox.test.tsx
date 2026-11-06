@@ -56,4 +56,38 @@ describe('components/admin_console/permission_schemes_settings/permission_checkb
         expect(screen.getByTestId('uniqId-checked')).not.toHaveClass('checked');
         expect(screen.getByTestId('uniqId-checked')).not.toHaveClass('intermediate');
     });
+
+    describe('what it says about itself', () => {
+        const box = (value: string, readOnly = false) => {
+            renderWithContext(
+                <>
+                    <span id='name'>{'Create Channels'}</span>
+                    <span id='description'>{'Create new channels.'}</span>
+                    <PermissionCheckbox
+                        value={value}
+                        id='row-checkbox'
+                        labelledBy='name'
+                        describedBy='description'
+                        readOnly={readOnly}
+                    />
+                </>,
+            );
+            return screen.getByRole('checkbox', {name: 'Create Channels', description: 'Create new channels.'});
+        };
+
+        test.each([['checked', 'true'], ['intermediate', 'mixed'], ['', 'false']])('value "%s" is aria-checked %s', (value, checked) => {
+            expect(box(value)).toHaveAttribute('aria-checked', checked);
+        });
+
+        test('says when its row can\'t be changed, and has no tab stop', () => {
+            const el = box('checked', true);
+            expect(el).toHaveAttribute('aria-disabled', 'true');
+            expect(el).not.toHaveAttribute('tabindex');
+        });
+
+        test('has no role without a name', () => {
+            renderWithContext(<PermissionCheckbox value='checked'/>);
+            expect(screen.queryByRole('checkbox')).toBeNull();
+        });
+    });
 });

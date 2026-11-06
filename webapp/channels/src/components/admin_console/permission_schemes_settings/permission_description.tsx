@@ -16,6 +16,9 @@ type Props = {
     selectRow: (id: string) => void;
     additionalValues?: Record<string, unknown>;
     description: string | JSX.Element;
+
+    /** the element's id, for the permission's box to be described by it */
+    elementId?: string;
 };
 
 const PermissionDescription = ({
@@ -24,6 +27,7 @@ const PermissionDescription = ({
     description,
     additionalValues,
     inherited,
+    elementId,
 }: Props): JSX.Element => {
     const {formatMessage} = useIntl();
 
@@ -70,6 +74,7 @@ const PermissionDescription = ({
             disabled={!showTooltip}
         >
             <span
+                id={elementId}
                 className='permission-description'
                 onClick={parentPermissionClicked}
             >

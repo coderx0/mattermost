@@ -62,8 +62,14 @@ const PermissionRow = ({
             <PermissionCheckbox
                 value={value}
                 id={`${uniqId}-checkbox`}
+                labelledBy={`${uniqId}-name`}
+                describedBy={`${uniqId}-description`}
+                readOnly={readOnly}
             />
-            <span className='permission-name'>
+            <span
+                id={`${uniqId}-name`}
+                className='permission-name'
+            >
                 {name}
             </span>
             <PermissionDescription
@@ -72,6 +78,7 @@ const PermissionRow = ({
                 selectRow={selectRow}
                 description={description}
                 additionalValues={additionalValues}
+                elementId={`${uniqId}-description`}
             />
         </div>
     );

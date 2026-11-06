@@ -134,6 +134,7 @@ exports[`components/integrations/EditOutgoingWebhook should match snapshot 1`] =
           <label
             class="control-label col-sm-4"
             for="channelId"
+            id="channelIdLabel"
           >
             Channel
           </label>
@@ -141,6 +142,7 @@ exports[`components/integrations/EditOutgoingWebhook should match snapshot 1`] =
             class="col-md-5 col-sm-8"
           >
             <select
+              aria-labelledby="channelIdLabel"
               class="form-control"
               id="channelSelect"
             >
@@ -418,6 +420,7 @@ exports[`components/integrations/EditOutgoingWebhook should match snapshot when 
           <label
             class="control-label col-sm-4"
             for="channelId"
+            id="channelIdLabel"
           >
             Channel
           </label>
@@ -425,6 +428,7 @@ exports[`components/integrations/EditOutgoingWebhook should match snapshot when 
             class="col-md-5 col-sm-8"
           >
             <select
+              aria-labelledby="channelIdLabel"
               class="form-control"
               id="channelSelect"
             >

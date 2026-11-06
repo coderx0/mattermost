@@ -19,7 +19,10 @@ export default function SettingSet({
             id={inputId}
             className='form-group'
         >
-            <legend className='control-label form-legend col-sm-4'>
+            <legend
+                id={`${inputId}-label`}
+                className='control-label form-legend col-sm-4'
+            >
                 {label}
             </legend>
             <div className='col-sm-8'>

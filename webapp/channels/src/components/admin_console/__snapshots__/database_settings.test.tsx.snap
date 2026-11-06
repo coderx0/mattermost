@@ -299,6 +299,7 @@ exports[`components/DatabaseSettings should match snapshot 1`] = `
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="trace-label"
             >
               SQL Statement Logging: 
             </legend>
@@ -309,18 +310,24 @@ exports[`components/DatabaseSettings should match snapshot 1`] = `
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="trace-label tracetrue-label"
                   data-testid="tracetrue"
                   id="tracetrue"
                   name="trace"
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="tracetrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="trace-label tracefalse-label"
                   checked=""
                   data-testid="tracefalse"
                   id="tracefalse"
@@ -328,7 +335,11 @@ exports[`components/DatabaseSettings should match snapshot 1`] = `
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="tracefalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"
@@ -378,6 +389,7 @@ exports[`components/DatabaseSettings should match snapshot 1`] = `
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="disableDatabaseSearch-label"
             >
               Disable database search: 
             </legend>
@@ -388,6 +400,7 @@ exports[`components/DatabaseSettings should match snapshot 1`] = `
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="disableDatabaseSearch-label disableDatabaseSearchtrue-label"
                   checked=""
                   data-testid="disableDatabaseSearchtrue"
                   id="disableDatabaseSearchtrue"
@@ -395,19 +408,28 @@ exports[`components/DatabaseSettings should match snapshot 1`] = `
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="disableDatabaseSearchtrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="disableDatabaseSearch-label disableDatabaseSearchfalse-label"
                   data-testid="disableDatabaseSearchfalse"
                   id="disableDatabaseSearchfalse"
                   name="disableDatabaseSearch"
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="disableDatabaseSearchfalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"
@@ -431,6 +453,7 @@ exports[`components/DatabaseSettings should match snapshot 1`] = `
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="undefined-label"
             >
               Schema Migrations:
             </legend>

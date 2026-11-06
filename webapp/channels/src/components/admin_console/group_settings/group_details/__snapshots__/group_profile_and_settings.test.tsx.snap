@@ -3,14 +3,18 @@
 exports[`components/admin_console/group_settings/group_details/GroupProfileAndSettings should match snapshot, with toggle off 1`] = `
 <div>
   <div
+    aria-labelledby="group_profile-title"
     class="AdminPanel clearfix "
     id="group_profile"
+    role="region"
   >
     <div
       class="header"
     >
       <div>
-        <h3>
+        <h3
+          id="group_profile-title"
+        >
           Group Profile
         </h3>
         <div
@@ -112,14 +116,18 @@ exports[`components/admin_console/group_settings/group_details/GroupProfileAndSe
 exports[`components/admin_console/group_settings/group_details/GroupProfileAndSettings should match snapshot, with toggle on 1`] = `
 <div>
   <div
+    aria-labelledby="group_profile-title"
     class="AdminPanel clearfix "
     id="group_profile"
+    role="region"
   >
     <div
       class="header"
     >
       <div>
-        <h3>
+        <h3
+          id="group_profile-title"
+        >
           Group Profile
         </h3>
         <div

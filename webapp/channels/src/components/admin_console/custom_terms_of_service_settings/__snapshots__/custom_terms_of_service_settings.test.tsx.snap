@@ -28,6 +28,7 @@ exports[`components/admin_console/CustomTermsOfServiceSettings should match snap
           >
             <legend
               class="control-label form-legend col-sm-4"
+              id="SupportSettings.CustomTermsOfServiceEnabled-label"
             >
               Enable Custom Terms of Service
             </legend>
@@ -38,6 +39,7 @@ exports[`components/admin_console/CustomTermsOfServiceSettings should match snap
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="SupportSettings.CustomTermsOfServiceEnabled-label SupportSettings.CustomTermsOfServiceEnabledtrue-label"
                   checked=""
                   data-testid="SupportSettings.CustomTermsOfServiceEnabledtrue"
                   id="SupportSettings.CustomTermsOfServiceEnabledtrue"
@@ -45,19 +47,28 @@ exports[`components/admin_console/CustomTermsOfServiceSettings should match snap
                   type="radio"
                   value="true"
                 />
-                True
+                <span
+                  id="SupportSettings.CustomTermsOfServiceEnabledtrue-label"
+                >
+                  True
+                </span>
               </label>
               <label
                 class="Label-eJcoMl iShgPr"
               >
                 <input
+                  aria-labelledby="SupportSettings.CustomTermsOfServiceEnabled-label SupportSettings.CustomTermsOfServiceEnabledfalse-label"
                   data-testid="SupportSettings.CustomTermsOfServiceEnabledfalse"
                   id="SupportSettings.CustomTermsOfServiceEnabledfalse"
                   name="SupportSettings.CustomTermsOfServiceEnabled"
                   type="radio"
                   value="false"
                 />
-                False
+                <span
+                  id="SupportSettings.CustomTermsOfServiceEnabledfalse-label"
+                >
+                  False
+                </span>
               </label>
               <div
                 class="help-text"
